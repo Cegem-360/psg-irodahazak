@@ -33,7 +33,7 @@
                     <button data-collapse-toggle="mobile-menu-2" type="button"
                         class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
                         aria-controls="mobile-menu-2" aria-expanded="false">
-                        <span class="sr-only">Menü</span>
+                        <span class="sr-only">Open main menu</span>
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
                                 d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
@@ -112,48 +112,44 @@
         <h2 class="text-4xl text-center my-8">Találja meg velünk vállalkozása <span class="text-[var(--primary)]">új
                 ideális</span> otthonát</h2>
     </div>
-    <div
-        class="bg-[url({{ Vite::asset('resources/images/reflections-in-modern-dutch-design-architecture-2025-03-23-22-04-59-utc.webp') }})]">
-        <div class="kiemelt-ajanlatok container mx-auto py-12">
-            <h2 class="text-4xl text-center my-8">Kiemelt ajánlatok</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto">
-                <div class="bg-white rounded-xl overflow-hidden shadow-xl">
-                    <img src="{{ Vite::asset('resources/images/andrassy_palace_iroda_5__384x246.jpg') }}"
-                        alt="Kiemelt ajánlatok" class="w-full h-auto object-cover" />
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Andrássy Palace Iroda</h3>
-                        <p class="text-gray-700 mb-4 min-h-24">1061 Budapest, Andrássy út 9.<br><strong>Bérleti díj:
-                            </strong>16 - 17
-                            EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2990 HUF/m2/hó</p>
-                        <a href="#"
-                            class="inline-block mb-4 px-6 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--secondary)] transition-colors">További
-                            részletek</a>
-                    </div>
+    <div class="kiemelt-ajanlatok container mx-auto my-12">
+        <h2 class="text-4xl text-center my-8">Kiemelt ajánlatok</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto">
+            <div class="bg-white rounded-xl overflow-hidden shadow-xl">
+                <img src="{{ Vite::asset('resources/images/andrassy_palace_iroda_5__384x246.jpg') }}"
+                    alt="Kiemelt ajánlatok" class="w-full h-auto object-cover" />
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Andrássy Palace Iroda</h3>
+                    <p class="text-gray-700 mb-4 min-h-24">1061 Budapest, Andrássy út 9.<br><strong>Bérleti díj:
+                        </strong>16 - 17
+                        EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2990 HUF/m2/hó</p>
+                    <a href="#"
+                        class="inline-block mb-4 px-6 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--secondary)] transition-colors">További
+                        részletek</a>
                 </div>
-                <div class="bg-white rounded-xl overflow-hidden shadow-xl">
-                    <img src="{{ Vite::asset('resources/images/arena_corner_irodahaz_1__384x246.jpg') }}"
-                        alt="Kiemelt ajánlatok" class="w-full h-auto object-cover" />
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Arena Corner</h3>
-                        <p class="text-gray-700 mb-4 min-h-24">1087 Budapest, Hungária körút 40.<br><strong>Bérleti
-                                díj:
-                            </strong>14.5 - 15.5 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2200 HUF/m2/hó</p>
-                        <a href="#"
-                            class="inline-block mb-4 px-6 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--secondary)] transition-colors">További
-                            részletek</a>
-                    </div>
+            </div>
+            <div class="bg-white rounded-xl overflow-hidden shadow-xl">
+                <img src="{{ Vite::asset('resources/images/arena_corner_irodahaz_1__384x246.jpg') }}"
+                    alt="Kiemelt ajánlatok" class="w-full h-auto object-cover" />
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Arena Corner</h3>
+                    <p class="text-gray-700 mb-4 min-h-24">1087 Budapest, Hungária körút 40.<br><strong>Bérleti díj:
+                        </strong>14.5 - 15.5 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2200 HUF/m2/hó</p>
+                    <a href="#"
+                        class="inline-block mb-4 px-6 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--secondary)] transition-colors">További
+                        részletek</a>
                 </div>
-                <div class="bg-white rounded-xl overflow-hidden shadow-xl">
-                    <img src="{{ Vite::asset('resources/images/bank_center_1_2_3_4_5_384x246.jpg') }}"
-                        alt="Kiemelt ajánlatok" class="w-full h-auto object-cover" />
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Bank Center</h3>
-                        <p class="text-gray-700 mb-4 min-h-24">1054 Budapest, Szabadság tér 7.<br><strong>Bérleti díj:
-                            </strong>22 - 26 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2700 HUF/m2/hó</p>
-                        <a href="#"
-                            class="inline-block mb-4 px-6 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--secondary)] transition-colors">További
-                            részletek</a>
-                    </div>
+            </div>
+            <div class="bg-white rounded-xl overflow-hidden shadow-xl">
+                <img src="{{ Vite::asset('resources/images/bank_center_1_2_3_4_5_384x246.jpg') }}"
+                    alt="Kiemelt ajánlatok" class="w-full h-auto object-cover" />
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Bank Center</h3>
+                    <p class="text-gray-700 mb-4 min-h-24">1054 Budapest, Szabadság tér 7.<br><strong>Bérleti díj:
+                        </strong>22 - 26 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2700 HUF/m2/hó</p>
+                    <a href="#"
+                        class="inline-block mb-4 px-6 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--secondary)] transition-colors">További
+                        részletek</a>
                 </div>
             </div>
         </div>
