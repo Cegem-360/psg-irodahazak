@@ -23,7 +23,7 @@ final class HouseSearch extends Component implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill($this->record->attributesToArray());
+        $this->form->fill();
     }
 
     public function form(Form $form): Form
