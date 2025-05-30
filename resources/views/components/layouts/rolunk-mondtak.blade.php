@@ -15,10 +15,10 @@
         </div>
         <div class="py-8 bg-gradient-to-b from-gray-400 to-accent/20">
             <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-2 max-w-screen-xl mx-auto">
-                <div class="flex flex-col md:flex-row gap-8 p-12">
+                <div class="flex flex-col lg:flex-row gap-8 p-12">
                     <img src="{{ Vite::asset('resources/images/centrica_800x600.png') }}" alt=""
-                        class="w-1/3 h-fit object-contain rounded-lg mb-4 p-2 bg-white" />
-                    <p class="w-2/3 text-md italic">
+                        class="w-1/2 lg:w-1/3 h-fit object-contain rounded-lg mb-4 p-2 bg-white" />
+                    <p class="lg:w-2/3 text-md italic">
                         “Januárban kezdtük el az új irodánk felkutatását, melyre a PSG képviselőjét kértük fel. A
                         cél
                         egy presztízs iroda megtalálása volt budai lokációban. Közel egy tucat irodát tekintettünk
@@ -35,10 +35,10 @@
                         <strong>Szabó Péter, Centica Business Solutions Zrt.</strong>
                     </p>
                 </div>
-                <div class="flex flex-col md:flex-row gap-8 p-12">
+                <div class="flex flex-col lg:flex-row gap-8 p-12">
                     <img src="{{ Vite::asset('resources/images/aegon_logo_800x600.png') }}" alt=""
-                        class="w-1/3 h-fit object-contain rounded-lg mb-4 p-2 bg-white" />
-                    <p class="w-2/3 text-md italic">
+                        class="w-1/2 lg:w-1/3 h-fit object-contain rounded-lg mb-4 p-2 bg-white" />
+                    <p class="lg:w-2/3 text-md italic">
                         “Több mint 1 éves irodakeresési folyamatot tudtunk lezárni a PSG és azon belül is Fekete
                         Richárd
                         segítségével. Bár többször is úgy tűnt nem sikerült megtalálni a csapatunk számára a

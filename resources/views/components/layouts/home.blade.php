@@ -1,25 +1,26 @@
 <div class="overflow-hidden max-w-[2200px] mx-auto bg-white">
     <header>
-        <div class="top-bar relative hidden sm:block bg-primary text-white text-xl">
+        <div class="top-bar relative bg-primary text-white text-xl">
             <div class="absolute bg-accentdark/90 inset-0"></div>
-            <div class="relative z-10 container flex justify-center items-center mx-auto">
+            <div class="relative z-10 max-w-screen-xl flex justify-center items-center mx-auto">
                 <a href="tel:+36203813917"
-                    class="flex items-center px-6 py-6 bg-gradient-to-b from-accent/80 to-accent/60">
+                    class="flex items-center justify-center grow lg:grow-0 p-2 lg:px-6 lg:py-6 bg-gradient-to-b from-accent/80 to-accent/60">
                     +36 20 381 3917
                 </a>
-                <a href="mailto:info@psg-irodahazak.hu" class="flex items-center px-6 py-6 hover:bg-accent/80">
+                <a href="mailto:info@psg-irodahazak.hu" class=" hidden lg:flex items-center px-6 py-6 hover:bg-accent/80">
                     info@psg-irodahazak.hu
                 </a>
-                <a href="#" class="flex items-center px-6 py-6 hover:bg-accent/80">
+                <a href="#" class=" hidden lg:flex items-center px-6 py-6 hover:bg-accent/80">
                     online kapcsolatfelvétel
                 </a>
-                <a href="#" class="flex items-center px-6 py-6 hover:bg-accent/80">
+                <a href="#" class=" hidden lg:flex items-center px-6 py-6 hover:bg-accent/80">
                     bejelentkezés|regisztráció
                 </a>
             </div>
         </div>
         <div class="overflow-hidden relative">
-            <div class="flex flex-col sm:flex-row justify-around items-center gap-32 mx-auto py-16 max-w-screen-xl">
+            <div
+                class="flex flex-col sm:flex-row justify-around items-center gap-8 sm:gap-32 mx-auto py-8 sm:py-16 max-w-screen-xl">
                 <div class="absolute -left-56 -top-16 z-10 w-[40%] text-primary/15"><x-svg.psg-irodahazak-symbol />
                 </div>
                 <div class="logo">
@@ -28,7 +29,7 @@
                             class="mr-3 h-12 sm:h-24" alt="PSG Irodaházak logo" />
                     </a>
                 </div>
-                <div class="slogan flex items-end text-center text-3xl">
+                <div class="slogan flex items-end text-center text-2xl sm:text-3xl">
                     <h2>A teljes budapesti <br><strong>„A” kategóriás kiadó irodaház kínálat</strong> <br>egy helyen
                     </h2>
                 </div>
