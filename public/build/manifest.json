@@ -1,11 +1,11 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-AtE34SyH.js",
+    "file": "assets/app-CCbcPzif.js",
     "name": "app",
     "src": "resources/css/app.css",
     "isEntry": true,
     "css": [
-      "assets/app-CJY0RbGS.css"
+      "assets/app-AvSntp94.css"
     ]
   },
   "resources/images/12_pont_0_jpg.jpg": {
@@ -105,7 +105,7 @@
     "src": "resources/images/welsec_logo_800x600.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-B_k6Qf6c.js",
+    "file": "assets/app-iZ1Z_YdH.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
