@@ -482,7 +482,7 @@
 
 
 
-
+    @livewire('house-search')
 
 
 
