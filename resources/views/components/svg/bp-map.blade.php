@@ -1,5 +1,19 @@
 <svg xmlns="https://www.w3.org/2000/svg" version="1.1" viewBox="0 0 597.66 565.39"
     xmlns:xlink="https://www.w3.org/1999/xlink">
+    <defs>
+        <style>
+            .kerulet {
+                fill: rgba(111, 114, 185, 0.3);
+                stroke: #606060;
+                stroke-width: 1px;
+                transition: fill 0.3s ease;
+            }
+
+            .kerulet:hover {
+                fill: rgba(111, 114, 185, 0.1);
+            }
+        </style>
+    </defs>
 
 
     <g transform="translate(-89.78125,-203.891)">
