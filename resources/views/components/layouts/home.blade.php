@@ -1,6 +1,6 @@
 <div class="overflow-hidden max-w-[2200px] mx-auto bg-white">
     <header>
-        <div class="top-bar relative bg-primary text-white text-xl">
+        <div class="top-bar relative hidden sm:block bg-primary text-white text-xl">
             <div class="absolute bg-accentdark/90 inset-0"></div>
             <div class="relative z-10 container flex justify-center items-center mx-auto">
                 <a href="tel:+36203813917"
@@ -18,8 +18,8 @@
                 </a>
             </div>
         </div>
-        <div class="overflow-hidden relative ">
-            <div class="flex justify-around items-center gap-32 mx-auto py-24 max-w-screen-xl">
+        <div class="overflow-hidden relative">
+            <div class="flex flex-col sm:flex-row justify-around items-center gap-32 mx-auto py-24 max-w-screen-xl">
                 <div class="absolute -left-56 -top-16 z-10 w-[40%] text-primary/15"><x-svg.psg-irodahazak-symbol />
                 </div>
                 <div class="logo">
@@ -144,6 +144,8 @@
         </div>
     </div>
 
+    <x-layouts.szuro />
+
     <x-layouts.kiemelt-ajanlatok />
 
     <x-layouts.rolunk-mondtak />
@@ -160,6 +162,5 @@
 
 
     {{-- @livewire('house-search') --}}
-    <x-layouts.szuro />
 
 </div>
