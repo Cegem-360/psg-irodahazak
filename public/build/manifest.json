@@ -1,0 +1,112 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-ZHTAmQ8j.js",
+    "name": "app",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "css": [
+      "assets/app-BBykrR7P.css"
+    ]
+  },
+  "resources/images/12_pont_0_jpg.jpg": {
+    "file": "assets/12_pont_0_jpg-C5TNfYAE.jpg",
+    "src": "resources/images/12_pont_0_jpg.jpg"
+  },
+  "resources/images/aegon_logo_800x600.png": {
+    "file": "assets/aegon_logo_800x600-BnEmxMsL.png",
+    "src": "resources/images/aegon_logo_800x600.png"
+  },
+  "resources/images/ai-generated-8614999_1280.jpg": {
+    "file": "assets/ai-generated-8614999_1280-CcZpqDrz.jpg",
+    "src": "resources/images/ai-generated-8614999_1280.jpg"
+  },
+  "resources/images/aip_logo_800x600.jpg": {
+    "file": "assets/aip_logo_800x600-CN7C2BRg.jpg",
+    "src": "resources/images/aip_logo_800x600.jpg"
+  },
+  "resources/images/andrassy_palace_iroda_5__384x246.jpg": {
+    "file": "assets/andrassy_palace_iroda_5__384x246-MsF5UV-a.jpg",
+    "src": "resources/images/andrassy_palace_iroda_5__384x246.jpg"
+  },
+  "resources/images/arena_corner_irodahaz_1__384x246.jpg": {
+    "file": "assets/arena_corner_irodahaz_1__384x246-BLDHkoD_.jpg",
+    "src": "resources/images/arena_corner_irodahaz_1__384x246.jpg"
+  },
+  "resources/images/artera_800x600.jpg": {
+    "file": "assets/artera_800x600-DTCIrSnc.jpg",
+    "src": "resources/images/artera_800x600.jpg"
+  },
+  "resources/images/azonnali_szolgaltatott_irodak.webp": {
+    "file": "assets/azonnali_szolgaltatott_irodak-DrBU8mCq.webp",
+    "src": "resources/images/azonnali_szolgaltatott_irodak.webp"
+  },
+  "resources/images/bakerstreet_irodahaz_1__800x600.jpg": {
+    "file": "assets/bakerstreet_irodahaz_1__800x600-D9dzjevI.jpg",
+    "src": "resources/images/bakerstreet_irodahaz_1__800x600.jpg"
+  },
+  "resources/images/bank_center_1_2_3_4_5_384x246.jpg": {
+    "file": "assets/bank_center_1_2_3_4_5_384x246-BzKQXCoo.jpg",
+    "src": "resources/images/bank_center_1_2_3_4_5_384x246.jpg"
+  },
+  "resources/images/belvarosi_kiado_irodak.webp": {
+    "file": "assets/belvarosi_kiado_irodak-HWMIfXMC.webp",
+    "src": "resources/images/belvarosi_kiado_irodak.webp"
+  },
+  "resources/images/budai_kiado_irodak.webp": {
+    "file": "assets/budai_kiado_irodak-B1aInjwQ.webp",
+    "src": "resources/images/budai_kiado_irodak.webp"
+  },
+  "resources/images/centrica_800x600.png": {
+    "file": "assets/centrica_800x600-CsMXSgTg.png",
+    "src": "resources/images/centrica_800x600.png"
+  },
+  "resources/images/collabit_logo_800x600.png": {
+    "file": "assets/collabit_logo_800x600-CAH6dotu.png",
+    "src": "resources/images/collabit_logo_800x600.png"
+  },
+  "resources/images/conclave-mas-largo-1268_1200_800.webp": {
+    "file": "assets/conclave-mas-largo-1268_1200_800-DaiybDyR.webp",
+    "src": "resources/images/conclave-mas-largo-1268_1200_800.webp"
+  },
+  "resources/images/datapao_logo_800x600.png": {
+    "file": "assets/datapao_logo_800x600-Ce0pc8LT.png",
+    "src": "resources/images/datapao_logo_800x600.png"
+  },
+  "resources/images/finotive_logo_1_800x600.jpg": {
+    "file": "assets/finotive_logo_1_800x600-C-8hHe45.jpg",
+    "src": "resources/images/finotive_logo_1_800x600.jpg"
+  },
+  "resources/images/hirek_office_800x600.jpg": {
+    "file": "assets/hirek_office_800x600-BWuCOO7d.jpg",
+    "src": "resources/images/hirek_office_800x600.jpg"
+  },
+  "resources/images/home_office_800x600.png": {
+    "file": "assets/home_office_800x600-CBnLskb1.png",
+    "src": "resources/images/home_office_800x600.png"
+  },
+  "resources/images/psg-irodahazak-logo.png": {
+    "file": "assets/psg-irodahazak-logo-Ct32wOUi.png",
+    "src": "resources/images/psg-irodahazak-logo.png"
+  },
+  "resources/images/reflections-in-modern-dutch-design-architecture-2025-03-23-22-04-59-utc.webp": {
+    "file": "assets/reflections-in-modern-dutch-design-architecture-2025-03-23-22-04-59-utc-CHeEckbb.webp",
+    "src": "resources/images/reflections-in-modern-dutch-design-architecture-2025-03-23-22-04-59-utc.webp"
+  },
+  "resources/images/vaci_uti_kiado_irodak.webp": {
+    "file": "assets/vaci_uti_kiado_irodak-De27YJWi.webp",
+    "src": "resources/images/vaci_uti_kiado_irodak.webp"
+  },
+  "resources/images/welsec_logo_800x600.png": {
+    "file": "assets/welsec_logo_800x600-D1f66OJb.png",
+    "src": "resources/images/welsec_logo_800x600.png"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DR_61oPI.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "resources/css/app.css"
+    ]
+  }
+}
