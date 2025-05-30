@@ -3,14 +3,15 @@
     <defs>
         <style>
             .kerulet {
-                fill: rgba(111, 114, 185, 0.3);
+                fill: rgba(247, 144, 30, 0.3);
                 stroke: #606060;
                 stroke-width: 1px;
                 transition: fill 0.3s ease;
+                {{-- fill: rgba(111, 114, 185, 0.3); --}}
             }
 
             .kerulet:hover {
-                fill: rgba(111, 114, 185, 0.1);
+                fill: rgba(111, 114, 185, 0.4);
             }
         </style>
     </defs>
