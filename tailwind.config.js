@@ -13,9 +13,15 @@ export default {
         "./resources/views/**/*.blade.php",
         "./vendor/filament/**/*.blade.php",
     ],
-
+    
     theme: {
         extend: {
+            colors: {
+                primary: 'rgb(var(--color-primary))',
+                secondary: 'rgb(var(--color-secondary))',
+                accent: 'rgb(var(--color-accent))',
+                accentdark: 'hsl(var(--color-accentdark))',
+            },
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
             },
