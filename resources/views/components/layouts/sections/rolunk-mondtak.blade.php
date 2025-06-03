@@ -1,12 +1,12 @@
     <div class="rolunk-mondtak mt-12">
         <div class="relative">
             <h2
-                class="my-16 font-bold text-gray-500 text-5xl text-center drop-shadow bg-clip-text text-transparent bg-gradient-to-r from-indigo-950 to-violet-600">
+                class="my-16 font-bold text-gray-500 text-5xl text-center drop-shadow bg-clip-text text-transparent bg-gradient-to-r from-accentdark to-accent">
                 Rólunk mondták</h2>
-            <div class="absolute -right-8 -top-10 z-10 w-1/3 text-accent/60 blur-3xl">
+            <div class="absolute -right-8 -top-10 z-10 w-1/3 text-accent/30 blur-3xl">
                 <x-svg.psg-irodahazak-symbol-1 />
             </div>
-            <div class="absolute -left-8 -top-16 z-10 w-1/3 text-accent/60 blur-3xl">
+            <div class="absolute -left-8 -top-16 z-10 w-1/3 text-accent/30 blur-3xl">
                 <x-svg.psg-irodahazak-symbol-2 />
             </div>
             <div class="absolute left-[50%] -translate-x-[50%] -bottom-40 z-10 w-96 text-accent/30 blur-3xl">

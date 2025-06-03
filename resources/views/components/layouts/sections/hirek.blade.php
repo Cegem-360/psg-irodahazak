@@ -3,7 +3,7 @@
         <div class="max-w-screen-xl mx-auto px-4 py-16 space-y-8">
             <h2 class="">
                 <span
-                    class="bg-gradient-to-r from-accentdark to-indigo-800 text-white text-2xl font-bold py-2 px-6 rounded">HÍREK</span>
+                    class="bg-gradient-to-r from-accentdark to-accent text-white text-2xl font-bold py-2 px-6 rounded">HÍREK</span>
             </h2>
 
             <div class="grid grid-cols-1 gap-4 md:gap-8 max-w-screen-xl mx-auto">
@@ -17,7 +17,7 @@
                         <p class="text-gray-700">Az Atenor sikeresen eladta a teljesen bérbe adott irodai és
                             kiskereskedelmi fejlesztését, az újbudai BakerStreet I. irodaházat - közölte a társaság.</p>
                         <a href="#"
-                            class="inline-block mt-6 px-6 py-2 bg-primary text-white rounded hover:bg-accent/80 transition-colors">Teljes
+                            class="inline-block mt-6 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">Teljes
                             cikk</a>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                             HO-napok számát a következő 1-2 évben. A nemzetközi trendek már a hibrid munkavégzés
                             csökkenését mutatják.</p>
                         <a href="#"
-                            class="inline-block mt-6 px-6 py-2 bg-primary text-white rounded hover:bg-accent/80 transition-colors">Teljes
+                            class="inline-block mt-6 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">Teljes
                             cikk</a>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                             kereskedelmi ingatlanpiacon rekordalacsony szintre, 22%-ra csökkent - közölte a Bloomberg.
                         </p>
                         <a href="#"
-                            class="inline-block mt-6 px-6 py-2 bg-primary text-white rounded hover:bg-accent/80 transition-colors">Teljes
+                            class="inline-block mt-6 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">Teljes
                             cikk</a>
                     </div>
                 </div>

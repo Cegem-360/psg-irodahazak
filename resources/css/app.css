@@ -5,11 +5,16 @@
 
 :root {
     /* --primary: #0B82C6;
-    --secondary: #F7901E; */
+    --secondary: #F7901E;
+    --accent-lilas: rgb(111, 114, 185);
+    --accent-kekes1: rgb(73, 98, 140);
+    --accent-kekes2: hsl(218, 42%, 32%);
+    --accent-dark-lilas: hsl(238, 35%, 15%);
+    --accent-dark-kekes: hsl(216, 35%, 15%); */
     --color-primary: 11 130 198;
     --color-secondary: 247 144 30;
-    --color-accent: 111 114 185;
-    --color-accentdark: 238 35% 15%;
+    --color-accent: 218 42 32;
+    --color-accentdark: 216 35% 15%;
 }
 body {
   background-color: hsl(238, 35%, 10%);
@@ -53,4 +58,61 @@ body {
     --color-secondary: 111 114 185;
   }
 }
+
+
+
+
+/* Swipe styles */
+    .swiper-container {
+        width: 100%;
+        height: 400px;
+    }
+
+    .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swiper-slide img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: hsl(var(--color-accent))!important;
+    }
+
+    .swiper-pagination-bullet {
+        background: #000;
+        /* Change to your desired color */
+    }
+
+    .swiper-pagination-bullet-active {
+        background: #007aff;
+        /* Change to your desired active color */
+    }
+
+    .swiper-pagination {
+        bottom: 10px;
+        /* Adjust as needed */
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .swiper-button-next {
+        right: 10px;
+        /* Adjust as needed */
+    }
+
+    .swiper-button-prev {
+        left: 10px;
+        /* Adjust as needed */
+    }
 

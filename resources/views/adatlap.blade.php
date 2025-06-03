@@ -13,6 +13,6 @@
     <x-slot name="content">
     </x-slot>
     <div class="overflow-hidden max-w-[2200px] mx-auto bg-white">
-        <x-layouts.home />
+        <x-layouts.pages.adatlap-oldal />
     </div>
 </x-layouts.app>

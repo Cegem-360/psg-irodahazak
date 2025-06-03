@@ -19,7 +19,7 @@ export default {
             colors: {
                 primary: 'rgb(var(--color-primary))',
                 secondary: 'rgb(var(--color-secondary))',
-                accent: 'rgb(var(--color-accent))',
+                accent: 'hsl(var(--color-accent))',
                 accentdark: 'hsl(var(--color-accentdark))',
             },
             fontFamily: {

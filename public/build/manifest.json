@@ -1,12 +1,8 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-CCbcPzif.js",
-    "name": "app",
+    "file": "assets/app-DNd0Te-w.css",
     "src": "resources/css/app.css",
-    "isEntry": true,
-    "css": [
-      "assets/app-AvSntp94.css"
-    ]
+    "isEntry": true
   },
   "resources/images/12_pont_0_jpg.jpg": {
     "file": "assets/12_pont_0_jpg-C5TNfYAE.jpg",
@@ -80,6 +76,10 @@
     "file": "assets/finotive_logo_1_800x600-C-8hHe45.jpg",
     "src": "resources/images/finotive_logo_1_800x600.jpg"
   },
+  "resources/images/greening-2025-03-15-00-55-00-utc.webp": {
+    "file": "assets/greening-2025-03-15-00-55-00-utc-Dq2-l97-.webp",
+    "src": "resources/images/greening-2025-03-15-00-55-00-utc.webp"
+  },
   "resources/images/hirek_office_800x600.jpg": {
     "file": "assets/hirek_office_800x600-BWuCOO7d.jpg",
     "src": "resources/images/hirek_office_800x600.jpg"
@@ -87,6 +87,10 @@
   "resources/images/home_office_800x600.png": {
     "file": "assets/home_office_800x600-CBnLskb1.png",
     "src": "resources/images/home_office_800x600.png"
+  },
+  "resources/images/office-building-2025-03-18-12-43-13-utc.webp": {
+    "file": "assets/office-building-2025-03-18-12-43-13-utc-C3GtFy1K.webp",
+    "src": "resources/images/office-building-2025-03-18-12-43-13-utc.webp"
   },
   "resources/images/psg-irodahazak-logo.png": {
     "file": "assets/psg-irodahazak-logo-Ct32wOUi.png",
@@ -105,12 +109,13 @@
     "src": "resources/images/welsec_logo_800x600.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-iZ1Z_YdH.js",
+    "file": "assets/app-DRMC7M5n.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
-    "imports": [
-      "resources/css/app.css"
+    "css": [
+      "assets/app-CJ-KzOvo.css",
+      "assets/app-DNd0Te-w.css"
     ]
   }
 }

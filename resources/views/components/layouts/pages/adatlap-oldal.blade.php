@@ -5,20 +5,11 @@
     </header>
     <div class="relative">
         <x-layouts.header.nav />
-        <x-layouts.sections.kategoria-valaszto />
     </div>
 
-    <x-layouts.forms.szuro />
+    <x-layouts.sections.adatlap-details />
 
-    <x-layouts.sections.kiemelt-ajanlatok />
-
-    <x-layouts.sections.rolunk-mondtak />
-
-    <x-layouts.sections.referenciak />
-
-    <x-layouts.sections.blog />
-
-    <x-layouts.sections.hirek />
+    <x-layouts.sections.hasonlo-irodak />
 
     <x-layouts.sections.ajanlat />
 

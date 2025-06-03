@@ -2,7 +2,7 @@
     <div class="max-w-screen-xl mx-auto px-4 pt-6 pb-16 space-y-8">
         <h2 class="">
             <span
-                class="bg-gradient-to-r from-accentdark to-indigo-800 text-white text-2xl font-bold py-2 px-6 rounded">BLOG</span>
+                class="bg-gradient-to-r from-accentdark to-accent text-white text-2xl font-bold py-2 px-6 rounded">BLOG</span>
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto">
@@ -20,7 +20,7 @@
                         felnőttként még nem tűnhet fel, de évtizedekkel később megbosszulhatja magát a
                         rendszertelen munka. Tudósok most riadót fújnak, túl sok ember hal bele ebbe évente.</p>
                     <a href="#"
-                        class="inline-block mb-4 px-6 py-2 bg-primary text-white rounded hover:bg-accent/80 transition-colors">Teljes
+                        class="inline-block mb-4 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">Teljes
                         cikk</a>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                         Vatikánban, érdemes felidézni, hogy milyen megdöbbentő pápaválasztások voltak a
                         katolikus egyház történetében.</p>
                     <a href="#"
-                        class="inline-block mb-4 px-6 py-2 bg-primary text-white rounded hover:bg-accent/80 transition-colors">Teljes
+                        class="inline-block mb-4 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">Teljes
                         cikk</a>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                         magyarázat, először aláírásgyűjtő petícióként akarták elindítani. A 12 pont születésének
                         története.</p>
                     <a href="#"
-                        class="inline-block mb-4 px-6 py-2 bg-primary text-white rounded hover:bg-accent/80 transition-colors">Teljes
+                        class="inline-block mb-4 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">Teljes
                         cikk</a>
                 </div>
             </div>

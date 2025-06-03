@@ -1,6 +1,16 @@
+    <div class="relative">
+        <h2 class="text-4xl text-center mt-24 mb-8">Találja meg velünk vállalkozása <span class="text-primary">új
+                ideális</span> otthonát</h2>
+        <div class="absolute -right-8 -top-10 z-10 w-1/3 text-accent/40 blur-3xl"><x-svg.psg-irodahazak-symbol-1 />
+        </div>
+        <div class="absolute -left-8 -top-16 z-10 w-1/3 text-accent/30 blur-3xl"><x-svg.psg-irodahazak-symbol-2 /></div>
+        <div class="absolute left-[50%] -translate-x-[50%] -bottom-40 z-10 w-96 text-accent/30 blur-3xl">
+            <x-svg.psg-irodahazak-symbol-3 />
+        </div>
+    </div>
     <div class="relative bg-cover bg-center bg-no-repeat"
-        style="background-image: url({{ Vite::asset('resources/images/details-in-the-facade-of-modern-architecture-2025-03-23-22-01-52-utc.webp') }});">
-        <div class="absolute inset-0 z-1 bg-gradient-to-b from-white to-white/70"></div>
+        style="background-image: url({{ Vite::asset('resources/images/office-building-2025-03-18-12-43-13-utc.webp') }});">
+        <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto pt-12 pb-20">
             {{-- <h2
                 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow bg-clip-text text-transparent bg-gradient-to-r from-indigo-950 to-violet-600">
@@ -63,7 +73,7 @@
                     <!-- Keresés gomb -->
                     <div>
                         <button
-                            class="w-full bg-primary text-white font-semibold px-8 py-2 rounded hover:bg-accent/80 transition">
+                            class="w-full bg-primary/70 text-white font-semibold px-8 py-2 rounded hover:bg-accent/80 transition">
                             KERESÉS
                         </button>
                     </div>
