@@ -6,29 +6,16 @@ import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
 
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.swiper-container').forEach((el) => {
-    new Swiper(el, {
-      slidesPerView: 1,
-      spaceBetween: 10,
-      pagination: {
-        el: el.querySelector('.swiper-pagination'),
-        clickable: true,
-      },
-      navigation: {
-        nextEl: el.querySelector('.swiper-button-next'),
-        prevEl: el.querySelector('.swiper-button-prev'),
-      },
-      loop: true,
-    });
-  });
+
   const galleryCarouselSwiperThumbs = new Swiper(".gallery-carousel-swiper-thumbs", {
 
-        slidesPerView: 3,
-        grid: {
+        slidesPerView: 4,
+        /* grid: {
             fill: 'row',
-            rows: 8,
-        },
-        spaceBetween: 10,
+            rows: 2,
+        }, */
+        slideThumbActiveClass: 'swiper-slide-thumb-active',
+        spaceBetween: 12,
     });
 
     const galleryCarouselSwiper = new Swiper('.gallery-carousel-swiper', {
@@ -37,6 +24,10 @@ document.addEventListener('DOMContentLoaded', function () {
         loop: true,
         thumbs: {
             swiper: galleryCarouselSwiperThumbs,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
         },
     });
 
