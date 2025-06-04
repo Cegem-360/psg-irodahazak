@@ -223,7 +223,7 @@
             </div>
             <div class="space-y-4 p-4">
                 <div class="space-y-4">
-                    <h2 class="text-3xl">Szolgáltatások</h2>
+                    <h2 class="text-3xl">Jellemzők</h2>
                     <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
                         <li class="pb-1">24 órás recepció és biztonsági szolgálat</li>
                         <li class="pb-1">bérlői igényeknek megfelelő alaprajzi kialakítás</li>
@@ -239,7 +239,7 @@
                         <li class="pb-1">állatbarát épület</li>
                     </ul>
                 </div>
-                <div class="space-y-4">
+                {{-- <div class="space-y-4">
                     <h2 class="text-3xl">Műszaki paraméterek</h2>
                     <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
                         <li class="pb-1">4 csöves fan-coil légkondicionálás</li>
@@ -261,7 +261,7 @@
                         <li class="pb-1">BREEAM minősítés</li>
                         <li class="pb-1">WELL-being</li>
                     </ul>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
