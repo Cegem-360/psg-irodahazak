@@ -1,7 +1,6 @@
     <div class="rolunk-mondtak mt-12">
         <div class="relative">
-            <h2
-                class="my-16 font-bold text-gray-500 text-5xl text-center drop-shadow bg-clip-text text-transparent bg-gradient-to-r from-accentdark to-accent">
+            <h2 class="my-16 font-bold text-gray-500 text-5xl text-center drop-shadow text-logogray/80">
                 Rólunk mondták</h2>
             <div class="absolute -right-8 -top-10 z-10 w-1/3 text-accent/30 blur-3xl">
                 <x-svg.psg-irodahazak-symbol-1 />
@@ -18,7 +17,7 @@
                 <div class="flex flex-col lg:flex-row gap-8 p-12">
                     <img src="{{ Vite::asset('resources/images/centrica_800x600.png') }}" alt=""
                         class="w-1/2 lg:w-1/3 h-fit object-contain rounded-lg mb-4 p-2 bg-white" />
-                    <p class="lg:w-2/3 text-md italic">
+                    <p class="lg:w-2/3 text-md italic text-justify">
                         “Januárban kezdtük el az új irodánk felkutatását, melyre a PSG képviselőjét kértük fel. A
                         cél
                         egy presztízs iroda megtalálása volt budai lokációban. Közel egy tucat irodát tekintettünk
@@ -38,7 +37,7 @@
                 <div class="flex flex-col lg:flex-row gap-8 p-12">
                     <img src="{{ Vite::asset('resources/images/aegon_logo_800x600.png') }}" alt=""
                         class="w-1/2 lg:w-1/3 h-fit object-contain rounded-lg mb-4 p-2 bg-white" />
-                    <p class="lg:w-2/3 text-md italic">
+                    <p class="lg:w-2/3 text-md italic text-justify">
                         “Több mint 1 éves irodakeresési folyamatot tudtunk lezárni a PSG és azon belül is Fekete
                         Richárd
                         segítségével. Bár többször is úgy tűnt nem sikerült megtalálni a csapatunk számára a

@@ -22,33 +22,35 @@
             <ul
                 class="flex flex-col mt-4 font-bold lg:flex-row lg:mt-0 text-white text-xl text-nowrap bg-gradient-to-b from-black/30 to-black/5 border border-black/15 backdrop-blur-3xl shadow-lg rounded-md overflow-hidden">
                 <li>
-                    <a href="#" class="block py-4 px-8 bg-accent/60 drop-shadow" aria-current="page">Főoldal</a>
+                    <a href="#"
+                        class="active block py-4 px-8 hover:bg-primary/40 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]"
+                        aria-current="page">Főoldal</a>
                 </li>
                 <li>
                     <a href="#"
-                        class="block py-4 px-8 hover:bg-accent/60 active:bg-accent drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Kiadó
+                        class="block py-4 px-8 hover:bg-primary/40 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Kiadó
                         irodák</a>
                 </li>
                 <li>
                     <a href="#"
-                        class="block py-4 px-8 hover:bg-accent/60 active:bg-accent drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Eladó
+                        class="block py-4 px-8 hover:bg-primary/40 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Eladó
                         irodaházak</a>
                 </li>
                 <li>
                     <a href="#"
-                        class="block py-4 px-8 hover:bg-accent/60 active:bg-accent drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Hírek</a>
+                        class="block py-4 px-8 hover:bg-primary/40 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Hírek</a>
                 </li>
                 <li>
                     <a href="#"
-                        class="block py-4 px-8 hover:bg-accent/60 active:bg-accent drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Rólunk</a>
+                        class="block py-4 px-8 hover:bg-primary/40 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Rólunk</a>
                 </li>
                 <li>
                     <a href="#"
-                        class="block py-4 px-8 hover:bg-accent/60 active:bg-accent drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Blog</a>
+                        class="block py-4 px-8 hover:bg-primary/40 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Blog</a>
                 </li>
                 <li>
                     <a href="#"
-                        class="block py-4 px-8 hover:bg-accent/60 active:bg-accent drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Kapcsolat</a>
+                        class="block py-4 px-8 hover:bg-primary/40 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Kapcsolat</a>
                 </li>
             </ul>
         </div>

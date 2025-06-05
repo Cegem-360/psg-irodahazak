@@ -21,6 +21,7 @@ export default {
                 secondary: 'rgb(var(--color-secondary))',
                 accent: 'hsl(var(--color-accent))',
                 accentdark: 'hsl(var(--color-accentdark))',
+                logogray: 'rgb(var(--color-logogray))',
             },
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],

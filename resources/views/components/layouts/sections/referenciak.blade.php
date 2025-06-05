@@ -1,6 +1,5 @@
     <div class="referenciak my-12">
-        <h2
-            class="my-16 font-bold text-gray-500 text-5xl text-center drop-shadow bg-clip-text text-transparent bg-gradient-to-r from-accentdark to-accent">
+        <h2 class="my-16 font-bold text-gray-500 text-5xl text-center drop-shadow text-logogray/80">
             Referenciák, akik velünk költöztek</h2>
         <div class=" py-8 bg-[#EFEFEF]">
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-screen-xl mx-auto">

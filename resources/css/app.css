@@ -15,6 +15,7 @@
     --color-secondary: 247 144 30;
     --color-accent: 218 42 32;
     --color-accentdark: 216 35% 15%;
+    --color-logogray: 48 48 50;
 }
 body {
   background-color: hsl(238, 35%, 10%);
@@ -59,6 +60,11 @@ body {
   }
 }
 
+nav {
+    .active {
+        @apply bg-primary/40;
+    }
+}
 
 table {
     td {

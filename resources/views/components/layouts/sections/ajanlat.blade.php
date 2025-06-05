@@ -1,8 +1,10 @@
     <!-- Kerjen ajanlatot -->
     <div class="bg-gradient-to-r from-accentdark to-accent text-white py-10 text-center">
         <p class="text-lg md:text-3xl font-bold">
-            <a href="tel:+36203813917" class="">Kérjen ajánlatot most!
-                <span class="inline-block ml-4"><i class="fas fa-phone-alt"></i> +36 20 381 3917</span></a>
+            <a href="mailto:info@psg-irodahazak.hu"><x-svg.mail class="text-accent mr-2" /> Kérjen
+                ajánlatot most!</a>
+            <a href="tel:+36203813917">
+                <span class="inline-block ml-8"><x-svg.phone class="text-accent mr-2" /> +36 20 381 3917</span></a>
         </p>
     </div>
     <!-- Linklista -->

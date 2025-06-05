@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-BY2TjhNW.css",
+    "file": "assets/app-D60s0okg.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -100,22 +100,34 @@
     "file": "assets/reflections-in-modern-dutch-design-architecture-2025-03-23-22-04-59-utc-CHeEckbb.webp",
     "src": "resources/images/reflections-in-modern-dutch-design-architecture-2025-03-23-22-04-59-utc.webp"
   },
+  "resources/images/the-office-building-2025-04-02-15-55-34-utc.webp": {
+    "file": "assets/the-office-building-2025-04-02-15-55-34-utc-HgOPYWUs.webp",
+    "src": "resources/images/the-office-building-2025-04-02-15-55-34-utc.webp"
+  },
+  "resources/images/vaci-uti-irodak.webp": {
+    "file": "assets/vaci-uti-irodak-C6Exxh6E.webp",
+    "src": "resources/images/vaci-uti-irodak.webp"
+  },
   "resources/images/vaci_uti_kiado_irodak.webp": {
     "file": "assets/vaci_uti_kiado_irodak-De27YJWi.webp",
     "src": "resources/images/vaci_uti_kiado_irodak.webp"
+  },
+  "resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp": {
+    "file": "assets/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc-BcqXNL4N.webp",
+    "src": "resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp"
   },
   "resources/images/welsec_logo_800x600.png": {
     "file": "assets/welsec_logo_800x600-D1f66OJb.png",
     "src": "resources/images/welsec_logo_800x600.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-e1rCW4Y8.js",
+    "file": "assets/app-Bx7aK-gT.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
       "assets/app-CJ-KzOvo.css",
-      "assets/app-BY2TjhNW.css"
+      "assets/app-D60s0okg.css"
     ]
   }
 }

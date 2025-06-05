@@ -14,7 +14,8 @@
                     <div class="p-8 pt-10">
                         <h3 class="text-xl font-bold mb-2">Eladták az Újbuda szívében épült irodaházat</h3>
                         <p class="text-md italic text-primary my-2">2025.05.15</p>
-                        <p class="text-gray-700">Az Atenor sikeresen eladta a teljesen bérbe adott irodai és
+                        <p class="text-gray-700 text-justify">Az Atenor sikeresen eladta a teljesen bérbe adott irodai
+                            és
                             kiskereskedelmi fejlesztését, az újbudai BakerStreet I. irodaházat - közölte a társaság.</p>
                         <a href="#"
                             class="inline-block mt-6 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">Teljes
@@ -28,7 +29,8 @@
                     <div class="p-8 pt-10">
                         <h3 class="text-xl font-bold mb-2">Felmérés: Tetőzik a home office-arány hazánkban?</h3>
                         <p class="text-md italic text-primary my-2">2025.04.30</p>
-                        <p class="text-gray-700">Csúcsához közelít a home office-ban tölthető idő aránya a teljes
+                        <p class="text-gray-700 text-justify">Csúcsához közelít a home office-ban tölthető idő aránya a
+                            teljes
                             munkaidőn belül – ez derült ki az ICON által kezelt irodaépületek bérlőinek döntéshozói
                             körében készített felmérésből. Négy bérlőből három nem tervezi tovább növelni az eddigi
                             HO-napok számát a következő 1-2 évben. A nemzetközi trendek már a hibrid munkavégzés
@@ -45,7 +47,8 @@
                     <div class="p-8 pt-10">
                         <h3 class="text-xl font-bold mb-2">A tavalyi év volt az irodapiac mélypontja?</h3>
                         <p class="text-md italic text-primary my-2">2025.02.03</p>
-                        <p class="text-gray-700">Az európai irodapiac jelentős visszaesést mutatott 2024-ban, ami az
+                        <p class="text-gray-700 text-justify">Az európai irodapiac jelentős visszaesést mutatott
+                            2024-ban, ami az
                             elmúlt évek legalacsonyabb tranzakciós volumenét eredményezte. A befektetők óvatossága
                             mögött elsősorban a távmunka terjedése és az épületek fenntarthatósági korszerűsítésének
                             magas költségei állnak. Az MSCI adatai szerint az irodaházak részesedése az európai

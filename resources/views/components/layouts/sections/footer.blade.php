@@ -43,6 +43,11 @@
                         <li class="mb-4">
                             <a href="#" class="hover:underline ">Hírek</a>
                         </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">&nbsp;</h2>
+                    <ul class="text-gray-600">
                         <li class="mb-4">
                             <a href="#" class="hover:underline ">Rólunk</a>
                         </li>
