@@ -2,6 +2,11 @@ import './../css/app.css';
 
 import.meta.glob(["../images/**", "../fonts/**"]);
 
+import jQuery from 'jquery';
+window.$ = window.jQuery = jQuery;
+import 'ion-rangeslider';
+import 'ion-rangeslider/css/ion.rangeSlider.css';
+
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
 

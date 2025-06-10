@@ -52,22 +52,16 @@
                     <h3 class="text-lg mb-4">Szűrés paraméterek szerint</h3>
                     <div class="space-y-2">
                         <label class="text-sm font-semibold">Alapterület (m²)</label>
-                        <input type="range" min="0" max="3000" value="0"
-                            class="w-full accent-blue-600">
-                        <div class="flex justify-between text-sm">
-                            <span>0</span>
-                            <span>3000+</span>
-                        </div>
+                        <input type="text" class="terulet-slider" name="terulet_range" value=""
+                            data-type="double" data-min="0" data-max="3000" data-from="0" data-to="3000"
+                            data-grid="true" data-skin="round" data-postfix="&nbsp;m²" />
                     </div>
 
                     <div class="space-y-2">
                         <label class="text-sm font-semibold">Bérleti díj (€/m²)</label>
-                        <input type="range" min="1" max="30" value="1"
-                            class="w-full accent-blue-600">
-                        <div class="flex justify-between text-sm">
-                            <span>1</span>
-                            <span>30+</span>
-                        </div>
+                        <input type="text" class="ar-slider" name="ar_range" value="" data-type="double"
+                            data-min="1" data-max="30" data-from="1" data-to="30" data-grid="true"
+                            data-skin="round" data-postfix="&nbsp;€/m²" />
                     </div>
 
                     <!-- Keresés gomb -->
@@ -81,4 +75,11 @@
 
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Initialize the range slider
+                $('.terulet-slider').ionRangeSlider();
+                $('.ar-slider').ionRangeSlider();
+            });
+        </script>
     </div>

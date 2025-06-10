@@ -143,3 +143,14 @@ table {
         left: 10px;
     }
 
+.irs-from, .irs-to, .irs-single {
+    background-color: rgb(var(--color-primary))!important;
+    font-weight: bold;
+}
+.irs-handle {
+    border-color: rgb(var(--color-primary))!important;
+}
+.irs-bar {
+    background-color: rgb(var(--color-primary))!important;
+}
+
