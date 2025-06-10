@@ -225,17 +225,17 @@
                     <h2 class="text-3xl">Jellemzők</h2>
                     <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
                         <li class="pb-1">24 órás recepció és biztonsági szolgálat</li>
-                        <li class="pb-1">bérlői igényeknek megfelelő alaprajzi kialakítás</li>
-                        <li class="pb-1">étterem</li>
-                        <li class="pb-1">tárgyaló bérlés lehetősége</li>
-                        <li class="pb-1">raktár bérlési lehetőség</li>
-                        <li class="pb-1">konferenciaterem bérlés lehetősége</li>
-                        <li class="pb-1">cégtábla kihelyezési lehetőség</li>
-                        <li class="pb-1">kávézó</li>
-                        <li class="pb-1">zuhanyzó, öltöző a kerékpárosoknak</li>
-                        <li class="pb-1">elektromos autó töltő</li>
-                        <li class="pb-1">Concierge szolgáltatások</li>
                         <li class="pb-1">állatbarát épület</li>
+                        <li class="pb-1">bérlői igényeknek megfelelő alaprajzi kialakítás</li>
+                        <li class="pb-1">cégtábla kihelyezési lehetőség</li>
+                        <li class="pb-1">Concierge szolgáltatások</li>
+                        <li class="pb-1">elektromos autó töltő</li>
+                        <li class="pb-1">étterem</li>
+                        <li class="pb-1">kávézó</li>
+                        <li class="pb-1">konferenciaterem bérlés lehetősége</li>
+                        <li class="pb-1">raktár bérlési lehetőség</li>
+                        <li class="pb-1">tárgyaló bérlés lehetősége</li>
+                        <li class="pb-1">zuhanyzó, öltöző a kerékpárosoknak</li>
                     </ul>
                 </div>
                 {{-- <div class="space-y-4">

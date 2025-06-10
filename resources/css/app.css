@@ -62,7 +62,7 @@ body {
 
 nav {
     .active {
-        @apply bg-primary/40;
+        @apply bg-primary/80;
     }
 }
 
@@ -144,13 +144,17 @@ table {
     }
 
 .irs-from, .irs-to, .irs-single {
-    background-color: rgb(var(--color-primary))!important;
-    font-weight: bold;
+    @apply !bg-primary/80 !font-bold;
 }
 .irs-handle {
-    border-color: rgb(var(--color-primary))!important;
+    @apply !border-primary/80;
 }
 .irs-bar {
-    background-color: rgb(var(--color-primary))!important;
+    @apply !bg-primary/80;
 }
 
+.lang {
+    .active {
+        @apply underline;
+    }
+}

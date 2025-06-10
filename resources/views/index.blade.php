@@ -13,6 +13,13 @@
     <x-slot name="content">
     </x-slot>
     <div class="overflow-hidden max-w-[2200px] mx-auto bg-white">
-        <x-layouts.home />
+        @if (request()->routeIs('home'))
+            <x-layouts.home />
+        @elseif (request()->routeIs('adatlap-oldal'))
+            <x-layouts.pages.adatlap-oldal />
+        @elseif (request()->routeIs('kiado-irodak'))
+            <x-layouts.pages.kiado-irodak />
+        @endif
+
     </div>
 </x-layouts.app>
