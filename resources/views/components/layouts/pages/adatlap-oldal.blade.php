@@ -16,6 +16,4 @@
     <x-layouts.sections.footer />
 
 
-    {{-- @livewire('house-search') --}}
-
 </div>

@@ -16,7 +16,8 @@
                 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow bg-clip-text text-transparent bg-gradient-to-r from-indigo-950 to-violet-600">
                 Kereső</h2> --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-screen-xl mx-auto">
-                <div class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl">
+                <div
+                    class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/10">
                     <!-- Térkép -->
                     <h3 class="text-lg mb-4">Térképes keresés</h3>
                     <x-svg.bp-map class="h-96" />
@@ -26,7 +27,8 @@
                     </label>
                 </div>
 
-                <div class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl">
+                <div
+                    class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/10">
                     <!-- Keresőmezők -->
                     <h3 class="text-lg mb-4">Keresési feltételek</h3>
                     <select class="w-full border border-gray-300 rounded-xl px-4 py-2">
@@ -47,7 +49,8 @@
                         class="w-full border border-gray-300 rounded-xl px-4 py-2">
                 </div>
 
-                <div class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl">
+                <div
+                    class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/10">
                     <!-- Range szűrők -->
                     <h3 class="text-lg mb-4">Szűrés paraméterek szerint</h3>
                     <div class="space-y-2">

@@ -45,9 +45,15 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @foreach ($images as $image)
                         <x-layouts.cards.ingatlan-card image="{{ $image }}" small title="Academia Irodaház"
-                            :description="'1061 Budapest, Andrássy út 9.<br><strong>Bérleti díj:</strong> 16 - 17 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2990 HUF/m2/hó'" link="/kiado-irodak/academia-irodahaz" />
+                            :description="'1061 Budapest, Andrássy út 9.<br><strong>Bérleti díj:</strong> 16 - 17 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2990 HUF/m2/hó'" link="/adatlap-oldal/" />
                     @endforeach
                 </div>
+            </div>
+
+            <div
+                class="flex justify-center gap-8 max-w-screen-xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+                {{-- Pagination --}}
+                <x-layouts.forms.pagination />
             </div>
     </div>
 </div>

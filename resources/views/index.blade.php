@@ -19,6 +19,12 @@
             <x-layouts.pages.adatlap-oldal />
         @elseif (request()->routeIs('kiado-irodak'))
             <x-layouts.pages.kiado-irodak />
+        @elseif (request()->routeIs('hirek'))
+            <x-layouts.pages.hirek />
+        @elseif (request()->routeIs('rolunk'))
+            <x-layouts.pages.rolunk />
+        @elseif (request()->routeIs('kapcsolat'))
+            <x-layouts.pages.kapcsolat />
         @endif
 
     </div>

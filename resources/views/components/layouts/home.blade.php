@@ -8,6 +8,8 @@
         <x-layouts.sections.kategoria-valaszto />
     </div>
 
+    <x-layouts.sections.bizalomerosito />
+
     <x-layouts.forms.szuro />
 
     <x-layouts.sections.kiemelt-ajanlatok />
@@ -16,9 +18,9 @@
 
     <x-layouts.sections.referenciak />
 
-    <x-layouts.sections.blog />
+    <x-layouts.sections.blog-section />
 
-    <x-layouts.sections.hirek />
+    <x-layouts.sections.hirek-section />
 
     <x-layouts.sections.ajanlat />
 

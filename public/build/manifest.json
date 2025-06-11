@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-BodhCD09.css",
+    "file": "assets/app-u1YAyJYw.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -32,6 +32,10 @@
     "file": "assets/artera_800x600-DTCIrSnc.jpg",
     "src": "resources/images/artera_800x600.jpg"
   },
+  "resources/images/azonnali_szolgaltatott_irodak-2.webp": {
+    "file": "assets/azonnali_szolgaltatott_irodak-2-v8VLIFmH.webp",
+    "src": "resources/images/azonnali_szolgaltatott_irodak-2.webp"
+  },
   "resources/images/azonnali_szolgaltatott_irodak.webp": {
     "file": "assets/azonnali_szolgaltatott_irodak-DrBU8mCq.webp",
     "src": "resources/images/azonnali_szolgaltatott_irodak.webp"
@@ -43,6 +47,10 @@
   "resources/images/bank_center_1_2_3_4_5_384x246.jpg": {
     "file": "assets/bank_center_1_2_3_4_5_384x246-BzKQXCoo.jpg",
     "src": "resources/images/bank_center_1_2_3_4_5_384x246.jpg"
+  },
+  "resources/images/belvarosi_kiado_irodak-2.webp": {
+    "file": "assets/belvarosi_kiado_irodak-2-DNWTrQ4V.webp",
+    "src": "resources/images/belvarosi_kiado_irodak-2.webp"
   },
   "resources/images/belvarosi_kiado_irodak.webp": {
     "file": "assets/belvarosi_kiado_irodak-HWMIfXMC.webp",
@@ -88,6 +96,10 @@
     "file": "assets/home_office_800x600-CBnLskb1.png",
     "src": "resources/images/home_office_800x600.png"
   },
+  "resources/images/kapcsolat.jpg": {
+    "file": "assets/kapcsolat-CJpzeMla.jpg",
+    "src": "resources/images/kapcsolat.jpg"
+  },
   "resources/images/office-building-2025-03-18-12-43-13-utc.webp": {
     "file": "assets/office-building-2025-03-18-12-43-13-utc-C3GtFy1K.webp",
     "src": "resources/images/office-building-2025-03-18-12-43-13-utc.webp"
@@ -121,13 +133,13 @@
     "src": "resources/images/welsec_logo_800x600.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-Cd0EnQC0.js",
+    "file": "assets/app-DMbFLVSq.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
       "assets/app-CH_R9frQ.css",
-      "assets/app-BodhCD09.css"
+      "assets/app-u1YAyJYw.css"
     ]
   }
 }

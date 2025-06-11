@@ -1,5 +1,5 @@
 <nav
-    class="fixed lg:absolute lg:-top-0 lg:left-[50%] lg:-translate-x-[50%] lg:-translate-y-[50%] z-10 bg-white lg:bg-transparent px-4 lg:px-0 py-2.5">
+    class="fixed lg:absolute lg:-top-0 lg:left-[50%] lg:-translate-x-[50%] lg:-translate-y-[50%] z-50 bg-white lg:bg-transparent px-4 lg:px-0 py-2.5">
     <div class="flex flex-wrap justify-center items-center mx-auto">
         <div class="flex items-center lg:order-2">
             <button data-collapse-toggle="mobile-menu-2" type="button"
@@ -27,30 +27,34 @@
                         aria-current="page">Főoldal</a>
                 </li>
                 <li>
-                    <a href="/kiado-irodak"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Kiadó
-                        irodák</a>
+                    <a href="/kiado-irodak/"
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+                        Kiadó irodák</a>
                 </li>
                 <li>
                     <a href="#"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Eladó
-                        irodaházak</a>
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+                        Eladó irodaházak</a>
+                </li>
+                <li>
+                    <a href="/hirek/"
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+                        Hírek</a>
+                </li>
+                <li>
+                    <a href="/rolunk/"
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+                        Rólunk</a>
                 </li>
                 <li>
                     <a href="#"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Hírek</a>
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+                        Blog</a>
                 </li>
                 <li>
-                    <a href="#"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Rólunk</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Blog</a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">Kapcsolat</a>
+                    <a href="/kapcsolat/"
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+                        Kapcsolat</a>
                 </li>
             </ul>
         </div>
