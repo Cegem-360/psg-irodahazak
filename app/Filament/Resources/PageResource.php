@@ -1,29 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\PageResource\Pages\ListPages;
+use App\Filament\Imports\PageImporter;
 use App\Filament\Resources\PageResource\Pages\CreatePage;
 use App\Filament\Resources\PageResource\Pages\EditPage;
-use App\Filament\Resources\PageResource\Pages;
-use App\Filament\Resources\PageResource\RelationManagers;
+use App\Filament\Resources\PageResource\Pages\ListPages;
 use App\Models\Page;
-use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ImportAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PageResource extends Resource
+final class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 
@@ -115,6 +113,9 @@ class PageResource extends Resource
             ])
             ->actions([
                 EditAction::make(),
+            ])
+            ->headerActions([
+                ImportAction::make()->importer(PageImporter::class),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

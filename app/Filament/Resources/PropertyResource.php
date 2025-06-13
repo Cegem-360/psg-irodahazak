@@ -2,26 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\PropertyResource\Pages\ListProperties;
+use App\Filament\Exports\PropertyExporter;
+use App\Filament\Imports\PropertyImporter;
 use App\Filament\Resources\PropertyResource\Pages\CreateProperty;
 use App\Filament\Resources\PropertyResource\Pages\EditProperty;
-use App\Filament\Resources\PropertyResource\Pages;
-use App\Filament\Resources\PropertyResource\RelationManagers;
+use App\Filament\Resources\PropertyResource\Pages\ListProperties;
 use App\Models\Property;
-use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ImportAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PropertyResource extends Resource
 {
@@ -43,6 +41,9 @@ class PropertyResource extends Resource
                     ->columnSpanFull(),
                 DateTimePicker::make('date')
                     ->required(),
+                TextInput::make('ord')
+                    ->numeric()
+                    ->default(0),
                 TextInput::make('meta_title')
                     ->maxLength(255),
                 Textarea::make('meta_title_en')
@@ -99,7 +100,15 @@ class PropertyResource extends Resource
                     ->maxLength(255),
                 TextInput::make('azonosito')
                     ->maxLength(255),
+                TextInput::make('min._kiado')
+                    ->maxLength(255),
+                TextInput::make('min._berleti_dij')
+                    ->maxLength(255),
+                TextInput::make('min._berleti_idoszak')
+                    ->maxLength(255),
                 TextInput::make('osszterulet_addons')
+                    ->maxLength(255),
+                TextInput::make('min._berleti_dij_addons')
                     ->maxLength(255),
                 TextInput::make('max_berleti_dij_addons')
                     ->maxLength(255),
@@ -123,7 +132,11 @@ class PropertyResource extends Resource
                     ->maxLength(255),
                 TextInput::make('max_parkolas_dija_addons')
                     ->maxLength(255),
+                TextInput::make('min._kiado_addons')
+                    ->maxLength(255),
                 TextInput::make('kozos_teruleti_arany_addons')
+                    ->maxLength(255),
+                TextInput::make('min._berleti_idoszak_addons')
                     ->maxLength(255),
                 TextInput::make('min_kiado')
                     ->maxLength(255),
@@ -168,16 +181,15 @@ class PropertyResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('title')
                     ->searchable(),
                 TextColumn::make('status')
                     ->searchable(),
                 TextColumn::make('date')
                     ->dateTime()
+                    ->sortable(),
+                TextColumn::make('ord')
+                    ->numeric()
                     ->sortable(),
                 TextColumn::make('meta_title')
                     ->searchable(),
@@ -221,7 +233,15 @@ class PropertyResource extends Resource
                     ->searchable(),
                 TextColumn::make('azonosito')
                     ->searchable(),
+                TextColumn::make('min._kiado')
+                    ->searchable(),
+                TextColumn::make('min._berleti_dij')
+                    ->searchable(),
+                TextColumn::make('min._berleti_idoszak')
+                    ->searchable(),
                 TextColumn::make('osszterulet_addons')
+                    ->searchable(),
+                TextColumn::make('min._berleti_dij_addons')
                     ->searchable(),
                 TextColumn::make('max_berleti_dij_addons')
                     ->searchable(),
@@ -245,7 +265,11 @@ class PropertyResource extends Resource
                     ->searchable(),
                 TextColumn::make('max_parkolas_dija_addons')
                     ->searchable(),
+                TextColumn::make('min._kiado_addons')
+                    ->searchable(),
                 TextColumn::make('kozos_teruleti_arany_addons')
+                    ->searchable(),
+                TextColumn::make('min._berleti_idoszak_addons')
                     ->searchable(),
                 TextColumn::make('min_kiado')
                     ->searchable(),
@@ -285,6 +309,12 @@ class PropertyResource extends Resource
             ])
             ->actions([
                 EditAction::make(),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(PropertyExporter::class),
+                ImportAction::make()
+                    ->importer(PropertyImporter::class),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
