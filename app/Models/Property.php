@@ -10,13 +10,13 @@ final class Property extends Model
 {
     protected $guarded = [];
 
-    protected $table = 'properties';
+    protected $table = 'property';
 
     protected function casts(): array
     {
         return [
-            'cimke_json' => 'array',
-            'service_json' => 'array',
+            'cimke_json' => 'json',
+            'service_json' => 'json',
         ];
     }
 }
