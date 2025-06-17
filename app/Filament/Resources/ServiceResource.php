@@ -32,9 +32,6 @@ final class ServiceResource extends Resource
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('ord')
-                    ->numeric()
-                    ->default(0),
             ]);
     }
 
@@ -46,14 +43,8 @@ final class ServiceResource extends Resource
                     ->label('ID')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('date')
-                    ->dateTime()
-                    ->sortable(),
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('ord')
-                    ->numeric()
-                    ->sortable(),
             ])
             ->filters([
                 //

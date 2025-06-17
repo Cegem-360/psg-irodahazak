@@ -4,19 +4,41 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 final class Property extends Model
 {
     protected $guarded = [];
 
-    protected $table = 'property';
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
+
+    #[Scope]
+    protected function active(Builder $query): void
+    {
+        $query->where('status', 'active');
+    }
+
+    #[Scope]
+    protected function inactive(Builder $query): void
+    {
+        $query->where('status', 'inactive');
+    }
 
     protected function casts(): array
     {
         return [
-            'cimke_json' => 'json',
-            'service_json' => 'json',
+            'tags' => 'array',
+            'services' => 'array',
         ];
     }
 }

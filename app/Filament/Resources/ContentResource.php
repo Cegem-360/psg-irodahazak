@@ -1,29 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\ContentResource\Pages\ListContents;
 use App\Filament\Resources\ContentResource\Pages\CreateContent;
 use App\Filament\Resources\ContentResource\Pages\EditContent;
-use App\Filament\Resources\ContentResource\Pages;
-use App\Filament\Resources\ContentResource\RelationManagers;
+use App\Filament\Resources\ContentResource\Pages\ListContents;
 use App\Models\Content;
-use Filament\Forms;
+use App\Models\Tag;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ContentResource extends Resource
+final class ContentResource extends Resource
 {
     protected static ?string $model = Content::class;
 
@@ -37,11 +35,10 @@ class ContentResource extends Resource
                     ->maxLength(255),
                 TextInput::make('status')
                     ->maxLength(255),
-                Textarea::make('lead')
+                RichEditor::make('lead')
                     ->columnSpanFull(),
-                Textarea::make('content')
+                RichEditor::make('content')
                     ->columnSpanFull(),
-                DateTimePicker::make('date'),
                 TextInput::make('ord')
                     ->numeric()
                     ->default(0),
@@ -54,7 +51,8 @@ class ContentResource extends Resource
                 TextInput::make('lang')
                     ->maxLength(2)
                     ->default('HU'),
-                Textarea::make('cimke_json')
+                Select::make('tags')
+                    ->options(Tag::all()->pluck('name', 'id'))
                     ->columnSpanFull(),
                 TextInput::make('lead_pic')
                     ->maxLength(255),
@@ -84,9 +82,6 @@ class ContentResource extends Resource
                     ->searchable(),
                 TextColumn::make('status')
                     ->searchable(),
-                TextColumn::make('date')
-                    ->dateTime()
-                    ->sortable(),
                 TextColumn::make('ord')
                     ->numeric()
                     ->sortable(),

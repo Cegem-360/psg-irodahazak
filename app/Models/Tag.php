@@ -6,9 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class Service extends Model
+final class Tag extends Model
 {
-    protected $guarded = [];
-
     protected $fillable = ['name'];
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Exports\PropertyExporter;
@@ -8,7 +10,10 @@ use App\Filament\Resources\PropertyResource\Pages\CreateProperty;
 use App\Filament\Resources\PropertyResource\Pages\EditProperty;
 use App\Filament\Resources\PropertyResource\Pages\ListProperties;
 use App\Models\Property;
+use App\Models\Service;
+use App\Models\Tag;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -21,7 +26,7 @@ use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class PropertyResource extends Resource
+final class PropertyResource extends Resource
 {
     protected static ?string $model = Property::class;
 
@@ -56,15 +61,11 @@ class PropertyResource extends Resource
                     ->columnSpanFull(),
                 Textarea::make('meta_description_en')
                     ->columnSpanFull(),
-                TextInput::make('epites_eve')
+                TextInput::make('construction_year')
                     ->maxLength(255),
-                TextInput::make('osszterulet')
+                TextInput::make('total_area')
                     ->maxLength(255),
                 TextInput::make('jelenleg_kiado')
-                    ->maxLength(255),
-                TextInput::make('min__kiado')
-                    ->maxLength(255),
-                TextInput::make('min__berleti_dij')
                     ->maxLength(255),
                 TextInput::make('max_berleti_dij')
                     ->maxLength(255),
@@ -80,8 +81,6 @@ class PropertyResource extends Resource
                     ->maxLength(255),
                 TextInput::make('kozos_teruleti_arany')
                     ->maxLength(255),
-                TextInput::make('min__berleti_idoszak')
-                    ->maxLength(255),
                 TextInput::make('cim_irsz')
                     ->maxLength(255),
                 TextInput::make('cim_varos')
@@ -90,25 +89,21 @@ class PropertyResource extends Resource
                     ->maxLength(255),
                 TextInput::make('cim_hazszam')
                     ->maxLength(255),
-                Textarea::make('cimke_json')
-                    ->columnSpanFull(),
-                Textarea::make('service_json')
-                    ->columnSpanFull(),
+                Select::make('tags')
+                    ->options(Tag::all()->pluck('name', 'id'))
+                    ->preload()
+                    ->multiple(),
+                Select::make('services')
+                    ->options(Service::all()->pluck('name', 'id'))
+                    ->preload()
+                    ->multiple(),
                 TextInput::make('maps_lat')
                     ->maxLength(255),
                 TextInput::make('maps_lng')
                     ->maxLength(255),
                 TextInput::make('azonosito')
                     ->maxLength(255),
-                TextInput::make('min._kiado')
-                    ->maxLength(255),
-                TextInput::make('min._berleti_dij')
-                    ->maxLength(255),
-                TextInput::make('min._berleti_idoszak')
-                    ->maxLength(255),
                 TextInput::make('osszterulet_addons')
-                    ->maxLength(255),
-                TextInput::make('min._berleti_dij_addons')
                     ->maxLength(255),
                 TextInput::make('max_berleti_dij_addons')
                     ->maxLength(255),
@@ -132,11 +127,7 @@ class PropertyResource extends Resource
                     ->maxLength(255),
                 TextInput::make('max_parkolas_dija_addons')
                     ->maxLength(255),
-                TextInput::make('min._kiado_addons')
-                    ->maxLength(255),
                 TextInput::make('kozos_teruleti_arany_addons')
-                    ->maxLength(255),
-                TextInput::make('min._berleti_idoszak_addons')
                     ->maxLength(255),
                 TextInput::make('min_kiado')
                     ->maxLength(255),
@@ -162,14 +153,12 @@ class PropertyResource extends Resource
                     ->maxLength(255),
                 TextInput::make('maps')
                     ->maxLength(255),
-                TextInput::make('elado_v__kiado')
+                TextInput::make('elado_v_kiado')
                     ->maxLength(255),
-                TextInput::make('elado_v__kiado_addons')
+                TextInput::make('elado_v_kiado_addons')
                     ->maxLength(255),
                 TextInput::make('updated')
                     ->maxLength(10),
-                TextInput::make('test')
-                    ->maxLength(255),
                 Textarea::make('egyeb')
                     ->columnSpanFull(),
                 TextInput::make('afa')
@@ -185,23 +174,13 @@ class PropertyResource extends Resource
                     ->searchable(),
                 TextColumn::make('status')
                     ->searchable(),
-                TextColumn::make('date')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('ord')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('meta_title')
                     ->searchable(),
-                TextColumn::make('epites_eve')
+                TextColumn::make('construction_year')
                     ->searchable(),
-                TextColumn::make('osszterulet')
+                TextColumn::make('total_area')
                     ->searchable(),
                 TextColumn::make('jelenleg_kiado')
-                    ->searchable(),
-                TextColumn::make('min__kiado')
-                    ->searchable(),
-                TextColumn::make('min__berleti_dij')
                     ->searchable(),
                 TextColumn::make('max_berleti_dij')
                     ->searchable(),
@@ -217,8 +196,6 @@ class PropertyResource extends Resource
                     ->searchable(),
                 TextColumn::make('kozos_teruleti_arany')
                     ->searchable(),
-                TextColumn::make('min__berleti_idoszak')
-                    ->searchable(),
                 TextColumn::make('cim_irsz')
                     ->searchable(),
                 TextColumn::make('cim_varos')
@@ -233,15 +210,7 @@ class PropertyResource extends Resource
                     ->searchable(),
                 TextColumn::make('azonosito')
                     ->searchable(),
-                TextColumn::make('min._kiado')
-                    ->searchable(),
-                TextColumn::make('min._berleti_dij')
-                    ->searchable(),
-                TextColumn::make('min._berleti_idoszak')
-                    ->searchable(),
                 TextColumn::make('osszterulet_addons')
-                    ->searchable(),
-                TextColumn::make('min._berleti_dij_addons')
                     ->searchable(),
                 TextColumn::make('max_berleti_dij_addons')
                     ->searchable(),
@@ -265,11 +234,7 @@ class PropertyResource extends Resource
                     ->searchable(),
                 TextColumn::make('max_parkolas_dija_addons')
                     ->searchable(),
-                TextColumn::make('min._kiado_addons')
-                    ->searchable(),
                 TextColumn::make('kozos_teruleti_arany_addons')
-                    ->searchable(),
-                TextColumn::make('min._berleti_idoszak_addons')
                     ->searchable(),
                 TextColumn::make('min_kiado')
                     ->searchable(),
@@ -293,13 +258,9 @@ class PropertyResource extends Resource
                     ->searchable(),
                 TextColumn::make('maps')
                     ->searchable(),
-                TextColumn::make('elado_v__kiado')
+                TextColumn::make('elado_v_kiado')
                     ->searchable(),
-                TextColumn::make('elado_v__kiado_addons')
-                    ->searchable(),
-                TextColumn::make('updated')
-                    ->searchable(),
-                TextColumn::make('test')
+                TextColumn::make('elado_v_kiado_addons')
                     ->searchable(),
                 TextColumn::make('afa')
                     ->searchable(),
@@ -310,16 +271,20 @@ class PropertyResource extends Resource
             ->actions([
                 EditAction::make(),
             ])
-            ->headerActions([
-                ExportAction::make()
-                    ->exporter(PropertyExporter::class),
-                ImportAction::make()
-                    ->importer(PropertyImporter::class),
-            ])
             ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
+            ])
+            ->headerActions([
+                ExportAction::make('export')
+                    ->label('Export Properties')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->exporter(PropertyExporter::class),
+                ImportAction::make('import')
+                    ->label('Import Properties')
+                    ->icon('heroicon-o-arrow-up-tray')
+                    ->importer(PropertyImporter::class),
             ]);
     }
 

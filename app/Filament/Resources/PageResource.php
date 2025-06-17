@@ -9,7 +9,6 @@ use App\Filament\Resources\PageResource\Pages\CreatePage;
 use App\Filament\Resources\PageResource\Pages\EditPage;
 use App\Filament\Resources\PageResource\Pages\ListPages;
 use App\Models\Page;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -48,12 +47,9 @@ final class PageResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(0),
-                TextInput::make('need_login')
-                    ->maxLength(25),
                 TextInput::make('show_menu')
                     ->numeric()
                     ->default(0),
-                DateTimePicker::make('date'),
                 TextInput::make('type')
                     ->maxLength(100),
                 Textarea::make('content_json')
@@ -89,13 +85,8 @@ final class PageResource extends Resource
                 TextColumn::make('parent_id')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('need_login')
-                    ->searchable(),
                 TextColumn::make('show_menu')
                     ->numeric()
-                    ->sortable(),
-                TextColumn::make('date')
-                    ->dateTime()
                     ->sortable(),
                 TextColumn::make('type')
                     ->searchable(),
