@@ -1,34 +1,21 @@
 <div>
-    @php
-        // Get the images ftom storage/app/public/ingatlan/gallery
-        $images = [
-            Storage::url('ingatlan/gallery/akademia_business_center_1__1_800x600.webp'),
-            Storage::url('ingatlan/gallery/academia_irodahaz_800x600.webp'),
-            Storage::url('ingatlan/gallery/academia_irodahaz_1__800x600.webp'),
-            Storage::url('ingatlan/gallery/academia_irodahaz_5__1_800x600.webp'),
-            Storage::url('ingatlan/gallery/academia_irodahaz_6__1_800x600.webp'),
-            Storage::url('ingatlan/gallery/academia_irodahaz_3__800x600.webp'),
-        ];
-    @endphp
-
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
             <h2 class="mt-4 mb-4 font-bold text-5xl text-center drop-shadow text-logogray/80">
                 Kiadó irodák</h2>
-            <h4 class="text-xl text-center mb-16">(238 találat)</h2>
+            <h4 class="text-xl text-center mb-16">({{ $totalOffices }} találat)</h2>
                 <div
                     class="flex justify-end gap-8 max-w-screen-xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                     <div class="">
                         <form action="#" class="">
                             <div>
-                                <select id="szuro"
+                                <select id="szuro" wire:model.live="sortField"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected value="1">Név szerint növekvő</option>
-                                    <option value="2">Név szerint csökkenő</option>
-                                    <option value="3">Ár szerint növekvő</option>
-                                    <option value="4">Ár szerint csökkenő</option>
+                                    <option value="title">Név szerint</option>
+                                    <option value="date">Dátum szerint</option>
+                                    <option value="ord">Sorrend szerint</option>
                                 </select>
                             </div>
                         </form>
@@ -43,10 +30,9 @@
                             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        @foreach ($offices ?? [] as $image)
-                            <x-layouts.cards.ingatlan-card image="{{ $image }}" small title="Academia Irodaház"
-                                :description="'1061 Budapest, Andrássy út 9.<br><strong>Bérleti díj:</strong> 16 - 17 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2990 HUF/m2/hó'" link="/adatlap-oldal/" />
+                    <div class="grid grid-cols-1 gap-6">
+                        @foreach ($this->getOffices() as $office)
+                            <x-layouts.cards.property-card :property="$office" />
                         @endforeach
                     </div>
                 </div>
@@ -54,8 +40,7 @@
                 <div
                     class="flex justify-center gap-8 max-w-screen-xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                     {{-- Pagination --}}
-
-                    {{ $offices->links() }}
+                    {{ $this->getOffices()->links() }}
 
                     {{--  @include('pages.forms.pagination') --}}
                 </div>

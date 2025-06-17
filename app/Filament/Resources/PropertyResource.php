@@ -23,6 +23,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ImportAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -170,13 +171,27 @@ final class PropertyResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('first_image')
+                    ->label('Kép')
+                    ->getStateUsing(fn (Property $record): ?string => $record->first_image_url)
+                    ->height(60)
+                    ->width(80),
                 TextColumn::make('title')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'active' => 'success',
+                        'inactive' => 'danger',
+                        default => 'gray',
+                    })
                     ->searchable(),
-                TextColumn::make('meta_title')
-                    ->searchable(),
+                TextColumn::make('images_count')
+                    ->label('Képek száma')
+                    ->counts('images'),
                 TextColumn::make('construction_year')
+                    ->label('Építés éve')
                     ->searchable(),
                 TextColumn::make('total_area')
                     ->searchable(),
@@ -291,7 +306,7 @@ final class PropertyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PropertyResource\RelationManagers\ImagesRelationManager::class,
         ];
     }
 

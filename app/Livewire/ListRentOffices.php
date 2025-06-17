@@ -47,6 +47,7 @@ final class ListRentOffices extends Component
     public function getOffices()
     {
         return Offices::query()
+            ->with('images') // Eager load images
             ->when($this->search, function ($query): void {
                 $query->where('title', 'like', '%'.$this->search.'%');
             })
