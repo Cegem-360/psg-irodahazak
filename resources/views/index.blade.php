@@ -18,7 +18,7 @@
         @elseif (request()->routeIs('adatlap-oldal'))
             <x-layouts.pages.adatlap-oldal />
         @elseif (request()->routeIs('kiado-irodak'))
-            <x-layouts.pages.kiado-irodak />
+            @include('pages.offices-for-rent')
         @elseif (request()->routeIs('hirek'))
             <x-layouts.pages.hirek />
         @elseif (request()->routeIs('rolunk'))
