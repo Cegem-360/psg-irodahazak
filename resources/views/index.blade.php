@@ -15,7 +15,6 @@
     <div class="overflow-hidden max-w-[2200px] mx-auto bg-white">
         @if (request()->routeIs('home'))
             @include('pages.home')
-            {{--     <x-layouts.home /> --}}
         @elseif (request()->routeIs('adatlap-oldal'))
             <x-layouts.pages.adatlap-oldal />
         @elseif (request()->routeIs('kiado-irodak'))

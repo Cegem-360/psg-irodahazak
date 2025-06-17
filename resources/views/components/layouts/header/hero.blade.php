@@ -1,4 +1,4 @@
-<div class="hero overflow-hidden relative">
+<div class="hero overflow-hidden relative bg-white">
     <div class="lang-menu absolute top-8 right-8 flex items-center gap-4 flex-nowrap z-20">
         <a href="https://www.facebook.com/psgirodahazak" target="_blank" title="https://www.facebook.com/psgirodahazak"
             class="text-primary hover:text-logogray">

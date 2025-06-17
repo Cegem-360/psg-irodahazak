@@ -44,6 +44,7 @@
         <div class="relative">
             <x-layouts.header.nav />
         </div>
+
         {{ $slot }}
 
         @livewire('notifications')
