@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('services', function (Blueprint $table): void {
-
-            $table->timestamps();
+        Schema::table('post_codes', function (Blueprint $table): void {
+            $table->id();
+            /*  $table->timestamps(); */
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('post_codes');
     }
 };

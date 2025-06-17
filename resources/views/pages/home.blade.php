@@ -2,7 +2,7 @@
 
     <x-layouts.sections.bizalomerosito />
 
-    <x-layouts.forms.szuro />
+    @include('pages.forms.szuro')
 
     <x-layouts.sections.kiemelt-ajanlatok />
 
@@ -15,8 +15,6 @@
     <x-layouts.sections.hirek-section />
 
     <x-layouts.sections.ajanlat />
-
-    <x-layouts.sections.footer />
 
     {{-- @livewire('house-search') --}}
 

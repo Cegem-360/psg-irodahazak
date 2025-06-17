@@ -22,6 +22,12 @@ final class Property extends Model
         return $this->hasMany(Tag::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(Gallery::class, 'target_table_id')
+            ->where('target_table', 'property');
+    }
+
     #[Scope]
     protected function active(Builder $query): void
     {

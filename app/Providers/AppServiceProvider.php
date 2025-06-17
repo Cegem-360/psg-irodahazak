@@ -23,10 +23,10 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        TextColumn::configureUsing(function (TextColumn $column) {
+        TextColumn::configureUsing(function (TextColumn $column): void {
             $column->translateLabel();
         });
-        RichEditor::configureUsing(function (RichEditor $editor) {
+        RichEditor::configureUsing(function (RichEditor $editor): void {
             $editor->translateLabel();
         });
     }

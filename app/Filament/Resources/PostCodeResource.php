@@ -2,6 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\PostCodeResource\Pages\ListPostCodes;
+use App\Filament\Resources\PostCodeResource\Pages\CreatePostCode;
+use App\Filament\Resources\PostCodeResource\Pages\EditPostCode;
 use App\Filament\Resources\PostCodeResource\Pages;
 use App\Filament\Resources\PostCodeResource\RelationManagers;
 use App\Models\PostCode;
@@ -23,13 +31,13 @@ class PostCodeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('iranyitoszam')
+                TextInput::make('iranyitoszam')
                     ->required()
                     ->maxLength(4),
-                Forms\Components\TextInput::make('helyiseg')
+                TextInput::make('helyiseg')
                     ->required()
                     ->maxLength(64),
-                Forms\Components\TextInput::make('megye')
+                TextInput::make('megye')
                     ->required()
                     ->maxLength(64),
             ]);
@@ -39,22 +47,30 @@ class PostCodeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('iranyitoszam')
+                TextColumn::make('iranyitoszam')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('helyiseg')
+                TextColumn::make('helyiseg')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('megye')
+                TextColumn::make('megye')
                     ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -69,9 +85,9 @@ class PostCodeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPostCodes::route('/'),
-            'create' => Pages\CreatePostCode::route('/create'),
-            'edit' => Pages\EditPostCode::route('/{record}/edit'),
+            'index' => ListPostCodes::route('/'),
+            'create' => CreatePostCode::route('/create'),
+            'edit' => EditPostCode::route('/{record}/edit'),
         ];
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('contents', function (Blueprint $table) {
+        Schema::table('contents', function (Blueprint $table): void {
 
             $table->timestamps();
         });
