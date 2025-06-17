@@ -21,6 +21,7 @@ final class Gallery extends Model
         'alt',
         'gallery_category_id',
         'video_url',
+        'image_file', // Virtual field for file upload
     ];
 
     protected $casts = [
@@ -94,7 +95,6 @@ final class Gallery extends Model
      */
     public function property()
     {
-        return $this->belongsTo(Property::class, 'target_table_id')
-            ->where('target_table', 'property');
+        return $this->belongsTo(Property::class, 'target_table_id');
     }
 }

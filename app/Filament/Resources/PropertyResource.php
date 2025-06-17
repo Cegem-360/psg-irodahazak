@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
 use App\Filament\Exports\PropertyExporter;
 use App\Filament\Imports\PropertyImporter;
 use App\Filament\Resources\PropertyResource\Pages\CreateProperty;
@@ -306,7 +307,7 @@ final class PropertyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            PropertyResource\RelationManagers\ImagesRelationManager::class,
+            ImagesRelationManager::class,
         ];
     }
 

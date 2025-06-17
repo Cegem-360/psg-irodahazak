@@ -4,13 +4,23 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\GalleryResource\Pages;
+use App\Filament\Resources\GalleryResource\Pages\CreateGallery;
+use App\Filament\Resources\GalleryResource\Pages\EditGallery;
+use App\Filament\Resources\GalleryResource\Pages\ListGalleries;
 use App\Models\Gallery;
 use App\Models\Property;
-use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 final class GalleryResource extends Resource
@@ -23,36 +33,51 @@ final class GalleryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('path')
-                    ->required()
+                FileUpload::make('image_file')
+                    ->label('Kép feltöltése')
+                    ->image()
+                    ->directory('uploads/gallery')
+                    ->visibility('public')
+                    ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])
+                    ->maxSize(5120) // 5MB
+                    ->columnSpanFull()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        if ($state) {
+                            // Automatically set path when file is uploaded
+                            $set('path', './'.$state);
+                            $pathInfo = pathinfo($state);
+                            $set('path_without_size_and_ext', './'.$pathInfo['dirname'].'/'.$pathInfo['filename']);
+                        }
+                    }),
+                TextInput::make('path')
                     ->maxLength(255)
-                    ->helperText('pl.: ./uploads/property/43/gallery/2_160x160.jpg'),
-                Forms\Components\Select::make('target_table_id')
+                    ->helperText('Automatikusan beállítva a kép feltöltésekor'),
+                Select::make('target_table_id')
                     ->label('Property')
                     ->options(Property::all()->pluck('title', 'id'))
                     ->required()
                     ->searchable(),
-                Forms\Components\TextInput::make('ord')
+                TextInput::make('ord')
                     ->label('Sorrend')
                     ->numeric()
                     ->default(0),
-                Forms\Components\TextInput::make('size')
+                TextInput::make('size')
                     ->maxLength(20)
                     ->placeholder('pl.: 800x600'),
-                Forms\Components\DateTimePicker::make('date'),
-                Forms\Components\TextInput::make('target_table')
+                DateTimePicker::make('date'),
+                TextInput::make('target_table')
                     ->default('property')
                     ->maxLength(150),
-                Forms\Components\TextInput::make('path_without_size_and_ext')
+                TextInput::make('path_without_size_and_ext')
                     ->maxLength(255)
-                    ->helperText('pl.: ./uploads/property/43/gallery/2'),
-                Forms\Components\TextInput::make('alt')
+                    ->helperText('Automatikusan beállítva a kép feltöltésekor'),
+                TextInput::make('alt')
                     ->label('Alt text')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('gallery_category_id')
+                TextInput::make('gallery_category_id')
                     ->numeric()
                     ->default(0),
-                Forms\Components\TextInput::make('video_url')
+                TextInput::make('video_url')
                     ->url()
                     ->maxLength(255),
             ]);
@@ -62,43 +87,43 @@ final class GalleryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('path')
+                ImageColumn::make('path')
                     ->label('Kép')
                     ->getStateUsing(fn (Gallery $record): string => $record->image_url)
                     ->height(60)
                     ->width(80),
-                Tables\Columns\TextColumn::make('property.title')
+                TextColumn::make('property.title')
                     ->label('Ingatlan')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('target_table_id')
+                TextColumn::make('target_table_id')
                     ->label('Property ID')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('ord')
+                TextColumn::make('ord')
                     ->label('Sorrend')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('size')
+                TextColumn::make('size')
                     ->label('Méret')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('alt')
+                TextColumn::make('alt')
                     ->label('Alt text')
                     ->searchable()
                     ->limit(30),
-                Tables\Columns\TextColumn::make('date')
+                TextColumn::make('date')
                     ->label('Dátum')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('image_exists')
+                IconColumn::make('image_exists')
                     ->label('Létezik')
                     ->getStateUsing(fn (Gallery $record): bool => $record->imageExists())
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -107,11 +132,11 @@ final class GalleryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -126,9 +151,9 @@ final class GalleryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGalleries::route('/'),
-            'create' => Pages\CreateGallery::route('/create'),
-            'edit' => Pages\EditGallery::route('/{record}/edit'),
+            'index' => ListGalleries::route('/'),
+            'create' => CreateGallery::route('/create'),
+            'edit' => EditGallery::route('/{record}/edit'),
         ];
     }
 }

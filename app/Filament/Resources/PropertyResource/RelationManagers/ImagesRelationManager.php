@@ -5,10 +5,21 @@ declare(strict_types=1);
 namespace App\Filament\Resources\PropertyResource\RelationManagers;
 
 use App\Models\Gallery;
-use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 final class ImagesRelationManager extends RelationManager
@@ -21,29 +32,44 @@ final class ImagesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('path')
+                FileUpload::make('image_file')
+                    ->label('Kép feltöltése')
+                    ->image()
+                    ->directory('uploads/gallery')
+                    ->visibility('public')
+                    ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])
+                    ->maxSize(5120) // 5MB
+                    ->columnSpanFull()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        if ($state) {
+                            // Automatically set path when file is uploaded
+                            $set('path', './'.$state);
+                            $pathInfo = pathinfo($state);
+                            $set('path_without_size_and_ext', './'.$pathInfo['dirname'].'/'.$pathInfo['filename']);
+                        }
+                    }),
+                TextInput::make('path')
                     ->label('Kép útvonal')
-                    ->required()
                     ->maxLength(255)
-                    ->helperText('pl.: ./uploads/property/43/gallery/2_160x160.jpg'),
-                Forms\Components\TextInput::make('path_without_size_and_ext')
+                    ->helperText('Automatikusan beállítva a kép feltöltésekor'),
+                TextInput::make('path_without_size_and_ext')
                     ->label('Alap útvonal (méret és kiterjesztés nélkül)')
                     ->maxLength(255)
-                    ->helperText('pl.: ./uploads/property/43/gallery/2'),
-                Forms\Components\TextInput::make('size')
+                    ->helperText('Automatikusan beállítva a kép feltöltésekor'),
+                TextInput::make('size')
                     ->label('Méret')
                     ->maxLength(20)
                     ->placeholder('pl.: 800x600'),
-                Forms\Components\TextInput::make('ord')
+                TextInput::make('ord')
                     ->label('Sorrend')
                     ->numeric()
                     ->default(0),
-                Forms\Components\TextInput::make('alt')
+                TextInput::make('alt')
                     ->label('Alt text')
                     ->maxLength(255),
-                Forms\Components\Hidden::make('target_table')
+                Hidden::make('target_table')
                     ->default('property'),
-                Forms\Components\DateTimePicker::make('date')
+                DateTimePicker::make('date')
                     ->label('Dátum'),
             ]);
     }
@@ -53,20 +79,20 @@ final class ImagesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('path')
             ->columns([
-                Tables\Columns\ImageColumn::make('path')
+                ImageColumn::make('path')
                     ->label('Kép')
                     ->getStateUsing(fn (Gallery $record): string => $record->image_url)
                     ->height(60)
                     ->width(80),
-                Tables\Columns\TextColumn::make('size')
+                TextColumn::make('size')
                     ->label('Méret'),
-                Tables\Columns\TextColumn::make('ord')
+                TextColumn::make('ord')
                     ->label('Sorrend')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('alt')
+                TextColumn::make('alt')
                     ->label('Alt text')
                     ->limit(30),
-                Tables\Columns\IconColumn::make('image_exists')
+                IconColumn::make('image_exists')
                     ->label('Létezik')
                     ->getStateUsing(fn (Gallery $record): bool => $record->imageExists())
                     ->boolean(),
@@ -75,7 +101,7 @@ final class ImagesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()
+                CreateAction::make()
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['target_table'] = 'property';
 
@@ -83,17 +109,17 @@ final class ImagesRelationManager extends RelationManager
                     }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\Action::make('view_image')
+                EditAction::make(),
+                DeleteAction::make(),
+                Action::make('view_image')
                     ->label('Megtekintés')
                     ->icon('heroicon-o-eye')
                     ->url(fn (Gallery $record): string => $record->image_url)
                     ->openUrlInNewTab(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('ord');

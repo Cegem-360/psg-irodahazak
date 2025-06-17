@@ -18,7 +18,7 @@ final class PropertyController extends Controller
             ->orderBy('ord')
             ->paginate(12);
 
-        return view('properties.index', compact('properties'));
+        return view('properties.index', ['properties' => $properties]);
     }
 
     /**
@@ -28,7 +28,7 @@ final class PropertyController extends Controller
     {
         $property->load('images');
 
-        return view('properties.show', compact('property'));
+        return view('properties.show', ['property' => $property]);
     }
 
     /**
@@ -36,7 +36,7 @@ final class PropertyController extends Controller
      */
     public function images(Property $property)
     {
-        $images = $property->images()->orderBy('ord')->get()->map(function ($image) {
+        $images = $property->images()->orderBy('ord')->get()->map(function ($image): array {
             return [
                 'id' => $image->id,
                 'url' => $image->image_url,
@@ -54,7 +54,7 @@ final class PropertyController extends Controller
      */
     public function imagesWithSize(Property $property, $size = null)
     {
-        $images = $property->images()->orderBy('ord')->get()->map(function ($image) use ($size) {
+        $images = $property->images()->orderBy('ord')->get()->map(function ($image) use ($size): array {
             return [
                 'id' => $image->id,
                 'url' => $image->getImageUrl($size),

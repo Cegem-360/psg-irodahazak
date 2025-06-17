@@ -30,7 +30,7 @@
                     <div class="swiper-slide p-1 cursor-pointer">
                         <img src="{{ $image->getImageUrl('160x160') }}"
                             alt="{{ $image->alt ?? ($property->title ?? 'Galéria kép') }}"
-                            class="w-full h-auto object-cover aspect-[16/9] rounded-xl">
+                            class="w-20 h-20 object-cover rounded-xl">
                     </div>
                 @endforeach
             </div>
