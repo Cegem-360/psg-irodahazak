@@ -1,20 +1,20 @@
 <div>
 
-    <x-layouts.sections.bizalomerosito />
+    <x-pages.sections.home.bizalomerosito />
 
     @include('pages.forms.szuro')
 
-    <x-layouts.sections.kiemelt-ajanlatok />
+    <x-pages.sections.home.kiemelt-ajanlatok />
 
-    <x-layouts.sections.rolunk-mondtak />
+    <x-pages.sections.home.rolunk-mondtak />
 
-    <x-layouts.sections.referenciak />
+    <x-pages.sections.home.referenciak />
 
-    <x-layouts.sections.blog-section />
+    <x-pages.sections.home.blog-section />
 
-    <x-layouts.sections.hirek-section />
+    <x-pages.sections.home.hirek-section />
 
-    <x-layouts.sections.ajanlat />
+    <x-pages.sections.home.ajanlat />
 
     {{-- @livewire('house-search') --}}
 

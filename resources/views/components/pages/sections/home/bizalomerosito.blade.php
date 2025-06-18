@@ -39,7 +39,7 @@
 
 {{-- Számláló animáció --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('livewire:load', function() {
         let animated = false;
         const counters = document.querySelectorAll('.counter');
         const observer = new IntersectionObserver((entries, observer) => {

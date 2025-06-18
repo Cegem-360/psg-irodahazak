@@ -75,7 +75,7 @@
             </div>
         </div>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('livewire:load', function() {
                 // Initialize the range slider
                 $('.terulet-slider').ionRangeSlider({
                     type: "double",

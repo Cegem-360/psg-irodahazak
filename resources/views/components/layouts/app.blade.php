@@ -38,18 +38,18 @@
 
     <body class="antialiased">
         <header>
-            <x-layouts.header.top-bar />
-            <x-layouts.header.hero />
+            <x-layouts.navigation.top-bar />
+            <x-layouts.navigation.hero />
         </header>
         <div class="relative">
-            <x-layouts.header.nav />
+            <x-layouts.navigation.navbar />
         </div>
 
         {{ $slot }}
 
         @livewire('notifications')
 
-        <x-layouts.sections.footer />
+        <x-pages.sections.footer />
 
         @filamentScripts
 
