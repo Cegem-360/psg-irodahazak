@@ -20,7 +20,7 @@
         <div class="absolute -left-56 -top-16 z-10 w-[40%] text-primary/15"><x-svg.psg-irodahazak-symbol />
         </div>
         <div class="logo">
-            <a href="{{ localized_route('home') }}" class="flex items-center">
+            <a href="/" class="flex items-center">
                 <img src="{{ Vite::asset('resources/images/psg-irodahazak-logo.png') }}" class="mr-3 h-12 sm:h-24"
                     alt="PSG Irodaházak logo" />
             </a>

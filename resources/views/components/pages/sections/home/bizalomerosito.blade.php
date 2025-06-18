@@ -38,8 +38,9 @@
 </div>
 
 {{-- Számláló animáció --}}
+
 <script>
-    document.addEventListener('livewire:load', function() {
+    document.addEventListener('livewire:initialized', function() {
         let animated = false;
         const counters = document.querySelectorAll('.counter');
         const observer = new IntersectionObserver((entries, observer) => {

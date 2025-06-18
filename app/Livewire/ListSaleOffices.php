@@ -9,7 +9,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-final class ListRentOffices extends Component
+final class ListSaleOffices extends Component
 {
     use WithPagination;
 
@@ -37,7 +37,7 @@ final class ListRentOffices extends Component
     public function updateTotalOffices(): void
     {
         $this->totalOffices = Offices::query()
-            ->rent()
+            ->sale()
             ->when($this->search, function ($query): void {
                 $query->where('title', 'like', '%'.$this->search.'%');
             })
@@ -52,7 +52,7 @@ final class ListRentOffices extends Component
             ->when($this->search, function ($query): void {
                 $query->where('title', 'like', '%'.$this->search.'%');
             })
-            ->rent()
+            ->sale()
             ->active()
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
@@ -85,7 +85,7 @@ final class ListRentOffices extends Component
 
     public function render()
     {
-        return view('livewire.list-rent-offices', [
+        return view('livewire.list-sale-offices', [
             'offices' => $this->getOffices(),
         ]);
     }

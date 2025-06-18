@@ -153,6 +153,18 @@ final class Property extends Model
         $query->where('status', 'inactive');
     }
 
+    #[Scope]
+    protected function sale(Builder $query): void
+    {
+        $query->where('elado_v_kiado', 'elado-iroda');
+    }
+
+    #[Scope]
+    protected function rent(Builder $query): void
+    {
+        $query->where('elado_v_kiado', 'kiado-iroda');
+    }
+
     protected function casts(): array
     {
         return [

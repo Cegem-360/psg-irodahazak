@@ -8,18 +8,19 @@
                 Kapcsolat</h2>
 
             <div class="max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
-                <!-- Contact Information Section -->
+                <!-- Kapcsolati információk szekció -->
                 <div
                     class="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 border-b border-gray-300 hover:brightness-95 transition-all duration-300 ease-in-out mb-8">
                     <div>
                         <h3 class="mb-3 text-logogray/80 text-xl">Property Solution Group Kft.</h3>
                         <p class="mb-3 text-gray-600">
-                            office: 1016 Budapest, Derék u. 2.
+                            Iroda: 1016 Budapest, Derék u. 2.
                         </p>
                         <p class="mb-3 text-gray-600">
                             Tel.: +36 20 381 3917
                         </p>
-                        <p>mail: <a class="text-primary" href="mailto:info@psg-irodahazak.hu">info@psg-irodahazak.hu</a>
+                        <p>E-mail: <a class="text-primary"
+                                href="mailto:info@psg-irodahazak.hu">info@psg-irodahazak.hu</a>
                         </p>
                     </div>
                     <div class="flex justify-center"><img class="mb-3"
@@ -27,11 +28,11 @@
                     </div>
                 </div>
 
-                <!-- Contact Form Section -->
+                <!-- Kapcsolatfelvételi űrlap szekció -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Contact Form -->
+                    <!-- Kapcsolatfelvételi űrlap -->
                     <div class="bg-white rounded-xl p-8 shadow-lg">
-                        <!-- Success/Error Messages -->
+                        <!-- Sikeres/Hiba üzenetek -->
                         @if (session('success'))
                             <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
                                 <div class="flex">
@@ -194,9 +195,9 @@
                         </form>
                     </div>
 
-                    <!-- Additional Information -->
+                    <!-- További információk -->
                     <div class="space-y-6">
-                        <!-- Office Hours -->
+                        <!-- Nyitvatartás -->
                         <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
                             <h4 class="text-xl font-bold text-gray-800 mb-4">Nyitvatartás</h4>
                             <div class="space-y-2 text-gray-600">
@@ -215,7 +216,7 @@
                             </div>
                         </div>
 
-                        <!-- Services -->
+                        <!-- Szolgáltatások -->
                         <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
                             <h4 class="text-xl font-bold text-gray-800 mb-4">Szolgáltatásaink</h4>
                             <ul class="space-y-2 text-gray-600">
@@ -262,7 +263,7 @@
                             </ul>
                         </div>
 
-                        <!-- Quick Contact -->
+                        <!-- Gyors kapcsolatfelvétel -->
                         <div class="bg-gradient-to-r from-primary to-accent text-white rounded-xl p-6 shadow-lg">
                             <h4 class="text-xl font-bold mb-4">Azonnali kapcsolat</h4>
                             <p class="mb-4">Sürgős esetben hívjon minket telefonon!</p>

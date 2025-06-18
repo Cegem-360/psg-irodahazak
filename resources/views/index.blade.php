@@ -19,6 +19,10 @@
             <x-pages.adatlap-oldal />
         @elseif (request()->routeIs('kiado-irodak'))
             @include('pages.offices-for-rent')
+        @elseif (request()->routeIs('elado-irodahazak'))
+            @include('pages.offices-for-sale')
+        @elseif (request()->routeIs('en.office-buildings-for-sale'))
+            @include('pages.offices-for-sale')
         @elseif (request()->routeIs('rolunk'))
             <x-pages.rolunk />
         @elseif (request()->routeIs('kapcsolat'))
