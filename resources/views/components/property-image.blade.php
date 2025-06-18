@@ -1,6 +1,6 @@
 @props([
     'property',
-    'size' => null,
+    'size' => '800x600', // Default to 800x600 instead of original size
     'class' => 'w-full h-auto object-cover',
     'alt' => null,
     'showPlaceholder' => true,

@@ -37,12 +37,12 @@
                         <x-property-image :property="$property" size="384x246" class="w-full h-auto border rounded" />
                     </div>
                     <div>
-                        <h4 class="font-medium mb-2">800x600</h4>
+                        <h4 class="font-medium mb-2">800x600 (Alapértelmezett)</h4>
                         <x-property-image :property="$property" size="800x600" class="w-full h-auto border rounded" />
                     </div>
                     <div>
-                        <h4 class="font-medium mb-2">Eredeti</h4>
-                        <x-property-image :property="$property" class="w-full h-auto border rounded" />
+                        <h4 class="font-medium mb-2">Eredeti (Teljes méret)</h4>
+                        <x-property-image :property="$property" size="" class="w-full h-auto border rounded" />
                     </div>
                 </div>
             </div>
@@ -52,9 +52,12 @@
                 <div class="bg-gray-100 p-4 rounded">
                     <pre class="text-sm">
 Eredeti útvonal: {{ $property->images->first()?->path }}
-Image URL: {{ $property->first_image_url }}
-800x600 méret: {{ $property->images->first()?->getImageUrl('800x600') }}
-160x160 méret: {{ $property->images->first()?->getImageUrl('160x160') }}
+Image URL (Eredeti): {{ $property->first_image_url }}
+800x600 méret (alapértelmezett): {{ $property->getFirstImageUrl() }}
+800x600 JPG: {{ $property->images->first()?->getImageUrl('800x600', 'jpg') }}
+800x600 WEBP: {{ $property->images->first()?->getImageUrl('800x600', 'webp') }}
+160x160 thumbnail: {{ $property->images->first()?->getThumbnailUrl() }}
+Egyedi méret: {{ $property->images->first()?->getImageUrl('1200x800', 'jpg') }}
                 </pre>
                 </div>
             </div>

@@ -12,6 +12,70 @@ final class Property extends Model
 {
     protected $guarded = [];
 
+    protected $fillable = [
+        'title',
+        'status',
+        'lead',
+        'content',
+        'date',
+        'ord',
+        'meta_title',
+        'meta_title_en',
+        'meta_keywords',
+        'meta_keywords_en',
+        'meta_description',
+        'meta_description_en',
+        'construction_year',
+        'total_area',
+        'jelenleg_kiado',
+        'max_berleti_dij',
+        'uzemeletetesi_dij',
+        'raktar_terulet',
+        'raktar_berleti_dij',
+        'parkolas',
+        'parkolas_dija',
+        'kozos_teruleti_arany',
+        'cim_irsz',
+        'cim_varos',
+        'cim_utca',
+        'cim_hazszam',
+        'tags',
+        'services',
+        'maps_lat',
+        'maps_lng',
+        'azonosito',
+        'osszterulet_addons',
+        'max_berleti_dij_addons',
+        'parkolas_dija_addons',
+        'min_berleti_dij',
+        'min_berleti_dij_addons',
+        'raktar_terulet_addons',
+        'raktar_berleti_dij_addons',
+        'uzemeletetesi_dij_addons',
+        'min_parkolas_dija',
+        'min_parkolas_dija_addons',
+        'max_parkolas_dija',
+        'max_parkolas_dija_addons',
+        'kozos_teruleti_arany_addons',
+        'min_kiado',
+        'min_kiado_addons',
+        'jelenleg_kiado_addons',
+        'kodszam',
+        'en_content',
+        'min_berleti_idoszak',
+        'min_berleti_idoszak_addons',
+        'cim_utca_addons',
+        'lang',
+        'cimke',
+        'service',
+        'maps',
+        'elado_v_kiado',
+        'elado_v_kiado_addons',
+        'updated',
+        'egyeb',
+        'afa',
+    ];
+
     public function services()
     {
         return $this->hasMany(Service::class);
@@ -55,6 +119,16 @@ final class Property extends Model
         $firstImage = $this->images->first();
 
         return $firstImage ? $firstImage->image_url : null;
+    }
+
+    /**
+     * Get the first image URL with specified size (default 800x600)
+     */
+    public function getFirstImageUrl(string $size = '800x600', string $extension = 'jpg'): ?string
+    {
+        $firstImage = $this->images->first();
+
+        return $firstImage ? $firstImage->getImageUrl($size, $extension) : null;
     }
 
     /**

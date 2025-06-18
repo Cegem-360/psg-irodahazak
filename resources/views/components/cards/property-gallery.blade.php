@@ -11,7 +11,8 @@
             <div class="swiper-wrapper">
                 @foreach ($images as $image)
                     <div class="swiper-slide">
-                        <img src="{{ $image->image_url }}" alt="{{ $image->alt ?? ($property->title ?? 'Galéria kép') }}"
+                        <img src="{{ $image->getImageUrl('800x600') }}"
+                            alt="{{ $image->alt ?? ($property->title ?? 'Galéria kép') }}"
                             class="w-full h-auto object-cover aspect-[4/3]">
                     </div>
                 @endforeach
