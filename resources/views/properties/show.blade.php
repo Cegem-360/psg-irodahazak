@@ -61,31 +61,52 @@
                         <h2 class="text-xl font-semibold text-gray-900 mb-4">Részletek</h2>
 
                         <div class="space-y-3">
-                            @if ($property->type)
+                            @if ($property->total_area)
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">Típus:</span>
-                                    <span class="font-medium">{{ $property->type }}</span>
+                                    <span class="text-gray-600">Összes terület:</span>
+                                    <span class="font-medium">{{ number_format($property->total_area, 0, ',', ' ') }}
+                                        {{ $property->osszterulet_addons ?? 'm²' }}</span>
                                 </div>
                             @endif
 
-                            @if ($property->size)
+                            @if ($property->jelenleg_kiado)
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">Méret:</span>
-                                    <span class="font-medium">{{ $property->size }}</span>
+                                    <span class="text-gray-600">Jelenleg kiadó:</span>
+                                    <span
+                                        class="font-medium">{{ number_format($property->jelenleg_kiado, 0, ',', ' ') }}
+                                        {{ $property->jelenleg_kiado_addons ?? 'm²' }}</span>
                                 </div>
                             @endif
 
-                            @if ($property->price)
+                            @if ($property->max_berleti_dij)
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">Ár:</span>
-                                    <span class="font-medium text-blue-600">{{ $property->price }}</span>
+                                    <span class="text-gray-600">Bérleti díj:</span>
+                                    <span class="font-medium text-blue-600">{{ $property->max_berleti_dij }}
+                                        {{ $property->max_berleti_dij_addons ?? 'EUR/m²/hó' }}</span>
                                 </div>
                             @endif
 
-                            @if ($property->location)
+                            @if ($property->uzemeletetesi_dij)
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Üzemeltetési díj:</span>
+                                    <span
+                                        class="font-medium">{{ number_format($property->uzemeletetesi_dij, 0, ',', ' ') }}
+                                        {{ $property->uzemeletetesi_dij_addons ?? 'HUF/m²/hó' }}</span>
+                                </div>
+                            @endif
+
+                            @if ($property->cim_irsz && $property->cim_varos)
                                 <div class="flex justify-between">
                                     <span class="text-gray-600">Helyszín:</span>
-                                    <span class="font-medium">{{ $property->location }}</span>
+                                    <span class="font-medium">{{ $property->cim_irsz }} {{ $property->cim_varos }},
+                                        {{ $property->cim_utca }} {{ $property->cim_hazszam }}</span>
+                                </div>
+                            @endif
+
+                            @if ($property->construction_year)
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Építési év:</span>
+                                    <span class="font-medium">{{ $property->construction_year }}</span>
                                 </div>
                             @endif
 
@@ -97,6 +118,62 @@
                             @endif
                         </div>
                     </div>
+
+                    <!-- Additional Information -->
+                    @if ($property->parkolas || $property->raktar_terulet || $property->min_berleti_idoszak)
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h2 class="text-xl font-semibold text-gray-900 mb-4">További információk</h2>
+
+                            <div class="space-y-3">
+                                @if ($property->parkolas)
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Parkolás:</span>
+                                        <span class="font-medium">{{ $property->parkolas }}</span>
+                                    </div>
+                                @endif
+
+                                @if ($property->min_parkolas_dija)
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Parkolási díj:</span>
+                                        <span class="font-medium">{{ $property->min_parkolas_dija }}
+                                            {{ $property->min_parkolas_dija_addons ?? 'EUR/hely/hó' }}</span>
+                                    </div>
+                                @endif
+
+                                @if ($property->raktar_terulet)
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Raktár terület:</span>
+                                        <span class="font-medium">{{ $property->raktar_terulet }}
+                                            {{ $property->raktar_terulet_addons ?? 'm²' }}</span>
+                                    </div>
+                                @endif
+
+                                @if ($property->raktar_berleti_dij)
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Raktár bérleti díj:</span>
+                                        <span class="font-medium">{{ $property->raktar_berleti_dij }}
+                                            {{ $property->raktar_berleti_dij_addons ?? 'EUR/m²/hó' }}</span>
+                                    </div>
+                                @endif
+
+                                @if ($property->min_berleti_idoszak)
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Min. bérleti időszak:</span>
+                                        <span class="font-medium">{{ $property->min_berleti_idoszak }}
+                                            {{ $property->min_berleti_idoszak_addons ?? 'év' }}</span>
+                                    </div>
+                                @endif
+
+                                @if ($property->kozos_teruleti_arany)
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Közös területi arány:</span>
+                                        <span
+                                            class="font-medium">{{ $property->kozos_teruleti_arany }}{{ $property->kozos_teruleti_arany_addons ?? '%' }}</span>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
 
                     <!-- Services -->
                     @if ($property->services && count($property->services) > 0)
@@ -143,11 +220,11 @@
             </div>
 
             <!-- Description -->
-            @if ($property->description)
+            @if ($property->content)
                 <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
                     <h2 class="text-2xl font-semibold text-gray-900 mb-4">Leírás</h2>
                     <div class="prose max-w-none text-gray-700">
-                        {!! $property->description !!}
+                        {!! $property->content !!}
                     </div>
                 </div>
             @endif

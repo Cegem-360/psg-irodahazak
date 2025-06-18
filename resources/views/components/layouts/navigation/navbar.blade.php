@@ -22,28 +22,28 @@
             <ul
                 class="flex flex-col mt-4 font-bold lg:flex-row lg:mt-0 text-white text-xl text-nowrap bg-gradient-to-b from-black/30 to-black/5 border border-black/15 backdrop-blur-3xl shadow-lg rounded-md overflow-hidden">
                 <li>
-                    <a href="/"
-                        class="{{ request()->is('/') ? 'active' : '' }} block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]"
+                    <a href="{{ route('home') }}"
+                        class="{{ request()->routeIs('home') ? 'active' : '' }} block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]"
                         aria-current="page">Főoldal</a>
                 </li>
                 <li>
-                    <a href="/kiado-irodak/"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->is('kiado-irodak') ? 'active' : '' }}">
+                    <a href="{{ route('kiado-irodak') }}"
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs('kiado-irodak') ? 'active' : '' }}">
                         Kiadó irodák</a>
                 </li>
                 <li>
-                    <a href="#"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+                    <a href="{{ route('elado-irodahazak') }}"
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs('elado-irodahazak') ? 'active' : '' }}">
                         Eladó irodaházak</a>
                 </li>
                 <li>
-                    <a href="/hirek/"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+                    <a href="{{ route('news.index') }}"
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs('news.*') ? 'active' : '' }}">
                         Hírek</a>
                 </li>
                 <li>
-                    <a href="/rolunk/"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+                    <a href="{{ route('rolunk') }}"
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs('rolunk') ? 'active' : '' }}">
                         Rólunk</a>
                 </li>
                 <li>
@@ -52,8 +52,8 @@
                         Blog</a>
                 </li>
                 <li>
-                    <a href="/kapcsolat/"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+                    <a href="{{ route('kapcsolat') }}"
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs('kapcsolat') ? 'active' : '' }}">
                         Kapcsolat</a>
                 </li>
             </ul>

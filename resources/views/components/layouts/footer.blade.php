@@ -21,10 +21,11 @@
                             <a href="mailto:info@psg-irodahazak.hu" class="hover:underline">info@psg-irodahazak.hu</a>
                         </li>
                         <li class="mb-4">
-                            <a href="#" class="hover:underline">online kapcsolatfelvétel</a>
+                            <a href="{{ route('kapcsolat') }}" class="hover:underline">online kapcsolatfelvétel</a>
                         </li>
                         <li>
-                            <a href="#" class="hover:underline">bejelentkezés / regisztráció</a>
+                            <a href="#" class="hover:underline" title="Hamarosan elérhető">bejelentkezés /
+                                regisztráció</a>
                         </li>
                     </ul>
                 </div>
@@ -32,16 +33,16 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Menü</h2>
                     <ul class="text-gray-600">
                         <li class="mb-4">
-                            <a href="#" class="hover:underline ">Főoldal</a>
+                            <a href="{{ route('home') }}" class="hover:underline ">Főoldal</a>
                         </li>
                         <li class="mb-4">
-                            <a href="#" class="hover:underline ">Kiadó irodák</a>
+                            <a href="{{ route('kiado-irodak') }}" class="hover:underline ">Kiadó irodák</a>
                         </li>
                         <li class="mb-4">
-                            <a href="#" class="hover:underline ">Eladó irodaházak</a>
+                            <a href="{{ route('elado-irodahazak') }}" class="hover:underline ">Eladó irodaházak</a>
                         </li>
                         <li class="mb-4">
-                            <a href="#" class="hover:underline ">Hírek</a>
+                            <a href="{{ route('news.index') }}" class="hover:underline ">Hírek</a>
                         </li>
                     </ul>
                 </div>
@@ -49,13 +50,13 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">&nbsp;</h2>
                     <ul class="text-gray-600">
                         <li class="mb-4">
-                            <a href="#" class="hover:underline ">Rólunk</a>
+                            <a href="{{ route('rolunk') }}" class="hover:underline ">Rólunk</a>
                         </li>
                         <li class="mb-4">
-                            <a href="#" class="hover:underline ">Blog</a>
+                            <a href="{{ route('blog.index') }}" class="hover:underline ">Blog</a>
                         </li>
                         <li>
-                            <a href="#" class="hover:underline">Kapcsolat</a>
+                            <a href="{{ route('kapcsolat') }}" class="hover:underline">Kapcsolat</a>
                         </li>
                     </ul>
                 </div>
@@ -63,10 +64,10 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Jogi nyilatkozatok</h2>
                     <ul class="text-gray-600">
                         <li class="mb-4">
-                            <a href="#" class="hover:underline">Adatvédelmi nyilatkozat</a>
+                            <a href="{{ route('privacy-policy') }}" class="hover:underline">Adatvédelmi nyilatkozat</a>
                         </li>
                         <li>
-                            <a href="#" class="hover:underline">Impresszum</a>
+                            <a href="{{ route('impresszum') }}" class="hover:underline">Impresszum</a>
                         </li>
                     </ul>
                 </div>

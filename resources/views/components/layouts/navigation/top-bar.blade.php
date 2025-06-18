@@ -9,12 +9,13 @@
             class=" hidden lg:flex items-center px-8 py-6 hover:bg-primary/80 duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
             info@psg-irodahazak.hu
         </a>
-        <a href="#"
+        <a href="{{ route('kapcsolat') }}"
             class=" hidden lg:flex items-center px-8 py-6 hover:bg-primary/80 duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
             online kapcsolatfelvétel
         </a>
         <a href="#"
-            class=" hidden lg:flex items-center px-8 py-6 hover:bg-primary/80 duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
+            class=" hidden lg:flex items-center px-8 py-6 hover:bg-primary/80 duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]"
+            title="Hamarosan elérhető">
             bejelentkezés
         </a>
     </div>
