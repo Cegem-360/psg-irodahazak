@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 final class Gallery extends Model
 {
@@ -41,11 +42,8 @@ final class Gallery extends Model
      */
     public function getImageUrlAttribute(): string
     {
-        // Remove the leading "./" from the path
-        $path = mb_ltrim($this->path, './');
 
-        // Return the full URL using asset() helper
-        return asset($path);
+        return asset($this->path);
     }
 
     /**
@@ -53,31 +51,22 @@ final class Gallery extends Model
      */
     public function getPublicUrlAttribute(): string
     {
-        // Remove the leading "./" from the path
-        $path = mb_ltrim($this->path, './');
-
-        // Return the public URL
-        return url($path);
+        return asset($this->path);
     }
 
     /**
      * Get different sizes of the image
      */
-    public function getImageUrl(?string $size = null): string
+    public function getImageUrl(?string $size = null, string $extension = 'jpg'): string
     {
         if (! $size) {
-            return $this->image_url;
+            return asset($this->path);
         }
 
-        // Build the path with the specified size
-        $pathWithoutExt = $this->path_without_size_and_ext;
-        $extension = pathinfo($this->path, PATHINFO_EXTENSION);
-        $newPath = $pathWithoutExt.'_'.$size.'.'.$extension;
+        $newPath = $this->path_without_size_and_ext.'_'.$size.'.'.$extension;
 
-        // Remove the leading "./" from the path
-        $path = mb_ltrim($newPath, './');
+        return asset($newPath);
 
-        return asset($path);
     }
 
     /**
@@ -85,9 +74,7 @@ final class Gallery extends Model
      */
     public function imageExists(): bool
     {
-        $path = mb_ltrim($this->path, './');
-
-        return file_exists(public_path($path));
+        return Storage::disk('public')->exists($this->path);
     }
 
     /**

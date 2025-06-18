@@ -32,26 +32,17 @@ final class ImagesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                FileUpload::make('image_file')
-                    ->label('Kép feltöltése')
+
+                FileUpload::make('path')
                     ->image()
-                    ->directory('uploads/gallery')
-                    ->visibility('public')
-                    ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])
-                    ->maxSize(5120) // 5MB
-                    ->columnSpanFull()
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        if ($state) {
-                            // Automatically set path when file is uploaded
-                            $set('path', './'.$state);
-                            $pathInfo = pathinfo($state);
-                            $set('path_without_size_and_ext', './'.$pathInfo['dirname'].'/'.$pathInfo['filename']);
-                        }
-                    }),
-                TextInput::make('path')
-                    ->label('Kép útvonal')
-                    ->maxLength(255)
-                    ->helperText('Automatikusan beállítva a kép feltöltésekor'),
+                    ->label('Kép feltöltése')
+                    ->required()
+                    ->disk('public')
+                    ->directory(function (Gallery $record): string {
+                        return 'property/'.$record->target_table_id.'/gallery';
+                    })
+                    ->preserveFilenames()
+                    ->helperText('Max. 10 MB, csak képek'),
                 TextInput::make('path_without_size_and_ext')
                     ->label('Alap útvonal (méret és kiterjesztés nélkül)')
                     ->maxLength(255)

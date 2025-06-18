@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,11 @@ Route::get('/properties', [PropertyController::class, 'index'])->name('propertie
 Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
 Route::get('/api/properties/{property}/images', [PropertyController::class, 'images'])->name('api.properties.images');
 Route::get('/api/properties/{property}/images/{size}', [PropertyController::class, 'imagesWithSize'])->name('api.properties.images.size');
+
+// Blog routes
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/kategoria/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
+Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
 
 /* Route::get('/', function () {
     return view('components.layouts.home');

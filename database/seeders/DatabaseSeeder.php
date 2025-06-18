@@ -24,5 +24,10 @@ final class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
+
+        // Blog seeder futtatása
+        $this->call([
+            BlogSeeder::class,
+        ]);
     }
 }
