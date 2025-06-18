@@ -16,15 +16,15 @@
         @if (request()->routeIs('home'))
             @include('pages.home')
         @elseif (request()->routeIs('adatlap-oldal'))
-            <x-layouts.pages.adatlap-oldal />
+            <x-pages.adatlap-oldal />
         @elseif (request()->routeIs('kiado-irodak'))
             @include('pages.offices-for-rent')
         @elseif (request()->routeIs('hirek'))
-            <x-layouts.pages.hirek />
+            <x-pages.hirek />
         @elseif (request()->routeIs('rolunk'))
-            <x-layouts.pages.rolunk />
+            <x-pages.rolunk />
         @elseif (request()->routeIs('kapcsolat'))
-            <x-layouts.pages.kapcsolat />
+            <x-pages.kapcsolat />
         @endif
 
     </div>

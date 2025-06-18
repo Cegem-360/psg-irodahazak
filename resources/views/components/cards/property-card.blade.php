@@ -8,7 +8,7 @@
     @if ($firstImage)
         <div class="aspect-[4/3] overflow-hidden">
             <img src="{{ $firstImage }}" alt="{{ $property->title }}"
-                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                class="w-16 h-16 object-cover hover:scale-105 transition-transform duration-300">
         </div>
     @else
         <div class="aspect-[4/3] bg-gray-100 flex items-center justify-center">

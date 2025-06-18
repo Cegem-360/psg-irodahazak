@@ -14,8 +14,6 @@
 
     <x-pages.sections.home.hirek-section />
 
-    <x-pages.sections.home.ajanlat />
-
-    {{-- @livewire('house-search') --}}
+    <x-pages.sections.ajanlat />
 
 </div>

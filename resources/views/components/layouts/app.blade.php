@@ -49,7 +49,7 @@
 
         @livewire('notifications')
 
-        <x-pages.sections.footer />
+        <x-layouts.footer />
 
         @filamentScripts
 

@@ -15,13 +15,13 @@
                     <p class="text-gray-600 mb-4">{{ $property->images->count() }} kép</p>
 
                     <!-- Property card komponens -->
-                    <x-layouts.cards.property-card :property="$property" />
+                    <x-cards.property-card :property="$property" />
                 </div>
 
                 <div>
                     <h3 class="text-xl font-semibold mb-4">Galéria</h3>
                     <!-- Property gallery komponens -->
-                    <x-layouts.cards.property-gallery :property="$property" />
+                    <x-cards.property-gallery :property="$property" />
                 </div>
             </div>
 

@@ -18,7 +18,7 @@
         <div
             class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
             <div>
-                <x-layouts.cards.ingatlan-gallery-carousel :images="$images" title="Academia Irodaház" />
+                <x-cards.ingatlan-gallery-carousel :images="$images" title="Academia Irodaház" />
             </div>
             <div class="p-4">
                 <h2 class="text-3xl">Adatok</h2>

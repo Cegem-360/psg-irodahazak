@@ -1,11 +1,4 @@
 <div>
-    <header>
-        <x-layouts.header.top-bar />
-        <x-layouts.header.hero />
-    </header>
-    <div class="relative">
-        <x-layouts.header.nav />
-    </div>
 
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
@@ -38,10 +31,6 @@
         </div>
     </div>
 
-
-    <x-layouts.sections.ajanlat />
-
-    <x-layouts.sections.footer />
-
+    <x-pages.sections.ajanlat />
 
 </div>

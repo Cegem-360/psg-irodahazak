@@ -32,7 +32,7 @@
                     </div>
                     <div class="grid grid-cols-1 gap-6">
                         @foreach ($this->getOffices() as $office)
-                            <x-layouts.cards.property-card :property="$office" />
+                            <x-cards.property-card :property="$office" />
                         @endforeach
                     </div>
                 </div>
