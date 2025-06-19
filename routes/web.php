@@ -69,7 +69,7 @@ Route::get('/budapest/{category}', function ($category) {
             return redirect()->route('kiado-irodak');
     }
 
-    return view('pages.filter', $queryParams);
+    return view('pages.filter', ['queryParams' => $queryParams]);
 })->name('budapest.category');
 
 Route::get('/ingatlanok', [PropertyController::class, 'index'])->name('properties.index');

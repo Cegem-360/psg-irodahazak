@@ -45,18 +45,18 @@ final class ListRentOffices extends Component
 
     public $officeDetails = [];
 
-    public function mount(): void
+    public function mount($queryParams = []): void
     {
-        // Initialize filters from request parameters
-        $this->search = request('search', '');
-        $this->districts = request('districts', '');
-        $this->district = request('district', '');
-        $this->officeName = request('office_name', '');
-        $this->areaMin = request('area_min', '');
-        $this->areaMax = request('area_max', '');
-        $this->priceMin = request('price_min', '');
-        $this->priceMax = request('price_max', '');
-        $this->includeAgglomeration = request('include_agglomeration', false);
+        // Initialize filters from queryParams if provided, otherwise from request parameters
+        $this->search = $queryParams['search'] ?? request('search', '');
+        $this->districts = $queryParams['districts'] ?? request('districts', '');
+        $this->district = $queryParams['district'] ?? request('district', '');
+        $this->officeName = $queryParams['office_name'] ?? request('office_name', '');
+        $this->areaMin = $queryParams['area_min'] ?? request('area_min', '');
+        $this->areaMax = $queryParams['area_max'] ?? request('area_max', '');
+        $this->priceMin = $queryParams['price_min'] ?? request('price_min', '');
+        $this->priceMax = $queryParams['price_max'] ?? request('price_max', '');
+        $this->includeAgglomeration = $queryParams['include_agglomeration'] ?? request('include_agglomeration', false);
 
         $this->updateTotalOffices();
     }
