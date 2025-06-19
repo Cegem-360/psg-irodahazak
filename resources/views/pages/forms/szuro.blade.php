@@ -66,95 +66,95 @@
                                 class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-48 overflow-y-auto hidden">
                                 <div class="p-2">
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="I. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="1" class="district-checkbox mr-2">
                                         <span>I. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="II. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="2" class="district-checkbox mr-2">
                                         <span>II. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="III. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="3" class="district-checkbox mr-2">
                                         <span>III. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="IV. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="4" class="district-checkbox mr-2">
                                         <span>IV. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="V. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="5" class="district-checkbox mr-2">
                                         <span>V. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="VI. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="6" class="district-checkbox mr-2">
                                         <span>VI. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="VII. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="7" class="district-checkbox mr-2">
                                         <span>VII. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="VIII. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="8" class="district-checkbox mr-2">
                                         <span>VIII. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="IX. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="9" class="district-checkbox mr-2">
                                         <span>IX. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="X. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="10" class="district-checkbox mr-2">
                                         <span>X. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XI. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="11" class="district-checkbox mr-2">
                                         <span>XI. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XII. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="12" class="district-checkbox mr-2">
                                         <span>XII. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XIII. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="13" class="district-checkbox mr-2">
                                         <span>XIII. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XIV. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="14" class="district-checkbox mr-2">
                                         <span>XIV. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XV. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="15" class="district-checkbox mr-2">
                                         <span>XV. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XVI. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="16" class="district-checkbox mr-2">
                                         <span>XVI. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XVII. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="17" class="district-checkbox mr-2">
                                         <span>XVII. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XVIII. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="18" class="district-checkbox mr-2">
                                         <span>XVIII. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XIX. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="19" class="district-checkbox mr-2">
                                         <span>XIX. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XX. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="20" class="district-checkbox mr-2">
                                         <span>XX. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XXI. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="21" class="district-checkbox mr-2">
                                         <span>XXI. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XXII. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="22" class="district-checkbox mr-2">
                                         <span>XXII. kerület</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="XXIII. kerület" class="district-checkbox mr-2">
+                                        <input type="checkbox" value="23" class="district-checkbox mr-2">
                                         <span>XXIII. kerület</span>
                                     </label>
                                 </div>
@@ -241,7 +241,8 @@
                         <!-- Keresés gomb -->
                         <div>
                             <button type="submit"
-                                class="w-full bg-primary/70 text-white font-semibold px-8 py-2 rounded hover:bg-accent/80 transition">
+                                class="w-full bg-primary/70 text-white font-semibold px-8 py-2 rounded hover:bg-accent/80 transition"
+                                onclick="console.log('Form submitted with districts:', document.getElementById('selectedDistricts').value);">
                                 KERESÉS
                             </button>
                         </div>
@@ -278,6 +279,17 @@
             .office-option:hover {
                 background-color: rgba(111, 114, 185, 0.05) !important;
             }
+
+            /* Map district highlighting */
+            .selected-district .kerulet {
+                fill: rgba(111, 114, 185, 0.6) !important;
+                stroke: #6f72b9 !important;
+                stroke-width: 2px !important;
+            }
+
+            .selected-district {
+                z-index: 10;
+            }
         </style>
         <script>
             document.addEventListener('livewire:initialized', function() {
@@ -310,12 +322,37 @@
                         document.getElementById('priceMin').value = data.from;
                         document.getElementById('priceMax').value = data.to;
                     }
-                }); // Handle district dropdown changes
-                // (This is now handled in the livewire:initialized event above)
+                });
+
+                // Initialize selected districts from URL parameters
+                initializeSelectedDistricts();
             });
 
             // Global array to store selected districts
             let selectedDistricts = [];
+
+            // Make selectDistrict function globally accessible
+            window.selectDistrict = selectDistrict;
+
+            // Initialize selected districts from URL or form data
+            function initializeSelectedDistricts() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const districtsParam = urlParams.get('districts');
+
+                if (districtsParam) {
+                    selectedDistricts = districtsParam.split(',').filter(d => d.trim() !== '');
+                    document.getElementById('selectedDistricts').value = selectedDistricts.join(',');
+
+                    // Update dropdown selections
+                    updateDropdownSelections();
+
+                    // Update display
+                    updateSelectedDistrictsDisplay();
+
+                    // Update map highlights
+                    updateMapHighlights();
+                }
+            }
 
             // Function to handle map district selection (multiple selection)
             function selectDistrict(districtName, event) {
@@ -325,28 +362,27 @@
                     event.stopPropagation();
                 }
 
+                // Ensure districtName is a string for consistency
+                const districtStr = String(districtName);
+
+                console.log('selectDistrict called with:', districtStr);
+
                 // Toggle district selection
-                const index = selectedDistricts.indexOf(districtName);
+                const index = selectedDistricts.indexOf(districtStr);
                 if (index > -1) {
                     // District already selected, remove it
                     selectedDistricts.splice(index, 1);
-                    // Remove visual highlight
-                    const districtElement = event.target.closest('a');
-                    if (districtElement) {
-                        districtElement.classList.remove('selected-district');
-                    }
                 } else {
                     // District not selected, add it
-                    selectedDistricts.push(districtName);
-                    // Add visual highlight
-                    const districtElement = event.target.closest('a');
-                    if (districtElement) {
-                        districtElement.classList.add('selected-district');
-                    }
+                    selectedDistricts.push(districtStr);
                 }
+
+                console.log('selectedDistricts after toggle:', selectedDistricts);
 
                 // Update hidden input with comma-separated values
                 document.getElementById('selectedDistricts').value = selectedDistricts.join(',');
+
+                console.log('Hidden input value set to:', document.getElementById('selectedDistricts').value);
 
                 // Update dropdown selections
                 updateDropdownSelections();
@@ -354,7 +390,7 @@
                 // Update display
                 updateSelectedDistrictsDisplay();
 
-                // Force update map highlights to ensure sync
+                // Update map highlights to ensure sync
                 updateMapHighlights();
 
                 return false; // Prevent default link behavior
@@ -604,14 +640,11 @@
 
                 // Add highlights for selected districts
                 selectedDistricts.forEach(district => {
-                    // Find all map links and check their onclick attribute
-                    const allMapLinks = document.querySelectorAll('svg a[onclick*="selectDistrict"]');
-                    allMapLinks.forEach(link => {
-                        const onclickAttr = link.getAttribute('onclick');
-                        if (onclickAttr && onclickAttr.includes(`'${district}',`)) {
-                            link.classList.add('selected-district');
-                        }
-                    });
+                    // Find the specific district link by onclick attribute
+                    const districtLink = document.querySelector(`svg a[onclick*="selectDistrict('${district}',"]`);
+                    if (districtLink) {
+                        districtLink.classList.add('selected-district');
+                    }
                 });
             }
 
@@ -635,6 +668,14 @@
                         // form.submit();
                     });
                 });
+            });
+
+            // Additional initialization when DOM is fully loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                // Make sure the map is properly initialized
+                setTimeout(() => {
+                    initializeSelectedDistricts();
+                }, 100);
             });
         </script>
     </div>

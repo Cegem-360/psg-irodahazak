@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Property as Offices;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Log;
 
 final class ListRentOffices extends Component
 {
@@ -74,54 +74,6 @@ final class ListRentOffices extends Component
             ->paginate($this->perPage);
     }
 
-    public function updatedSearch(): void
-    {
-        $this->resetPage();
-        $this->updateTotalOffices();
-    }
-
-    public function updatedDistrict(): void
-    {
-        $this->resetPage();
-        $this->updateTotalOffices();
-    }
-
-    public function updatedDistricts(): void
-    {
-        $this->resetPage();
-        $this->updateTotalOffices();
-    }
-
-    public function updatedOfficeName(): void
-    {
-        $this->resetPage();
-        $this->updateTotalOffices();
-    }
-
-    public function updatedAreaMin(): void
-    {
-        $this->resetPage();
-        $this->updateTotalOffices();
-    }
-
-    public function updatedAreaMax(): void
-    {
-        $this->resetPage();
-        $this->updateTotalOffices();
-    }
-
-    public function updatedPriceMin(): void
-    {
-        $this->resetPage();
-        $this->updateTotalOffices();
-    }
-
-    public function updatedPriceMax(): void
-    {
-        $this->resetPage();
-        $this->updateTotalOffices();
-    }
-
     public function sortBy($field): void
     {
         if ($this->sortField === $field) {
@@ -131,13 +83,6 @@ final class ListRentOffices extends Component
             $this->sortDirection = 'asc';
         }
 
-        $this->resetPage();
-    }
-
-    #[On('refreshList')]
-    public function refreshList(): void
-    {
-        $this->updateTotalOffices();
         $this->resetPage();
     }
 
@@ -165,18 +110,40 @@ final class ListRentOffices extends Component
 
         // Apply district filter (single district for backward compatibility)
         if ($this->district) {
-            $query->where('cim_varos', 'like', '%'.$this->district.'%');
+            $query->where(function ($q) {
+                $districtNumber = $this->district;
+                $q->where('cim_varos', 'like', '%'.$districtNumber.'. kerület%')
+                    ->orWhere('cim_varos', 'like', '%Budapest '.$districtNumber.'%')
+                    ->orWhere('cim_varos', 'like', '%1'.mb_str_pad($districtNumber, 2, '0', STR_PAD_LEFT).'%');
+            });
         }
 
         // Apply multiple districts filter
         if ($this->districts) {
+            // Debug logging
+            Log::info('Districts filter applied with value: '.$this->districts);
+
             $selectedDistricts = explode(',', $this->districts);
             $selectedDistricts = array_filter(array_map('trim', $selectedDistricts));
+
+            Log::info('Processed districts: ', $selectedDistricts);
 
             if (! empty($selectedDistricts)) {
                 $query->where(function ($q) use ($selectedDistricts) {
                     foreach ($selectedDistricts as $district) {
-                        $q->orWhere('cim_varos', 'like', '%'.$district.'%');
+                        $q->orWhere(function ($subQ) use ($district) {
+                            $districtNum = (int) $district; // Ensure it's an integer
+                            $postalCode = '1'.mb_str_pad((string) $districtNum, 2, '0', STR_PAD_LEFT);
+
+                            // Match different possible formats:
+                            $subQ->where('cim_varos', 'like', '%'.$district.'. kerület%')
+                                ->orWhere('cim_varos', 'like', '%Budapest '.$district.'%')
+                                ->orWhere('cim_varos', 'like', '%'.$district.'.kerület%') // without space
+                                ->orWhere('cim_irsz', 'like', $postalCode.'%')
+                                ->orWhere('cim_utca', 'like', '%'.$district.'. kerület%')
+                                ->orWhere('title', 'like', '%'.$district.'. kerület%')
+                                ->orWhere('content', 'like', '%'.$district.'. kerület%');
+                        });
                     }
                 });
             }

@@ -23,6 +23,46 @@ Route::view('/adatvedelmi-nyilatkozat', 'index')->name('privacy-policy');
 Route::view('/impresszum', 'index')->name('impresszum');
 Route::post('/kapcsolat', [ContactController::class, 'store'])->name('contact.store');
 
+// Budapest irodaház kategória route-ok
+Route::get('/budapest/{category}', function ($category) {
+    $districtsMap = [
+        'kiado-azonnali-szolgaltatott-irodak' => '',
+        'kiado-pesti-irodak' => 'IV. kerület,V. kerület,VI. kerület,VII. kerület,VIII. kerület,IX. kerület,X. kerület,XIV. kerület,XV. kerület,XVI. kerület,XVII. kerület,XVIII. kerület,XIX. kerület,XX. kerület',
+        'kiado-belvarosi-irodak' => 'V. kerület,VI. kerület,VII. kerület,VIII. kerület,IX. kerület',
+        'kiado-v-keruleti-irodak' => 'V. kerület',
+        'kiado-vaci-uti-irodak' => 'XIII. kerület,XIV. kerület',
+        'kiado-budai-irodak' => 'I. kerület,II. kerület,III. kerület,XI. kerület,XII. kerület,XXII. kerület',
+        'kiado-bel-budai-irodak' => 'I. kerület,II. kerület,XI. kerület,XII. kerület',
+        'kiado-xi-keruleti-irodak' => 'XI. kerület',
+        'kiado-zold-irodak' => '',
+        'kiado-klasszikus-irodahazak' => '',
+        'kiado-uj-irodahazak' => '',
+        'elado-irodak' => '',
+    ];
+
+    $districts = $districtsMap[$category] ?? '';
+    $queryParams = [];
+
+    if ($districts) {
+        $queryParams['districts'] = $districts;
+    }
+
+    // Speciális szűrők
+    if ($category === 'kiado-azonnali-szolgaltatott-irodak') {
+        $queryParams['search'] = 'szolgáltatott';
+    } elseif ($category === 'kiado-zold-irodak') {
+        $queryParams['search'] = 'zöld';
+    } elseif ($category === 'kiado-klasszikus-irodahazak') {
+        $queryParams['search'] = 'klasszikus';
+    } elseif ($category === 'kiado-uj-irodahazak') {
+        $queryParams['search'] = 'új';
+    } elseif ($category === 'elado-irodak') {
+        return redirect()->route('elado-irodahazak');
+    }
+
+    return redirect()->route('kiado-irodak', $queryParams);
+})->name('budapest.category');
+
 Route::get('/ingatlanok', [PropertyController::class, 'index'])->name('properties.index');
 Route::get('/ingatlanok/{property}', [PropertyController::class, 'show'])->name('properties.show');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');

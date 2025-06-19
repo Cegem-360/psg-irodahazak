@@ -12,24 +12,24 @@
         <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-gray-800 text-lg">
 
             <ul class="space-y-2">
-                <li>Kiadó azonnali szolgáltatott irodák</li>
-                <li>Kiadó pesti irodák</li>
-                <li>Kiadó belvárosi irodák</li>
-                <li>Kiadó irodák V. kerület</li>
+                <li><a href="/budapest/kiado-azonnali-szolgaltatott-irodak">Kiadó azonnali szolgáltatott irodák</a></li>
+                <li><a href="/budapest/kiado-pesti-irodak">Kiadó pesti irodák</a></li>
+                <li><a href="/budapest/kiado-belvarosi-irodak">Kiadó belvárosi irodák</a></li>
+                <li><a href="/budapest/kiado-v-keruleti-irodak">Kiadó irodák V. kerület</a></li>
             </ul>
 
             <ul class="space-y-2">
-                <li>Kiadó Váci úti irodák</li>
-                <li>Kiadó budai irodák</li>
-                <li>Kiadó bel-budai irodák</li>
-                <li>Kiadó irodák XI. kerület</li>
+                <li><a href="/budapest/kiado-vaci-uti-irodak">Kiadó Váci úti irodák</a></li>
+                <li><a href="/budapest/kiado-budai-irodak">Kiadó budai irodák</a></li>
+                <li><a href="/budapest/kiado-bel-budai-irodak">Kiadó bel-budai irodák</a></li>
+                <li><a href="/budapest/kiado-xi-keruleti-irodak">Kiadó irodák XI. kerület</a></li>
             </ul>
 
             <ul class="space-y-2">
-                <li>Kiadó zöld irodák</li>
-                <li>Kiadó klasszikus irodaházak</li>
-                <li>Kiadó új irodaházak</li>
-                <li>Eladó irodák</li>
+                <li><a href="/budapest/kiado-zold-irodak">Kiadó zöld irodák</a></li>
+                <li><a href="/budapest/kiado-klasszikus-irodahazak">Kiadó klasszikus irodaházak</a></li>
+                <li><a href="/budapest/kiado-uj-irodahazak">Kiadó új irodaházak</a></li>
+                <li><a href="/budapest/elado-irodak">Eladó irodák</a></li>
             </ul>
 
         </div>
