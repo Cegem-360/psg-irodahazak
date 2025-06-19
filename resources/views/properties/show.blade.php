@@ -1,6 +1,6 @@
 <x-layouts.app>
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
-        style="background-image{{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
+        style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-8 pt-24 pb-20">
             <h2 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
@@ -31,38 +31,38 @@
                             <tr>
                                 <td class="bold">Összterület:</td>
                                 <td>{{ number_format($property->total_area) }}
-                                    m<sup>2</sup>{{ $property->osszterulet_addons ? ' ' . $property->osszterulet_addons : '' }}
+                                    {{ $property->osszterulet_addons ?? '' }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="bold">Jelenleg kiadó:</td>
-                                <td>{{ number_format($property->jelenleg_kiado) }}
-                                    m<sup>2</sup>{{ $property->jelenleg_kiado_addons ? ' ' . $property->jelenleg_kiado_addons : '' }}
+                                <td>{{ $property->jelenleg_kiado }}
+                                    {{ $property->jelenleg_kiado_addons ?? '' }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="bold">Min. kiadó:</td>
-                                <td>{{ number_format($property->min_kiado) }}
-                                    m<sup>2</sup>{{ $property->min_kiado_addons ? ' ' . $property->min_kiado_addons : '' }}
+                                <td>{{ $property->min_kiado }}
+                                    {{ $property->min_kiado_addons ?? '' }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="bold">Bérleti díj:</td>
                                 <td>{{ $property->min_berleti_dij }}{{ $property->max_berleti_dij ? ' - ' . $property->max_berleti_dij : '' }}
-                                    EUR/m2/hó{{ $property->min_berleti_dij_addons ? ' ' . $property->min_berleti_dij_addons : '' }}{{ $property->max_berleti_dij_addons ? ' ' . $property->max_berleti_dij_addons : '' }}
+                                    {{ $property->min_berleti_dij_addons ?? '' }}
                                 </td>
                             </tr>
                             <tr>
                                 <td class="bold">Üzemeltetési díj:</td>
                                 <td>{{ $property->uzemeletetesi_dij }}
-                                    EUR/m<sup>2</sup>/hó{{ $property->uzemeletetesi_dij_addons ? ' ' . $property->uzemeletetesi_dij_addons : '' }}
+                                    {{ $property->uzemeletetesi_dij_addons ?? '' }}</td>
                                 </td>
                             </tr>
                             @if ($property->raktar_terulet)
                                 <tr>
                                     <td class="bold">Raktár terület:</td>
                                     <td>{{ number_format($property->raktar_terulet) }}
-                                        m<sup>2</sup>{{ $property->raktar_terulet_addons ? ' ' . $property->raktar_terulet_addons : '' }}
+                                        {{ $property->raktar_terulet_addons ?? '' }}
                                     </td>
                                 </tr>
                             @endif
@@ -70,7 +70,7 @@
                                 <tr>
                                     <td class="bold">Raktár bérleti díj:</td>
                                     <td>{{ $property->raktar_berleti_dij }}
-                                        EUR/m<sup>2</sup>/hó{{ $property->raktar_berleti_dij_addons ? ' ' . $property->raktar_berleti_dij_addons : '' }}
+                                        {{ $property->raktar_berleti_dij_addons ?? '' }}
                                     </td>
                                 </tr>
                             @endif
@@ -80,21 +80,24 @@
                             </tr>
                             <tr>
                                 <td class="bold">Parkolás díja:</td>
-                                <td>{{ $property->min_parkolas_dija }}{{ $property->max_parkolas_dija ? ' - ' . $property->max_parkolas_dija : '' }}
-                                    EUR/hely/hó{{ $property->min_parkolas_dija_addons ? ' ' . $property->min_parkolas_dija_addons : '' }}{{ $property->max_parkolas_dija_addons ? ' ' . $property->max_parkolas_dija_addons : '' }}
+                                <td>{{ $property->min_parkolas_dija }}
+                                    {{ $property->min_parkolas_dija_addons ?? '' }}
                                 </td>
                             </tr>
                             @if ($property->kozos_teruleti_arany)
                                 <tr>
                                     <td class="bold">Közös területi arány:</td>
-                                    <td>{{ $property->kozos_teruleti_arany }}%{{ $property->kozos_teruleti_arany_addons ? ' ' . $property->kozos_teruleti_arany_addons : '' }}
+                                    <td>{{ $property->kozos_teruleti_arany }}
+                                        {{ $property->kozos_teruleti_arany_addons ?? '' }}
                                     </td>
                                 </tr>
                             @endif
                             @if ($property->min_berleti_idoszak)
                                 <tr>
                                     <td class="bold">Min. bérleti időszak:</td>
-                                    <td>{{ $property->min_berleti_idoszak }}{{ $property->min_berleti_idoszak_addons ? ' ' . $property->min_berleti_idoszak_addons : '' }}
+                                    <td>
+                                        {{ $property->min_berleti_idoszak }}
+                                        {{ $property->min_berleti_idoszak_addons ?? '' }}
                                     </td>
                                 </tr>
                             @endif
@@ -106,7 +109,12 @@
                             @endif
                             @if ($property->afa)
                                 <tr>
-                                    <td style="padding-top: 20px" class="bold" colspan="2">{{ $property->afa }}
+                                    <td style="padding-top: 20px" class="bold" colspan="2">
+                                        @if ($property->afa /* == 'igen' */)
+                                            A fenti díjakra még 27% ÁFA tevődik!
+                                        @else
+                                            A fenti díjakra még 27% ÁFA nem tevődik!
+                                        @endif
                                     </td>
                                 </tr>
                             @endif

@@ -40,13 +40,7 @@
                                 ', ' .
                                 $office->cim_utca .
                                 ' ' .
-                                $office->cim_hazszam .
-                                '<br><strong>Bérleti díj:</strong> ' .
-                                $office->min_berleti_dij .
-                                ' - ' .
-                                $office->max_berleti_dij .
-                                '<br><strong>Üzemeltetési díj: </strong>' .
-                                $office->uzemeletetesi_dij" :link="route('properties.show', $office)" />
+                                $office->cim_hazszam" :link="route('properties.show', $office)" />
                     @endforeach
                 </div>
             </div>

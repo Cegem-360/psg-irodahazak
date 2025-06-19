@@ -55,7 +55,7 @@
             <div
                 class="flex justify-center gap-8 max-w-screen-xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 {{-- Pagination --}}
-                @include('pages.forms.pagination')
+                {{ $this->getOffices()->links() }}
             </div>
         </div>
     </div>

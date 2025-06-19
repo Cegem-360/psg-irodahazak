@@ -170,6 +170,7 @@ final class Property extends Model
         return [
             'tags' => 'array',
             'services' => 'array',
+
         ];
     }
 }

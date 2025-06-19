@@ -52,7 +52,7 @@
                         {{ __('navigation.about_us') }}</a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('blog.index') }}"
+                    <a href="https://psgirodahazak.blog.hu/"
                         class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['blog.*', 'en.blog.*']) ? 'active' : '' }}">
                         {{ __('navigation.blog') }}</a>
                 </li>
