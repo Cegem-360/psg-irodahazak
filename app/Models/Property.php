@@ -98,7 +98,7 @@ final class Property extends Model
      */
     public function galleryImages()
     {
-        return $this->images()->orderBy('ord');
+        return $this->images()->get();
     }
 
     /**

@@ -13,19 +13,17 @@
     <x-slot name="content">
     </x-slot>
     <div class="overflow-hidden max-w-[2200px] mx-auto bg-white">
-        @if (request()->routeIs('home'))
+        @if (request()->routeIs('home') || request()->routeIs('en.home'))
             @include('pages.home')
-        @elseif (request()->routeIs('adatlap-oldal'))
+        @elseif (request()->routeIs('adatlap-oldal') || request()->routeIs('en.adatlap-oldal'))
             <x-pages.adatlap-oldal />
-        @elseif (request()->routeIs('kiado-irodak'))
+        @elseif (request()->routeIs('kiado-irodak') || request()->routeIs('en.kiado-irodak'))
             @include('pages.offices-for-rent')
-        @elseif (request()->routeIs('elado-irodahazak'))
+        @elseif (request()->routeIs('elado-irodahazak') || request()->routeIs('en.elado-irodahazak'))
             @include('pages.offices-for-sale')
-        @elseif (request()->routeIs('en.office-buildings-for-sale'))
-            @include('pages.offices-for-sale')
-        @elseif (request()->routeIs('rolunk'))
+        @elseif (request()->routeIs('rolunk') || request()->routeIs('en.rolunk'))
             <x-pages.rolunk />
-        @elseif (request()->routeIs('kapcsolat'))
+        @elseif (request()->routeIs('kapcsolat') || request()->routeIs('en.kapcsolat'))
             <x-pages.kapcsolat />
         @endif
 

@@ -1,11 +1,12 @@
 <div>
+
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
             <h2 class="mt-4 mb-4 font-bold text-5xl text-center drop-shadow text-logogray/80">
-                Eladó irodaházak</h2>
-            <h4 class="text-xl text-center mb-16">({{ $totalOffices }} találat)</h4>
+                {{ __('page.title.office_buildings_for_sale') }}</h2>
+            <h4 class="text-xl text-center mb-16">({{ $totalOffices }} {{ __('page.results') }})</h4>
             <div
                 class="flex justify-end gap-8 max-w-screen-xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div class="">
@@ -13,9 +14,9 @@
                         <div>
                             <select id="szuro" wire:model.live="sortField"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                <option value="title">Név szerint</option>
-                                <option value="date">Dátum szerint</option>
-                                <option value="ord">Sorrend szerint</option>
+                                <option value="title">{{ __('page.sort.by_name') }}</option>
+                                <option value="date">{{ __('page.sort.by_date') }}</option>
+                                <option value="ord">{{ __('page.sort.by_order') }}</option>
                             </select>
                         </div>
                     </form>
@@ -30,9 +31,22 @@
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-                <div class="grid grid-cols-1 gap-6">
-                    @foreach ($this->getOffices() as $office)
-                        <x-cards.property-card :property="$office" />
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    @foreach ($this->getOffices() ?? [] as $office)
+                        <x-cards.ingatlan-card image="{{ $office->getFirstImageUrl('800x600') }}" small
+                            :title="$office->title" :description="$office->cim_irsz .
+                                ' ' .
+                                $office->cim_varos .
+                                ', ' .
+                                $office->cim_utca .
+                                ' ' .
+                                $office->cim_hazszam .
+                                '<br><strong>Bérleti díj:</strong> ' .
+                                $office->min_berleti_dij .
+                                ' - ' .
+                                $office->max_berleti_dij .
+                                '<br><strong>Üzemeltetési díj: </strong>' .
+                                $office->uzemeletetesi_dij" :link="route('properties.show', $office)" />
                     @endforeach
                 </div>
             </div>
@@ -41,8 +55,6 @@
                 class="flex justify-center gap-8 max-w-screen-xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 {{-- Pagination --}}
                 {{ $this->getOffices()->links() }}
-
-                {{--  @include('pages.forms.pagination') --}}
             </div>
         </div>
     </div>
