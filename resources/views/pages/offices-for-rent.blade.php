@@ -4,5 +4,4 @@
 
     @include('pages.forms.szuro')
 
-    <x-pages.sections.ajanlat />
 </div>

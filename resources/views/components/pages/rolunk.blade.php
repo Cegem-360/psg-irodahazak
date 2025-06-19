@@ -31,6 +31,4 @@
         </div>
     </div>
 
-    <x-pages.sections.ajanlat />
-
 </div>

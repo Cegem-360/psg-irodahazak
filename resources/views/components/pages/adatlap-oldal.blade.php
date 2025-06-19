@@ -4,6 +4,4 @@
 
     <x-pages.sections.hasonlo-irodak />
 
-    <x-pages.sections.ajanlat />
-
 </div>

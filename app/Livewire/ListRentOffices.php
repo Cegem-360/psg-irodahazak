@@ -101,10 +101,17 @@ final class ListRentOffices extends Component
 
         // Apply search filter
         if ($this->search) {
-            $query->where(function ($q) {
-                $q->where('title', 'like', '%'.$this->search.'%')
-                    ->orWhere('content', 'like', '%'.$this->search.'%')
-                    ->orWhere('lead', 'like', '%'.$this->search.'%');
+            $searchTerms = explode(' ', mb_trim($this->search));
+            $searchTerms = array_filter($searchTerms);
+
+            $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->where(function ($subQ) use ($term) {
+                        $subQ->where('title', 'like', '%'.$term.'%')
+                            ->orWhere('content', 'like', '%'.$term.'%')
+                            ->orWhere('lead', 'like', '%'.$term.'%');
+                    });
+                }
             });
         }
 
@@ -112,9 +119,24 @@ final class ListRentOffices extends Component
         if ($this->district) {
             $query->where(function ($q) {
                 $districtNumber = $this->district;
+                $districtNum = (int) $districtNumber;
+                $postalCode = '1'.mb_str_pad((string) $districtNum, 2, '0', STR_PAD_LEFT);
+
+                // Roman numerals mapping
+                $romanNumerals = [
+                    1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V',
+                    6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
+                    11 => 'XI', 12 => 'XII', 13 => 'XIII', 14 => 'XIV', 15 => 'XV',
+                    16 => 'XVI', 17 => 'XVII', 18 => 'XVIII', 19 => 'XIX', 20 => 'XX',
+                    21 => 'XXI', 22 => 'XXII', 23 => 'XXIII',
+                ];
+
+                $romanDistrict = $romanNumerals[$districtNum] ?? $districtNumber;
+
                 $q->where('cim_varos', 'like', '%'.$districtNumber.'. kerület%')
+                    ->orWhere('cim_varos', 'like', '%'.$romanDistrict.'. kerület%')
                     ->orWhere('cim_varos', 'like', '%Budapest '.$districtNumber.'%')
-                    ->orWhere('cim_varos', 'like', '%1'.mb_str_pad($districtNumber, 2, '0', STR_PAD_LEFT).'%');
+                    ->orWhere('cim_irsz', 'like', $postalCode.'%');
             });
         }
 
@@ -132,17 +154,33 @@ final class ListRentOffices extends Component
                 $query->where(function ($q) use ($selectedDistricts) {
                     foreach ($selectedDistricts as $district) {
                         $q->orWhere(function ($subQ) use ($district) {
-                            $districtNum = (int) $district; // Ensure it's an integer
+                            $districtNum = (int) $district;
                             $postalCode = '1'.mb_str_pad((string) $districtNum, 2, '0', STR_PAD_LEFT);
+
+                            // Roman numerals mapping for Hungarian districts
+                            $romanNumerals = [
+                                1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V',
+                                6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
+                                11 => 'XI', 12 => 'XII', 13 => 'XIII', 14 => 'XIV', 15 => 'XV',
+                                16 => 'XVI', 17 => 'XVII', 18 => 'XVIII', 19 => 'XIX', 20 => 'XX',
+                                21 => 'XXI', 22 => 'XXII', 23 => 'XXIII',
+                            ];
+
+                            $romanDistrict = $romanNumerals[$districtNum] ?? $district;
 
                             // Match different possible formats:
                             $subQ->where('cim_varos', 'like', '%'.$district.'. kerület%')
+                                ->orWhere('cim_varos', 'like', '%'.$romanDistrict.'. kerület%')
                                 ->orWhere('cim_varos', 'like', '%Budapest '.$district.'%')
-                                ->orWhere('cim_varos', 'like', '%'.$district.'.kerület%') // without space
+                                ->orWhere('cim_varos', 'like', '%'.$district.'.kerület%')
+                                ->orWhere('cim_varos', 'like', '%'.$romanDistrict.'.kerület%')
                                 ->orWhere('cim_irsz', 'like', $postalCode.'%')
                                 ->orWhere('cim_utca', 'like', '%'.$district.'. kerület%')
+                                ->orWhere('cim_utca', 'like', '%'.$romanDistrict.'. kerület%')
                                 ->orWhere('title', 'like', '%'.$district.'. kerület%')
-                                ->orWhere('content', 'like', '%'.$district.'. kerület%');
+                                ->orWhere('title', 'like', '%'.$romanDistrict.'. kerület%')
+                                ->orWhere('content', 'like', '%'.$district.'. kerület%')
+                                ->orWhere('content', 'like', '%'.$romanDistrict.'. kerület%');
                         });
                     }
                 });

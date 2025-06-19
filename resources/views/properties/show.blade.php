@@ -262,5 +262,4 @@
         </div>
     </div>
 
-    <x-pages.sections.ajanlat />
 </x-layouts.app>

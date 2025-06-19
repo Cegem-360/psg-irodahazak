@@ -40,7 +40,8 @@
                         </div>
                         <label class="text-sm text-primary flex items-center">
                             <input type="checkbox" name="include_agglomeration" value="1"
-                                class="mr-2 appearance-none checked:bg-accent focus:ring-accent">
+                                class="mr-2 appearance-none checked:bg-accent focus:ring-accent"
+                                {{ request('include_agglomeration') ? 'checked' : '' }}>
                             Agglomeráció találatait is mutassa
                         </label>
                     </div>
@@ -394,7 +395,9 @@
                 updateMapHighlights();
 
                 return false; // Prevent default link behavior
-            } // Function to update dropdown selections
+            }
+
+            // Function to update dropdown selections
             function updateDropdownSelections() {
                 const checkboxes = document.querySelectorAll('.district-checkbox');
                 checkboxes.forEach(checkbox => {
@@ -426,7 +429,9 @@
                 } else {
                     display.classList.add('hidden');
                 }
-            } // Handle dropdown changes
+            }
+
+            // Handle dropdown changes
             document.addEventListener('livewire:initialized', function() {
                 const dropdownButton = document.getElementById('dropdownButton');
                 const dropdownMenu = document.getElementById('dropdownMenu');
@@ -566,7 +571,10 @@
                         {
                             title: '{{ addslashes($office->title) }}',
                             city: '{{ addslashes($office->cim_irsz ?? 'Budapest') }}'
-                        },
+                        }
+                        @if (!$loop->last)
+                            ,
+                        @endif
                     @endforeach
                 ];
 
