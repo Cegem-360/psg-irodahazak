@@ -1,5 +1,8 @@
 <div>
-
+    <div class="relative">
+        <x-layouts.header.nav />
+        <x-layouts.sections.kategoria-valaszto />
+    </div>
     <x-pages.sections.home.bizalomerosito />
 
     @include('pages.forms.szuro')
