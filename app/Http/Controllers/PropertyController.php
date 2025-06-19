@@ -80,7 +80,34 @@ final class PropertyController extends Controller
     {
         $property->load('images');
 
-        return view('properties.show', ['property' => $property]);
+        // Get similar properties from the same district (first 4 digits of postal code)
+        $districtCode = mb_substr($property->cim_irsz ?? '', 0, 4);
+        $similarProperties = Property::where('id', '!=', $property->id)
+            ->where('cim_irsz', 'like', $districtCode.'%')
+            ->where('status', 'active')
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
+
+        // If we don't have enough similar properties from the same district,
+        // get additional ones from other districts
+        if ($similarProperties->count() < 3) {
+            $additionalCount = 3 - $similarProperties->count();
+            $excludeIds = $similarProperties->pluck('id')->push($property->id)->toArray();
+
+            $additionalProperties = Property::whereNotIn('id', $excludeIds)
+                ->where('status', 'active')
+                ->inRandomOrder()
+                ->limit($additionalCount)
+                ->get();
+
+            $similarProperties = $similarProperties->merge($additionalProperties);
+        }
+
+        return view('properties.show', [
+            'property' => $property,
+            'similarProperties' => $similarProperties,
+        ]);
     }
 
     /**

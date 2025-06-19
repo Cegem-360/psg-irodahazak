@@ -17,24 +17,25 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @foreach ($this->getOffices() ?? [] as $office)
-                        <x-cards.ingatlan-card :image="$office->getFirstImageUrl('800x600')" small :title="$office->title" :description="$office->cim_irsz .
-                            ' ' .
-                            $office->cim_varos .
-                            ', ' .
-                            $office->cim_utca .
-                            ' ' .
-                            $office->cim_hazszam .
-                            '<br><strong>Bérleti díj:</strong> ' .
-                            $office->min_berleti_dij .
-                            ' - ' .
-                            $office->max_berleti_dij .
-                            ' ' .
-                            $office->max_berleti_dij_addons .
-                            '<br><strong>Üzemeltetési díj: </strong>' .
-                            $office->uzemeletetesi_dij .
-                            ' ' .
-                            $office->uzemeletetesi_dij_addons"
-                            link="{{ route('properties.show', $office->slug) }}" />
+                        <x-cards.ingatlan-card image="{{ $office->getFirstImageUrl('800x600') }}" small
+                            :title="$office->title" :description="$office->cim_irsz .
+                                ' ' .
+                                $office->cim_varos .
+                                ', ' .
+                                $office->cim_utca .
+                                ' ' .
+                                $office->cim_hazszam .
+                                '<br><strong>Bérleti díj:</strong> ' .
+                                $office->min_berleti_dij .
+                                ' - ' .
+                                $office->max_berleti_dij .
+                                ' ' .
+                                $office->max_berleti_dij_addons .
+                                '<br><strong>Üzemeltetési díj: </strong>' .
+                                $office->uzemeletetesi_dij .
+                                ' ' .
+                                $office->uzemeletetesi_dij_addons"
+                            :link="route('properties.show', ['property' => $office])" />
                     @endforeach
                 </div>
             </div>

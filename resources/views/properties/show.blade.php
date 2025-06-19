@@ -250,14 +250,38 @@
             <h2 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
                 Hasonló irodák</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto">
-                <x-cards.ingatlan-card
-                    image="{{ Vite::asset('resources/images/andrassy_palace_iroda_5__384x246.jpg') }}"
-                    title="Andrássy Palace Iroda" :description="'1061 Budapest, Andrássy út 9.<br><strong>Bérleti díj:</strong> 16 - 17 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2990 HUF/m2/hó'" link="/adatlap-oldal/" />
-                <x-cards.ingatlan-card
-                    image="{{ Vite::asset('resources/images/arena_corner_irodahaz_1__384x246.jpg') }}"
-                    title="Arena Corner" :description="'1087 Budapest, Hungária körút 40.<br><strong>Bérleti díj:</strong> 14.5 - 15.5 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2200 HUF/m2/hó'" link="/adatlap-oldal/" />
-                <x-cards.ingatlan-card image="{{ Vite::asset('resources/images/bank_center_1_2_3_4_5_384x246.jpg') }}"
-                    title="Bank Center" :description="'1054 Budapest, Szabadság tér 7.<br><strong>Bérleti díj:</strong> 22 - 26 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2700 HUF/m2/hó'" link="/adatlap-oldal/" />
+                @if ($similarProperties && $similarProperties->count() > 0)
+                    @foreach ($similarProperties as $similarProperty)
+                        <x-cards.ingatlan-card
+                            image="{{ $similarProperty->getFirstImageUrl('384x246') ?: Vite::asset('resources/images/default-office.jpg') }}"
+                            title="{{ $similarProperty->title }}" :description="$similarProperty->cim_irsz .
+                                ' ' .
+                                $similarProperty->cim_varos .
+                                ', ' .
+                                $similarProperty->cim_utca .
+                                ' ' .
+                                $similarProperty->cim_hazszam .
+                                ($similarProperty->cim_utca_addons ? ', ' . $similarProperty->cim_utca_addons : '') .
+                                '<br>' .
+                                '<strong>Bérleti díj:</strong> ' .
+                                ($similarProperty->min_berleti_dij ?: 'Érdeklődjön') .
+                                ($similarProperty->max_berleti_dij ? ' - ' . $similarProperty->max_berleti_dij : '') .
+                                '<br>' .
+                                '<strong>Üzemeltetési díj:</strong> ' .
+                                ($similarProperty->uzemeletetesi_dij ?: 'Érdeklődjön')"
+                            link="{{ route('properties.show', $similarProperty->slug) }}" />
+                    @endforeach
+                @else
+                    <x-cards.ingatlan-card
+                        image="{{ Vite::asset('resources/images/andrassy_palace_iroda_5__384x246.jpg') }}"
+                        title="Andrássy Palace Iroda" :description="'1061 Budapest, Andrássy út 9.<br><strong>Bérleti díj:</strong> 16 - 17 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2990 HUF/m2/hó'" link="/adatlap-oldal/" />
+                    <x-cards.ingatlan-card
+                        image="{{ Vite::asset('resources/images/arena_corner_irodahaz_1__384x246.jpg') }}"
+                        title="Arena Corner" :description="'1087 Budapest, Hungária körút 40.<br><strong>Bérleti díj:</strong> 14.5 - 15.5 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2200 HUF/m2/hó'" link="/adatlap-oldal/" />
+                    <x-cards.ingatlan-card
+                        image="{{ Vite::asset('resources/images/bank_center_1_2_3_4_5_384x246.jpg') }}"
+                        title="Bank Center" :description="'1054 Budapest, Szabadság tér 7.<br><strong>Bérleti díj:</strong> 22 - 26 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2700 HUF/m2/hó'" link="/adatlap-oldal/" />
+                @endif
             </div>
         </div>
     </div>
