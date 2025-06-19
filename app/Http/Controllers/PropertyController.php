@@ -125,19 +125,19 @@ final class PropertyController extends Controller
     public function searchOfficeNames()
     {
         $searchTerm = request('q', '');
-        
-        if (strlen($searchTerm) < 2) {
+
+        if (mb_strlen($searchTerm) < 2) {
             return response()->json([]);
         }
-        
+
         $offices = Property::active()
-            ->where('title', 'like', '%' . $searchTerm . '%')
+            ->where('title', 'like', '%'.$searchTerm.'%')
             ->select('title', 'cim_varos')
             ->distinct()
             ->orderBy('title')
             ->limit(10)
             ->get();
-        
+
         return response()->json($offices);
     }
 }
