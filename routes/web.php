@@ -59,6 +59,4 @@ Route::group(['as' => 'en.'], function () {
 // API routes (not localized)
 Route::get('/api/properties/{property}/images', [PropertyController::class, 'images'])->name('api.properties.images');
 Route::get('/api/properties/{property}/images/{size}', [PropertyController::class, 'imagesWithSize'])->name('api.properties.images.size');
-
-// Test route for images
-Route::view('/test-images', 'test-images')->name('test-images');
+Route::get('/api/search-office-names', [PropertyController::class, 'searchOfficeNames'])->name('api.search.office.names');

@@ -15,6 +15,8 @@ final class ListRentOffices extends Component
 
     public $search = '';
 
+    public $districts = '';
+
     public $district = '';
 
     public $officeName = '';
@@ -47,6 +49,7 @@ final class ListRentOffices extends Component
     {
         // Initialize filters from request parameters
         $this->search = request('search', '');
+        $this->districts = request('districts', '');
         $this->district = request('district', '');
         $this->officeName = request('office_name', '');
         $this->areaMin = request('area_min', '');
@@ -78,6 +81,12 @@ final class ListRentOffices extends Component
     }
 
     public function updatedDistrict(): void
+    {
+        $this->resetPage();
+        $this->updateTotalOffices();
+    }
+
+    public function updatedDistricts(): void
     {
         $this->resetPage();
         $this->updateTotalOffices();
@@ -154,9 +163,23 @@ final class ListRentOffices extends Component
             });
         }
 
-        // Apply district filter
+        // Apply district filter (single district for backward compatibility)
         if ($this->district) {
             $query->where('cim_varos', 'like', '%'.$this->district.'%');
+        }
+
+        // Apply multiple districts filter
+        if ($this->districts) {
+            $selectedDistricts = explode(',', $this->districts);
+            $selectedDistricts = array_filter(array_map('trim', $selectedDistricts));
+
+            if (! empty($selectedDistricts)) {
+                $query->where(function ($q) use ($selectedDistricts) {
+                    foreach ($selectedDistricts as $district) {
+                        $q->orWhere('cim_varos', 'like', '%'.$district.'%');
+                    }
+                });
+            }
         }
 
         // Apply office name filter

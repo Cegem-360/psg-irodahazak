@@ -56,6 +56,4 @@
 
     <x-pages.sections.home.hirek-section />
 
-    <x-pages.sections.ajanlat />
-
 </div>

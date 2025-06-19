@@ -17,7 +17,7 @@
             <form id="filterForm" method="GET" action="{{ route('kiado-irodak') }}" class="search-form">
                 <!-- Hidden inputs for map selection and parameters -->
                 <input type="hidden" name="type" value="rent">
-                <input type="hidden" name="district" id="selectedDistrict" value="">
+                <input type="hidden" name="districts" id="selectedDistricts" value="">
                 <input type="hidden" name="area_min" id="areaMin" value="">
                 <input type="hidden" name="area_max" id="areaMax" value="">
                 <input type="hidden" name="price_min" id="priceMin" value="">
@@ -30,8 +30,12 @@
                         <h3 class="text-lg mb-4">Térképes keresés</h3>
                         <div class="map-container">
                             <x-svg.bp-map class="h-96" />
-                            <div id="selectedDistrictDisplay" class="mt-2 text-sm text-primary font-semibold hidden">
-                                Kiválasztott kerület: <span id="districtName"></span>
+                            <div id="selectedDistrictsDisplay" class="mt-2 text-sm text-primary font-semibold hidden">
+                                Kiválasztott kerületek: <span id="districtsNames"></span>
+                                <button type="button" id="clearSelections"
+                                    class="ml-2 text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+                                    Összes törlése
+                                </button>
                             </div>
                         </div>
                         <label class="text-sm text-primary flex items-center">
@@ -45,46 +49,179 @@
                         class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/10">
                         <!-- Keresőmezők -->
                         <h3 class="text-lg mb-4">Keresési feltételek</h3>
-                        <select name="district_dropdown" id="districtDropdown"
-                            class="w-full border border-gray-300 rounded-xl px-4 py-2">
-                            <option value="" disabled selected>Válasszon kerületet!</option>
-                            <option value="I. kerület">I. kerület</option>
-                            <option value="II. kerület">II. kerület</option>
-                            <option value="III. kerület">III. kerület</option>
-                            <option value="IV. kerület">IV. kerület</option>
-                            <option value="V. kerület">V. kerület</option>
-                            <option value="VI. kerület">VI. kerület</option>
-                            <option value="VII. kerület">VII. kerület</option>
-                            <option value="VIII. kerület">VIII. kerület</option>
-                            <option value="IX. kerület">IX. kerület</option>
-                            <option value="X. kerület">X. kerület</option>
-                            <option value="XI. kerület">XI. kerület</option>
-                            <option value="XII. kerület">XII. kerület</option>
-                            <option value="XIII. kerület">XIII. kerület</option>
-                            <option value="XIV. kerület">XIV. kerület</option>
-                            <option value="XV. kerület">XV. kerület</option>
-                            <option value="XVI. kerület">XVI. kerület</option>
-                            <option value="XVII. kerület">XVII. kerület</option>
-                            <option value="XVIII. kerület">XVIII. kerület</option>
-                            <option value="XIX. kerület">XIX. kerület</option>
-                            <option value="XX. kerület">XX. kerület</option>
-                            <option value="XXI. kerület">XXI. kerület</option>
-                            <option value="XXII. kerület">XXII. kerület</option>
-                            <option value="XXIII. kerület">XXIII. kerület</option>
-                        </select>
+                        <!-- Custom Multi-Select Dropdown -->
+                        <div class="relative">
+                            <button type="button" id="dropdownButton"
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-white text-left focus:ring-2 focus:ring-accent focus:border-accent flex justify-between items-center">
+                                <span id="dropdownText">Kerületek kiválasztása</span>
+                                <svg class="w-5 h-5 transition-transform duration-200" id="dropdownArrow" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
 
-                        <select name="office_name" class="w-full border border-gray-300 rounded-xl px-4 py-2">
-                            <option value="" disabled selected>Irodaház neve</option>
-                            <option value="Árpád Center">Árpád Center</option>
-                            <option value="RiverPark">RiverPark</option>
-                            <option value="WestEnd">WestEnd</option>
-                            <option value="Millennium Center">Millennium Center</option>
-                            <option value="Bank Center">Bank Center</option>
-                            <!-- További irodaházak... -->
-                        </select>
+                            <!-- Dropdown Menu -->
+                            <div id="dropdownMenu"
+                                class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-48 overflow-y-auto hidden">
+                                <div class="p-2">
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="I. kerület" class="district-checkbox mr-2">
+                                        <span>I. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="II. kerület" class="district-checkbox mr-2">
+                                        <span>II. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="III. kerület" class="district-checkbox mr-2">
+                                        <span>III. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="IV. kerület" class="district-checkbox mr-2">
+                                        <span>IV. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="V. kerület" class="district-checkbox mr-2">
+                                        <span>V. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="VI. kerület" class="district-checkbox mr-2">
+                                        <span>VI. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="VII. kerület" class="district-checkbox mr-2">
+                                        <span>VII. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="VIII. kerület" class="district-checkbox mr-2">
+                                        <span>VIII. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="IX. kerület" class="district-checkbox mr-2">
+                                        <span>IX. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="X. kerület" class="district-checkbox mr-2">
+                                        <span>X. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XI. kerület" class="district-checkbox mr-2">
+                                        <span>XI. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XII. kerület" class="district-checkbox mr-2">
+                                        <span>XII. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XIII. kerület" class="district-checkbox mr-2">
+                                        <span>XIII. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XIV. kerület" class="district-checkbox mr-2">
+                                        <span>XIV. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XV. kerület" class="district-checkbox mr-2">
+                                        <span>XV. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XVI. kerület" class="district-checkbox mr-2">
+                                        <span>XVI. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XVII. kerület" class="district-checkbox mr-2">
+                                        <span>XVII. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XVIII. kerület" class="district-checkbox mr-2">
+                                        <span>XVIII. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XIX. kerület" class="district-checkbox mr-2">
+                                        <span>XIX. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XX. kerület" class="district-checkbox mr-2">
+                                        <span>XX. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XXI. kerület" class="district-checkbox mr-2">
+                                        <span>XXI. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XXII. kerület" class="district-checkbox mr-2">
+                                        <span>XXII. kerület</span>
+                                    </label>
+                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                        <input type="checkbox" value="XXIII. kerület" class="district-checkbox mr-2">
+                                        <span>XXIII. kerület</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Office Name Search Dropdown -->
+                        <div class="relative">
+                            <button type="button" id="officeDropdownButton"
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-white text-left focus:ring-2 focus:ring-accent focus:border-accent flex justify-between items-center">
+                                <span id="officeDropdownText">Irodaház neve</span>
+                                <svg class="w-5 h-5 transition-transform duration-200" id="officeDropdownArrow"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+
+                            <!-- Hidden input for form submission -->
+                            <input type="hidden" name="office_name" id="selectedOfficeName"
+                                value="{{ request('office_name') }}">
+
+                            <!-- Dropdown Menu -->
+                            <div id="officeDropdownMenu"
+                                class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-64 overflow-hidden hidden">
+                                <!-- Search input inside dropdown -->
+                                <div class="p-3 border-b border-gray-200">
+                                    <input type="text" id="officeSearchInput"
+                                        placeholder="Keresés irodaházak között..."
+                                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-accent focus:border-accent text-sm">
+                                </div>
+
+                                <!-- Results container -->
+                                <div class="max-h-48 overflow-y-auto">
+                                    <div id="officeResults" class="p-2">
+                                        <!-- Static default options (will be replaced with dynamic content) -->
+                                        <div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option"
+                                            data-value="">
+                                            <div class="text-gray-500 italic">Összes irodaház</div>
+                                        </div>
+                                    </div>
+
+                                    <div id="officeLoading" class="p-4 text-center text-gray-500 hidden">
+                                        <div class="flex items-center justify-center">
+                                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-500"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                    stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                </path>
+                                            </svg>
+                                            Keresés...
+                                        </div>
+                                    </div>
+
+                                    <div id="officeEmpty" class="p-4 text-center text-gray-500 hidden">
+                                        Nincs találat
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <input type="text" name="search" placeholder="Keresett kifejezés"
-                            class="w-full border border-gray-300 rounded-xl px-4 py-2" value="{{ request('search') }}">
+                            class="w-full border border-gray-300 rounded-xl px-4 py-2"
+                            value="{{ request('search') }}">
                     </div>
 
                     <div
@@ -113,6 +250,35 @@
                 </div>
             </form>
         </div>
+        <style>
+            /* Custom dropdown styling */
+            .district-checkbox {
+                accent-color: #16a34a;
+            }
+
+            .district-checkbox:checked+span {
+                color: #16a34a;
+                font-weight: 600;
+            }
+
+            #dropdownMenu,
+            #officeDropdownMenu {
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            }
+
+            #dropdownMenu label:hover,
+            .office-option:hover {
+                background-color: rgba(111, 114, 185, 0.05);
+            }
+
+            .office-option {
+                transition: background-color 0.2s ease;
+            }
+
+            .office-option:hover {
+                background-color: rgba(111, 114, 185, 0.05) !important;
+            }
+        </style>
         <script>
             document.addEventListener('livewire:initialized', function() {
                 // Initialize the range sliders
@@ -144,23 +310,14 @@
                         document.getElementById('priceMin').value = data.from;
                         document.getElementById('priceMax').value = data.to;
                     }
-                });
-
-                // Handle district dropdown changes
-                document.getElementById('districtDropdown').addEventListener('change', function() {
-                    const selectedDistrict = this.value;
-                    document.getElementById('selectedDistrict').value = selectedDistrict;
-
-                    if (selectedDistrict) {
-                        document.getElementById('selectedDistrictDisplay').classList.remove('hidden');
-                        document.getElementById('districtName').textContent = selectedDistrict;
-                    } else {
-                        document.getElementById('selectedDistrictDisplay').classList.add('hidden');
-                    }
-                });
+                }); // Handle district dropdown changes
+                // (This is now handled in the livewire:initialized event above)
             });
 
-            // Function to handle map district selection
+            // Global array to store selected districts
+            let selectedDistricts = [];
+
+            // Function to handle map district selection (multiple selection)
             function selectDistrict(districtName, event) {
                 // Prevent default behavior and stop event propagation
                 if (event) {
@@ -168,24 +325,306 @@
                     event.stopPropagation();
                 }
 
-                // Update hidden input
-                document.getElementById('selectedDistrict').value = districtName;
+                // Toggle district selection
+                const index = selectedDistricts.indexOf(districtName);
+                if (index > -1) {
+                    // District already selected, remove it
+                    selectedDistricts.splice(index, 1);
+                    // Remove visual highlight
+                    const districtElement = event.target.closest('a');
+                    if (districtElement) {
+                        districtElement.classList.remove('selected-district');
+                    }
+                } else {
+                    // District not selected, add it
+                    selectedDistricts.push(districtName);
+                    // Add visual highlight
+                    const districtElement = event.target.closest('a');
+                    if (districtElement) {
+                        districtElement.classList.add('selected-district');
+                    }
+                }
 
-                // Update dropdown
-                document.getElementById('districtDropdown').value = districtName;
+                // Update hidden input with comma-separated values
+                document.getElementById('selectedDistricts').value = selectedDistricts.join(',');
 
-                // Show selected district
-                document.getElementById('selectedDistrictDisplay').classList.remove('hidden');
-                document.getElementById('districtName').textContent = districtName;
+                // Update dropdown selections
+                updateDropdownSelections();
 
-                // Add visual feedback to map (optional)
-                // You could add a class to highlight the selected district
+                // Update display
+                updateSelectedDistrictsDisplay();
+
+                // Force update map highlights to ensure sync
+                updateMapHighlights();
 
                 return false; // Prevent default link behavior
+            } // Function to update dropdown selections
+            function updateDropdownSelections() {
+                const checkboxes = document.querySelectorAll('.district-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = selectedDistricts.includes(checkbox.value);
+                });
+                updateDropdownText();
+            }
+
+            // Function to update dropdown button text
+            function updateDropdownText() {
+                const dropdownText = document.getElementById('dropdownText');
+                if (selectedDistricts.length === 0) {
+                    dropdownText.textContent = 'Kerületek kiválasztása';
+                } else if (selectedDistricts.length === 1) {
+                    dropdownText.textContent = selectedDistricts[0];
+                } else {
+                    dropdownText.textContent = `${selectedDistricts.length} kerület kiválasztva`;
+                }
+            }
+
+            // Function to update the display of selected districts
+            function updateSelectedDistrictsDisplay() {
+                const display = document.getElementById('selectedDistrictsDisplay');
+                const namesSpan = document.getElementById('districtsNames');
+
+                if (selectedDistricts.length > 0) {
+                    display.classList.remove('hidden');
+                    namesSpan.textContent = selectedDistricts.join(', ');
+                } else {
+                    display.classList.add('hidden');
+                }
+            } // Handle dropdown changes
+            document.addEventListener('livewire:initialized', function() {
+                const dropdownButton = document.getElementById('dropdownButton');
+                const dropdownMenu = document.getElementById('dropdownMenu');
+                const dropdownArrow = document.getElementById('dropdownArrow');
+                const checkboxes = document.querySelectorAll('.district-checkbox');
+
+                // Toggle dropdown visibility
+                dropdownButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const isHidden = dropdownMenu.classList.contains('hidden');
+
+                    if (isHidden) {
+                        dropdownMenu.classList.remove('hidden');
+                        dropdownArrow.style.transform = 'rotate(180deg)';
+                    } else {
+                        dropdownMenu.classList.add('hidden');
+                        dropdownArrow.style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Handle checkbox changes
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        if (this.checked) {
+                            if (!selectedDistricts.includes(this.value)) {
+                                selectedDistricts.push(this.value);
+                            }
+                        } else {
+                            const index = selectedDistricts.indexOf(this.value);
+                            if (index > -1) {
+                                selectedDistricts.splice(index, 1);
+                            }
+                        }
+
+                        // Update hidden input
+                        document.getElementById('selectedDistricts').value = selectedDistricts.join(
+                            ',');
+
+                        // Update dropdown text
+                        updateDropdownText();
+
+                        // Update visual highlights on map
+                        updateMapHighlights();
+
+                        // Update display
+                        updateSelectedDistrictsDisplay();
+                    });
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                        dropdownMenu.classList.add('hidden');
+                        dropdownArrow.style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Clear all selections button
+                document.getElementById('clearSelections').addEventListener('click', function() {
+                    selectedDistricts = [];
+                    document.getElementById('selectedDistricts').value = '';
+                    updateDropdownSelections();
+                    updateSelectedDistrictsDisplay();
+                    clearMapHighlights();
+                });
+
+                // Office Name Dropdown functionality
+                const officeDropdownButton = document.getElementById('officeDropdownButton');
+                const officeDropdownMenu = document.getElementById('officeDropdownMenu');
+                const officeDropdownArrow = document.getElementById('officeDropdownArrow');
+                const officeSearchInput = document.getElementById('officeSearchInput');
+                const officeResults = document.getElementById('officeResults');
+                const officeLoading = document.getElementById('officeLoading');
+                const officeEmpty = document.getElementById('officeEmpty');
+
+                let officeSearchTimeout;
+
+                // Initialize dropdown text based on current value
+                const currentOfficeValue = document.getElementById('selectedOfficeName').value;
+                if (currentOfficeValue) {
+                    document.getElementById('officeDropdownText').textContent = currentOfficeValue;
+                }
+
+                // Toggle office dropdown
+                officeDropdownButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const isHidden = officeDropdownMenu.classList.contains('hidden');
+
+                    if (isHidden) {
+                        officeDropdownMenu.classList.remove('hidden');
+                        officeDropdownArrow.style.transform = 'rotate(180deg)';
+                        officeSearchInput.focus();
+                        // Load initial results
+                        loadOfficeNames('');
+                    } else {
+                        officeDropdownMenu.classList.add('hidden');
+                        officeDropdownArrow.style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Search functionality
+                officeSearchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.trim();
+
+                    clearTimeout(officeSearchTimeout);
+
+                    officeSearchTimeout = setTimeout(() => {
+                        loadOfficeNames(searchTerm);
+                    }, 300);
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!officeDropdownButton.contains(e.target) && !officeDropdownMenu.contains(e.target)) {
+                        officeDropdownMenu.classList.add('hidden');
+                        officeDropdownArrow.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+
+            // Function to load office names
+            function loadOfficeNames(searchTerm) {
+                const officeLoading = document.getElementById('officeLoading');
+                const officeEmpty = document.getElementById('officeEmpty');
+                const officeResults = document.getElementById('officeResults');
+
+                // Show loading
+                officeLoading.classList.remove('hidden');
+                officeEmpty.classList.add('hidden');
+
+                // Static office names for now (later can be replaced with AJAX call)
+                const offices = [
+                    @php
+                        $offices = \App\Models\Property::active()->get();
+                    @endphp
+                    @foreach ($offices as $office)
+                        {
+                            title: '{{ addslashes($office->title) }}',
+                            city: '{{ addslashes($office->cim_irsz ?? 'Budapest') }}'
+                        },
+                    @endforeach
+                ];
+
+                // Filter offices based on search term
+                const filteredOffices = offices.filter(office =>
+                    office.title.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+
+                setTimeout(() => {
+                    officeLoading.classList.add('hidden');
+
+                    if (filteredOffices.length === 0 && searchTerm) {
+                        officeEmpty.classList.remove('hidden');
+                        officeResults.innerHTML =
+                            '<div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option" data-value=""><div class="text-gray-500 italic">Összes irodaház</div></div>';
+                    } else {
+                        officeEmpty.classList.add('hidden');
+
+                        // Build results HTML
+                        let resultsHTML =
+                            '<div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option" data-value=""><div class="text-gray-500 italic">Összes irodaház</div></div>';
+
+                        filteredOffices.forEach(office => {
+                            resultsHTML += `
+                                <div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option" data-value="${office.title}">
+                                    <div class="font-medium">${office.title}</div>
+                                    <div class="text-sm text-gray-500">${office.city}</div>
+                                </div>
+                            `;
+                        });
+
+                        officeResults.innerHTML = resultsHTML;
+
+                        // Add click listeners to options
+                        document.querySelectorAll('.office-option').forEach(option => {
+                            option.addEventListener('click', function() {
+                                selectOffice(this.dataset.value);
+                            });
+                        });
+                    }
+                }, 200);
+            }
+
+            // Function to select an office
+            function selectOffice(officeName) {
+                const officeDropdownButton = document.getElementById('officeDropdownButton');
+                const officeDropdownMenu = document.getElementById('officeDropdownMenu');
+                const officeDropdownArrow = document.getElementById('officeDropdownArrow');
+                const officeDropdownText = document.getElementById('officeDropdownText');
+                const selectedOfficeName = document.getElementById('selectedOfficeName');
+
+                // Update hidden input
+                selectedOfficeName.value = officeName;
+
+                // Update button text
+                if (officeName) {
+                    officeDropdownText.textContent = officeName;
+                } else {
+                    officeDropdownText.textContent = 'Irodaház neve';
+                }
+
+                // Close dropdown
+                officeDropdownMenu.classList.add('hidden');
+                officeDropdownArrow.style.transform = 'rotate(0deg)';
+            }
+
+            // Function to update map highlights based on selected districts
+            function updateMapHighlights() {
+                // Clear all highlights first
+                clearMapHighlights();
+
+                // Add highlights for selected districts
+                selectedDistricts.forEach(district => {
+                    // Find all map links and check their onclick attribute
+                    const allMapLinks = document.querySelectorAll('svg a[onclick*="selectDistrict"]');
+                    allMapLinks.forEach(link => {
+                        const onclickAttr = link.getAttribute('onclick');
+                        if (onclickAttr && onclickAttr.includes(`'${district}',`)) {
+                            link.classList.add('selected-district');
+                        }
+                    });
+                });
+            }
+
+            // Function to clear all map highlights
+            function clearMapHighlights() {
+                const allLinks = document.querySelectorAll('svg a.selected-district');
+                allLinks.forEach(link => {
+                    link.classList.remove('selected-district');
+                });
             }
 
             // Auto-submit form when ranges change (optional)
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('livewire:initialized', function() {
                 const form = document.getElementById('filterForm');
 
                 // Auto-submit on dropdown changes (optional)

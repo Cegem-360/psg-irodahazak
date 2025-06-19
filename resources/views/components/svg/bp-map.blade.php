@@ -13,6 +13,16 @@
             .kerulet:hover {
                 fill: rgba(111, 114, 185, 0.4);
             }
+
+            .selected-district .kerulet {
+                fill: rgba(34, 197, 94, 0.6) !important;
+                stroke: #16a34a;
+                stroke-width: 2px;
+            }
+
+            .selected-district .kerulet:hover {
+                fill: rgba(34, 197, 94, 0.8) !important;
+            }
         </style>
     </defs>
 

@@ -15,8 +15,23 @@ final class PropertyController extends Controller
     {
         $query = Property::with('images')->active();
 
-        // Filter by district
-        if (request('district')) {
+        // Filter by districts (multiple)
+        if (request('districts')) {
+            $districts = explode(',', request('districts'));
+            $districts = array_map('trim', $districts); // Remove any extra whitespace
+            $districts = array_filter($districts); // Remove empty values
+
+            if (! empty($districts)) {
+                $query->where(function ($q) use ($districts) {
+                    foreach ($districts as $district) {
+                        $q->orWhere('cim_varos', 'like', '%'.$district.'%');
+                    }
+                });
+            }
+        }
+
+        // Filter by district (single - for backward compatibility)
+        if (request('district') && ! request('districts')) {
             $query->where('cim_varos', 'like', '%'.request('district').'%');
         }
 
@@ -102,5 +117,27 @@ final class PropertyController extends Controller
         });
 
         return response()->json($images);
+    }
+
+    /**
+     * Search office names for autocomplete
+     */
+    public function searchOfficeNames()
+    {
+        $searchTerm = request('q', '');
+        
+        if (strlen($searchTerm) < 2) {
+            return response()->json([]);
+        }
+        
+        $offices = Property::active()
+            ->where('title', 'like', '%' . $searchTerm . '%')
+            ->select('title', 'cim_varos')
+            ->distinct()
+            ->orderBy('title')
+            ->limit(10)
+            ->get();
+        
+        return response()->json($offices);
     }
 }
