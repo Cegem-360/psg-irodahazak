@@ -210,8 +210,13 @@
                         <h2 class="text-3xl">Jellemzők</h2>
                         <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
                             @if ($property->services && count($property->services) > 0)
-                                @foreach ($property->services as $service)
-                                    <li class="pb-1">{{ $service }}</li>
+                                @php
+                                    $allItems = collect($property->services)
+                                        ->merge($property->tags ?? [])
+                                        ->sort();
+                                @endphp
+                                @foreach ($allItems as $item)
+                                    <li class="pb-1">{{ $item }}</li>
                                 @endforeach
                             @endif
                         </ul>
