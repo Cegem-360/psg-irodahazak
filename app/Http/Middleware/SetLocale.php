@@ -19,6 +19,11 @@ final class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Skip locale detection for language switch routes to prevent conflicts
+        if ($request->is('language/*')) {
+            return $next($request);
+        }
+
         // First check if we're on an English route
         $locale = 'hu'; // default
 
