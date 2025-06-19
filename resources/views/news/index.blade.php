@@ -22,7 +22,7 @@
                         <p class="text-gray-600">{{ $article->published_at->format('Y.m.d.') }}</p>
                         <h3 class="text-xl font-semibold">{{ $article->title }}</h3>
                         <div class="md:ml-auto">
-                            <a href="{{ route('news.show', $article->slug) }}"
+                            <a href="{{ localized_route('news.show', ['slug' => $article->slug]) }}"
                                 class="px-3 py-1 text-sm bg-primary/70 text-white rounded hover:bg-primary/90 transition-colors duration-300 ease-in-out after:absolute after:inset-0 after:cursor-pointer">{{ $article->title }}</a>
                         </div>
                     </div>

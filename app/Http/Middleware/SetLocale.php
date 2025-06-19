@@ -19,25 +19,8 @@ final class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Skip locale detection for language switch routes to prevent conflicts
-        if ($request->is('language/*')) {
-            return $next($request);
-        }
-
-        // First check if we're on an English route
-        $locale = 'hu'; // default
-
-        if ($request->is('en') || $request->is('en/*')) {
-            $locale = 'en';
-            Session::put('locale', 'en');
-        } else {
-            // Get locale from session, fallback to config default
-            $locale = Session::get('locale', config('app.locale'));
-        }
-
-        // Ensure the locale is supported
-        if (in_array($locale, ['hu', 'en'])) {
-            App::setLocale($locale);
+        if (Session::has('locale')) {
+            App::setLocale(Session::get('locale'));
         }
 
         return $next($request);

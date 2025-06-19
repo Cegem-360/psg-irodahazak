@@ -22,7 +22,7 @@
 
                 <!-- Search Form -->
                 <div class="mt-8 max-w-md mx-auto">
-                    <form method="GET" action="{{ route('blog.index') }}" class="flex">
+                    <form method="GET" action="{{ localized_route('blog.index') }}" class="flex">
                         <input type="text" name="search" value="{{ request('search') }}" placeholder="Keresés..."
                             class="flex-1 px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <button type="submit"
@@ -42,7 +42,7 @@
                         <h3 class="text-lg font-semibold mb-4 text-gray-900">Kategóriák</h3>
                         <ul class="space-y-3">
                             <li>
-                                <a href="{{ route('blog.index') }}"
+                                <a href="{{ localized_route('blog.index') }}"
                                     class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-150 {{ !request('category') ? 'text-blue-600 font-medium' : '' }}">
                                     <span>Összes bejegyzés</span>
                                     <span class="text-sm bg-gray-100 px-2 py-1 rounded">{{ $posts->total() }}</span>
@@ -50,7 +50,7 @@
                             </li>
                             @foreach ($categories as $category)
                                 <li>
-                                    <a href="{{ route('blog.category', $category->slug) }}"
+                                    <a href="{{ localized_route('blog.category', ['slug' => $category->slug]) }}"
                                         class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-150">
                                         <span class="flex items-center">
                                             <span class="w-3 h-3 rounded-full mr-2"
@@ -100,7 +100,7 @@
                                         </div>
 
                                         <h2 class="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
-                                            <a href="{{ route('blog.show', $post->slug) }}"
+                                            <a href="{{ localized_route('blog.show', ['slug' => $post->slug]) }}"
                                                 class="hover:text-blue-600 transition duration-150">
                                                 {{ $post->title }}
                                             </a>
@@ -154,7 +154,7 @@
                             </p>
                             @if (request('search'))
                                 <div class="mt-6">
-                                    <a href="{{ route('blog.index') }}"
+                                    <a href="{{ localized_route('blog.index') }}"
                                         class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-600 bg-blue-100 hover:bg-blue-200 transition duration-150">
                                         Összes bejegyzés megtekintése
                                     </a>

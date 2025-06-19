@@ -179,7 +179,8 @@
                                 <div class="ml-3 text-sm">
                                     <label for="contact_privacy" class="font-light text-gray-500">Elfogadom az <a
                                             class="font-medium text-primary hover:underline"
-                                            href="{{ route('privacy-policy') }}">adatvédelmi nyilatkozatot</a> és
+                                            href="{{ localized_route('privacy-policy') }}">adatvédelmi
+                                            nyilatkozatot</a> és
                                         hozzájárulok adataim
                                         kezeléséhez. *</label>
                                     @error('privacy')

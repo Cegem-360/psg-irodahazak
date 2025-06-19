@@ -14,9 +14,9 @@
         <div class="bg-white border-b">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <nav class="flex items-center space-x-2 text-sm text-gray-500">
-                    <a href="{{ route('home') }}" class="hover:text-blue-600">Főoldal</a>
+                    <a href="{{ localized_route('home') }}" class="hover:text-blue-600">Főoldal</a>
                     <span>/</span>
-                    <a href="{{ route('blog.index') }}" class="hover:text-blue-600">Blog</a>
+                    <a href="{{ localized_route('blog.index') }}" class="hover:text-blue-600">Blog</a>
                     <span>/</span>
                     <span class="text-gray-900">{{ $category->name }}</span>
                 </nav>
@@ -52,14 +52,14 @@
                         <h3 class="text-lg font-semibold mb-4 text-gray-900">Kategóriák</h3>
                         <ul class="space-y-3">
                             <li>
-                                <a href="{{ route('blog.index') }}"
+                                <a href="{{ localized_route('blog.index') }}"
                                     class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-150">
                                     <span>Összes bejegyzés</span>
                                 </a>
                             </li>
                             @foreach ($categories as $cat)
                                 <li>
-                                    <a href="{{ route('blog.category', $cat->slug) }}"
+                                    <a href="{{ localized_route('blog.category', ['slug' => $cat->slug]) }}"
                                         class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-150 {{ $cat->id === $category->id ? 'text-blue-600 font-medium' : '' }}">
                                         <span class="flex items-center">
                                             <span class="w-3 h-3 rounded-full mr-2"
@@ -109,7 +109,7 @@
                                         </div>
 
                                         <h2 class="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
-                                            <a href="{{ route('blog.show', $post->slug) }}"
+                                            <a href="{{ localized_route('blog.show', ['slug' => $post->slug]) }}"
                                                 class="hover:text-blue-600 transition duration-150">
                                                 {{ $post->title }}
                                             </a>
@@ -158,7 +158,7 @@
                                 Jelenleg nincsenek publikált bejegyzések ebben a kategóriában.
                             </p>
                             <div class="mt-6">
-                                <a href="{{ route('blog.index') }}"
+                                <a href="{{ localized_route('blog.index') }}"
                                     class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-600 bg-blue-100 hover:bg-blue-200 transition duration-150">
                                     Összes bejegyzés megtekintése
                                 </a>

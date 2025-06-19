@@ -31,7 +31,7 @@
                 <nav class="flex" aria-label="Breadcrumb">
                     <ol class="flex items-center space-x-4">
                         <li>
-                            <a href="{{ route('home') }}"
+                            <a href="{{ localized_route('home') }}"
                                 class="text-gray-500 hover:text-gray-700 transition duration-150">
                                 Főoldal
                             </a>
@@ -42,7 +42,7 @@
                                     d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            <a href="{{ route('news.index') }}"
+                            <a href="{{ localized_route('news.index') }}"
                                 class="ml-4 text-gray-500 hover:text-gray-700 transition duration-150">
                                 Hírek
                             </a>
@@ -55,7 +55,7 @@
                                         d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <a href="{{ route('news.category', $news->category->slug) }}"
+                                <a href="{{ localized_route('news.category', ['slug' => $news->category->slug]) }}"
                                     class="ml-4 text-gray-500 hover:text-gray-700 transition duration-150">
                                     {{ $news->category->name }}
                                 </a>
@@ -161,7 +161,7 @@
                                         <time>{{ $related->published_at->format('Y.m.d.') }}</time>
                                     </div>
                                     <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-                                        <a href="{{ route('news.show', $related->slug) }}"
+                                        <a href="{{ localized_route('news.show', ['slug' => $related->slug]) }}"
                                             class="hover:text-red-600 transition duration-150">
                                             {{ $related->title }}
                                         </a>
@@ -176,7 +176,7 @@
 
             <!-- Back to News -->
             <div class="mt-12 text-center">
-                <a href="{{ route('news.index') }}"
+                <a href="{{ localized_route('news.index') }}"
                     class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition duration-150">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">

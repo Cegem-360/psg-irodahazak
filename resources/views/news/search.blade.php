@@ -21,7 +21,7 @@
 
                 <!-- Search Form -->
                 <div class="mt-8 max-w-md mx-auto">
-                    <form method="GET" action="{{ route('news.search') }}" class="flex">
+                    <form method="GET" action="{{ localized_route('news.search') }}" class="flex">
                         <input type="text" name="q" value="{{ $search }}"
                             placeholder="Keresés a hírekben..."
                             class="flex-1 px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -40,7 +40,7 @@
                 <nav class="flex" aria-label="Breadcrumb">
                     <ol class="flex items-center space-x-4">
                         <li>
-                            <a href="{{ route('home') }}"
+                            <a href="{{ localized_route('home') }}"
                                 class="text-gray-500 hover:text-gray-700 transition duration-150">
                                 Főoldal
                             </a>
@@ -51,7 +51,7 @@
                                     d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            <a href="{{ route('news.index') }}"
+                            <a href="{{ localized_route('news.index') }}"
                                 class="ml-4 text-gray-500 hover:text-gray-700 transition duration-150">
                                 Hírek
                             </a>
@@ -77,14 +77,14 @@
                         <h3 class="text-lg font-semibold mb-4 text-gray-900">Szűrés kategóriák szerint</h3>
                         <ul class="space-y-3">
                             <li>
-                                <a href="{{ route('news.search', ['q' => $search]) }}"
+                                <a href="{{ localized_route('news.search', ['q' => $search]) }}"
                                     class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-150 {{ !request('category') ? 'text-blue-600 font-medium' : '' }}">
                                     <span>Minden kategória</span>
                                 </a>
                             </li>
                             @foreach ($categories as $category)
                                 <li>
-                                    <a href="{{ route('news.search', ['q' => $search, 'category' => $category->slug]) }}"
+                                    <a href="{{ localized_route('news.search', ['q' => $search, 'category' => $category->slug]) }}"
                                         class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-150">
                                         <span class="flex items-center">
                                             @if ($category->icon)
@@ -131,7 +131,7 @@
                                         </div>
 
                                         <h2 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
-                                            <a href="{{ route('news.show', $article->slug) }}"
+                                            <a href="{{ localized_route('news.show', ['slug' => $article->slug]) }}"
                                                 class="hover:text-blue-600 transition duration-150">
                                                 {{ $article->title }}
                                             </a>
@@ -173,7 +173,7 @@
                                 </ul>
                             </div>
                             <div class="mt-6">
-                                <a href="{{ route('news.index') }}"
+                                <a href="{{ localized_route('news.index') }}"
                                     class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition duration-150">
                                     Vissza az összes hírhez
                                 </a>

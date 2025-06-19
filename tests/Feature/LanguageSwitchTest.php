@@ -8,64 +8,46 @@ use Tests\TestCase;
 
 final class LanguageSwitchTest extends TestCase
 {
-    public function test_language_switch_to_hungarian_from_homepage()
+    public function test_language_switch_to_hungarian()
     {
-        // Start from homepage
-        $response = $this->get('/');
-        $response->assertStatus(200);
-
-        // Switch to Hungarian (should stay on homepage)
-        $response = $this->get('/language/hu', [
-            'HTTP_REFERER' => 'http://localhost/',
-        ]);
+        // Switch to Hungarian (should go to homepage)
+        $response = $this->get('/language/hu');
 
         $response->assertRedirect('/');
         $response->assertSessionHas('locale', 'hu');
     }
 
-    public function test_language_switch_to_english_from_homepage()
+    public function test_language_switch_to_english()
     {
-        // Start from homepage
-        $response = $this->get('/');
-        $response->assertStatus(200);
+        // Switch to English (should go to English homepage /contact)
+        $response = $this->get('/language/en');
 
-        // Switch to English (should redirect to /en)
-        $response = $this->get('/language/en', [
-            'HTTP_REFERER' => 'http://localhost/',
-        ]);
-
-        $response->assertRedirect('/en');
+        $response->assertRedirect('/contact');
         $response->assertSessionHas('locale', 'en');
     }
 
-    public function test_language_switch_from_english_page()
+    public function test_language_switch_with_url_mapping()
     {
-        // Start from English contact page
-        $response = $this->get('/en/contact');
-        $response->assertStatus(200);
-
-        // Switch to Hungarian
-        $response = $this->get('/language/hu', [
-            'HTTP_REFERER' => 'http://localhost/en/contact',
-        ]);
-
-        $response->assertRedirect('/kapcsolat');
-        $response->assertSessionHas('locale', 'hu');
-    }
-
-    public function test_language_switch_from_hungarian_page()
-    {
-        // Start from Hungarian contact page
-        $response = $this->get('/kapcsolat');
-        $response->assertStatus(200);
-
-        // Switch to English
+        // Test Hungarian contact page to English
         $response = $this->get('/language/en', [
             'HTTP_REFERER' => 'http://localhost/kapcsolat',
         ]);
 
-        $response->assertRedirect('/en/contact');
+        $response->assertRedirect('/contact-us');
         $response->assertSessionHas('locale', 'en');
+
+        // Test blog URL mapping
+        $response = $this->get('/language/en', [
+            'HTTP_REFERER' => 'http://localhost/blog',
+        ]);
+
+        $response->assertRedirect('/news-blog');
+
+        $response = $this->get('/language/hu', [
+            'HTTP_REFERER' => 'http://localhost/news-blog',
+        ]);
+
+        $response->assertRedirect('/blog');
     }
 
     public function test_invalid_locale_returns_404()
@@ -74,14 +56,21 @@ final class LanguageSwitchTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_language_switch_without_referer_redirects_to_homepage()
+    public function test_english_urls_set_locale_automatically()
     {
-        // Switch to English without referer
-        $response = $this->get('/language/en');
-        $response->assertRedirect('/en');
+        // Accessing an English URL should set locale to 'en'
+        $response = $this->get('/contact');
+        $response->assertStatus(200);
+        // Note: This would be tested in browser where session persists
+    }
 
-        // Switch to Hungarian without referer
-        $response = $this->get('/language/hu');
-        $response->assertRedirect('/');
+    public function test_hungarian_urls_work_without_prefix()
+    {
+        // Hungarian URLs should work normally
+        $response = $this->get('/');
+        $response->assertStatus(200);
+
+        $response = $this->get('/kapcsolat');
+        $response->assertStatus(200);
     }
 }

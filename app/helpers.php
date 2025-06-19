@@ -18,37 +18,3 @@ if (! function_exists('localized_route')) {
         return route($name, $parameters, $absolute);
     }
 }
-
-if (! function_exists('switch_locale_route')) {
-    /**
-     * Get the equivalent route in different locale
-     */
-    function switch_locale_route(string $targetLocale): string
-    {
-        $currentRoute = request()->route();
-        if (! $currentRoute) {
-            return $targetLocale === 'en' ? '/en' : '/';
-        }
-
-        $routeName = $currentRoute->getName();
-        $parameters = $currentRoute->parameters();
-
-        // Remove language prefix if exists
-        $baseRouteName = str_replace('en.', '', $routeName);
-
-        // Add target language prefix if needed
-        if ($targetLocale === 'en') {
-            $targetRouteName = 'en.'.$baseRouteName;
-        } else {
-            $targetRouteName = $baseRouteName;
-        }
-
-        // Check if target route exists
-        if (Illuminate\Support\Facades\Route::has($targetRouteName)) {
-            return route($targetRouteName, $parameters);
-        }
-
-        // Fallback to homepage in target language
-        return $targetLocale === 'en' ? '/en' : '/';
-    }
-}

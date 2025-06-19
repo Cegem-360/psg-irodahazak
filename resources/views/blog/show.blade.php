@@ -45,11 +45,11 @@
         <div class="bg-white border-b">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <nav class="flex items-center space-x-2 text-sm text-gray-500">
-                    <a href="{{ route('home') }}" class="hover:text-blue-600">Főoldal</a>
+                    <a href="{{ localized_route('home') }}" class="hover:text-blue-600">Főoldal</a>
                     <span>/</span>
-                    <a href="{{ route('blog.index') }}" class="hover:text-blue-600">Blog</a>
+                    <a href="{{ localized_route('blog.index') }}" class="hover:text-blue-600">Blog</a>
                     <span>/</span>
-                    <a href="{{ route('blog.category', $post->category->slug) }}"
+                    <a href="{{ localized_route('blog.category', ['slug' => $post->category->slug]) }}"
                         class="hover:text-blue-600">{{ $post->category->name }}</a>
                     <span>/</span>
                     <span class="text-gray-900">{{ Str::limit($post->title, 50) }}</span>
@@ -127,7 +127,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-500 mb-2">Kategória:</p>
-                        <a href="{{ route('blog.category', $post->category->slug) }}"
+                        <a href="{{ localized_route('blog.category', ['slug' => $post->category->slug]) }}"
                             class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white hover:opacity-90 transition duration-150"
                             style="background-color: {{ $post->category->color }}">
                             {{ $post->category->name }}
@@ -201,7 +201,7 @@
                                     </div>
 
                                     <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                                        <a href="{{ route('blog.show', $relatedPost->slug) }}"
+                                        <a href="{{ localized_route('blog.show', ['slug' => $relatedPost->slug]) }}"
                                             class="hover:text-blue-600 transition duration-150">
                                             {{ $relatedPost->title }}
                                         </a>
