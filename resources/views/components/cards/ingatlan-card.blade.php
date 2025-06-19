@@ -15,7 +15,7 @@
             {!! $description !!}</p>
         <a href="{{ $link ?? '#' }}"
             class="inline-block {{ $small ? 'mb-2 px-3 py-1 text-sm' : 'mb-4 px-6 py-2' }} bg-primary/70 text-white rounded group-hover:bg-primary/90 transition-colors duration-300 ease-in-out after:absolute after:inset-0 after:cursor-pointer">
-            {{ __('További részletek') }}
+            {{ __('More details') }}
         </a>
     </div>
 </div>

@@ -28,6 +28,11 @@ final class AppServiceProvider extends ServiceProvider
         // Register model observers
         Gallery::observe(GalleryObserver::class);
 
+        // Set locale from session
+        if (session()->has('locale')) {
+            app()->setLocale(session('locale'));
+        }
+
         TextColumn::configureUsing(function (TextColumn $column): void {
             $column->translateLabel();
         });

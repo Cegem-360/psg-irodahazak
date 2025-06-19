@@ -94,6 +94,55 @@ Route::group(['as' => 'en.'], function () {
     Route::view('/impressum', 'index')->name('impresszum');
     Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
+    // English Budapest category routes
+    Route::get('/budapest-en/{category}', function ($category) {
+        $queryParams = [];
+
+        // District-based filtering (same logic as Hungarian)
+        switch ($category) {
+            case 'kiado-pesti-irodak':
+                $queryParams['districts'] = '4,5,6,7,8,9,10,14,15,16,17,18,19,20';
+                break;
+            case 'kiado-belvarosi-irodak':
+                $queryParams['districts'] = '5,6,7,8,9';
+                break;
+            case 'kiado-v-keruleti-irodak':
+                $queryParams['districts'] = '5';
+                break;
+            case 'kiado-vaci-uti-irodak':
+                $queryParams['districts'] = '13,14';
+                break;
+            case 'kiado-budai-irodak':
+                $queryParams['districts'] = '1,2,3,11,12,22';
+                break;
+            case 'kiado-bel-budai-irodak':
+                $queryParams['districts'] = '1,2,11,12';
+                break;
+            case 'kiado-xi-keruleti-irodak':
+                $queryParams['districts'] = '11';
+                break;
+            case 'kiado-azonnali-szolgaltatott-irodak':
+                $queryParams['search'] = 'szolgáltatott';
+                break;
+            case 'kiado-zold-irodak':
+                $queryParams['search'] = 'zöld';
+                break;
+            case 'kiado-klasszikus-irodahazak':
+                $queryParams['search'] = 'klasszikus';
+                break;
+            case 'kiado-uj-irodahazak':
+                $queryParams['search'] = 'új';
+                break;
+            case 'elado-irodak':
+                return redirect()->route('en.elado-irodahazak');
+            default:
+                // If no match, redirect to English home
+                return redirect()->route('en.kiado-irodak');
+        }
+
+        return view('pages.filter', ['queryParams' => $queryParams]);
+    })->name('budapest.category');
+
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
     Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
     Route::get('/news-blog', [BlogController::class, 'index'])->name('blog.index');

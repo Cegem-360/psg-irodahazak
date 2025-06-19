@@ -25,13 +25,17 @@
                                 $office->cim_utca .
                                 ' ' .
                                 $office->cim_hazszam .
-                                '<br><strong>Bérleti díj:</strong> ' .
+                                '<br><strong>' .
+                                __('Rent:') .
+                                '</strong> ' .
                                 $office->min_berleti_dij .
                                 ' - ' .
                                 $office->max_berleti_dij .
                                 ' ' .
                                 $office->max_berleti_dij_addons .
-                                '<br><strong>Üzemeltetési díj: </strong>' .
+                                '<br><strong>' .
+                                __('Operating Fee:') .
+                                '</strong> ' .
                                 $office->uzemeletetesi_dij .
                                 ' ' .
                                 $office->uzemeletetesi_dij_addons"

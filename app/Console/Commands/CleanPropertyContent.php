@@ -21,7 +21,7 @@ final class CleanPropertyContent extends Command
      *
      * @var string
      */
-    protected $description = 'Remove \\n\\n characters from property content fields';
+    protected $description = 'Remove \\n\\n characters from property content and en_content fields';
 
     /**
      * Execute the console command.
@@ -32,22 +32,32 @@ final class CleanPropertyContent extends Command
 
         $this->info('Starting property content cleanup...');
 
-        // Get properties that have content with actual newlines or literal \n\n
-        $properties = Property::whereNotNull('content')
-            ->where('content', '!=', '')
-            ->where(function ($query) {
-                $query->where('content', 'like', '%\\n\\n%')  // literal \n\n
-                    ->orWhere('content', 'like', "%\n\n%");  // actual newlines
-            })
-            ->get();
+        // Get properties that have content with actual newlines or literal \n\n in either content or en_content
+        $properties = Property::where(function ($query) {
+            $query->where(function ($subQuery) {
+                $subQuery->whereNotNull('content')
+                    ->where('content', '!=', '')
+                    ->where(function ($contentQuery) {
+                        $contentQuery->where('content', 'like', '%\\n\\n%')  // literal \n\n
+                            ->orWhere('content', 'like', "%\n\n%");  // actual newlines
+                    });
+            })->orWhere(function ($subQuery) {
+                $subQuery->whereNotNull('en_content')
+                    ->where('en_content', '!=', '')
+                    ->where(function ($enContentQuery) {
+                        $enContentQuery->where('en_content', 'like', '%\\n\\n%')  // literal \n\n
+                            ->orWhere('en_content', 'like', "%\n\n%");  // actual newlines
+                    });
+            });
+        })->get();
 
         if ($properties->isEmpty()) {
-            $this->info('No properties found with \\n\\n in content field.');
+            $this->info('No properties found with \\n\\n in content or en_content fields.');
 
             return;
         }
 
-        $this->info("Found {$properties->count()} properties with \\n\\n in content field.");
+        $this->info("Found {$properties->count()} properties with \\n\\n in content or en_content fields.");
 
         if ($dryRun) {
             $this->warn('DRY RUN MODE - No changes will be made');
@@ -60,39 +70,39 @@ final class CleanPropertyContent extends Command
         $updated = 0;
 
         foreach ($properties as $property) {
-            $originalContent = $property->content;
-            $cleanedContent = $originalContent;
+            $changes = [];
 
-            // Check what type of newlines we have
-            $hasLiteralNewlines = mb_strpos($originalContent, '\\n\\n') !== false;
-            $hasActualNewlines = mb_strpos($originalContent, "\n\n") !== false;
+            // Process content field
+            if (! empty($property->content)) {
+                $originalContent = $property->content;
+                $cleanedContent = $this->cleanContentField($originalContent);
 
-            // Remove literal \n\n
-            if ($hasLiteralNewlines) {
-                $cleanedContent = str_replace('\\n\\n', '', $cleanedContent);
+                if ($originalContent !== $cleanedContent) {
+                    $changes['content'] = $cleanedContent;
+
+                    if ($dryRun) {
+                        $this->showFieldChanges('content', $property, $originalContent, $cleanedContent);
+                    }
+                }
             }
 
-            // Clean up actual multiple newlines (replace 2+ newlines with single newline)
-            if ($hasActualNewlines) {
-                $cleanedContent = preg_replace('/\n{2,}/', "\n", $cleanedContent);
+            // Process en_content field
+            if (! empty($property->en_content)) {
+                $originalEnContent = $property->en_content;
+                $cleanedEnContent = $this->cleanContentField($originalEnContent);
+
+                if ($originalEnContent !== $cleanedEnContent) {
+                    $changes['en_content'] = $cleanedEnContent;
+
+                    if ($dryRun) {
+                        $this->showFieldChanges('en_content', $property, $originalEnContent, $cleanedEnContent);
+                    }
+                }
             }
 
-            $cleanedContent = mb_trim($cleanedContent);
-
-            if ($originalContent !== $cleanedContent) {
-                if ($dryRun) {
-                    $this->line("\nProperty ID {$property->id} - Title: {$property->title}");
-                    $this->line('Has literal \\n\\n: '.($hasLiteralNewlines ? 'YES' : 'NO'));
-                    $this->line('Has actual newlines: '.($hasActualNewlines ? 'YES' : 'NO'));
-                    $this->line('Original length: '.mb_strlen($originalContent));
-                    $this->line('Cleaned length: '.mb_strlen($cleanedContent));
-
-                    // Show a small sample
-                    $sample = mb_substr($originalContent, 0, 200);
-                    $this->line('Sample content: '.json_encode($sample));
-                    $this->line('---');
-                } else {
-                    $property->update(['content' => $cleanedContent]);
+            if (! empty($changes)) {
+                if (! $dryRun) {
+                    $property->update($changes);
                 }
                 $updated++;
             }
@@ -111,5 +121,46 @@ final class CleanPropertyContent extends Command
         }
 
         $this->info('Property content cleanup completed!');
+    }
+
+    /**
+     * Clean a content field by removing literal \n\n and excessive newlines
+     */
+    private function cleanContentField(string $content): string
+    {
+        $cleanedContent = $content;
+
+        // Remove literal \n\n
+        if (mb_strpos($content, '\\n\\n') !== false) {
+            $cleanedContent = str_replace('\\n\\n', '', $cleanedContent);
+        }
+
+        // Clean up actual multiple newlines (replace 2+ newlines with single newline)
+        if (mb_strpos($content, "\n\n") !== false) {
+            $cleanedContent = preg_replace('/\n{2,}/', "\n", $cleanedContent);
+        }
+
+        return mb_trim($cleanedContent);
+    }
+
+    /**
+     * Show changes for a specific field in dry-run mode
+     */
+    private function showFieldChanges(string $fieldName, Property $property, string $original, string $cleaned): void
+    {
+        $hasLiteralNewlines = mb_strpos($original, '\\n\\n') !== false;
+        $hasActualNewlines = mb_strpos($original, "\n\n") !== false;
+
+        $this->line("\nProperty ID {$property->id} - Title: {$property->title}");
+        $this->line("Field: {$fieldName}");
+        $this->line('Has literal \\n\\n: '.($hasLiteralNewlines ? 'YES' : 'NO'));
+        $this->line('Has actual newlines: '.($hasActualNewlines ? 'YES' : 'NO'));
+        $this->line('Original length: '.mb_strlen($original));
+        $this->line('Cleaned length: '.mb_strlen($cleaned));
+
+        // Show a small sample
+        $sample = mb_substr($original, 0, 200);
+        $this->line('Sample content: '.json_encode($sample));
+        $this->line('---');
     }
 }
