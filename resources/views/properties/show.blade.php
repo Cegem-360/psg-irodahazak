@@ -216,29 +216,7 @@
                             @endif
                         </ul>
                     </div>
-                    {{-- <div class="space-y-4">
-                    <h2 class="text-3xl">Műszaki paraméterek</h2>
-                    <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
-                        <li class="pb-1">4 csöves fan-coil légkondicionálás</li>
-                        <li class="pb-1">belső árnyékolók</li>
-                        <li class="pb-1">épületfelügyeleti rendszer</li>
-                        <li class="pb-1">frisslevegő ellátás</li>
-                        <li class="pb-1">kiváló tömegközlekedési lehetőség</li>
-                        <li class="pb-1">emelt padló</li>
-                        <li class="pb-1">korszerű, kényelmes és gyors liftek</li>
-                        <li class="pb-1">nyitható ablakok</li>
-                        <li class="pb-1">kettős elektromos betáp.</li>
-                        <li class="pb-1">álmennyezet</li>
-                        <li class="pb-1">teherlift</li>
-                        <li class="pb-1">akadálymentesített épület</li>
-                        <li class="pb-1">Access4You</li>
-                        <li class="pb-1">elektromos és hibrid autós töltők</li>
-                        <li class="pb-1">magas minőségű kivitelezés és anyaghasználat</li>
-                        <li class="pb-1">optikai kábel-csatlakozás</li>
-                        <li class="pb-1">BREEAM minősítés</li>
-                        <li class="pb-1">WELL-being</li>
-                    </ul>
-                </div> --}}
+
                 </div>
             </div>
         </div>
