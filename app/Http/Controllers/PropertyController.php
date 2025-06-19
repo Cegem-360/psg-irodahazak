@@ -13,10 +13,47 @@ final class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Property::with('images')
-            ->active()
-            ->orderBy('ord')
-            ->paginate(12);
+        $query = Property::with('images')->active();
+
+        // Filter by district
+        if (request('district')) {
+            $query->where('cim_varos', 'like', '%'.request('district').'%');
+        }
+
+        // Filter by office building name
+        if (request('office_name')) {
+            $query->where('title', 'like', '%'.request('office_name').'%');
+        }
+
+        // Filter by search term
+        if (request('search')) {
+            $query->where(function ($q) {
+                $q->where('title', 'like', '%'.request('search').'%')
+                    ->orWhere('content', 'like', '%'.request('search').'%')
+                    ->orWhere('lead', 'like', '%'.request('search').'%');
+            });
+        }
+
+        // Filter by area range
+        if (request('area_min') || request('area_max')) {
+            $areaMin = request('area_min', 0);
+            $areaMax = request('area_max', 9999999);
+            $query->whereBetween('total_area', [$areaMin, $areaMax]);
+        }
+
+        // Filter by rental price range
+        if (request('price_min') || request('price_max')) {
+            $priceMin = request('price_min', 0);
+            $priceMax = request('price_max', 9999999);
+            $query->whereBetween('max_berleti_dij', [$priceMin, $priceMax]);
+        }
+
+        // Filter by rental properties only if rental filter is applied
+        if (request('type') === 'rent') {
+            $query->rent();
+        }
+
+        $properties = $query->orderBy('ord')->paginate(12);
 
         return view('properties.index', ['properties' => $properties]);
     }

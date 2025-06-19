@@ -15,6 +15,20 @@ final class ListRentOffices extends Component
 
     public $search = '';
 
+    public $district = '';
+
+    public $officeName = '';
+
+    public $areaMin = '';
+
+    public $areaMax = '';
+
+    public $priceMin = '';
+
+    public $priceMax = '';
+
+    public $includeAgglomeration = false;
+
     public $sortField = 'title';
 
     public $sortDirection = 'asc';
@@ -31,34 +45,69 @@ final class ListRentOffices extends Component
 
     public function mount(): void
     {
+        // Initialize filters from request parameters
+        $this->search = request('search', '');
+        $this->district = request('district', '');
+        $this->officeName = request('office_name', '');
+        $this->areaMin = request('area_min', '');
+        $this->areaMax = request('area_max', '');
+        $this->priceMin = request('price_min', '');
+        $this->priceMax = request('price_max', '');
+        $this->includeAgglomeration = request('include_agglomeration', false);
+
         $this->updateTotalOffices();
     }
 
     public function updateTotalOffices(): void
     {
-        $this->totalOffices = Offices::query()
-            ->rent()
-            ->when($this->search, function ($query): void {
-                $query->where('title', 'like', '%'.$this->search.'%');
-            })
-            ->active()
-            ->count();
+        $this->totalOffices = $this->buildQuery()->count();
     }
 
     public function getOffices()
     {
-        return Offices::query()
+        return $this->buildQuery()
             ->with('images') // Eager load images
-            ->when($this->search, function ($query): void {
-                $query->where('title', 'like', '%'.$this->search.'%');
-            })
-            ->rent()
-            ->active()
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
     }
 
     public function updatedSearch(): void
+    {
+        $this->resetPage();
+        $this->updateTotalOffices();
+    }
+
+    public function updatedDistrict(): void
+    {
+        $this->resetPage();
+        $this->updateTotalOffices();
+    }
+
+    public function updatedOfficeName(): void
+    {
+        $this->resetPage();
+        $this->updateTotalOffices();
+    }
+
+    public function updatedAreaMin(): void
+    {
+        $this->resetPage();
+        $this->updateTotalOffices();
+    }
+
+    public function updatedAreaMax(): void
+    {
+        $this->resetPage();
+        $this->updateTotalOffices();
+    }
+
+    public function updatedPriceMin(): void
+    {
+        $this->resetPage();
+        $this->updateTotalOffices();
+    }
+
+    public function updatedPriceMax(): void
     {
         $this->resetPage();
         $this->updateTotalOffices();
@@ -88,5 +137,51 @@ final class ListRentOffices extends Component
         return view('livewire.list-rent-offices', [
             'offices' => $this->getOffices(),
         ]);
+    }
+
+    private function buildQuery()
+    {
+        $query = Offices::query()
+            ->rent()
+            ->active();
+
+        // Apply search filter
+        if ($this->search) {
+            $query->where(function ($q) {
+                $q->where('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('content', 'like', '%'.$this->search.'%')
+                    ->orWhere('lead', 'like', '%'.$this->search.'%');
+            });
+        }
+
+        // Apply district filter
+        if ($this->district) {
+            $query->where('cim_varos', 'like', '%'.$this->district.'%');
+        }
+
+        // Apply office name filter
+        if ($this->officeName) {
+            $query->where('title', 'like', '%'.$this->officeName.'%');
+        }
+
+        // Apply area range filter
+        if ($this->areaMin && $this->areaMax) {
+            $query->whereBetween('total_area', [$this->areaMin, $this->areaMax]);
+        } elseif ($this->areaMin) {
+            $query->where('total_area', '>=', $this->areaMin);
+        } elseif ($this->areaMax) {
+            $query->where('total_area', '<=', $this->areaMax);
+        }
+
+        // Apply price range filter
+        if ($this->priceMin && $this->priceMax) {
+            $query->whereBetween('max_berleti_dij', [$this->priceMin, $this->priceMax]);
+        } elseif ($this->priceMin) {
+            $query->where('max_berleti_dij', '>=', $this->priceMin);
+        } elseif ($this->priceMax) {
+            $query->where('max_berleti_dij', '<=', $this->priceMax);
+        }
+
+        return $query;
     }
 }
