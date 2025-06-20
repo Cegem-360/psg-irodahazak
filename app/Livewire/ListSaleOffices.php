@@ -94,7 +94,7 @@ final class ListSaleOffices extends Component
                     'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
                     'operating_fee' => ($office->uzemeletetesi_dij ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
                     'url' => route('properties.show', ['property' => $office]),
-                    'image' => $office->getFirstImageUrl('400x300') ?: 'https://via.placeholder.com/400x300/f3f4f6/9ca3af?text=Kép+nincs',
+
                 ];
             })
             ->values(); // Reset array keys to ensure clean JSON
