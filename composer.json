@@ -14,7 +14,8 @@
         "laravel/framework": "^12.18",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6.3",
-        "nunomaduro/essentials": "@dev"
+        "nunomaduro/essentials": "@dev",
+        "spatie/browsershot": "^5.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",
