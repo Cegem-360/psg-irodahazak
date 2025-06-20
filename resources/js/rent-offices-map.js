@@ -61,10 +61,7 @@ class RentOfficesMapHandler {
     createCustomInfoWindowContent(office) {
         return `
             <div class="p-4 max-w-sm">
-                <div class="flex items-center space-x-3 mb-3">
-                    <img src="${office.image}" alt="${office.title}" class="w-16 h-12 object-cover rounded" loading="lazy" onerror="this.style.display='none'">
-                    <h3 class="font-bold text-lg text-gray-800">${office.title}</h3>
-                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-3">${office.title}</h3>
                 <div class="space-y-2 text-sm text-gray-600">
                     <p><strong>Cím:</strong> ${office.address}</p>
                     <p><strong>Bérleti díj:</strong> ${office.rent}</p>
