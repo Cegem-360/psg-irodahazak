@@ -51,7 +51,7 @@ final class Gallery extends Model
      */
     public function getPublicUrlAttribute(): string
     {
-        return asset($this->path);
+        return Storage::url($this->path);
     }
 
     /**
@@ -60,12 +60,12 @@ final class Gallery extends Model
     public function getImageUrl(?string $size = null, string $extension = 'jpg'): string
     {
         if (! $size) {
-            return asset($this->path);
+            return Storage::url($this->path);
         }
 
         $newPath = $this->path_without_size_and_ext.'_'.$size.'.'.$extension;
 
-        return asset($newPath);
+        return Storage::url($newPath);
     }
 
     /**
