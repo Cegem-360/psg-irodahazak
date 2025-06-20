@@ -55,9 +55,10 @@
             // Import the rent offices map handler (creates global instance automatically)
             import('{{ Vite::asset('resources/js/rent-offices-map.js') }}').then(module => {
                 const apiKey = '{{ config('services.google_maps.api_key') }}';
+                const mapId = '{{ config('services.google_maps.map_id') }}';
                 let officesData = @json($this->getOfficesForMap());
 
-                // Check if API key is available
+                // Check if API key and map ID are available
                 if (!apiKey || apiKey.trim() === '') {
                     console.warn('Google Maps API key is missing. Please set GOOGLE_MAPS_API_KEY in your .env file.');
                     const mapElement = document.getElementById('map');
@@ -80,6 +81,28 @@
                     return;
                 }
 
+                if (!mapId || mapId.trim() === '') {
+                    console.warn('Google Maps Map ID is missing. Please set GOOGLE_MAPS_MAP_ID in your .env file.');
+                    const mapElement = document.getElementById('map');
+                    if (mapElement) {
+                        mapElement.innerHTML = `
+                        <div class="flex items-center justify-center h-full bg-gray-100 rounded-lg">
+                            <div class="text-center p-6">
+                                <div class="mb-4">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 616 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">Térkép nem elérhető</h3>
+                                <p class="text-gray-500">Google Maps Map ID szükséges a térkép megjelenítéséhez.</p>
+                            </div>
+                        </div>
+                    `;
+                    }
+                    return;
+                }
+
                 // Function to safely initialize map when DOM is ready
                 function initializeMapSafely() {
                     const mapElement = document.getElementById('map');
@@ -91,7 +114,7 @@
 
                     // Initialize map
                     if (window.rentOfficesMapHandler) {
-                        window.rentOfficesMapHandler.initialize(apiKey, officesData);
+                        window.rentOfficesMapHandler.initialize(apiKey, officesData, mapId);
                     }
                 }
 

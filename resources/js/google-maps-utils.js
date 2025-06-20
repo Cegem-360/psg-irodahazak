@@ -16,13 +16,27 @@ export class GoogleMapsManager {
     /**
      * Google Maps API inicializálása
      */
-    async initializeGoogleMaps(apiKey, mapElementId, onInitCallback) {
+    async initializeGoogleMaps(
+        apiKey,
+        mapElementId,
+        onInitCallback,
+        mapId = null
+    ) {
         if (!apiKey) {
             this.showMapError(
                 "Google Maps API kulcs nincs konfigurálva. Kérjük, állítsa be a GOOGLE_MAPS_API_KEY környezeti változót."
             );
             return;
         }
+
+        if (!mapId) {
+            this.showMapError(
+                "Google Maps Map ID nincs konfigurálva. Kérjük, állítsa be a GOOGLE_MAPS_MAP_ID környezeti változót."
+            );
+            return;
+        }
+
+        this.mapId = mapId;
 
         if (window.google && window.google.maps) {
             this.initMap(mapElementId, onInitCallback);
@@ -37,7 +51,7 @@ export class GoogleMapsManager {
 
         return new Promise((resolve, reject) => {
             const script = document.createElement("script");
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initGoogleMapsCallback&v=weekly&loading=async`;
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initGoogleMapsCallback&v=weekly&loading=async&libraries=marker`;
             script.async = true;
             script.defer = true;
 
@@ -95,13 +109,10 @@ export class GoogleMapsManager {
                 streetViewControl: false,
                 rotateControl: false,
                 fullscreenControl: true,
-                styles: [
-                    {
-                        featureType: "poi",
-                        elementType: "labels",
-                        stylers: [{ visibility: "off" }],
-                    },
-                ],
+                mapTypeId: "roadmap",
+                mapId: this.mapId,
+                // Note: styles cannot be used when mapId is present
+                // Map styles are controlled via Google Cloud Console when using mapId
             });
 
             // Initialize geocoder
@@ -165,7 +176,11 @@ export class GoogleMapsManager {
      * Markerek törlése
      */
     clearMarkers() {
-        this.markers.forEach((marker) => marker.setMap(null));
+        this.markers.forEach((marker) => {
+            if (marker.map) {
+                marker.map = null;
+            }
+        });
         this.markers = [];
     }
 
@@ -175,19 +190,15 @@ export class GoogleMapsManager {
     addMarker(position, title, infoContent, useAnimation = false) {
         if (!this.map) return null;
 
-        const markerOptions = {
+        // Create AdvancedMarkerElement
+        const marker = new google.maps.marker.AdvancedMarkerElement({
             position: position,
             map: this.map,
             title: title,
-            optimized: true,
-        };
+        });
 
-        // Only add animation if explicitly requested
-        if (useAnimation) {
-            markerOptions.animation = google.maps.Animation.DROP;
-        }
-
-        const marker = new google.maps.Marker(markerOptions);
+        // Note: AdvancedMarkerElement doesn't support DROP animation
+        // Animation would need to be implemented via CSS/JS if needed
 
         if (infoContent) {
             const infoWindow = new google.maps.InfoWindow({
@@ -220,12 +231,12 @@ export class GoogleMapsManager {
         if (!this.map || this.markers.length === 0) return;
 
         if (this.markers.length === 1) {
-            this.map.setCenter(this.markers[0].getPosition());
+            this.map.setCenter(this.markers[0].position);
             this.map.setZoom(14);
         } else {
             const bounds = new google.maps.LatLngBounds();
             this.markers.forEach((marker) => {
-                bounds.extend(marker.getPosition());
+                bounds.extend(marker.position);
             });
             this.map.fitBounds(bounds);
 
@@ -247,12 +258,7 @@ export class GoogleMapsManager {
      */
     createInfoWindowContent(office) {
         return `
-            <div class="p-2 max-w-sm">
-                <div class="mb-2">
-                    <img src="${office.image}" alt="${office.title}" 
-                         class="w-full h-32 object-cover rounded-lg"
-                         onerror="this.src='https://via.placeholder.com/400x300/f3f4f6/9ca3af?text=Kép+nincs'">
-                </div>
+            <div class="p-3 max-w-sm">
                 <h3 class="font-semibold text-lg mb-2 text-gray-900">${
                     office.title
                 }</h3>

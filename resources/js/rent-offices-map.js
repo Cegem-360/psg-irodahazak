@@ -13,11 +13,16 @@ class RentOfficesMapHandler {
     /**
      * Inicializálás
      */
-    async initialize(apiKey, officesData) {
+    async initialize(apiKey, officesData, mapId) {
         try {
-            await this.mapsManager.initializeGoogleMaps(apiKey, "map", () => {
-                this.updateMapMarkers(officesData);
-            });
+            await this.mapsManager.initializeGoogleMaps(
+                apiKey,
+                "map",
+                () => {
+                    this.updateMapMarkers(officesData);
+                },
+                mapId
+            );
         } catch (error) {
             console.error("Failed to initialize Google Maps:", error);
         }
