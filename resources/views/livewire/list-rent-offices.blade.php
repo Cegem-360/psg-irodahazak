@@ -10,7 +10,7 @@
             <div
                 class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div class="relative">
-                    <div id="map" class="sticky top-8 h-[120vh] rounded-lg border border-gray-300"
+                    <div wire:ignore id="map" class="sticky top-8 h-[120vh] rounded-lg border border-gray-300"
                         style="width: 100%;"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -98,15 +98,41 @@
                 // Start initialization
                 initializeMapSafely();
 
+                // Track if we're already updating to prevent infinite loops
+                let isUpdating = false;
+
                 // Listen for Livewire updates using $wire hooks
-                $wire.$hook('morph', () => {
-                    // Refresh markers after DOM updates
-                    const updatedOfficesData = @json($this->getOfficesForMap());
-                    if (window.rentOfficesMapHandler) {
+                $wire.$hook('commit', ({
+                    succeed
+                }) => {
+                    succeed(() => {
+                        // Prevent infinite loops
+                        if (isUpdating) return;
+
                         setTimeout(() => {
-                            window.rentOfficesMapHandler.refreshMarkers(updatedOfficesData);
-                        }, 100);
-                    }
+                            if (window.rentOfficesMapHandler && !isUpdating) {
+                                isUpdating = true;
+
+                                // Get fresh office data without triggering another morph
+                                $wire.$call('getOfficesForMap').then((freshOfficesData) => {
+                                    window.rentOfficesMapHandler.refreshMarkers(
+                                        freshOfficesData);
+                                }).catch((error) => {
+                                    console.error('Failed to fetch fresh office data:',
+                                        error);
+                                    // Fallback to current visible data (no server call)
+                                    const currentData = @json($this->getOfficesForMap());
+                                    window.rentOfficesMapHandler.refreshMarkers(
+                                        currentData);
+                                }).finally(() => {
+                                    // Reset the flag after a short delay
+                                    setTimeout(() => {
+                                        isUpdating = false;
+                                    }, 500);
+                                });
+                            }
+                        }, 150);
+                    });
                 });
 
             }).catch(error => {

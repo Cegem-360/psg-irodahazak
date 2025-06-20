@@ -21,19 +21,44 @@
 
 ## Funkciók:
 
-- **Több pin megjelenítése:** Az összes aktív, bérleti célú ingatlan megjelenik a térképen
+- **Több pin megjelenítése:** Az összes aktív, bérleti/eladási célú ingatlan megjelenik a térképen
 - **Interaktív információs ablakok:** Kattints egy pin-re a részletek megtekintéséhez
-- **Dinamikus frissítés:** A térkép automatikusan frissül a szűrők változásakor
+- **Dinamikus frissítés:** A térkép automatikusan frissül a szűrők és lapozás változásakor
 - **Automatikus viewport:** A térkép automatikusan igazítja a nézetet az összes pin-hez
 - **Hibakezelés:** Hiányzó vagy érvénytelen API kulcs esetén barátságos hibaüzenet
 - **Teljesítmény optimalizálás:** Aszinkron betöltés és optimalizált marker renderelés
+- **Moduláris architektúra:** JavaScript kód külön fájlokban, ES6 modulok használatával
+- **Geocoding támogatás:** Eladási ingatlanok esetén automatikus címgeokódolás
+
+## Technikai részletek:
+
+### Livewire integráció:
+- **Livewire 3.x kompatibilis:** Modern hooks és $wire API használata
+- **Végtelen ciklus védelem:** Intelligens állapotkezelés a hook-okban
+- **Hibatűrő adatfrissítés:** Automatikus fallback mechanizmusok
+
+### JavaScript modulok:
+- `resources/js/google-maps-utils.js` - Közös térkép funkciók
+- `resources/js/rent-offices-map.js` - Bérleti irodák kezelése
+- `resources/js/sale-offices-map.js` - Eladási irodák kezelése (geocoding)
 
 ## Hibaelhárítás:
 
 - **Konzol figyelmeztetések:** Lásd [Console Warnings Guide](CONSOLE_WARNINGS_GUIDE.md)
 - **Advanced Marker Migration:** Lásd [Advanced Marker Migration Guide](ADVANCED_MARKER_MIGRATION.md)
+- **Livewire Hooks:** Lásd [Livewire Hooks Best Practices](LIVEWIRE_HOOKS_BEST_PRACTICES.md)
 - **API kulcs problémák:** Ellenőrizd a Google Cloud Console beállításokat
+- **Geocoding integration:** Lásd [Geocoding Integration Guide](GEOCODING_INTEGRATION.md)
 
 ## Használat:
 
-A térkép automatikusan betöltődik a "Kiadó Irodák" oldalon. A szűrők használatakor a térkép is frissül, csak a szűrési feltételeknek megfelelő ingatlanok jelennek meg.
+A térkép automatikusan betöltődik a "Kiadó Irodák" és "Eladó Irodák" oldalakon. A szűrők és lapozás használatakor a térkép is frissül, csak az aktuálisan látható ingatlanok jelennek meg.
+
+### Kiadó irodák:
+- Koordináták alapján működik (`maps_lat`, `maps_lng`)
+- Gyors, közvetlen marker megjelenítés
+
+### Eladó irodák:
+- Címgeokódolás alapján működik
+- Automatikus koordináta generálás a címből
+- Rate limiting és hibakezelés
