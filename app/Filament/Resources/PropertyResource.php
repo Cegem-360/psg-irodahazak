@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
 use App\Filament\Exports\PropertyExporter;
 use App\Filament\Imports\PropertyImporter;
 use App\Filament\Resources\PropertyResource\Pages\CreateProperty;
 use App\Filament\Resources\PropertyResource\Pages\EditProperty;
 use App\Filament\Resources\PropertyResource\Pages\ListProperties;
+use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
 use App\Models\Property;
 use App\Models\Service;
 use App\Models\Tag;
@@ -174,6 +174,8 @@ final class PropertyResource extends Resource
             ->columns([
                 ImageColumn::make('first_image')
                     ->label('Kép')
+                    ->disk('public')
+                    ->visibility('public')
                     ->getStateUsing(fn (Property $record): ?string => $record->first_image_url)
                     ->height(60)
                     ->width(80),
