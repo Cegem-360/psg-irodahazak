@@ -138,42 +138,6 @@
                 </div>
             </article>
 
-            <!-- Related News -->
-            @if ($relatedNews->count() > 0)
-                <div class="mt-12">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Kapcsolódó hírek</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        @foreach ($relatedNews as $related)
-                            <article
-                                class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition duration-150">
-                                @if ($related->featured_image)
-                                    <img src="{{ Storage::url($related->featured_image) }}"
-                                        alt="{{ $related->title }}" class="w-full h-48 object-cover">
-                                @endif
-                                <div class="p-6">
-                                    <div class="flex items-center text-sm text-gray-500 mb-2">
-                                        @if ($related->category)
-                                            <span class="inline-block px-2 py-1 rounded text-xs font-medium mr-2"
-                                                style="background-color: {{ $related->category->color }}20; color: {{ $related->category->color }}">
-                                                {{ $related->category->name }}
-                                            </span>
-                                        @endif
-                                        <time>{{ $related->published_at->format('Y.m.d.') }}</time>
-                                    </div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-                                        <a href="{{ localized_route('news.show', ['slug' => $related->slug]) }}"
-                                            class="hover:text-red-600 transition duration-150">
-                                            {{ $related->title }}
-                                        </a>
-                                    </h3>
-                                    <p class="text-gray-600 text-sm line-clamp-3">{{ $related->excerpt }}</p>
-                                </div>
-                            </article>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-
             <!-- Back to News -->
             <div class="mt-12 text-center">
                 <a href="{{ localized_route('news.index') }}"

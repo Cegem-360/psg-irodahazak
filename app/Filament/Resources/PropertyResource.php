@@ -14,6 +14,7 @@ use App\Models\Property;
 use App\Models\Service;
 use App\Models\Tag;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -49,13 +50,17 @@ final class PropertyResource extends Resource
                 TextInput::make('title')
                     ->label('Cím')
                     ->maxLength(255),
-                TextInput::make('status')
+                Select::make('status')
                     ->label('Státusz')
-                    ->maxLength(255),
-                Textarea::make('lead')
+                    ->options([
+                        'active' => 'Active',
+                        'inactive' => 'Inactive',
+                    ])
+                    ->required(),
+                RichEditor::make('lead')
                     ->label('Bevezető')
                     ->columnSpanFull(),
-                Textarea::make('content')
+                RichEditor::make('content')
                     ->label('Tartalom')
                     ->columnSpanFull(),
                 DateTimePicker::make('date')
@@ -203,7 +208,12 @@ final class PropertyResource extends Resource
                 TextInput::make('min_berleti_idoszak_addons')
                     ->label('Min. bérleti időszak kiegészítések')
                     ->maxLength(255),
-                TextInput::make('cim_utca_addons')
+                Select::make('cim_utca_addons')
+                    ->options([
+                        'none' => 'Nincs',
+                        'street' => 'Utca',
+                        'street_and_number' => 'Utca és házszám',
+                    ])
                     ->label('Utca kiegészítések')
                     ->maxLength(255),
                 TextInput::make('lang')
@@ -218,16 +228,20 @@ final class PropertyResource extends Resource
                 TextInput::make('maps')
                     ->label('Térképek')
                     ->maxLength(255),
-                TextInput::make('elado_v_kiado')
+                Select::make('elado_v_kiado')
                     ->label('Eladó v. kiadó')
-                    ->maxLength(255),
+                    ->options([
+                        'kiado-iroda' => 'Kiadó',
+                        'elado-iroda' => 'Eladó',
+                    ])
+                    ->required(),
                 TextInput::make('elado_v_kiado_addons')
                     ->label('Eladó v. kiadó kiegészítések')
                     ->maxLength(255),
                 TextInput::make('updated')
                     ->label('Frissítve')
                     ->maxLength(10),
-                Textarea::make('egyeb')
+                RichEditor::make('egyeb')
                     ->label('Egyéb')
                     ->columnSpanFull(),
                 TextInput::make('afa')

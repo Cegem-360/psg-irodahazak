@@ -78,8 +78,6 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/kategoria/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
 Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/hirek', [NewsController::class, 'index'])->name('news.index');
-Route::get('/hirek/kategoria/{slug}', [NewsController::class, 'category'])->name('news.category');
-Route::get('/hirek/kereses', [NewsController::class, 'search'])->name('news.search');
 Route::get('/hirek/{slug}', [NewsController::class, 'show'])->name('news.show');
 
 // English routes (different URLs, same functionality)
@@ -149,8 +147,6 @@ Route::group(['as' => 'en.'], function () {
     Route::get('/news-blog/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
     Route::get('/news-blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
     Route::get('/news', [NewsController::class, 'index'])->name('news.index');
-    Route::get('/news/category/{slug}', [NewsController::class, 'category'])->name('news.category');
-    Route::get('/news/search', [NewsController::class, 'search'])->name('news.search');
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
 });
 

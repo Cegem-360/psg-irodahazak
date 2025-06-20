@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,8 @@ use Illuminate\Support\Str;
 final class News extends Model
 {
     use HasFactory;
+
+    protected $table = 'news';
 
     protected $fillable = [
         'title',
@@ -33,7 +36,7 @@ final class News extends Model
     protected $casts = [
         'is_published' => 'boolean',
         'is_breaking' => 'boolean',
-        'published_at' => 'datetime',
+        'published_at' => 'date',
         'meta_data' => 'array',
         'views_count' => 'integer',
         'priority' => 'integer',
@@ -50,14 +53,6 @@ final class News extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    // Scopes
-    public function scopePublished(Builder $query): Builder
-    {
-        return $query->where('is_published', true)
-            ->whereNotNull('published_at')
-            ->where('published_at', '<=', now());
-    }
-
     public function scopeDraft(Builder $query): Builder
     {
         return $query->where('is_published', false);
@@ -66,17 +61,6 @@ final class News extends Model
     public function scopeBreaking(Builder $query): Builder
     {
         return $query->where('is_breaking', true);
-    }
-
-    public function scopeByCategory(Builder $query, int $categoryId): Builder
-    {
-        return $query->where('news_category_id', $categoryId);
-    }
-
-    public function scopeByPriority(Builder $query): Builder
-    {
-        return $query->orderBy('priority', 'desc')
-            ->orderBy('published_at', 'desc');
     }
 
     // Accessors
@@ -169,5 +153,24 @@ final class News extends Model
                 $news->excerpt = Str::limit(strip_tags($news->content), 160);
             }
         });
+    }
+
+    #[Scope]
+    protected function byPriority(Builder $query): void
+    {
+        $query->orderBy('priority', 'desc')
+            ->orderBy('published_at', 'desc');
+    }
+
+    #[Scope]
+    protected function byCategory(Builder $query, int $categoryId): void
+    {
+        $query->where('news_category_id', $categoryId);
+    }
+
+    #[Scope]
+    protected function published(Builder $query): void
+    {
+        $query->where('is_published', true);
     }
 }

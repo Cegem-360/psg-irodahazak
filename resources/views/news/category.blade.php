@@ -113,7 +113,7 @@
                                                     style="background-color: {{ $category->color }}20; color: {{ $category->color }}">
                                                     {{ $category->name }}
                                                 </span>
-                                                <time>{{ $article->published_at->format('Y.m.d.') }}</time>
+                                                <time>{{ $article?->published_at->format('Y.m.d.') }}</time>
                                             </div>
                                             @if ($article->is_breaking)
                                                 <span

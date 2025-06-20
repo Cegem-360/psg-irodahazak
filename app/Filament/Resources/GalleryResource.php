@@ -14,6 +14,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
@@ -41,28 +42,23 @@ final class GalleryResource extends Resource
     {
         return $form
             ->schema([
-                FileUpload::make('image_file')
-                    ->label('Kép feltöltése')
+                FileUpload::make('path')
                     ->image()
-                    ->directory('uploads/gallery')
-                    ->visibility('public')
-                    ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])
-                    ->maxSize(5120) // 5MB
-                    ->columnSpanFull()
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        if ($state) {
-                            // Automatically set path when file is uploaded
-                            $set('path', './'.$state);
-                            $pathInfo = pathinfo($state);
-                            $set('path_without_size_and_ext', './'.$pathInfo['dirname'].'/'.$pathInfo['filename']);
-                        }
-                    }),
-                TextInput::make('path')
-                    ->maxLength(255)
-                    ->helperText('Automatikusan beállítva a kép feltöltésekor'),
+                    ->label('Kép feltöltése')
+                    ->required()
+                    ->disk('public')
+                    ->directory(function (Get $get): string {
+                        return 'property/'.$get('target_table_id').'/gallery';
+                    })
+                    ->preserveFilenames()
+                    ->helperText('Max. 10 MB, csak képek')
+                    ->visible(
+                        fn (Get $get): bool => $get('target_table_id') ?? false
+                    ),
                 Select::make('target_table_id')
                     ->label('Property')
                     ->options(Property::all()->pluck('title', 'id'))
+                    ->live()
                     ->required()
                     ->searchable(),
                 TextInput::make('ord')
