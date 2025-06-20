@@ -72,7 +72,11 @@ final class ImagesRelationManager extends RelationManager
             ->columns([
                 ImageColumn::make('path')
                     ->label('Kép')
-                    ->getStateUsing(fn (Gallery $record): string => $record->image_url)
+                    ->disk('public')
+                    ->visibility('public')
+                    ->directory(function (Gallery $record): string {
+                        return 'property/'.$record->target_table_id.'/gallery';
+                    })
                     ->height(60)
                     ->width(80),
                 TextColumn::make('size')
