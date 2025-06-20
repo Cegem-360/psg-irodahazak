@@ -27,28 +27,45 @@ final class ContentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Tartalom';
+
+    protected static ?string $modelLabel = 'Tartalom';
+
+    protected static ?string $pluralModelLabel = 'Tartalom';
+
+    protected static ?string $navigationGroup = 'Tartalomkezelés';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('title')
+                    ->label('Cím')
                     ->maxLength(255),
                 TextInput::make('status')
+                    ->label('Státusz')
                     ->maxLength(255),
                 RichEditor::make('lead')
+                    ->label('Bevezető')
                     ->columnSpanFull(),
                 RichEditor::make('content')
+                    ->label('Tartalom')
                     ->columnSpanFull(),
                 TextInput::make('ord')
+                    ->label('Sorrend')
                     ->numeric()
                     ->default(0),
                 TextInput::make('meta_title')
+                    ->label('Meta cím')
                     ->maxLength(255),
                 Textarea::make('meta_keywords')
+                    ->label('Meta kulcsszavak')
                     ->columnSpanFull(),
                 Textarea::make('meta_description')
+                    ->label('Meta leírás')
                     ->columnSpanFull(),
                 TextInput::make('lang')
+                    ->label('Nyelv')
                     ->maxLength(2)
                     ->default('HU'),
                 Select::make('tags')
@@ -79,15 +96,20 @@ final class ContentResource extends Resource
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('title')
+                    ->label('Cím')
                     ->searchable(),
                 TextColumn::make('status')
+                    ->label('Státusz')
                     ->searchable(),
                 TextColumn::make('ord')
+                    ->label('Sorrend')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('meta_title')
+                    ->label('Meta cím')
                     ->searchable(),
                 TextColumn::make('lang')
+                    ->label('Nyelv')
                     ->searchable(),
                 TextColumn::make('lead_pic')
                     ->searchable(),

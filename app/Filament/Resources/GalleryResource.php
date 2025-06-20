@@ -29,6 +29,14 @@ final class GalleryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Galéria';
+
+    protected static ?string $modelLabel = 'Kép';
+
+    protected static ?string $pluralModelLabel = 'Képek';
+
+    protected static ?string $navigationGroup = 'Média';
+
     public static function form(Form $form): Form
     {
         return $form

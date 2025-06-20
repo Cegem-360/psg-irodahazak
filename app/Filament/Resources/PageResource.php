@@ -26,41 +26,60 @@ final class PageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Oldalak';
+
+    protected static ?string $modelLabel = 'Oldal';
+
+    protected static ?string $pluralModelLabel = 'Oldalak';
+
+    protected static ?string $navigationGroup = 'Tartalom';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('title')
+                    ->label('Cím')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('url')
+                    ->label('URL')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('ord')
+                    ->label('Sorrend')
                     ->required()
                     ->numeric()
                     ->default(0),
                 TextInput::make('template')
+                    ->label('Sablon')
                     ->required()
                     ->maxLength(150),
                 TextInput::make('parent_id')
+                    ->label('Szülő ID')
                     ->required()
                     ->numeric()
                     ->default(0),
                 TextInput::make('show_menu')
+                    ->label('Megjelenés menüben')
                     ->numeric()
                     ->default(0),
                 TextInput::make('type')
+                    ->label('Típus')
                     ->maxLength(100),
                 Textarea::make('content_json')
+                    ->label('Tartalom JSON')
                     ->columnSpanFull(),
                 TextInput::make('title_url')
+                    ->label('Cím URL')
                     ->maxLength(255),
                 TextInput::make('sow_just_super_admin')
+                    ->label('Csak superadmin')
                     ->required()
                     ->numeric()
                     ->default(0),
                 TextInput::make('content_category_id')
+                    ->label('Tartalom kategória ID')
                     ->numeric(),
             ]);
     }
@@ -74,23 +93,31 @@ final class PageResource extends Resource
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('title')
+                    ->label('Cím')
                     ->searchable(),
                 TextColumn::make('url')
+                    ->label('URL')
                     ->searchable(),
                 TextColumn::make('ord')
+                    ->label('Sorrend')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('template')
+                    ->label('Sablon')
                     ->searchable(),
                 TextColumn::make('parent_id')
+                    ->label('Szülő ID')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('show_menu')
+                    ->label('Menü')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('type')
+                    ->label('Típus')
                     ->searchable(),
                 TextColumn::make('title_url')
+                    ->label('Cím URL')
                     ->searchable(),
                 TextColumn::make('sow_just_super_admin')
                     ->numeric()

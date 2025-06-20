@@ -24,12 +24,22 @@ final class ServiceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Szolgáltatások';
+
+    protected static ?string $modelLabel = 'Szolgáltatás';
+
+    protected static ?string $pluralModelLabel = 'Szolgáltatások';
+
+    protected static ?string $navigationGroup = 'Tartalomkezelés';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                DateTimePicker::make('date'),
+                DateTimePicker::make('date')
+                    ->label('Dátum'),
                 TextInput::make('name')
+                    ->label('Név')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -44,6 +54,7 @@ final class ServiceResource extends Resource
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('name')
+                    ->label('Név')
                     ->searchable(),
             ])
             ->filters([

@@ -34,136 +34,204 @@ final class PropertyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Ingatlanok';
+
+    protected static ?string $modelLabel = 'Ingatlan';
+
+    protected static ?string $pluralModelLabel = 'Ingatlanok';
+
+    protected static ?string $navigationGroup = 'Ingatlanok';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('title')
+                    ->label('Cím')
                     ->maxLength(255),
                 TextInput::make('status')
+                    ->label('Státusz')
                     ->maxLength(255),
                 Textarea::make('lead')
+                    ->label('Bevezető')
                     ->columnSpanFull(),
                 Textarea::make('content')
+                    ->label('Tartalom')
                     ->columnSpanFull(),
                 DateTimePicker::make('date')
+                    ->label('Dátum')
                     ->required(),
                 TextInput::make('ord')
+                    ->label('Sorrend')
                     ->numeric()
                     ->default(0),
                 TextInput::make('meta_title')
+                    ->label('Meta cím')
                     ->maxLength(255),
                 Textarea::make('meta_title_en')
+                    ->label('Meta cím (angol)')
                     ->columnSpanFull(),
                 Textarea::make('meta_keywords')
+                    ->label('Meta kulcsszavak')
                     ->columnSpanFull(),
                 Textarea::make('meta_keywords_en')
+                    ->label('Meta kulcsszavak (angol)')
                     ->columnSpanFull(),
                 Textarea::make('meta_description')
+                    ->label('Meta leírás')
                     ->columnSpanFull(),
                 Textarea::make('meta_description_en')
+                    ->label('Meta leírás (angol)')
                     ->columnSpanFull(),
                 TextInput::make('construction_year')
+                    ->label('Építés éve')
                     ->maxLength(255),
                 TextInput::make('total_area')
+                    ->label('Összterület')
                     ->maxLength(255),
                 TextInput::make('jelenleg_kiado')
+                    ->label('Jelenleg kiadó')
                     ->maxLength(255),
                 TextInput::make('max_berleti_dij')
+                    ->label('Max. bérleti díj')
                     ->maxLength(255),
                 TextInput::make('uzemeletetesi_dij')
+                    ->label('Üzemeltetési díj')
                     ->maxLength(255),
                 TextInput::make('raktar_terulet')
+                    ->label('Raktár terület')
                     ->maxLength(255),
                 TextInput::make('raktar_berleti_dij')
+                    ->label('Raktár bérleti díj')
                     ->maxLength(255),
                 TextInput::make('parkolas')
+                    ->label('Parkolás')
                     ->maxLength(255),
                 TextInput::make('parkolas_dija')
+                    ->label('Parkolás díja')
                     ->maxLength(255),
                 TextInput::make('kozos_teruleti_arany')
+                    ->label('Közös területi arány')
                     ->maxLength(255),
                 TextInput::make('cim_irsz')
+                    ->label('Irányítószám')
                     ->maxLength(255),
                 TextInput::make('cim_varos')
+                    ->label('Város')
                     ->maxLength(255),
                 TextInput::make('cim_utca')
+                    ->label('Utca')
                     ->maxLength(255),
                 TextInput::make('cim_hazszam')
+                    ->label('Házszám')
                     ->maxLength(255),
                 Select::make('tags')
+                    ->label('Címkék')
                     ->options(Tag::all()->pluck('name', 'id'))
                     ->preload()
                     ->multiple(),
                 Select::make('services')
+                    ->label('Szolgáltatások')
                     ->options(Service::all()->pluck('name', 'id'))
                     ->preload()
                     ->multiple(),
                 TextInput::make('maps_lat')
+                    ->label('Térkép szélesség')
                     ->maxLength(255),
                 TextInput::make('maps_lng')
+                    ->label('Térkép hosszúság')
                     ->maxLength(255),
                 TextInput::make('azonosito')
+                    ->label('Azonosító')
                     ->maxLength(255),
                 TextInput::make('osszterulet_addons')
+                    ->label('Összterület kiegészítések')
                     ->maxLength(255),
                 TextInput::make('max_berleti_dij_addons')
+                    ->label('Max. bérleti díj kiegészítések')
                     ->maxLength(255),
                 TextInput::make('parkolas_dija_addons')
+                    ->label('Parkolás díja kiegészítések')
                     ->maxLength(255),
                 TextInput::make('min_berleti_dij')
+                    ->label('Min. bérleti díj')
                     ->maxLength(255),
                 TextInput::make('min_berleti_dij_addons')
+                    ->label('Min. bérleti díj kiegészítések')
                     ->maxLength(255),
                 TextInput::make('raktar_terulet_addons')
+                    ->label('Raktár terület kiegészítések')
                     ->maxLength(255),
                 TextInput::make('raktar_berleti_dij_addons')
+                    ->label('Raktár bérleti díj kiegészítések')
                     ->maxLength(255),
                 TextInput::make('uzemeletetesi_dij_addons')
+                    ->label('Üzemeltetési díj kiegészítések')
                     ->maxLength(255),
                 TextInput::make('min_parkolas_dija')
+                    ->label('Min. parkolás díja')
                     ->maxLength(255),
                 TextInput::make('min_parkolas_dija_addons')
                     ->maxLength(255),
                 TextInput::make('max_parkolas_dija')
+                    ->label('Max. parkolás díja')
                     ->maxLength(255),
                 TextInput::make('max_parkolas_dija_addons')
+                    ->label('Max. parkolás díja kiegészítések')
                     ->maxLength(255),
                 TextInput::make('kozos_teruleti_arany_addons')
+                    ->label('Közös területi arány kiegészítések')
                     ->maxLength(255),
                 TextInput::make('min_kiado')
+                    ->label('Min. kiadó')
                     ->maxLength(255),
                 TextInput::make('min_kiado_addons')
+                    ->label('Min. kiadó kiegészítések')
                     ->maxLength(255),
                 TextInput::make('jelenleg_kiado_addons')
+                    ->label('Jelenleg kiadó kiegészítések')
                     ->maxLength(255),
                 TextInput::make('kodszam')
+                    ->label('Kódszám')
                     ->maxLength(255),
                 Textarea::make('en_content')
+                    ->label('Angol tartalom')
                     ->columnSpanFull(),
                 TextInput::make('min_berleti_idoszak')
+                    ->label('Min. bérleti időszak')
                     ->maxLength(255),
                 TextInput::make('min_berleti_idoszak_addons')
+                    ->label('Min. bérleti időszak kiegészítések')
                     ->maxLength(255),
                 TextInput::make('cim_utca_addons')
+                    ->label('Utca kiegészítések')
                     ->maxLength(255),
                 TextInput::make('lang')
+                    ->label('Nyelv')
                     ->maxLength(2),
                 TextInput::make('cimke')
+                    ->label('Címke')
                     ->maxLength(255),
                 TextInput::make('service')
+                    ->label('Szolgáltatás')
                     ->maxLength(255),
                 TextInput::make('maps')
+                    ->label('Térképek')
                     ->maxLength(255),
                 TextInput::make('elado_v_kiado')
+                    ->label('Eladó v. kiadó')
                     ->maxLength(255),
                 TextInput::make('elado_v_kiado_addons')
+                    ->label('Eladó v. kiadó kiegészítések')
                     ->maxLength(255),
                 TextInput::make('updated')
+                    ->label('Frissítve')
                     ->maxLength(10),
                 Textarea::make('egyeb')
+                    ->label('Egyéb')
                     ->columnSpanFull(),
                 TextInput::make('afa')
+                    ->label('ÁFA')
                     ->maxLength(255),
             ]);
     }
@@ -180,9 +248,11 @@ final class PropertyResource extends Resource
                     ->height(60)
                     ->width(80),
                 TextColumn::make('title')
+                    ->label('Cím')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('status')
+                    ->label('Státusz')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'active' => 'success',
@@ -197,36 +267,52 @@ final class PropertyResource extends Resource
                     ->label('Építés éve')
                     ->searchable(),
                 TextColumn::make('total_area')
+                    ->label('Összterület')
                     ->searchable(),
                 TextColumn::make('jelenleg_kiado')
+                    ->label('Jelenleg kiadó')
                     ->searchable(),
                 TextColumn::make('max_berleti_dij')
+                    ->label('Max. bérleti díj')
                     ->searchable(),
                 TextColumn::make('uzemeletetesi_dij')
+                    ->label('Üzemeltetési díj')
                     ->searchable(),
                 TextColumn::make('raktar_terulet')
+                    ->label('Raktár terület')
                     ->searchable(),
                 TextColumn::make('raktar_berleti_dij')
+                    ->label('Raktár bérleti díj')
                     ->searchable(),
                 TextColumn::make('parkolas')
+                    ->label('Parkolás')
                     ->searchable(),
                 TextColumn::make('parkolas_dija')
+                    ->label('Parkolás díja')
                     ->searchable(),
                 TextColumn::make('kozos_teruleti_arany')
+                    ->label('Közös területi arány')
                     ->searchable(),
                 TextColumn::make('cim_irsz')
+                    ->label('Irányítószám')
                     ->searchable(),
                 TextColumn::make('cim_varos')
+                    ->label('Város')
                     ->searchable(),
                 TextColumn::make('cim_utca')
+                    ->label('Utca')
                     ->searchable(),
                 TextColumn::make('cim_hazszam')
+                    ->label('Házszám')
                     ->searchable(),
                 TextColumn::make('maps_lat')
+                    ->label('Térkép szélesség')
                     ->searchable(),
                 TextColumn::make('maps_lng')
+                    ->label('Térkép hosszúság')
                     ->searchable(),
                 TextColumn::make('azonosito')
+                    ->label('Azonosító')
                     ->searchable(),
                 TextColumn::make('osszterulet_addons')
                     ->searchable(),
