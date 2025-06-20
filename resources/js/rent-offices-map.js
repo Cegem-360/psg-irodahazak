@@ -36,12 +36,17 @@ class RentOfficesMapHandler {
             return;
         }
 
-        // Add markers for offices with coordinates
+        // Add markers for offices with coordinates (no drop animation)
         offices.forEach((office) => {
             if (office.lat && office.lng) {
                 const position = { lat: office.lat, lng: office.lng };
                 const infoContent = this.createCustomInfoWindowContent(office);
-                this.mapsManager.addMarker(position, office.title, infoContent);
+                this.mapsManager.addMarker(
+                    position,
+                    office.title,
+                    infoContent,
+                    false
+                );
             }
         });
 

@@ -172,16 +172,22 @@ export class GoogleMapsManager {
     /**
      * Marker hozzáadása
      */
-    addMarker(position, title, infoContent) {
+    addMarker(position, title, infoContent, useAnimation = false) {
         if (!this.map) return null;
 
-        const marker = new google.maps.Marker({
+        const markerOptions = {
             position: position,
             map: this.map,
             title: title,
-            animation: google.maps.Animation.DROP,
             optimized: true,
-        });
+        };
+
+        // Only add animation if explicitly requested
+        if (useAnimation) {
+            markerOptions.animation = google.maps.Animation.DROP;
+        }
+
+        const marker = new google.maps.Marker(markerOptions);
 
         if (infoContent) {
             const infoWindow = new google.maps.InfoWindow({

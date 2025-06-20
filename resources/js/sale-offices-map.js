@@ -39,47 +39,66 @@ class SaleOfficesMapHandler {
         // Show loading message while geocoding
         this.mapsManager.updateMapPlaceholder("Címek feldolgozása...");
 
-        const successfulMarkers = [];
+        const geocodingPromises = [];
+        const validOffices = [];
 
-        // Process offices sequentially to avoid rate limiting
+        // Create geocoding promises for all valid addresses
         for (let i = 0; i < offices.length; i++) {
             const office = offices[i];
 
-            try {
-                // Skip if address is empty
-                if (!office.address || office.address.trim() === "") {
-                    console.warn("Empty address for office:", office.title);
-                    continue;
-                }
+            // Skip if address is empty
+            if (!office.address || office.address.trim() === "") {
+                console.warn("Empty address for office:", office.title);
+                continue;
+            }
 
-                const coords = await this.mapsManager.geocodeAddress(
-                    office.address
-                );
+            validOffices.push(office);
 
+            // Add delay between requests to avoid rate limiting
+            const delay = i * 300; // 300ms delay between each request
+
+            const geocodingPromise = new Promise((resolve) => {
+                setTimeout(async () => {
+                    try {
+                        const coords = await this.mapsManager.geocodeAddress(
+                            office.address
+                        );
+                        resolve({ office, coords, success: true });
+                    } catch (error) {
+                        console.warn(
+                            `Failed to geocode address "${office.address}" for office "${office.title}":`,
+                            error
+                        );
+                        resolve({ office, coords: null, success: false });
+                    }
+                }, delay);
+            });
+
+            geocodingPromises.push(geocodingPromise);
+        }
+
+        // Wait for all geocoding to complete
+        const geocodingResults = await Promise.all(geocodingPromises);
+
+        // Add all successful markers at once (no animation to avoid dropping effect)
+        const successfulMarkers = [];
+
+        geocodingResults.forEach(({ office, coords, success }) => {
+            if (success && coords) {
                 const infoContent =
                     this.mapsManager.createInfoWindowContent(office);
                 const marker = this.mapsManager.addMarker(
                     coords,
                     office.title,
-                    infoContent
+                    infoContent,
+                    false // No drop animation
                 );
 
                 if (marker) {
                     successfulMarkers.push(marker);
                 }
-
-                // Small delay between geocoding requests to avoid rate limiting
-                if (i < offices.length - 1) {
-                    await new Promise((resolve) => setTimeout(resolve, 200));
-                }
-            } catch (error) {
-                console.warn(
-                    `Failed to geocode address "${office.address}" for office "${office.title}":`,
-                    error
-                );
-                // Continue with other offices
             }
-        }
+        });
 
         // Hide loading message
         this.mapsManager.hideMapPlaceholder();
