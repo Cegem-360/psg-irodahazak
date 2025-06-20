@@ -97,7 +97,8 @@ final class GalleryResource extends Resource
             ->columns([
                 ImageColumn::make('path')
                     ->label('Kép')
-                    ->getStateUsing(fn (Gallery $record): string => $record->image_url)
+                    ->disk('public')
+                    ->visibility('public')
                     ->height(60)
                     ->width(80),
                 TextColumn::make('property.title')
