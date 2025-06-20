@@ -52,6 +52,7 @@
         <x-layouts.footer />
 
         @filamentScripts
+        @stack('scripts')
 
     </body>
 

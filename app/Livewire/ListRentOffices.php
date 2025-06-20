@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Property as Offices;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Log;
 
 final class ListRentOffices extends Component
 {
@@ -91,6 +91,36 @@ final class ListRentOffices extends Component
         return view('livewire.list-rent-offices', [
             'offices' => $this->getOffices(),
         ]);
+    }
+
+    public function getOfficesForMap()
+    {
+        // Get only the currently paginated offices that have coordinates
+        $paginatedOffices = $this->buildQuery()
+            ->with('images')
+            ->orderBy($this->sortField, $this->sortDirection)
+            ->paginate($this->perPage);
+
+        // Filter out offices without coordinates and transform to map format
+        return $paginatedOffices->getCollection()
+            ->whereNotNull('maps_lat')
+            ->whereNotNull('maps_lng')
+            ->where('maps_lat', '!=', '')
+            ->where('maps_lng', '!=', '')
+            ->map(function ($office) {
+                return [
+                    'id' => $office->id,
+                    'title' => $office->title,
+                    'lat' => (float) $office->maps_lat,
+                    'lng' => (float) $office->maps_lng,
+                    'address' => $office->cim_irsz.' '.$office->cim_varos.', '.$office->cim_utca.' '.$office->cim_hazszam,
+                    'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
+                    'operating_fee' => ($office->uzemeletetesi_dij ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
+                    'url' => route('properties.show', ['property' => $office]),
+                    'image' => $office->getFirstImageUrl('400x300') ?: 'https://via.placeholder.com/400x300/f3f4f6/9ca3af?text=Kép+nincs',
+                ];
+            })
+            ->values(); // Reset array keys to ensure clean JSON
     }
 
     private function buildQuery()

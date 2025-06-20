@@ -10,10 +10,8 @@
             <div
                 class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div class="relative">
-                    <iframe class="sticky top-8 h-[120vh]"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.3752330104103!2d19.04358067667799!3d47.502083195188725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741dc15d6bf2925%3A0xd7e6926bead52fbc!2sAcademia%20Offices%20%2F%20Irodah%C3%A1z!5e0!3m2!1shu!2shu!4v1749023556934!5m2!1shu!2shu"
-                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div id="map" class="sticky top-8 h-[120vh] rounded-lg border border-gray-300"
+                        style="width: 100%;"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @foreach ($this->getOffices() ?? [] as $office)
@@ -51,5 +49,70 @@
             </div>
         </div>
     </div>
+
+    @script
+        <script>
+            // Import the rent offices map handler (creates global instance automatically)
+            import('{{ Vite::asset('resources/js/rent-offices-map.js') }}').then(module => {
+                const apiKey = '{{ config('services.google_maps.api_key') }}';
+                let officesData = @json($this->getOfficesForMap());
+
+                // Check if API key is available
+                if (!apiKey || apiKey.trim() === '') {
+                    console.warn('Google Maps API key is missing. Please set GOOGLE_MAPS_API_KEY in your .env file.');
+                    const mapElement = document.getElementById('map');
+                    if (mapElement) {
+                        mapElement.innerHTML = `
+                        <div class="flex items-center justify-center h-full bg-gray-100 rounded-lg">
+                            <div class="text-center p-6">
+                                <div class="mb-4">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 616 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">Térkép nem elérhető</h3>
+                                <p class="text-gray-500">Google Maps API kulcs szükséges a térkép megjelenítéséhez.</p>
+                            </div>
+                        </div>
+                    `;
+                    }
+                    return;
+                }
+
+                // Function to safely initialize map when DOM is ready
+                function initializeMapSafely() {
+                    const mapElement = document.getElementById('map');
+                    if (!mapElement) {
+                        console.warn('Map element not found, retrying...');
+                        setTimeout(initializeMapSafely, 100);
+                        return;
+                    }
+
+                    // Initialize map
+                    if (window.rentOfficesMapHandler) {
+                        window.rentOfficesMapHandler.initialize(apiKey, officesData);
+                    }
+                }
+
+                // Start initialization
+                initializeMapSafely();
+
+                // Listen for Livewire updates using $wire hooks
+                $wire.$hook('morph', () => {
+                    // Refresh markers after DOM updates
+                    const updatedOfficesData = @json($this->getOfficesForMap());
+                    if (window.rentOfficesMapHandler) {
+                        setTimeout(() => {
+                            window.rentOfficesMapHandler.refreshMarkers(updatedOfficesData);
+                        }, 100);
+                    }
+                });
+
+            }).catch(error => {
+                console.error('Failed to load map module:', error);
+            });
+        </script>
+    @endscript
 
 </div>

@@ -26,10 +26,36 @@
             <div
                 class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div class="relative">
-                    <iframe class="sticky top-8 h-[120vh]"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.3752330104103!2d19.04358067667799!3d47.502083195188725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741dc15d6bf2925%3A0xd7e6926bead52fbc!2sAcademia%20Offices%20%2F%20Irodah%C3%A1z!5e0!3m2!1shu!2shu!4v1749023556934!5m2!1shu!2shu"
-                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <!-- Google Maps Container -->
+                    <div id="map"
+                        class="sticky top-8 h-[120vh] rounded-lg shadow-lg bg-gray-100 flex items-center justify-center">
+                        <div class="text-center text-gray-500" id="map-placeholder">
+                            <svg class="w-12 h-12 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <p>{{ __('Térkép betöltése...') }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Map Error Display -->
+                    <div id="map-error"
+                        class="sticky top-8 h-[120vh] rounded-lg shadow-lg bg-red-50 border-2 border-red-200 items-center justify-center text-center p-8 hidden">
+                        <div class="text-red-600">
+                            <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z">
+                                </path>
+                            </svg>
+                            <h3 class="text-lg font-semibold mb-2">{{ __('Térkép betöltési hiba') }}</h3>
+                            <p id="map-error-message" class="text-sm"></p>
+                        </div>
+                    </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @foreach ($this->getOffices() ?? [] as $office)
@@ -54,3 +80,67 @@
     </div>
 
 </div>
+@script
+    <script>
+        // Import the sale offices map handler (creates global instance automatically)
+        import('{{ Vite::asset('resources/js/sale-offices-map.js') }}').then(module => {
+            const apiKey = @js(config('services.google_maps.api_key'));
+            let officesData = @json($this->getOfficesForMap());
+
+            // Check if API key is available
+            if (!apiKey || apiKey.trim() === '') {
+                console.warn('Google Maps API key is missing. Please set GOOGLE_MAPS_API_KEY in your .env file.');
+                const mapElement = document.getElementById('map');
+                if (mapElement) {
+                    mapElement.innerHTML = `
+                        <div class="flex items-center justify-center h-full bg-gray-100 rounded-lg">
+                            <div class="text-center p-6">
+                                <div class="mb-4">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 616 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">Térkép nem elérhető</h3>
+                                <p class="text-gray-500">Google Maps API kulcs szükséges a térkép megjelenítéséhez.</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                return;
+            }
+
+            // Function to safely initialize map when DOM is ready
+            function initializeMapSafely() {
+                const mapElement = document.getElementById('map');
+                if (!mapElement) {
+                    console.warn('Map element not found, retrying...');
+                    setTimeout(initializeMapSafely, 100);
+                    return;
+                }
+
+                // Initialize map
+                if (window.saleOfficesMapHandler) {
+                    window.saleOfficesMapHandler.initialize(apiKey, officesData);
+                }
+            }
+
+            // Start initialization
+            initializeMapSafely();
+
+            // Listen for Livewire updates using $wire hooks
+            $wire.$hook('morph', () => {
+                // Refresh markers after DOM updates
+                const updatedOfficesData = @json($this->getOfficesForMap());
+                if (window.saleOfficesMapHandler) {
+                    setTimeout(() => {
+                        window.saleOfficesMapHandler.refreshMarkers(updatedOfficesData);
+                    }, 100);
+                }
+            });
+
+        }).catch(error => {
+            console.error('Failed to load map module:', error);
+        });
+    </script>
+@endscript

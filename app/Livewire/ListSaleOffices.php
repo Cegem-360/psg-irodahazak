@@ -58,6 +58,48 @@ final class ListSaleOffices extends Component
             ->paginate($this->perPage);
     }
 
+    public function getOfficesForMap()
+    {
+        // Get only the currently paginated offices
+        $paginatedOffices = Offices::query()
+            ->with('images')
+            ->when($this->search, function ($query): void {
+                $query->where('title', 'like', '%'.$this->search.'%');
+            })
+            ->sale()
+            ->active()
+            ->orderBy($this->sortField, $this->sortDirection)
+            ->paginate($this->perPage);
+
+        // Transform all offices to map format (coordinates will be geocoded on frontend)
+        return $paginatedOffices->getCollection()
+            ->map(function ($office) {
+                // Build full address for geocoding
+                $addressParts = array_filter([
+                    $office->cim_irsz,
+                    $office->cim_varos,
+                    $office->cim_utca,
+                    $office->cim_hazszam,
+                ]);
+                $fullAddress = implode(' ', $addressParts);
+
+                return [
+                    'id' => $office->id,
+                    'title' => $office->title,
+                    'address' => $fullAddress,
+                    'postal_code' => $office->cim_irsz ?? '',
+                    'city' => $office->cim_varos ?? '',
+                    'street' => $office->cim_utca ?? '',
+                    'house_number' => $office->cim_hazszam ?? '',
+                    'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
+                    'operating_fee' => ($office->uzemeletetesi_dij ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
+                    'url' => route('properties.show', ['property' => $office]),
+                    'image' => $office->getFirstImageUrl('400x300') ?: 'https://via.placeholder.com/400x300/f3f4f6/9ca3af?text=Kép+nincs',
+                ];
+            })
+            ->values(); // Reset array keys to ensure clean JSON
+    }
+
     public function updatedSearch(): void
     {
         $this->resetPage();

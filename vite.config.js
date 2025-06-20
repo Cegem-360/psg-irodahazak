@@ -7,6 +7,9 @@ export default defineConfig({
             input: [
                 "resources/css/app.css",
                 "resources/js/app.js",
+                "resources/js/google-maps-utils.js",
+                "resources/js/sale-offices-map.js",
+                "resources/js/rent-offices-map.js",
             ],
             refresh: [
                 ...refreshPaths,
