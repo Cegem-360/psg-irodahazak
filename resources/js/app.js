@@ -4,14 +4,13 @@ import.meta.glob(["../images/**", "../fonts/**"]);
 
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
-
 import "ion-rangeslider";
 import "ion-rangeslider/css/ion.rangeSlider.css";
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
 
-document.addEventListener("livewire:load", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const galleryCarouselSwiperThumbs = new Swiper(
         ".gallery-carousel-swiper-thumbs",
         {
