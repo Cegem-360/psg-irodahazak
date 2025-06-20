@@ -121,7 +121,7 @@ final class Property extends Model
     {
         $firstImage = $this->images->first();
 
-        return $firstImage ? $firstImage->image_url : null;
+        return $firstImage ? $firstImage->getFirstImageUrl() : null;
     }
 
     /**
