@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:public/build/assets/rent-offices-map-CQzSeXzj.js
 import{G as s}from"./google-maps-utils-YxLbDfuB.js";class n{constructor(){this.mapsManager=new s}async initialize(a,t,e){try{await this.mapsManager.initializeGoogleMaps(a,"map",()=>{this.updateMapMarkers(t)},e)}catch(r){console.error("Failed to initialize Google Maps:",r)}}updateMapMarkers(a){this.mapsManager.map&&(this.mapsManager.clearMarkers(),!(!a||a.length===0)&&(a.forEach(t=>{if(t.lat&&t.lng){const e={lat:t.lat,lng:t.lng},r=this.createCustomInfoWindowContent(t);this.mapsManager.addMarker(e,t.title,r,!1)}}),this.mapsManager.fitMarkersToView(),this.mapsManager.hideMapPlaceholder()))}createCustomInfoWindowContent(a){return`
-========
-import{G as r}from"./google-maps-utils-CayYpv_9.js";class n{constructor(){this.mapsManager=new r}async initialize(a,t){try{await this.mapsManager.initializeGoogleMaps(a,"map",()=>{this.updateMapMarkers(t)})}catch(e){console.error("Failed to initialize Google Maps:",e)}}updateMapMarkers(a){this.mapsManager.map&&(this.mapsManager.clearMarkers(),!(!a||a.length===0)&&(a.forEach(t=>{if(t.lat&&t.lng){const e={lat:t.lat,lng:t.lng},s=this.createCustomInfoWindowContent(t);this.mapsManager.addMarker(e,t.title,s,!1)}}),this.mapsManager.fitMarkersToView(),this.mapsManager.hideMapPlaceholder()))}createCustomInfoWindowContent(a){return`
->>>>>>>> parent of 15897f3 (feat: Enhance Google Maps integration with Map ID support and improved error handling):public/build/assets/rent-offices-map-BpvQ8Lrq.js
             <div class="p-4 max-w-sm">
                 <h3 class="font-bold text-lg text-gray-800 mb-3">${a.title}</h3>
                 <div class="space-y-2 text-sm text-gray-600">

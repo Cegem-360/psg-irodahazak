@@ -3,7 +3,6 @@
 <div class="space-y-4">
     <div class="swiper gallery-carousel-swiper rounded-xl">
         <div class="swiper-wrapper">
-            @dump($images)
             @foreach ($images ?? [] as $image)
                 <div class="swiper-slide">
                     <img src="{{ $image->getImageUrl('800x600', 'jpg') }}" alt="{{ $title }}"
