@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.3.24",
+        "intervention/image": "^3.11",
         "laravel/framework": "^12.18",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6.3",

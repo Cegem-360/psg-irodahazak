@@ -5,28 +5,30 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Models\Gallery;
+use App\Services\WatermarkService;
 use Illuminate\Support\Facades\Storage;
 
 final class GalleryObserver
 {
-    /**
-     * Handle the Gallery "creating" event.
-     */
-    public function creating(Gallery $gallery): void
+    private WatermarkService $watermarkService;
+
+    public function __construct(WatermarkService $watermarkService)
     {
-        // Ha van feltöltött kép fájl, állítsuk be a path mezőket
-        if (request()->hasFile('image_file')) {
-            $file = request()->file('image_file');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $path = $file->storeAs('uploads/gallery', $filename, 'public');
+        $this->watermarkService = $watermarkService;
+    }
 
-            $gallery->path = './'.$path;
-            $gallery->path_without_size_and_ext = './'.pathinfo($path, PATHINFO_DIRNAME).'/'.pathinfo($path, PATHINFO_FILENAME);
+    /**
+     * Handle the Gallery "created" event.
+     */
+    public function created(Gallery $gallery): void
+    {
+        // Vízjel alkalmazása a létrehozott képre
+        if ($gallery->path) {
+            $this->watermarkService->applyWatermark($gallery->path, $gallery->target_table);
 
-            // Automatikusan beállítjuk a target_table-t, ha nincs megadva
-            if (! $gallery->target_table) {
-                $gallery->target_table = 'property';
-            }
+            // Különböző méretek létrehozása vízjellel (opcionális)
+            $sizes = ['160x160', '300x200', '800x600', '1200x800'];
+            $this->watermarkService->createWatermarkedSizes($gallery->path, $sizes, $gallery->target_table);
         }
     }
 
@@ -48,6 +50,21 @@ final class GalleryObserver
 
             $gallery->path = './'.$path;
             $gallery->path_without_size_and_ext = './'.pathinfo($path, PATHINFO_DIRNAME).'/'.pathinfo($path, PATHINFO_FILENAME);
+        }
+    }
+
+    /**
+     * Handle the Gallery "updated" event.
+     */
+    public function updated(Gallery $gallery): void
+    {
+        // Ha új kép lett feltöltve, alkalmazunk vízjelet
+        if ($gallery->wasChanged('path') && $gallery->path) {
+            $this->watermarkService->applyWatermark($gallery->path, $gallery->target_table);
+
+            // Különböző méretek létrehozása vízjellel (opcionális)
+            $sizes = ['160x160', '300x200', '800x600', '1200x800'];
+            $this->watermarkService->createWatermarkedSizes($gallery->path, $sizes, $gallery->target_table);
         }
     }
 

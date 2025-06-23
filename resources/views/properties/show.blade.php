@@ -21,7 +21,7 @@
                             <tr>
                                 <td class="bold">{{ __('Address') }}:</td>
                                 <td>{{ $property->cim_irsz }} {{ $property->cim_varos }}, {{ $property->cim_utca }}
-                                    {{ $property->cim_hazszam }}{{ $property->cim_utca_addons ? ', ' . $property->cim_utca_addons : '' }}
+                                    {{ $property->cim_utca_addons ?? '' }} {{ $property->cim_hazszam }}
                                 </td>
                             </tr>
                             <tr>
