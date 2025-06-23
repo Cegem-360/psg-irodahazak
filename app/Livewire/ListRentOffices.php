@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Property as Offices;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -113,7 +112,7 @@ final class ListRentOffices extends Component
                     'title' => $office->title,
                     'lat' => (float) $office->maps_lat,
                     'lng' => (float) $office->maps_lng,
-                    'address' => $office->cim_irsz.' '.$office->cim_varos.', '.$office->cim_utca.' '.$office->cim_hazszam,
+                    'address' => $office->cim_irsz.' '.$office->cim_varos.($office->district ? ' '.$office->district.'. kerület' : '').', '.$office->cim_utca.' '.$office->cim_hazszam,
                     'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
                     'operating_fee' => ($office->uzemeletetesi_dij ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
                     'url' => route('properties.show', ['property' => $office]),
@@ -128,115 +127,50 @@ final class ListRentOffices extends Component
             ->rent()
             ->active();
 
+        // If agglomeration is not included, only show Budapest properties
+        if (! $this->includeAgglomeration) {
+            $query->budapestOnly();
+        }
+
         // Apply search filter
         if ($this->search) {
-            $searchTerms = explode(' ', mb_trim($this->search));
-            $searchTerms = array_filter($searchTerms);
-
-            $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->where(function ($subQ) use ($term) {
-                        $subQ->where('title', 'like', '%'.$term.'%')
-                            ->orWhere('content', 'like', '%'.$term.'%')
-                            ->orWhere('lead', 'like', '%'.$term.'%');
-                    });
-                }
-            });
+            $query->searchText($this->search);
         }
 
         // Apply district filter (single district for backward compatibility)
         if ($this->district) {
-            $query->where(function ($q) {
-                $districtNumber = $this->district;
-                $districtNum = (int) $districtNumber;
-                $postalCode = '1'.mb_str_pad((string) $districtNum, 2, '0', STR_PAD_LEFT);
-
-                // Roman numerals mapping
-                $romanNumerals = [
-                    1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V',
-                    6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
-                    11 => 'XI', 12 => 'XII', 13 => 'XIII', 14 => 'XIV', 15 => 'XV',
-                    16 => 'XVI', 17 => 'XVII', 18 => 'XVIII', 19 => 'XIX', 20 => 'XX',
-                    21 => 'XXI', 22 => 'XXII', 23 => 'XXIII',
-                ];
-
-                $romanDistrict = $romanNumerals[$districtNum] ?? $districtNumber;
-
-                $q->where('cim_varos', 'like', '%'.$districtNumber.'. kerület%')
-                    ->orWhere('cim_varos', 'like', '%'.$romanDistrict.'. kerület%')
-                    ->orWhere('cim_varos', 'like', '%Budapest '.$districtNumber.'%')
-                    ->orWhere('cim_irsz', 'like', $postalCode.'%');
-            });
+            $query->inDistrict($this->district);
         }
 
         // Apply multiple districts filter
         if ($this->districts) {
-            // Debug logging
-            Log::info('Districts filter applied with value: '.$this->districts);
-
             $selectedDistricts = explode(',', $this->districts);
             $selectedDistricts = array_filter(array_map('trim', $selectedDistricts));
 
-            Log::info('Processed districts: ', $selectedDistricts);
-
             if (! empty($selectedDistricts)) {
-                $query->where(function ($q) use ($selectedDistricts) {
-                    foreach ($selectedDistricts as $district) {
-                        $q->orWhere(function ($subQ) use ($district) {
-                            $districtNum = (int) $district;
-                            $postalCode = '1'.mb_str_pad((string) $districtNum, 2, '0', STR_PAD_LEFT);
-
-                            // Roman numerals mapping for Hungarian districts
-                            $romanNumerals = [
-                                1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V',
-                                6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
-                                11 => 'XI', 12 => 'XII', 13 => 'XIII', 14 => 'XIV', 15 => 'XV',
-                                16 => 'XVI', 17 => 'XVII', 18 => 'XVIII', 19 => 'XIX', 20 => 'XX',
-                                21 => 'XXI', 22 => 'XXII', 23 => 'XXIII',
-                            ];
-
-                            $romanDistrict = $romanNumerals[$districtNum] ?? $district;
-
-                            // Match different possible formats:
-                            $subQ->where('cim_varos', 'like', '%'.$district.'. kerület%')
-                                ->orWhere('cim_varos', 'like', '%'.$romanDistrict.'. kerület%')
-                                ->orWhere('cim_varos', 'like', '%Budapest '.$district.'%')
-                                ->orWhere('cim_varos', 'like', '%'.$district.'.kerület%')
-                                ->orWhere('cim_varos', 'like', '%'.$romanDistrict.'.kerület%')
-                                ->orWhere('cim_irsz', 'like', $postalCode.'%')
-                                ->orWhere('cim_utca', 'like', '%'.$district.'. kerület%')
-                                ->orWhere('cim_utca', 'like', '%'.$romanDistrict.'. kerület%')
-                                ->orWhere('title', 'like', '%'.$district.'. kerület%')
-                                ->orWhere('title', 'like', '%'.$romanDistrict.'. kerület%')
-                                ->orWhere('content', 'like', '%'.$district.'. kerület%')
-                                ->orWhere('content', 'like', '%'.$romanDistrict.'. kerület%');
-                        });
-                    }
-                });
+                $query->inDistricts($selectedDistricts);
             }
         }
 
         // Apply office name filter
         if ($this->officeName) {
-            $query->where('title', 'like', '%'.$this->officeName.'%');
+            $query->byOfficeName($this->officeName);
         }
 
         // Apply area range filter
-        if ($this->areaMin && $this->areaMax) {
-            $query->whereBetween('total_area', [$this->areaMin, $this->areaMax]);
-        } elseif ($this->areaMin) {
-            $query->where('total_area', '>=', $this->areaMin);
-        } elseif ($this->areaMax) {
-            $query->where('total_area', '<=', $this->areaMax);
+        if ($this->areaMin || $this->areaMax) {
+            $query->areaRange(
+                $this->areaMin ? (int) $this->areaMin : null,
+                $this->areaMax ? (int) $this->areaMax : null
+            );
         }
 
         // Apply price range filter
-        if ($this->priceMin && $this->priceMax) {
-            $query->whereBetween('max_berleti_dij', [$this->priceMin, $this->priceMax]);
-        } elseif ($this->priceMin) {
-            $query->where('max_berleti_dij', '>=', $this->priceMin);
-        } elseif ($this->priceMax) {
-            $query->where('max_berleti_dij', '<=', $this->priceMax);
+        if ($this->priceMin || $this->priceMax) {
+            $query->priceRange(
+                $this->priceMin ? (int) $this->priceMin : null,
+                $this->priceMax ? (int) $this->priceMax : null
+            );
         }
 
         return $query;

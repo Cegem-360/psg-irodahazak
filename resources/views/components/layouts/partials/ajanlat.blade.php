@@ -28,7 +28,7 @@
 
             <ul class="space-y-2">
                 <li><a
-                        href="{{ localized_route('budapest.category', ['category' => 'kiado-vaci-uti-irodak']) }}">{{ __('Offices for rent on Váci út') }}</a>
+                        href="{{ localized_route('budapest.category', ['category' => 'kiado-vaci-uti-irodak']) }}">{{ __('Offices for rent on Váci street') }}</a>
                 </li>
                 <li><a
                         href="{{ localized_route('budapest.category', ['category' => 'kiado-budai-irodak']) }}">{{ __('Offices for rent in Buda') }}</a>

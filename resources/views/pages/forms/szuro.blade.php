@@ -42,7 +42,7 @@
                             <input type="checkbox" name="include_agglomeration" value="1"
                                 class="mr-2 appearance-none checked:bg-accent focus:ring-accent"
                                 {{ request('include_agglomeration') ? 'checked' : '' }}>
-                            Agglomeráció találatait is mutassa
+                            {{ __('Show agglomeration results too') }}
                         </label>
                     </div>
 
@@ -313,9 +313,9 @@
                 $('.ar-slider').ionRangeSlider({
                     type: "double",
                     min: 1,
-                    max: 60,
+                    max: 30,
                     from: 1,
-                    to: 60,
+                    to: 30,
                     grid: true,
                     skin: "round",
                     postfix: "&nbsp;€/m²",

@@ -40,7 +40,7 @@
     "Offices for rent in Pest": "Kiadó pesti irodák",
     "Offices for rent in downtown": "Kiadó belvárosi irodák",
     "Offices for rent in District V": "Kiadó irodák V. kerület",
-    "Offices for rent on Váci út": "Kiadó Váci úti irodák",
+    "Offices for rent on Váci street": "Kiadó Váci úti irodák",
     "Offices for rent in Buda": "Kiadó budai irodák",
     "Offices for rent in inner Buda": "Kiadó bel-budai irodák",
     "Offices for rent in District XI": "Kiadó irodák XI. kerület",
@@ -69,5 +69,8 @@
     "Legal Statements": "Jogi nyilatkozatok",
     "Privacy Policy": "Adatvédelmi szabályzat",
     "Imprint": "Impresszum",
-    "All rights reserved.": "Minden jog fenntartva."
+    "All rights reserved.": "Minden jog fenntartva.",
+    "Company Name": "Cég neve",
+    "The office building is currently 100% rented out!": "Az irodaház jelenleg 100%-ban bérbe adott!",
+    "Show agglomeration results too": "Agglomeráció találatait is mutassa"
 }

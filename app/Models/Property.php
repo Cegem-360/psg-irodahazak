@@ -169,6 +169,138 @@ final class Property extends Model
         $query->where('elado_v_kiado', 'kiado-iroda');
     }
 
+    #[Scope]
+    protected function budapestOnly(Builder $query): void
+    {
+        $query->where(function ($q) {
+            $q->where('cim_varos', 'like', '%Budapest%')
+                ->orWhere(function ($subQ) {
+                    $subQ->where('cim_irsz', 'like', '1%');
+                });
+        });
+    }
+
+    #[Scope]
+    protected function inDistrict(Builder $query, string $district): void
+    {
+        $districtNum = (int) $district;
+
+        // Roman numerals mapping
+        $romanNumerals = [
+            1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V',
+            6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
+            11 => 'XI', 12 => 'XII', 13 => 'XIII', 14 => 'XIV', 15 => 'XV',
+            16 => 'XVI', 17 => 'XVII', 18 => 'XVIII', 19 => 'XIX', 20 => 'XX',
+            21 => 'XXI', 22 => 'XXII', 23 => 'XXIII',
+        ];
+
+        $romanDistrict = $romanNumerals[$districtNum] ?? $district;
+
+        $query->where(function ($q) use ($romanDistrict, $district, $districtNum) {
+            // District oszlopban keresés
+            $q->where('district', $romanDistrict)
+                ->orWhere('district', $district);
+
+            // Irányítószám alapú keresés - matematikai megoldás
+            if ($districtNum >= 1 && $districtNum <= 23) {
+                $q->orWhere(function ($subQ) use ($districtNum) {
+                    // Irányítószám → szám → osztás 10-zel → kivonás 100
+                    // Például: 1051 → 1051/10=105 → 105-100=5 → 5. kerület
+                    $subQ->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
+                        ->whereRaw('CAST(cim_irsz AS UNSIGNED) > 999')
+                        ->whereRaw('CAST(cim_irsz AS UNSIGNED) < 10000')
+                        ->whereRaw('FLOOR(CAST(cim_irsz AS UNSIGNED) / 10) - 100 = ?', [$districtNum]);
+                });
+            }
+        });
+    }
+
+    #[Scope]
+    protected function inDistricts(Builder $query, array $districts): void
+    {
+        $query->where(function ($q) use ($districts) {
+            foreach ($districts as $district) {
+                $q->orWhere(function ($subQ) use ($district) {
+                    $districtNum = (int) $district;
+
+                    // Roman numerals mapping
+                    $romanNumerals = [
+                        1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V',
+                        6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
+                        11 => 'XI', 12 => 'XII', 13 => 'XIII', 14 => 'XIV', 15 => 'XV',
+                        16 => 'XVI', 17 => 'XVII', 18 => 'XVIII', 19 => 'XIX', 20 => 'XX',
+                        21 => 'XXI', 22 => 'XXII', 23 => 'XXIII',
+                    ];
+
+                    $romanDistrict = $romanNumerals[$districtNum] ?? $district;
+
+                    // District oszlopban keresés
+                    $subQ->where('district', $romanDistrict)
+                        ->orWhere('district', $district);
+
+                    // Irányítószám alapú keresés - matematikai megoldás
+                    if ($districtNum >= 1 && $districtNum <= 23) {
+                        $subQ->orWhere(function ($postalQ) use ($districtNum) {
+                            // Irányítószám → szám → osztás 10-zel → kivonás 100
+                            // Például: 1051 → 1051/10=105 → 105-100=5 → 5. kerület
+                            $postalQ->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
+                                ->whereRaw('CAST(cim_irsz AS UNSIGNED) > 999')
+                                ->whereRaw('CAST(cim_irsz AS UNSIGNED) < 10000')
+                                ->whereRaw('FLOOR(CAST(cim_irsz AS UNSIGNED) / 10) - 100 = ?', [$districtNum]);
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    #[Scope]
+    protected function searchText(Builder $query, string $search): void
+    {
+        $searchTerms = explode(' ', mb_trim($search));
+        $searchTerms = array_filter($searchTerms);
+
+        $query->where(function ($q) use ($searchTerms) {
+            foreach ($searchTerms as $term) {
+                $q->where(function ($subQ) use ($term) {
+                    $subQ->where('title', 'like', '%'.$term.'%')
+                        ->orWhere('content', 'like', '%'.$term.'%')
+                        ->orWhere('lead', 'like', '%'.$term.'%');
+                });
+            }
+        });
+    }
+
+    #[Scope]
+    protected function byOfficeName(Builder $query, string $officeName): void
+    {
+        $query->where('title', 'like', '%'.$officeName.'%');
+    }
+
+    #[Scope]
+    protected function areaRange(Builder $query, ?int $minArea = null, ?int $maxArea = null): void
+    {
+        if ($minArea && $maxArea) {
+            $query->whereBetween('total_area', [$minArea, $maxArea]);
+        } elseif ($minArea) {
+            $query->where('total_area', '>=', $minArea);
+        } elseif ($maxArea) {
+            $query->where('total_area', '<=', $maxArea);
+        }
+    }
+
+    #[Scope]
+    protected function priceRange(Builder $query, ?int $minPrice = null, ?int $maxPrice = null): void
+    {
+        if ($minPrice && $maxPrice) {
+            $query->whereBetween('max_berleti_dij', [$minPrice, $maxPrice]);
+        } elseif ($minPrice) {
+            $query->where('max_berleti_dij', '>=', $minPrice);
+        } elseif ($maxPrice) {
+            $query->where('max_berleti_dij', '<=', $maxPrice);
+        }
+    }
+
     protected function slug(): Attribute
     {
         return Attribute::make(

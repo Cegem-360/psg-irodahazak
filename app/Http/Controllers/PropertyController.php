@@ -80,11 +80,12 @@ final class PropertyController extends Controller
     {
         $property->load('images');
 
-        // Get similar properties from the same district (first 4 digits of postal code)
-        $districtCode = mb_substr($property->cim_irsz ?? '', 0, 4);
+        // Get similar properties from the same district (exact 4-digit postal code match)
+        $postalCode = $property->cim_irsz;
         $similarProperties = Property::where('id', '!=', $property->id)
-            ->where('cim_irsz', 'like', $districtCode.'%')
-            ->where('status', 'active')
+            ->where('cim_irsz', $postalCode)
+            ->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
+            ->active()
             ->inRandomOrder()
             ->limit(3)
             ->get();
@@ -96,7 +97,7 @@ final class PropertyController extends Controller
             $excludeIds = $similarProperties->pluck('id')->push($property->id)->toArray();
 
             $additionalProperties = Property::whereNotIn('id', $excludeIds)
-                ->where('status', 'active')
+                ->active()
                 ->inRandomOrder()
                 ->limit($additionalCount)
                 ->get();
