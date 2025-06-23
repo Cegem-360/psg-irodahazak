@@ -66,7 +66,7 @@
                                 ', ' .
                                 $office->cim_utca .
                                 ' ' .
-                                $office->cim_hazszam" :link="route('properties.show', $office)" />
+                                $office->cim_hazszam" :link="route('properties.show-for-sale', $office)" />
                     @endforeach
                 </div>
             </div>

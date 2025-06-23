@@ -73,7 +73,8 @@ Route::get('/budapest/{category}', function ($category) {
 })->name('budapest.category');
 
 Route::get('/ingatlanok', [PropertyController::class, 'index'])->name('properties.index');
-Route::get('/kiado-irodak/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
+Route::get('/kiado-iroda/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
+Route::get('/elado-irodahaz/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/kategoria/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
 Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
