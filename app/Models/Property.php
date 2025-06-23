@@ -39,6 +39,7 @@ final class Property extends Model
         'kozos_teruleti_arany',
         'cim_irsz',
         'cim_varos',
+        'district',
         'cim_utca',
         'cim_hazszam',
         'tags',
