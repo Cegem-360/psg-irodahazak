@@ -39,7 +39,7 @@ final class ListSaleOffices extends Component
         $this->totalOffices = Offices::query()
             ->sale()
             ->when($this->search, function ($query): void {
-                $query->where('title', 'like', '%'.$this->search.'%');
+                $query->searchText($this->search);
             })
             ->active()
             ->count();
@@ -50,7 +50,7 @@ final class ListSaleOffices extends Component
         return Offices::query()
             ->with('images') // Eager load images
             ->when($this->search, function ($query): void {
-                $query->where('title', 'like', '%'.$this->search.'%');
+                $query->searchText($this->search);
             })
             ->sale()
             ->active()
@@ -64,7 +64,7 @@ final class ListSaleOffices extends Component
         $paginatedOffices = Offices::query()
             ->with('images')
             ->when($this->search, function ($query): void {
-                $query->where('title', 'like', '%'.$this->search.'%');
+                $query->searchText($this->search);
             })
             ->sale()
             ->active()

@@ -260,12 +260,16 @@ final class Property extends Model
         $searchTerms = explode(' ', mb_trim($search));
         $searchTerms = array_filter($searchTerms);
 
-        $query->where(function ($q) use ($searchTerms) {
+        $query->where(function (Builder $q) use ($searchTerms) {
             foreach ($searchTerms as $term) {
-                $q->where(function ($subQ) use ($term) {
+                $q->where(function (Builder $subQ) use ($term) {
                     $subQ->where('title', 'like', '%'.$term.'%')
                         ->orWhere('content', 'like', '%'.$term.'%')
-                        ->orWhere('lead', 'like', '%'.$term.'%');
+                        ->orWhere('lead', 'like', '%'.$term.'%')
+                        // Tags tömb mezőben keresés - case-insensitive JSON keresés
+                        ->orWhereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%'.$term.'%'])
+                        // Services tömb mezőben keresés - case-insensitive JSON keresés
+                        ->orWhereRaw('JSON_SEARCH(LOWER(services), "one", LOWER(?)) IS NOT NULL', ['%'.$term.'%']);
                 });
             }
         });
