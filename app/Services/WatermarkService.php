@@ -53,10 +53,10 @@ final class WatermarkService
 
             // Ellenőrizzük a kép méretét
             $minWidth = config('watermark.min_image_width', 300);
-            $minHeight = config('watermark.min_image_height', 200);
+            $minHeight = config('watermark.min_image_height', 300);
 
             if ($image->width() < $minWidth || $image->height() < $minHeight) {
-                Log::info("Watermark: Kép túl kicsi a vízjelhez: {$image->width()}x{$image->height()}");
+                Log::info("Watermark: Kép túl kicsi a vízjelhez (minimum: {$minWidth}x{$minHeight}): {$image->width()}x{$image->height()} - {$imagePath}");
 
                 return true; // Nem alkalmazunk vízjelet, de ez nem hiba
             }
@@ -170,11 +170,11 @@ final class WatermarkService
             $image = $this->manager->read($originalFullPath);
 
             // Ellenőrizzük a kép méretét
-            $minWidth = config('watermark.min_image_width', 300);
-            $minHeight = config('watermark.min_image_height', 200);
+            $minWidth = config('watermark.min_image_width', 200);
+            $minHeight = config('watermark.min_image_height', 150);
 
             if ($image->width() < $minWidth || $image->height() < $minHeight) {
-                Log::info("Watermark Prototype: Kép túl kicsi a vízjelhez: {$image->width()}x{$image->height()}");
+                Log::info("Watermark Prototype: Kép túl kicsi a vízjelhez (minimum: {$minWidth}x{$minHeight}): {$image->width()}x{$image->height()} - {$originalImagePath}");
 
                 return true; // Nem alkalmazunk vízjelet, de ez nem hiba
             }

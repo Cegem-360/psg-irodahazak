@@ -53,8 +53,8 @@ final class WatermarkSettings extends Page implements HasForms
             'shadow_offset_x' => config('watermark.shadow.offset_x', 2),
             'shadow_offset_y' => config('watermark.shadow.offset_y', 2),
             'shadow_blur' => config('watermark.shadow.blur', 4),
-            'min_image_width' => config('watermark.min_image_width', 300),
-            'min_image_height' => config('watermark.min_image_height', 200),
+            'min_image_width' => config('watermark.min_image_width', 200),
+            'min_image_height' => config('watermark.min_image_height', 150),
         ]);
     }
 

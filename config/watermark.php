@@ -60,6 +60,6 @@ return [
     ],
 
     // Minimum kép méret, ami alatt nem rakjuk rá a vízjelet (pixel)
-    'min_image_width' => env('WATERMARK_MIN_WIDTH', 100),
-    'min_image_height' => env('WATERMARK_MIN_HEIGHT', 100),
+    'min_image_width' => env('WATERMARK_MIN_WIDTH', 300),
+    'min_image_height' => env('WATERMARK_MIN_HEIGHT', 300),
 ];
