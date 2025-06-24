@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
+use App\Models\BlogCategory;
+use App\Models\User;
+use App\Models\BlogPost;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BlogPost>
+ * @extends Factory<BlogPost>
  */
 final class BlogPostFactory extends Factory
 {
@@ -23,12 +27,12 @@ final class BlogPostFactory extends Factory
 
         return [
             'title' => $title,
-            'slug' => \Illuminate\Support\Str::slug($title),
+            'slug' => Str::slug($title),
             'excerpt' => $this->faker->paragraph(2),
             'content' => $this->generateRichContent(),
             'featured_image' => null, // Egyelőre nincs kép
-            'blog_category_id' => \App\Models\BlogCategory::factory(),
-            'user_id' => \App\Models\User::factory(),
+            'blog_category_id' => BlogCategory::factory(),
+            'user_id' => User::factory(),
             'is_published' => $isPublished,
             'published_at' => $isPublished ? $this->faker->dateTimeBetween('-1 month', 'now') : null,
             'meta_data' => [
@@ -42,7 +46,7 @@ final class BlogPostFactory extends Factory
 
     public function published(): Factory
     {
-        return $this->state(function (array $attributes) {
+        return $this->state(function (array $attributes): array {
             return [
                 'is_published' => true,
                 'published_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
@@ -52,7 +56,7 @@ final class BlogPostFactory extends Factory
 
     public function draft(): Factory
     {
-        return $this->state(function (array $attributes) {
+        return $this->state(function (array $attributes): array {
             return [
                 'is_published' => false,
                 'published_at' => null,
@@ -79,6 +83,7 @@ final class BlogPostFactory extends Factory
                 for ($j = 0; $j < $this->faker->numberBetween(3, 6); $j++) {
                     $content .= '<li>'.$this->faker->sentence(8).'</li>';
                 }
+
                 $content .= '</ul>';
             }
         }

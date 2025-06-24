@@ -24,7 +24,7 @@ final class QuoteRequestModal extends Component
 
     public $message = '';
 
-    public $selectedProperty = null;
+    public $selectedProperty;
 
     public $properties = [];
 
@@ -48,7 +48,7 @@ final class QuoteRequestModal extends Component
         'privacy.accepted' => 'Az adatvédelmi nyilatkozat elfogadása kötelező.',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         // Always show modal initially
         $this->showModal = false;
@@ -61,21 +61,21 @@ final class QuoteRequestModal extends Component
             ->get();
     }
 
-    public function openModal()
+    public function openModal(): void
     {
         $this->showModal = true;
         $this->showTab = false;
         session()->forget('quote_modal_closed');
     }
 
-    public function closeModal()
+    public function closeModal(): void
     {
         $this->showModal = false;
         $this->showTab = true;
         $this->resetForm();
     }
 
-    public function submitForm()
+    public function submitForm(): void
     {
         $this->validate();
 
@@ -99,7 +99,7 @@ final class QuoteRequestModal extends Component
                 'message' => $this->message,
                 'propertyName' => $this->selectedProperty ? Property::find($this->selectedProperty)?->title : 'Nincs megadva',
                 'quoteId' => $quoteRequest->id,
-            ], function ($message) {
+            ], function ($message): void {
                 $message->to('info@psg-irodahazak.hu')
                     ->subject('Új árajánlat kérés érkezett')
                     ->replyTo($this->email, $this->name);
@@ -109,7 +109,7 @@ final class QuoteRequestModal extends Component
             Mail::send('emails.quote-confirmation', [
                 'name' => $this->name,
                 'propertyName' => $this->selectedProperty ? Property::find($this->selectedProperty)?->title : 'Nincs megadva',
-            ], function ($message) {
+            ], function ($message): void {
                 $message->to($this->email, $this->name)
                     ->subject('Árajánlat kérés megerősítése - PSG Irodaházak');
             });
@@ -117,7 +117,7 @@ final class QuoteRequestModal extends Component
             session()->flash('success', 'Köszönjük az érdeklődését! Hamarosan felvesszük Önnel a kapcsolatot.');
             $this->closeModal();
 
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             session()->flash('error', 'Hiba történt az árajánlat kérés küldése során. Kérjük, próbálja újra később.');
         }
     }
@@ -127,7 +127,7 @@ final class QuoteRequestModal extends Component
         return view('livewire.quote-request-modal');
     }
 
-    private function resetForm()
+    private function resetForm(): void
     {
         $this->name = '';
         $this->phone = '';

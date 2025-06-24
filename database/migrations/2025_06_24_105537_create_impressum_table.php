@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('impressum', function (Blueprint $table) {
+        Schema::create('impressum', function (Blueprint $table): void {
             $table->id();
             $table->string('title')->default('Impresszum');
             $table->longText('content')->nullable();

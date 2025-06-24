@@ -39,6 +39,42 @@ If a package (such as a Spatie package) is based on another package, the base pa
 For production, ensure you implement `FilamentUser` in your User model and add the `canAccessPanel` function.  
 See the [Filament documentation](https://filamentphp.com/docs/3.x/panels/installation#deploying-to-production) for details.
 
+# Modulok
+
+## Referencia Modul
+
+A referencia modul lehetővé teszi ügyfél logók/referenciák kezelését.
+
+### Funkciók:
+- Név és kép tárolása
+- Sorrend meghatározása (0 = első, 1 = második, stb.)
+- Aktív/inaktív állapot
+- Filament admin felület magyar nyelvű címkékkel
+- Képek tárolása `storage/app/public/references` mappában
+- Drag & drop átrendezés a Filament admin felületen
+
+### Használat:
+
+#### Admin felületen:
+Látogasd meg a `/admin/references` oldalt a referenciák kezeléséhez.
+
+#### Frontend használat:
+```php
+// Helper függvény használata
+$references = get_references();
+
+// Vagy közvetlenül a modellen keresztül
+$references = \App\Models\Reference::active()->ordered()->get();
+```
+
+#### Livewire komponens:
+```blade
+<livewire:reference-list />
+```
+
+### API Végpontok:
+A referenciák lekérdezhetők REST API-n keresztül is (ha szükséges).
+
 ## License
 
 The MIT License. Please see [the license file](LICENSE.md) for more information.

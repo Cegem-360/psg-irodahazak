@@ -137,9 +137,11 @@ final class News extends Model
             if (empty($news->slug)) {
                 $news->slug = Str::slug($news->title);
             }
+
             if (empty($news->excerpt)) {
                 $news->excerpt = Str::limit(strip_tags($news->content), 160);
             }
+
             if (empty($news->priority)) {
                 $news->priority = 2; // Default to normal priority
             }
@@ -149,6 +151,7 @@ final class News extends Model
             if ($news->isDirty('title') && empty($news->slug)) {
                 $news->slug = Str::slug($news->title);
             }
+
             if ($news->isDirty('content') && empty($news->excerpt)) {
                 $news->excerpt = Str::limit(strip_tags($news->content), 160);
             }

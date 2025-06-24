@@ -27,7 +27,7 @@ final class PopulateGalleryImages extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $this->info('Starting to populate gallery images...');
 
@@ -48,7 +48,7 @@ final class PopulateGalleryImages extends Command
         $totalUpdated = 0;
 
         foreach ($propertyIds as $propertyId) {
-            $storagePath = "property/{$propertyId}/gallery";
+            $storagePath = sprintf('property/%s/gallery', $propertyId);
 
             // Check if the directory exists
             if (! Storage::disk('public')->exists($storagePath)) {
@@ -67,7 +67,7 @@ final class PopulateGalleryImages extends Command
             }
 
             // Extract just the filenames (not the full path)
-            $imageNames = array_map(function ($file) {
+            $imageNames = array_map(function ($file): string {
                 return basename($file);
             }, $files);
 
@@ -86,7 +86,7 @@ final class PopulateGalleryImages extends Command
                 $totalUpdated += $count;
 
                 $this->newLine();
-                $this->line("Property {$propertyId}: ".count($imageNames)." images found, {$count} gallery records would be updated");
+                $this->line(sprintf('Property %s: ', $propertyId).count($imageNames).sprintf(' images found, %s gallery records would be updated', $count));
                 $this->line('Images: '.implode(', ', array_slice($imageNames, 0, 5)).(count($imageNames) > 5 ? '...' : ''));
             }
 
@@ -97,9 +97,9 @@ final class PopulateGalleryImages extends Command
         $this->newLine();
 
         if ($isDryRun) {
-            $this->info("DRY RUN: Would update {$totalUpdated} gallery records");
+            $this->info(sprintf('DRY RUN: Would update %s gallery records', $totalUpdated));
         } else {
-            $this->info("Successfully updated {$totalUpdated} gallery records");
+            $this->info(sprintf('Successfully updated %s gallery records', $totalUpdated));
         }
 
         return 0;

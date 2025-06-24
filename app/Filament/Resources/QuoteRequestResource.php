@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\Section;
+use App\Filament\Resources\QuoteRequestResource\Pages\ListQuoteRequests;
+use App\Filament\Resources\QuoteRequestResource\Pages\CreateQuoteRequest;
+use App\Filament\Resources\QuoteRequestResource\Pages\ViewQuoteRequest;
+use App\Filament\Resources\QuoteRequestResource\Pages\EditQuoteRequest;
 use App\Filament\Resources\QuoteRequestResource\Pages;
 use App\Models\QuoteRequest;
 use Filament\Forms;
@@ -45,7 +50,7 @@ final class QuoteRequestResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Kapcsolattartó adatok')
+                Section::make('Kapcsolattartó adatok')
                     ->schema([
                         TextInput::make('name')
                             ->label('Név')
@@ -65,7 +70,7 @@ final class QuoteRequestResource extends Resource
                     ])
                     ->columns(3),
 
-                Forms\Components\Section::make('Kérés részletei')
+                Section::make('Kérés részletei')
                     ->schema([
                         Select::make('property_id')
                             ->label('Ingatlan')
@@ -85,7 +90,7 @@ final class QuoteRequestResource extends Resource
                     ])
                     ->columns(2),
 
-                Forms\Components\Section::make('Kezelés')
+                Section::make('Kezelés')
                     ->schema([
                         Select::make('status')
                             ->label('Állapot')
@@ -222,10 +227,10 @@ final class QuoteRequestResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListQuoteRequests::route('/'),
-            'create' => Pages\CreateQuoteRequest::route('/create'),
-            'view' => Pages\ViewQuoteRequest::route('/{record}'),
-            'edit' => Pages\EditQuoteRequest::route('/{record}/edit'),
+            'index' => ListQuoteRequests::route('/'),
+            'create' => CreateQuoteRequest::route('/create'),
+            'view' => ViewQuoteRequest::route('/{record}'),
+            'edit' => EditQuoteRequest::route('/{record}/edit'),
         ];
     }
 

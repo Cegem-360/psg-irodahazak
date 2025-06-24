@@ -21,13 +21,13 @@ final class TestimonialController extends Controller
             ->limit(6)
             ->get();
 
-        return view('testimonials.index', compact('testimonials', 'featuredTestimonials'));
+        return view('testimonials.index', ['testimonials' => $testimonials, 'featuredTestimonials' => $featuredTestimonials]);
     }
 
     public function show(Testimonial $testimonial): View
     {
         abort_unless($testimonial->is_active, 404);
 
-        return view('testimonials.show', compact('testimonial'));
+        return view('testimonials.show', ['testimonial' => $testimonial]);
     }
 }

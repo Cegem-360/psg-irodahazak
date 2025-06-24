@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use Symfony\Component\HttpFoundation\Response;
 use App\Models\Property;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Browsershot\Browsershot;
@@ -17,7 +18,7 @@ final class PropertyPdfService
         $property->load(['images']);
 
         // HTML tartalom generálása
-        $html = view('pdf.property', compact('property'))->render();
+        $html = view('pdf.property', ['property' => $property])->render();
 
         // PDF generálás Browsershot segítségével
         $footerHtml = view('pdf.footer')->render();
@@ -29,8 +30,7 @@ final class PropertyPdfService
                 config('pdf.browsershot.margins.right', 15),
                 config('pdf.browsershot.margins.bottom', 25), // Alsó margó nagyobb a footer miatt
                 config('pdf.browsershot.margins.left', 15)
-            )
-            ->showBackground(config('pdf.browsershot.show_background', true))
+            )->showBackground()
             ->waitUntilNetworkIdle(config('pdf.browsershot.wait_until_network_idle', true))
             ->timeout(config('pdf.browsershot.timeout', 90))
             ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
@@ -40,7 +40,7 @@ final class PropertyPdfService
         $filename = $this->generateFilename($property);
 
         // PDF letöltés streamelt válaszként
-        return new StreamedResponse(function () use ($pdf) {
+        return new StreamedResponse(function () use ($pdf): void {
             echo $pdf->pdf();
         }, 200, [
             'Content-Type' => 'application/pdf',
@@ -57,7 +57,7 @@ final class PropertyPdfService
         $property->load(['images']);
 
         // HTML tartalom generálása
-        $html = view('pdf.property', compact('property'))->render();
+        $html = view('pdf.property', ['property' => $property])->render();
 
         // Alapértelmezett útvonal ha nincs megadva
         if (! $path) {
@@ -74,8 +74,7 @@ final class PropertyPdfService
                 config('pdf.browsershot.margins.right', 15),
                 config('pdf.browsershot.margins.bottom', 25), // Alsó margó nagyobb a footer miatt
                 config('pdf.browsershot.margins.left', 15)
-            )
-            ->showBackground(config('pdf.browsershot.show_background', true))
+            )->showBackground()
             ->waitUntilNetworkIdle(config('pdf.browsershot.wait_until_network_idle', true))
             ->timeout(config('pdf.browsershot.timeout', 90))
             ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
@@ -88,13 +87,13 @@ final class PropertyPdfService
         return $path;
     }
 
-    public function generatePdfForView(Property $property): \Symfony\Component\HttpFoundation\Response
+    public function generatePdfForView(Property $property): Response
     {
         // Betöltjük a kapcsolódó képek adatokat
         $property->load(['images']);
 
         // HTML tartalom generálása
-        $html = view('pdf.property', compact('property'))->render();
+        $html = view('pdf.property', ['property' => $property])->render();
 
         // PDF generálás Browsershot segítségével
         $footerHtml = view('pdf.footer')->render();
@@ -106,8 +105,7 @@ final class PropertyPdfService
                 config('pdf.browsershot.margins.right', 15),
                 config('pdf.browsershot.margins.bottom', 25), // Alsó margó nagyobb a footer miatt
                 config('pdf.browsershot.margins.left', 15)
-            )
-            ->showBackground(config('pdf.browsershot.show_background', true))
+            )->showBackground()
             ->waitUntilNetworkIdle(config('pdf.browsershot.wait_until_network_idle', true))
             ->timeout(config('pdf.browsershot.timeout', 90))
             ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
@@ -128,6 +126,6 @@ final class PropertyPdfService
         $title = $property->title ? str_replace([' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|'], '_', $property->title) : 'ingatlan';
         $date = now()->format('Y_m_d_H_i');
 
-        return "ingatlan_{$title}_{$date}.pdf";
+        return sprintf('ingatlan_%s_%s.pdf', $title, $date);
     }
 }

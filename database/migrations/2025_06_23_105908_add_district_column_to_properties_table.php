@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('properties', function (Blueprint $table) {
+        Schema::table('properties', function (Blueprint $table): void {
             $table->string('district')->nullable()->after('cim_varos');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('properties', function (Blueprint $table) {
+        Schema::table('properties', function (Blueprint $table): void {
             $table->dropColumn('district');
         });
     }

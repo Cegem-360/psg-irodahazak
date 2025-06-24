@@ -4,6 +4,34 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Set;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Get;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\KeyValue;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\BulkAction;
+use Illuminate\Database\Eloquent\Collection;
+use App\Filament\Resources\BlogPostResource\Pages\ListBlogPosts;
+use App\Filament\Resources\BlogPostResource\Pages\CreateBlogPost;
+use App\Filament\Resources\BlogPostResource\Pages\EditBlogPost;
 use App\Filament\Resources\BlogPostResource\Pages;
 use App\Models\BlogPost;
 use Filament\Forms;
@@ -33,34 +61,34 @@ final class BlogPostResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Group::make()
+                Group::make()
                     ->schema([
-                        Forms\Components\Section::make('Alapadatok')
+                        Section::make('Alapadatok')
                             ->schema([
-                                Forms\Components\TextInput::make('title')
+                                TextInput::make('title')
                                     ->label('Cím')
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                    ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
-                                Forms\Components\TextInput::make('slug')
+                                TextInput::make('slug')
                                     ->label('URL slug')
                                     ->required()
                                     ->maxLength(255)
                                     ->unique(BlogPost::class, 'slug', ignoreRecord: true)
                                     ->helperText('Automatikusan generálódik a címből'),
 
-                                Forms\Components\Textarea::make('excerpt')
+                                Textarea::make('excerpt')
                                     ->label('Kivonat')
                                     ->maxLength(500)
                                     ->rows(3)
                                     ->helperText('Rövid összefoglaló a bejegyzésről. Automatikusan generálódik a tartalomból, ha üresen hagyod.'),
                             ]),
 
-                        Forms\Components\Section::make('Tartalom')
+                        Section::make('Tartalom')
                             ->schema([
-                                Forms\Components\RichEditor::make('content')
+                                RichEditor::make('content')
                                     ->label('Tartalom')
                                     ->required()
                                     ->toolbarButtons([
@@ -83,26 +111,26 @@ final class BlogPostResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Forms\Components\Group::make()
+                Group::make()
                     ->schema([
-                        Forms\Components\Section::make('Beállítások')
+                        Section::make('Beállítások')
                             ->schema([
-                                Forms\Components\Select::make('blog_category_id')
+                                Select::make('blog_category_id')
                                     ->label('Kategória')
                                     ->relationship('category', 'name')
                                     ->searchable()
                                     ->preload()
                                     ->required()
                                     ->createOptionForm([
-                                        Forms\Components\TextInput::make('name')
+                                        TextInput::make('name')
                                             ->label('Név')
                                             ->required(),
-                                        Forms\Components\ColorPicker::make('color')
+                                        ColorPicker::make('color')
                                             ->label('Szín')
                                             ->default('#3B82F6'),
                                     ]),
 
-                                Forms\Components\Select::make('user_id')
+                                Select::make('user_id')
                                     ->label('Szerző')
                                     ->relationship('author', 'name')
                                     ->default(Auth::id())
@@ -110,21 +138,21 @@ final class BlogPostResource extends Resource
                                     ->searchable()
                                     ->preload(),
 
-                                Forms\Components\Toggle::make('is_published')
+                                Toggle::make('is_published')
                                     ->label('Publikált')
                                     ->default(false)
                                     ->live(),
 
-                                Forms\Components\DateTimePicker::make('published_at')
+                                DateTimePicker::make('published_at')
                                     ->label('Publikálás dátuma')
                                     ->default(now())
-                                    ->visible(fn (Forms\Get $get): bool => $get('is_published'))
-                                    ->required(fn (Forms\Get $get): bool => $get('is_published')),
+                                    ->visible(fn (Get $get): bool => $get('is_published'))
+                                    ->required(fn (Get $get): bool => $get('is_published')),
                             ]),
 
-                        Forms\Components\Section::make('Kép')
+                        Section::make('Kép')
                             ->schema([
-                                Forms\Components\FileUpload::make('featured_image')
+                                FileUpload::make('featured_image')
                                     ->label('Kiemelt kép')
                                     ->image()
                                     ->directory('blog')
@@ -137,9 +165,9 @@ final class BlogPostResource extends Resource
                                     ]),
                             ]),
 
-                        Forms\Components\Section::make('SEO')
+                        Section::make('SEO')
                             ->schema([
-                                Forms\Components\KeyValue::make('meta_data')
+                                KeyValue::make('meta_data')
                                     ->label('Meta adatok')
                                     ->keyLabel('Kulcs')
                                     ->valueLabel('Érték')
@@ -161,29 +189,29 @@ final class BlogPostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('featured_image')
+                ImageColumn::make('featured_image')
                     ->label('Kép')
                     ->circular()
                     ->defaultImageUrl(url('/images/placeholder.png')),
 
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->label('Cím')
                     ->searchable()
                     ->sortable()
                     ->limit(50),
 
-                Tables\Columns\TextColumn::make('category.name')
+                TextColumn::make('category.name')
                     ->label('Kategória')
                     ->badge()
                     ->color(fn (BlogPost $record): string => $record->category->color ?? 'primary')
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('author.name')
+                TextColumn::make('author.name')
                     ->label('Szerző')
                     ->sortable()
                     ->toggleable(),
 
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->label('Státusz')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -199,42 +227,42 @@ final class BlogPostResource extends Resource
                         default => 'Ismeretlen',
                     }),
 
-                Tables\Columns\TextColumn::make('views_count')
+                TextColumn::make('views_count')
                     ->label('Megtekintések')
                     ->numeric()
                     ->sortable()
                     ->badge()
                     ->color('primary'),
 
-                Tables\Columns\TextColumn::make('published_at')
+                TextColumn::make('published_at')
                     ->label('Publikálva')
                     ->dateTime('Y-m-d H:i')
                     ->sortable()
                     ->toggleable(),
 
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Létrehozva')
                     ->dateTime('Y-m-d H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('blog_category_id')
+                SelectFilter::make('blog_category_id')
                     ->label('Kategória')
                     ->relationship('category', 'name')
                     ->searchable()
                     ->preload(),
 
-                Tables\Filters\SelectFilter::make('user_id')
+                SelectFilter::make('user_id')
                     ->label('Szerző')
                     ->relationship('author', 'name')
                     ->searchable()
                     ->preload(),
 
-                Tables\Filters\Filter::make('status')
+                Filter::make('status')
                     ->label('Státusz')
                     ->form([
-                        Forms\Components\Select::make('status')
+                        Select::make('status')
                             ->options([
                                 'published' => 'Publikált',
                                 'scheduled' => 'Ütemezett',
@@ -258,9 +286,9 @@ final class BlogPostResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('toggle_publish')
+                ViewAction::make(),
+                EditAction::make(),
+                Action::make('toggle_publish')
                     ->label(fn (BlogPost $record): string => $record->is_published ? 'Visszavonás' : 'Publikálás')
                     ->icon(fn (BlogPost $record): string => $record->is_published ? 'heroicon-o-eye-slash' : 'heroicon-o-eye')
                     ->color(fn (BlogPost $record): string => $record->is_published ? 'warning' : 'success')
@@ -272,24 +300,24 @@ final class BlogPostResource extends Resource
                         }
                     })
                     ->requiresConfirmation(),
-                Tables\Actions\DeleteAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\BulkAction::make('publish')
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    BulkAction::make('publish')
                         ->label('Publikálás')
                         ->icon('heroicon-o-eye')
                         ->color('success')
-                        ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                        ->action(function (Collection $records): void {
                             $records->each->publish();
                         })
                         ->requiresConfirmation(),
-                    Tables\Actions\BulkAction::make('unpublish')
+                    BulkAction::make('unpublish')
                         ->label('Visszavonás')
                         ->icon('heroicon-o-eye-slash')
                         ->color('warning')
-                        ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                        ->action(function (Collection $records): void {
                             $records->each->unpublish();
                         })
                         ->requiresConfirmation(),
@@ -308,9 +336,9 @@ final class BlogPostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBlogPosts::route('/'),
-            'create' => Pages\CreateBlogPost::route('/create'),
-            'edit' => Pages\EditBlogPost::route('/{record}/edit'),
+            'index' => ListBlogPosts::route('/'),
+            'create' => CreateBlogPost::route('/create'),
+            'edit' => EditBlogPost::route('/{record}/edit'),
         ];
     }
 }

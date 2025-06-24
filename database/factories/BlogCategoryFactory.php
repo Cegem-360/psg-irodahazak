@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
+use App\Models\BlogCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BlogCategory>
+ * @extends Factory<BlogCategory>
  */
 final class BlogCategoryFactory extends Factory
 {
@@ -33,7 +35,7 @@ final class BlogCategoryFactory extends Factory
 
         return [
             'name' => $name,
-            'slug' => \Illuminate\Support\Str::slug($name),
+            'slug' => Str::slug($name),
             'description' => $this->faker->paragraph(3),
             'color' => $categories[$name],
             'is_active' => $this->faker->boolean(90), // 90% aktív

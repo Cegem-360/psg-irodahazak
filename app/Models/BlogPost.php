@@ -116,6 +116,7 @@ final class BlogPost extends Model
             if (empty($post->slug)) {
                 $post->slug = Str::slug($post->title);
             }
+
             if (empty($post->excerpt)) {
                 $post->excerpt = Str::limit(strip_tags($post->content), 160);
             }
@@ -125,6 +126,7 @@ final class BlogPost extends Model
             if ($post->isDirty('title') && empty($post->slug)) {
                 $post->slug = Str::slug($post->title);
             }
+
             if ($post->isDirty('content') && empty($post->excerpt)) {
                 $post->excerpt = Str::limit(strip_tags($post->content), 160);
             }

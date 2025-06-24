@@ -73,7 +73,7 @@ final class ListSaleOffices extends Component
 
         // Transform all offices to map format (coordinates will be geocoded on frontend)
         return $paginatedOffices->getCollection()
-            ->map(function ($office) {
+            ->map(function ($office): array {
                 // Build full address for geocoding
                 $addressParts = array_filter([
                     $office->cim_irsz,

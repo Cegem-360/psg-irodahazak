@@ -4,6 +4,33 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Set;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Get;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\BulkAction;
+use App\Filament\Resources\NewsResource\Pages\ListNews;
+use App\Filament\Resources\NewsResource\Pages\CreateNews;
+use App\Filament\Resources\NewsResource\Pages\EditNews;
 use App\Filament\Resources\NewsResource\Pages;
 use App\Models\News;
 use Filament\Forms;
@@ -36,59 +63,59 @@ final class NewsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Alapadatok')
+                Section::make('Alapadatok')
                     ->schema([
-                        Forms\Components\TextInput::make('title')
+                        TextInput::make('title')
                             ->label('Cím')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                            ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
-                        Forms\Components\TextInput::make('slug')
+                        TextInput::make('slug')
                             ->label('Slug')
                             ->required()
                             ->maxLength(255)
                             ->unique(News::class, 'slug', ignoreRecord: true),
 
-                        Forms\Components\Textarea::make('excerpt')
+                        Textarea::make('excerpt')
                             ->label('Kivonat')
                             ->maxLength(500)
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
 
-                Forms\Components\Section::make('Tartalom')
+                Section::make('Tartalom')
                     ->schema([
-                        Forms\Components\RichEditor::make('content')
+                        RichEditor::make('content')
                             ->label('Tartalom')
                             ->required()
                             ->columnSpanFull(),
 
-                        Forms\Components\FileUpload::make('featured_image')
+                        FileUpload::make('featured_image')
                             ->label('Kiemelt kép')
                             ->image()
                             ->directory('news')
                             ->maxSize(2048),
                     ]),
 
-                Forms\Components\Section::make('Kategorizálás')
+                Section::make('Kategorizálás')
                     ->schema([
-                        Forms\Components\Select::make('news_category_id')
+                        Select::make('news_category_id')
                             ->label('Kategória')
                             ->relationship('category', 'name')
                             ->searchable()
                             ->preload()
                             ->createOptionForm([
-                                Forms\Components\TextInput::make('name')
+                                TextInput::make('name')
                                     ->label('Név')
                                     ->required(),
-                                Forms\Components\TextInput::make('slug')
+                                TextInput::make('slug')
                                     ->label('Slug')
                                     ->required(),
                             ]),
 
-                        Forms\Components\Select::make('priority')
+                        Select::make('priority')
                             ->label('Prioritás')
                             ->options([
                                 1 => 'Alacsony',
@@ -100,25 +127,25 @@ final class NewsResource extends Resource
                             ->default(2)
                             ->required(),
 
-                        Forms\Components\Toggle::make('is_breaking')
+                        Toggle::make('is_breaking')
                             ->label('Fontos hír')
                             ->default(false),
                     ])
                     ->columns(3),
 
-                Forms\Components\Section::make('Publikálás')
+                Section::make('Publikálás')
                     ->schema([
-                        Forms\Components\Toggle::make('is_published')
+                        Toggle::make('is_published')
                             ->label('Publikált')
                             ->default(false)
                             ->live(),
 
-                        Forms\Components\DateTimePicker::make('published_at')
+                        DateTimePicker::make('published_at')
                             ->label('Publikálás időpontja')
-                            ->visible(fn (Forms\Get $get): bool => $get('is_published'))
+                            ->visible(fn (Get $get): bool => $get('is_published'))
                             ->default(now()),
 
-                        Forms\Components\Select::make('user_id')
+                        Select::make('user_id')
                             ->label('Szerző')
                             ->relationship('author', 'name')
                             ->searchable()
@@ -134,32 +161,32 @@ final class NewsResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('featured_image')
+                ImageColumn::make('featured_image')
                     ->label('Kép')
                     ->square()
                     ->size(60),
 
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->label('Cím')
                     ->searchable()
                     ->sortable()
                     ->limit(50)
                     ->weight(FontWeight::Bold),
 
-                Tables\Columns\TextColumn::make('category.name')
+                TextColumn::make('category.name')
                     ->label('Kategória')
                     ->badge()
                     ->color(fn ($record) => $record->category?->color ?? 'gray'),
 
-                Tables\Columns\TextColumn::make('author.name')
+                TextColumn::make('author.name')
                     ->label('Szerző')
                     ->searchable()
                     ->toggleable(),
 
-                Tables\Columns\TextColumn::make('priority_label')
+                TextColumn::make('priority_label')
                     ->label('Prioritás')
                     ->badge()
-                    ->color(fn ($state) => match ($state) {
+                    ->color(fn ($state): string => match ($state) {
                         'Kritikus' => 'danger',
                         'Sürgős' => 'warning',
                         'Magas' => 'info',
@@ -168,17 +195,17 @@ final class NewsResource extends Resource
                         default => 'gray',
                     }),
 
-                Tables\Columns\IconColumn::make('is_breaking')
+                IconColumn::make('is_breaking')
                     ->label('Fontos')
                     ->boolean()
                     ->trueIcon('heroicon-o-exclamation-triangle')
                     ->falseIcon('heroicon-o-minus')
                     ->trueColor('warning'),
 
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->label('Státusz')
                     ->badge()
-                    ->color(fn ($state) => match ($state) {
+                    ->color(fn ($state): string => match ($state) {
                         'published' => 'success',
                         'scheduled' => 'info',
                         'draft' => 'gray',
@@ -191,29 +218,29 @@ final class NewsResource extends Resource
                         default => $state,
                     }),
 
-                Tables\Columns\TextColumn::make('views_count')
+                TextColumn::make('views_count')
                     ->label('Megtekintések')
                     ->numeric()
                     ->sortable()
                     ->toggleable(),
 
-                Tables\Columns\TextColumn::make('published_at')
+                TextColumn::make('published_at')
                     ->label('Publikálva')
                     ->dateTime()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Létrehozva')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('news_category_id')
+                SelectFilter::make('news_category_id')
                     ->label('Kategória')
                     ->relationship('category', 'name'),
 
-                Tables\Filters\SelectFilter::make('priority')
+                SelectFilter::make('priority')
                     ->label('Prioritás')
                     ->options([
                         1 => 'Alacsony',
@@ -223,17 +250,17 @@ final class NewsResource extends Resource
                         5 => 'Kritikus',
                     ]),
 
-                Tables\Filters\TernaryFilter::make('is_published')
+                TernaryFilter::make('is_published')
                     ->label('Publikált'),
 
-                Tables\Filters\TernaryFilter::make('is_breaking')
+                TernaryFilter::make('is_breaking')
                     ->label('Fontos hír'),
 
-                Tables\Filters\Filter::make('published_at')
+                Filter::make('published_at')
                     ->form([
-                        Forms\Components\DatePicker::make('published_from')
+                        DatePicker::make('published_from')
                             ->label('Publikálva ettől'),
-                        Forms\Components\DatePicker::make('published_until')
+                        DatePicker::make('published_until')
                             ->label('Publikálva eddig'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
@@ -249,16 +276,16 @@ final class NewsResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\Action::make('publish')
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
+                Action::make('publish')
                     ->label('Publikálás')
                     ->icon('heroicon-o-eye')
                     ->color('success')
                     ->action(fn (News $record) => $record->publish())
-                    ->visible(fn (News $record) => ! $record->is_published),
-                Tables\Actions\Action::make('unpublish')
+                    ->visible(fn (News $record): bool => ! $record->is_published),
+                Action::make('unpublish')
                     ->label('Publikálás visszavonása')
                     ->icon('heroicon-o-eye-slash')
                     ->color('gray')
@@ -266,14 +293,14 @@ final class NewsResource extends Resource
                     ->visible(fn (News $record) => $record->is_published),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\BulkAction::make('publish')
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    BulkAction::make('publish')
                         ->label('Publikálás')
                         ->icon('heroicon-o-eye')
                         ->color('success')
                         ->action(fn ($records) => $records->each->publish()),
-                    Tables\Actions\BulkAction::make('unpublish')
+                    BulkAction::make('unpublish')
                         ->label('Publikálás visszavonása')
                         ->icon('heroicon-o-eye-slash')
                         ->color('gray')
@@ -293,9 +320,9 @@ final class NewsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListNews::route('/'),
-            'create' => Pages\CreateNews::route('/create'),
-            'edit' => Pages\EditNews::route('/{record}/edit'),
+            'index' => ListNews::route('/'),
+            'create' => CreateNews::route('/create'),
+            'edit' => EditNews::route('/{record}/edit'),
         ];
     }
 }

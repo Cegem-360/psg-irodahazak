@@ -18,7 +18,7 @@ final class OfficeController extends Controller
             ->rent()
             ->active()
             ->when($request->district, function ($query) use ($request): void {
-                $query->where(function ($q) use ($request) {
+                $query->where(function ($q) use ($request): void {
                     $q->where('cim_varos', 'like', '%'.$request->district.'.%')
                         ->orWhere('cim_varos', 'like', '%'.$request->district.' %')
                         ->orWhere('cim_varos', 'like', '%'.$request->district.'%');
@@ -26,7 +26,7 @@ final class OfficeController extends Controller
             })
             ->orderBy('title')
             ->get()
-            ->map(function ($office) {
+            ->map(function ($office): array {
                 // Extract district from address
                 $district = $this->extractDistrict($office->cim_varos);
 

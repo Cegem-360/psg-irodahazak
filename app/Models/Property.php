@@ -172,9 +172,9 @@ final class Property extends Model
     #[Scope]
     protected function budapestOnly(Builder $query): void
     {
-        $query->where(function ($q) {
+        $query->where(function ($q): void {
             $q->where('cim_varos', 'like', '%Budapest%')
-                ->orWhere(function ($subQ) {
+                ->orWhere(function ($subQ): void {
                     $subQ->where('cim_irsz', 'like', '1%');
                 });
         });
@@ -196,14 +196,14 @@ final class Property extends Model
 
         $romanDistrict = $romanNumerals[$districtNum] ?? $district;
 
-        $query->where(function ($q) use ($romanDistrict, $district, $districtNum) {
+        $query->where(function ($q) use ($romanDistrict, $district, $districtNum): void {
             // District oszlopban keresés
             $q->where('district', $romanDistrict)
                 ->orWhere('district', $district);
 
             // Irányítószám alapú keresés - matematikai megoldás
             if ($districtNum >= 1 && $districtNum <= 23) {
-                $q->orWhere(function ($subQ) use ($districtNum) {
+                $q->orWhere(function ($subQ) use ($districtNum): void {
                     // Irányítószám → szám → osztás 10-zel → kivonás 100
                     // Például: 1051 → 1051/10=105 → 105-100=5 → 5. kerület
                     $subQ->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
@@ -218,9 +218,9 @@ final class Property extends Model
     #[Scope]
     protected function inDistricts(Builder $query, array $districts): void
     {
-        $query->where(function ($q) use ($districts) {
+        $query->where(function ($q) use ($districts): void {
             foreach ($districts as $district) {
-                $q->orWhere(function ($subQ) use ($district) {
+                $q->orWhere(function ($subQ) use ($district): void {
                     $districtNum = (int) $district;
 
                     // Roman numerals mapping
@@ -240,7 +240,7 @@ final class Property extends Model
 
                     // Irányítószám alapú keresés - matematikai megoldás
                     if ($districtNum >= 1 && $districtNum <= 23) {
-                        $subQ->orWhere(function ($postalQ) use ($districtNum) {
+                        $subQ->orWhere(function ($postalQ) use ($districtNum): void {
                             // Irányítószám → szám → osztás 10-zel → kivonás 100
                             // Például: 1051 → 1051/10=105 → 105-100=5 → 5. kerület
                             $postalQ->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
@@ -260,9 +260,9 @@ final class Property extends Model
         $searchTerms = explode(' ', mb_trim($search));
         $searchTerms = array_filter($searchTerms);
 
-        $query->where(function (Builder $q) use ($searchTerms) {
+        $query->where(function (Builder $q) use ($searchTerms): void {
             foreach ($searchTerms as $term) {
-                $q->where(function (Builder $subQ) use ($term) {
+                $q->where(function (Builder $subQ) use ($term): void {
                     $subQ->where('title', 'like', '%'.$term.'%')
                         ->orWhere('content', 'like', '%'.$term.'%')
                         ->orWhere('lead', 'like', '%'.$term.'%')

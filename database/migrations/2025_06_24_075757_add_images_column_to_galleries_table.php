@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('galleries', function (Blueprint $table) {
+        Schema::table('galleries', function (Blueprint $table): void {
             $table->json('images')->nullable()->after('video_url');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('galleries', function (Blueprint $table) {
+        Schema::table('galleries', function (Blueprint $table): void {
             $table->dropColumn('images');
         });
     }

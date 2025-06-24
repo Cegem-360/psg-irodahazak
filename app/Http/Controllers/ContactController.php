@@ -47,21 +47,21 @@ final class ContactController extends Controller
 
         try {
             // Send email notification to admin
-            Mail::send('emails.contact', $validated, function ($message) use ($validated) {
+            Mail::send('emails.contact', $validated, function ($message) use ($validated): void {
                 $message->to(env('ADMIN_EMAIL', 'info@psg-irodahazak.hu'))
                     ->subject('Új kapcsolatfelvételi üzenet: '.$validated['subject'])
                     ->replyTo($validated['email'], $validated['name']);
             });
 
             // Send confirmation email to user
-            Mail::send('emails.contact-confirmation', $validated, function ($message) use ($validated) {
+            Mail::send('emails.contact-confirmation', $validated, function ($message) use ($validated): void {
                 $message->to($validated['email'], $validated['name'])
                     ->subject('Kapcsolatfelvételi üzenet megerősítése - PSG Irodaházak');
             });
 
             return back()->with('success', 'Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.');
 
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return back()
                 ->withInput()
                 ->with('error', 'Hiba történt az üzenet küldése során. Kérjük, próbálja újra később vagy hívjon minket telefonon.');

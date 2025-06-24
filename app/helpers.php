@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\Eloquent\Collection;
+use App\Models\Reference;
+
 if (! function_exists('localized_route')) {
     /**
      * Generate a localized route URL based on current locale
@@ -16,5 +19,17 @@ if (! function_exists('localized_route')) {
         }
 
         return route($name, $parameters, $absolute);
+    }
+}
+
+if (! function_exists('get_references')) {
+    /**
+     * Get active references ordered by order field
+     */
+    function get_references(): Collection
+    {
+        return Reference::active()
+            ->ordered()
+            ->get();
     }
 }
