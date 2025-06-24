@@ -44,6 +44,7 @@ final class GalleryResource extends Resource
             ->schema([
                 FileUpload::make('path')
                     ->image()
+                    ->imageEditor()
                     ->label('Kép feltöltése')
                     ->required()
                     ->disk('public')
@@ -53,7 +54,7 @@ final class GalleryResource extends Resource
                     ->preserveFilenames()
                     ->helperText('Max. 10 MB, csak képek')
                     ->visible(
-                        fn (Get $get): bool => $get('target_table_id') ?? false
+                        fn (Get $get): bool => $get('target_table_id') !== null
                     ),
                 Select::make('target_table_id')
                     ->label('Property')
