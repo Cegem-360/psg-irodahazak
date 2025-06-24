@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 final class QuoteRequestModal extends Component
-{    public $showModal = false;
+{
+    public $showModal = false;
+
     public $showTab = false;
 
     public $name = '';
@@ -44,12 +46,14 @@ final class QuoteRequestModal extends Component
         'email.email' => 'Kérjük, adjon meg egy érvényes email címet.',
         'privacy.required' => 'Az adatvédelmi nyilatkozat elfogadása kötelező.',
         'privacy.accepted' => 'Az adatvédelmi nyilatkozat elfogadása kötelező.',
-    ];    public function mount()
+    ];
+
+    public function mount()
     {
         // Always show modal initially
         $this->showModal = false;
         $this->showTab = false;
-        
+
         // Load all active properties for dropdown
         $this->properties = Property::active()
             ->select('id', 'title')
