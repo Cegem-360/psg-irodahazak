@@ -11,12 +11,8 @@ use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 final class QuoteRequestModal extends Component
-{
-    public $showModal = false;
-
+{    public $showModal = false;
     public $showTab = false;
-
-    public $modalClosed = false;
 
     public $name = '';
 
@@ -48,13 +44,12 @@ final class QuoteRequestModal extends Component
         'email.email' => 'Kérjük, adjon meg egy érvényes email címet.',
         'privacy.required' => 'Az adatvédelmi nyilatkozat elfogadása kötelező.',
         'privacy.accepted' => 'Az adatvédelmi nyilatkozat elfogadása kötelező.',
-    ];
-
-    public function mount()
+    ];    public function mount()
     {
-        // Check if modal was previously closed in this session
-        $this->modalClosed = session()->has('quote_modal_closed');
-
+        // Always show modal initially
+        $this->showModal = false;
+        $this->showTab = false;
+        
         // Load all active properties for dropdown
         $this->properties = Property::active()
             ->select('id', 'title')
@@ -73,8 +68,6 @@ final class QuoteRequestModal extends Component
     {
         $this->showModal = false;
         $this->showTab = true;
-        $this->modalClosed = true;
-        session(['quote_modal_closed' => true]);
         $this->resetForm();
     }
 
@@ -103,7 +96,7 @@ final class QuoteRequestModal extends Component
                 'propertyName' => $this->selectedProperty ? Property::find($this->selectedProperty)?->title : 'Nincs megadva',
                 'quoteId' => $quoteRequest->id,
             ], function ($message) {
-                $message->to(env('ADMIN_EMAIL', 'info@psg-irodahazak.hu'))
+                $message->to('info@psg-irodahazak.hu')
                     ->subject('Új árajánlat kérés érkezett')
                     ->replyTo($this->email, $this->name);
             });

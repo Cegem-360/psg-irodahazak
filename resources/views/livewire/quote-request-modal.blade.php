@@ -1,6 +1,6 @@
 <div>
     <!-- Floating Quote Request Button (Orange) -->
-    @if (!$showModal && !$modalClosed)
+    @if (!$showModal && !$showTab)
         <div class="fixed top-1/2 right-0 transform -translate-y-1/2 z-50 transition-all duration-300 ease-in-out">
             <button wire:click="openModal"
                 class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-l-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2">
