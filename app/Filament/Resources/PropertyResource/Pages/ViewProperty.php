@@ -6,10 +6,10 @@ namespace App\Filament\Resources\PropertyResource\Pages;
 
 use App\Filament\Resources\PropertyResource;
 use Filament\Actions\Action;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Actions\EditAction;
+use Filament\Resources\Pages\ViewRecord;
 
-final class EditProperty extends EditRecord
+final class ViewProperty extends ViewRecord
 {
     protected static string $resource = PropertyResource::class;
 
@@ -26,7 +26,7 @@ final class EditProperty extends EditRecord
                 ->modalHeading('PDF Generálás')
                 ->modalDescription('Biztosan szeretnéd generálni az ingatlan PDF adatlapját?')
                 ->modalSubmitActionLabel('PDF Megnyitás'),
-            DeleteAction::make(),
+            EditAction::make(),
         ];
     }
 }

@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ImpresszumController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PropertyController;
+use App\Models\Property;
+use App\Services\PropertyPdfService;
 use Illuminate\Support\Facades\Route;
 
 // Language switcher route
@@ -20,7 +23,7 @@ Route::view('/elado-irodahazak', 'index')->name('elado-irodahazak');
 Route::view('/rolunk', 'index')->name('rolunk');
 Route::view('/kapcsolat', 'index')->name('kapcsolat');
 Route::view('/adatvedelmi-nyilatkozat', 'index')->name('privacy-policy');
-Route::view('/impresszum', 'index')->name('impresszum');
+Route::get('/impresszum', [ImpresszumController::class, 'show'])->name('impresszum');
 Route::post('/kapcsolat', [ContactController::class, 'store'])->name('contact.store');
 
 // Budapest irodaház kategória route-ok
@@ -150,6 +153,28 @@ Route::group(['as' => 'en.'], function () {
     Route::get('/news', [NewsController::class, 'index'])->name('news.index');
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
 });
+
+// Test route for PDF generation (remove in production)
+Route::get('/test-pdf/{property}', function (Property $property) {
+    $pdfService = new PropertyPdfService();
+
+    return $pdfService->generatePdf($property);
+})->name('test.pdf');
+
+// PDF generation route for properties
+Route::get('/property-pdf/{property}', function (Property $property) {
+    $pdfService = new PropertyPdfService();
+
+    return $pdfService->generatePdfForView($property);
+})->name('property.pdf');
+
+// PDF preview route (HTML only, no PDF generation)
+Route::get('/property-preview/{property}', function (Property $property) {
+    // Betöltjük a kapcsolódó képek adatokat
+    $property->load(['images']);
+
+    return view('pdf.property', compact('property'));
+})->name('property.preview');
 
 // API routes (not localized)
 Route::get('/api/properties/{property}/images', [PropertyController::class, 'images'])->name('api.properties.images');

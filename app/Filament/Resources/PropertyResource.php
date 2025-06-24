@@ -9,6 +9,7 @@ use App\Filament\Imports\PropertyImporter;
 use App\Filament\Resources\PropertyResource\Pages\CreateProperty;
 use App\Filament\Resources\PropertyResource\Pages\EditProperty;
 use App\Filament\Resources\PropertyResource\Pages\ListProperties;
+use App\Filament\Resources\PropertyResource\Pages\ViewProperty;
 use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
 use App\Models\Property;
 use App\Models\Service;
@@ -20,11 +21,13 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ImportAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -214,8 +217,7 @@ final class PropertyResource extends Resource
                         'street' => 'Utca',
                         'street_and_number' => 'Utca és házszám',
                     ])
-                    ->label('Utca kiegészítések')
-                    ->maxLength(255),
+                    ->label('Utca kiegészítések'),
                 TextInput::make('lang')
                     ->label('Nyelv')
                     ->maxLength(2),
@@ -387,7 +389,18 @@ final class PropertyResource extends Resource
                 //
             ])
             ->actions([
+                ViewAction::make(),
                 EditAction::make(),
+                Action::make('generate_pdf')
+                    ->label('PDF')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('success')
+                    ->url(fn (Property $record) => route('property.pdf', $record))
+                    ->openUrlInNewTab()
+                    ->requiresConfirmation()
+                    ->modalHeading('PDF Generálás')
+                    ->modalDescription('Biztosan szeretnéd generálni az ingatlan PDF adatlapját?')
+                    ->modalSubmitActionLabel('PDF Megnyitás'),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -418,6 +431,7 @@ final class PropertyResource extends Resource
         return [
             'index' => ListProperties::route('/'),
             'create' => CreateProperty::route('/create'),
+            'view' => ViewProperty::route('/{record}'),
             'edit' => EditProperty::route('/{record}/edit'),
         ];
     }
