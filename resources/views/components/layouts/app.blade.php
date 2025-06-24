@@ -48,6 +48,8 @@
         {{ $slot }}
 
         @livewire('notifications')
+        
+        @livewire('quote-request-modal')
 
         <x-layouts.footer />
 
