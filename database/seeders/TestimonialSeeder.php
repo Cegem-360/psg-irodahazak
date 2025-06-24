@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Testimonial;
 use Illuminate\Database\Seeder;
 
-class TestimonialSeeder extends Seeder
+final class TestimonialSeeder extends Seeder
 {
     public function run(): void
     {

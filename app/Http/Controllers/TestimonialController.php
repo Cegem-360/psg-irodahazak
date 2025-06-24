@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Testimonial;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class TestimonialController extends Controller
+final class TestimonialController extends Controller
 {
     public function index(): View
     {
@@ -28,7 +27,7 @@ class TestimonialController extends Controller
     public function show(Testimonial $testimonial): View
     {
         abort_unless($testimonial->is_active, 404);
-        
+
         return view('testimonials.show', compact('testimonial'));
     }
 }

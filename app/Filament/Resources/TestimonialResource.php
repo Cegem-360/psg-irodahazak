@@ -1,28 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TestimonialResource\Pages;
-use App\Filament\Resources\TestimonialResource\RelationManagers;
 use App\Models\Testimonial;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TestimonialResource extends Resource
+final class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-ellipsis';
-    
+
     protected static ?string $navigationLabel = 'Rólunk mondták';
-    
+
     protected static ?string $modelLabel = 'Vélemény';
-    
+
     protected static ?string $pluralModelLabel = 'Vélemények';
 
     public static function form(Form $form): Form
@@ -50,7 +49,7 @@ class TestimonialResource extends Resource
                             ->image()
                             ->directory('testimonials/logos'),
                     ])->columns(2),
-                    
+
                 Forms\Components\Section::make('Vélemény')
                     ->schema([
                         Forms\Components\Textarea::make('testimonial')
@@ -74,7 +73,7 @@ class TestimonialResource extends Resource
                             ->maxLength(255)
                             ->placeholder('pl. Iroda bérlés, Ingatlan eladás'),
                     ])->columns(2),
-                    
+
                 Forms\Components\Section::make('Beállítások')
                     ->schema([
                         Forms\Components\Toggle::make('is_featured')
@@ -110,9 +109,10 @@ class TestimonialResource extends Resource
                     ->limit(50)
                     ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
                         $state = $column->getState();
-                        if (strlen($state) <= 50) {
+                        if (mb_strlen($state) <= 50) {
                             return null;
                         }
+
                         return $state;
                     }),
                 Tables\Columns\TextColumn::make('rating')
@@ -124,7 +124,7 @@ class TestimonialResource extends Resource
                         '3' => 'warning',
                         default => 'danger',
                     })
-                    ->formatStateUsing(fn (string $state): string => $state . ' ⭐')
+                    ->formatStateUsing(fn (string $state): string => $state.' ⭐')
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_featured')
                     ->label('Kiemelt')

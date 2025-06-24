@@ -22,22 +22,22 @@
         </div>
 
         <!-- Featured Testimonials -->
-        @if($featuredTestimonials->count() > 0)
-        <div class="py-16 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">
-                        {{ __('Kiemelt vélemények') }}
-                    </h2>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @foreach($featuredTestimonials as $testimonial)
-                        <x-testimonial-card :testimonial="$testimonial" :featured="true" />
-                    @endforeach
+        @if ($featuredTestimonials->count() > 0)
+            <div class="py-16 bg-gray-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">
+                            {{ __('Kiemelt vélemények') }}
+                        </h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        @foreach ($featuredTestimonials as $testimonial)
+                            <x-testimonial-card :testimonial="$testimonial" :featured="true" />
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
         @endif
 
         <!-- All Testimonials -->
@@ -62,7 +62,7 @@
                 </div>
 
                 <!-- Pagination -->
-                @if($testimonials->hasPages())
+                @if ($testimonials->hasPages())
                     <div class="mt-12">
                         {{ $testimonials->links() }}
                     </div>
