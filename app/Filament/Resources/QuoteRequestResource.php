@@ -7,26 +7,25 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\QuoteRequestResource\Pages;
 use App\Models\QuoteRequest;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 
-class QuoteRequestResource extends Resource
+final class QuoteRequestResource extends Resource
 {
     protected static ?string $model = QuoteRequest::class;
 
@@ -232,11 +231,11 @@ class QuoteRequestResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('status', 'new')->count() ?: null;
+        return self::getModel()::where('status', 'new')->count() ?: null;
     }
 
     public static function getNavigationBadgeColor(): ?string
     {
-        return static::getModel()::where('status', 'new')->count() > 0 ? 'danger' : null;
+        return self::getModel()::where('status', 'new')->count() > 0 ? 'danger' : null;
     }
 }

@@ -7,7 +7,7 @@ namespace App\Filament\Resources\QuoteRequestResource\Pages;
 use App\Filament\Resources\QuoteRequestResource;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateQuoteRequest extends CreateRecord
+final class CreateQuoteRequest extends CreateRecord
 {
     protected static string $resource = QuoteRequestResource::class;
 }

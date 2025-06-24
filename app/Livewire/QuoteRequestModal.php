@@ -6,21 +6,30 @@ namespace App\Livewire;
 
 use App\Models\Property;
 use App\Models\QuoteRequest;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
-class QuoteRequestModal extends Component
+final class QuoteRequestModal extends Component
 {
     public $showModal = false;
+
     public $showTab = false;
+
     public $modalClosed = false;
-    
+
     public $name = '';
+
     public $phone = '';
+
     public $email = '';
+
     public $message = '';
+
     public $selectedProperty = null;
+
     public $properties = [];
+
     public $privacy = false;
 
     protected $rules = [
@@ -45,7 +54,7 @@ class QuoteRequestModal extends Component
     {
         // Check if modal was previously closed in this session
         $this->modalClosed = session()->has('quote_modal_closed');
-        
+
         // Load all active properties for dropdown
         $this->properties = Property::active()
             ->select('id', 'title')
@@ -111,9 +120,14 @@ class QuoteRequestModal extends Component
             session()->flash('success', 'Köszönjük az érdeklődését! Hamarosan felvesszük Önnel a kapcsolatot.');
             $this->closeModal();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             session()->flash('error', 'Hiba történt az árajánlat kérés küldése során. Kérjük, próbálja újra később.');
         }
+    }
+
+    public function render()
+    {
+        return view('livewire.quote-request-modal');
     }
 
     private function resetForm()
@@ -125,10 +139,5 @@ class QuoteRequestModal extends Component
         $this->selectedProperty = null;
         $this->privacy = false;
         $this->resetValidation();
-    }
-
-    public function render()
-    {
-        return view('livewire.quote-request-modal');
     }
 }
