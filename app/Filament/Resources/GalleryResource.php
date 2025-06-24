@@ -85,6 +85,18 @@ final class GalleryResource extends Resource
                 TextInput::make('video_url')
                     ->url()
                     ->maxLength(255),
+                FileUpload::make('images')
+                    ->label('Több kép feltöltése')
+                    ->image()
+                    ->multiple()
+                    ->disk('public')
+                    ->directory(function (Get $get): string {
+                        return 'property/'.$get('target_table_id').'/gallery';
+                    })
+                    ->helperText('Több kép egyszerre feltöltéséhez')
+                    ->visible(
+                        fn (Get $get): bool => $get('target_table_id') !== null
+                    ),
             ]);
     }
 
