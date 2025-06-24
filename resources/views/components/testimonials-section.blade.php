@@ -1,7 +1,13 @@
 @props(['limit' => 3])
 
 @php
-    $testimonials = \App\Models\Testimonial::active()->featured()->ordered()->limit($limit)->get();
+    $currentLang = app()->getLocale();
+    $testimonials = \App\Models\Testimonial::active()
+        ->featured()
+        ->forLang($currentLang)
+        ->ordered()
+        ->limit($limit)
+        ->get();
 @endphp
 
 @if ($testimonials->count() > 0)

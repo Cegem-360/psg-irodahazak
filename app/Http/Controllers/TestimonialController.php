@@ -11,12 +11,16 @@ final class TestimonialController extends Controller
 {
     public function index(): View
     {
+        $currentLang = app()->getLocale();
+
         $testimonials = Testimonial::active()
+            ->forLang($currentLang)
             ->ordered()
             ->paginate(12);
 
         $featuredTestimonials = Testimonial::active()
             ->featured()
+            ->forLang($currentLang)
             ->ordered()
             ->limit(6)
             ->get();

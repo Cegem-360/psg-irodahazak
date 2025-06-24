@@ -4,27 +4,25 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\TestimonialResource\Pages\ListTestimonials;
 use App\Filament\Resources\TestimonialResource\Pages\CreateTestimonial;
-use App\Filament\Resources\TestimonialResource\Pages\ViewTestimonial;
 use App\Filament\Resources\TestimonialResource\Pages\EditTestimonial;
-use App\Filament\Resources\TestimonialResource\Pages;
+use App\Filament\Resources\TestimonialResource\Pages\ListTestimonials;
+use App\Filament\Resources\TestimonialResource\Pages\ViewTestimonial;
 use App\Models\Testimonial;
-use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 final class TestimonialResource extends Resource
@@ -65,6 +63,13 @@ final class TestimonialResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(0),
+                Select::make('lang')
+                    ->required()
+                    ->options([
+                        'hu' => 'Magyar',
+                        'en' => 'Angol',
+                    ])
+                    ->default('hu'),
             ]);
     }
 
@@ -93,6 +98,13 @@ final class TestimonialResource extends Resource
                 TextColumn::make('order')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('lang')
+                    ->sortable()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'hu' => 'Magyar',
+                        'en' => 'Angol',
+                        default => $state,
+                    }),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -12,6 +12,7 @@ final class TestimonialSeeder extends Seeder
     public function run(): void
     {
         $testimonials = [
+            // Magyar testimonialok
             [
                 'client_name' => 'Kovács Péter',
                 'client_position' => 'Ügyvezető',
@@ -22,6 +23,7 @@ final class TestimonialSeeder extends Seeder
                 'is_featured' => true,
                 'is_active' => true,
                 'order' => 1,
+                'lang' => 'hu',
             ],
             [
                 'client_name' => 'Nagy Andrea',
@@ -33,6 +35,7 @@ final class TestimonialSeeder extends Seeder
                 'is_featured' => true,
                 'is_active' => true,
                 'order' => 2,
+                'lang' => 'hu',
             ],
             [
                 'client_name' => 'Szabó László',
@@ -44,6 +47,7 @@ final class TestimonialSeeder extends Seeder
                 'is_featured' => true,
                 'is_active' => true,
                 'order' => 3,
+                'lang' => 'hu',
             ],
             [
                 'client_name' => 'Molnár Zita',
@@ -55,6 +59,7 @@ final class TestimonialSeeder extends Seeder
                 'is_featured' => false,
                 'is_active' => true,
                 'order' => 4,
+                'lang' => 'hu',
             ],
             [
                 'client_name' => 'Tóth Gábor',
@@ -66,6 +71,7 @@ final class TestimonialSeeder extends Seeder
                 'is_featured' => false,
                 'is_active' => true,
                 'order' => 5,
+                'lang' => 'hu',
             ],
             [
                 'client_name' => 'Varga Eszter',
@@ -77,6 +83,45 @@ final class TestimonialSeeder extends Seeder
                 'is_featured' => false,
                 'is_active' => true,
                 'order' => 6,
+                'lang' => 'hu',
+            ],
+
+            // Angol testimonialok
+            [
+                'client_name' => 'John Smith',
+                'client_position' => 'CEO',
+                'client_company' => 'Tech Solutions Ltd.',
+                'testimonial' => 'Excellent professional approach and fast service from the PSG Office Buildings team. Our new office perfectly meets our expectations, and the rental process was smooth. I highly recommend them!',
+                'rating' => 5,
+                'project_type' => 'Office rental',
+                'is_featured' => true,
+                'is_active' => true,
+                'order' => 1,
+                'lang' => 'en',
+            ],
+            [
+                'client_name' => 'Sarah Johnson',
+                'client_position' => 'HR Manager',
+                'client_company' => 'Global Corp Inc.',
+                'testimonial' => 'Professional service, flexible approach and excellent value for money. The PSG team responded quickly to all our requests and helped us find the perfect office for our company.',
+                'rating' => 5,
+                'project_type' => 'Office rental',
+                'is_featured' => true,
+                'is_active' => true,
+                'order' => 2,
+                'lang' => 'en',
+            ],
+            [
+                'client_name' => 'Michael Brown',
+                'client_position' => 'Owner',
+                'client_company' => 'Business Center LLC',
+                'testimonial' => 'They supported us throughout the sale of our office building. The valuation was accurate, the marketing strategy was successful, and they quickly found the right buyer. Reliable and trustworthy partners.',
+                'rating' => 4,
+                'project_type' => 'Office building sale',
+                'is_featured' => true,
+                'is_active' => true,
+                'order' => 3,
+                'lang' => 'en',
             ],
         ];
 

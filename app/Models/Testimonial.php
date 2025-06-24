@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 
 final class Testimonial extends Model
@@ -20,6 +21,7 @@ final class Testimonial extends Model
         'is_featured',
         'is_active',
         'order',
+        'lang',
     ];
 
     protected $casts = [
@@ -28,18 +30,27 @@ final class Testimonial extends Model
         'rating' => 'integer',
     ];
 
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
-    }
-
-    public function scopeFeatured($query)
+    #[Scope]
+    protected function featured($query)
     {
         return $query->where('is_featured', true);
     }
 
-    public function scopeOrdered($query)
+    #[Scope]
+    protected function ordered($query)
     {
         return $query->orderBy('order')->orderBy('created_at', 'desc');
+    }
+
+    #[Scope]
+    protected function forLang($query, string $lang = 'hu')
+    {
+        return $query->where('lang', $lang);
+    }
+
+    #[Scope]
+    protected function active($query)
+    {
+        $query->where('is_active', true);
     }
 }
