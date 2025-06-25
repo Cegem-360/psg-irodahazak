@@ -7,14 +7,10 @@
             {{ __('Featured Offers') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto">
             @foreach (Property::active()->featured()->get() ?? [] as $property)
-                <x-cards.ingatlan-card :image="Storage::url($property->image)" :title="$property->title" :description="$property->description" :link="localized_route('properties.show', ['property' => $property->id])" />
+                <livewire:ingatlan-card :property="$property" :image="$property->getFirstImageUrl()" :title="$property->title" :description="$property->getAddressFormated()"
+                    :link="localized_route('properties.show', ['property' => $property->slug])" :key="$property->id" :smal="true" />
             @endforeach
-            {{-- <x-cards.ingatlan-card image="{{ Vite::asset('resources/images/andrassy_palace_iroda_5__384x246.jpg') }}"
-                title="Andrássy Palace Iroda" :description="'1061 Budapest, Andrássy út 9.<br><strong>Bérleti díj:</strong> 16 - 17 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2990 HUF/m2/hó'" link="/adatlap-oldal" />
-            <x-cards.ingatlan-card image="{{ Vite::asset('resources/images/arena_corner_irodahaz_1__384x246.jpg') }}"
-                title="Arena Corner" :description="'1087 Budapest, Hungária körút 40.<br><strong>Bérleti díj:</strong> 14.5 - 15.5 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2200 HUF/m2/hó'" link="/adatlap-oldal" />
-            <x-cards.ingatlan-card image="{{ Vite::asset('resources/images/bank_center_1_2_3_4_5_384x246.jpg') }}"
-                title="Bank Center" :description="'1054 Budapest, Szabadság tér 7.<br><strong>Bérleti díj:</strong> 22 - 26 EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>2700 HUF/m2/hó'" link="/adatlap-oldal" /> --}}
+
         </div>
     </div>
 </div>

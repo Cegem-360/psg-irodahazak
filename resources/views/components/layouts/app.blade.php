@@ -51,6 +51,10 @@
 
         @livewire('quote-request-modal')
 
+        @livewire('property-map-modal')
+
+        @livewire('property-phone-modal')
+
         <x-layouts.footer />
 
         @filamentScripts
