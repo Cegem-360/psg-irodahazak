@@ -35,4 +35,55 @@ document.addEventListener("DOMContentLoaded", function () {
             prevEl: ".swiper-button-prev",
         },
     });
+
+    const referenceSwiper = new Swiper(".reference-swiper", {
+        direction: "horizontal",
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        loop: true,
+        slidesPerView: 6,
+        spaceBetween: 12,
+        breakpoints: {
+            // create responsive breakpoints matching Tailwind's breakpoints
+            640: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 5,
+            },
+        },
+        navigation: {
+            nextEl: ".reference-button-next",
+            prevEl: ".reference-button-prev",
+        },
+    });
+
+    const rolunkmondtakSwiper = new Swiper(".rolunkmondtak-swiper", {
+        direction: "horizontal",
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        loop: true,
+        slidesPerView: 2,
+        spaceBetween: 12,
+        breakpoints: {
+            // create responsive breakpoints matching Tailwind's breakpoints
+            640: {
+                slidesPerView: 1,
+            },
+            768: {
+                slidesPerView: 2,
+            },
+        },
+        navigation: {
+            nextEl: ".rolunkmondtak-button-next",
+            prevEl: ".rolunkmondtak-button-prev",
+        },
+    });
 });
