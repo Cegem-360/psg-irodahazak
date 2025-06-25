@@ -1,6 +1,6 @@
 @php
     $currentLang = app()->getLocale();
-    $testimonials = \App\Models\Testimonial::active()->forLang($currentLang)->ordered()->limit(3)->get();
+    $testimonials = \App\Models\Testimonial::active()->forLang($currentLang)->ordered()->limit(2)->get();
 @endphp
 
 <div class="rolunk-mondtak mt-12">
@@ -27,14 +27,14 @@
                             alt="{{ $testimonial->client_company }}"
                             class="w-1/2 lg:w-1/3 h-fit object-contain rounded-lg mb-4 p-2 bg-white" />
 
-                        <p class="lg:w-2/3 text-md italic text-justify">
+                        <div class="lg:w-2/3 text-md italic text-justify">
                             {!! $testimonial->testimonial !!}
                             <br>
                             <br>
                             <strong>
                                 {{ $testimonial->client_name }}
                             </strong>
-                        </p>
+                        </div>
                     </div>
                 @endforeach
             </div>
