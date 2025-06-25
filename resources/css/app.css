@@ -129,17 +129,19 @@ table {
     } */
 
     .swiper-button-next,
-    .swiper-button-prev {
+    .swiper-button-prev,
+    .reference-button-next,
+    .reference-button-prev {
         margin: 0!important;
         top: 50%;
         transform: translateY(-50%);
     }
 
-    .swiper-button-next {
+    .swiper-button-next, .reference-button-next {
         right: 10px;
     }
 
-    .swiper-button-prev {
+    .swiper-button-prev, .reference-button-prev {
         left: 10px;
     }
 
