@@ -42,30 +42,20 @@ final class ReferenceResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->label('Név')
                     ->required()
                     ->maxLength(255),
                 FileUpload::make('image')
-                    ->label('Kép')
+                    ->required()
                     ->image()
                     ->directory('references')
-                    ->imageEditor()
-                    ->imageEditorAspectRatios([
-                        '16:9',
-                        '4:3',
-                        '1:1',
-                    ])
-                    ->optimize('webp')
-                    ->resize(50)
-                    ->columnSpanFull(),
+                    ->imageEditor(),
                 TextInput::make('order')
                     ->label('Sorrend')
-                    ->required()
                     ->numeric()
                     ->default(0)
                     ->helperText('0 = első, 1 = második, stb.'),
                 Toggle::make('is_active')
-                    ->label('Aktív')
+
                     ->default(true),
             ]);
     }
