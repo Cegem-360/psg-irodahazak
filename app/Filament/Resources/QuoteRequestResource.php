@@ -4,10 +4,19 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+<<<<<<< HEAD
 use App\Filament\Resources\QuoteRequestResource\Pages\CreateQuoteRequest;
 use App\Filament\Resources\QuoteRequestResource\Pages\EditQuoteRequest;
 use App\Filament\Resources\QuoteRequestResource\Pages\ListQuoteRequests;
 use App\Filament\Resources\QuoteRequestResource\Pages\ViewQuoteRequest;
+=======
+use Filament\Forms\Components\Section;
+use App\Filament\Resources\QuoteRequestResource\Pages\ListQuoteRequests;
+use App\Filament\Resources\QuoteRequestResource\Pages\CreateQuoteRequest;
+use App\Filament\Resources\QuoteRequestResource\Pages\ViewQuoteRequest;
+use App\Filament\Resources\QuoteRequestResource\Pages\EditQuoteRequest;
+use App\Filament\Resources\QuoteRequestResource\Pages;
+>>>>>>> 53c1f31 (Refactor controllers and models for improved type hinting and code clarity)
 use App\Models\QuoteRequest;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;

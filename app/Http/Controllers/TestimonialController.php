@@ -31,7 +31,11 @@ final class TestimonialController extends Controller
     public function show(Testimonial $testimonial): View
     {
         abort_unless($testimonial->is_active, 404);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 53c1f31 (Refactor controllers and models for improved type hinting and code clarity)
         return view('testimonials.show', ['testimonial' => $testimonial]);
     }
 }
