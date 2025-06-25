@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 
 final class Testimonial extends Model
@@ -31,6 +32,8 @@ final class Testimonial extends Model
     ];
 
     #[Scope]
+    protected function active($query)
+    #[Scope]
 <<<<<<< HEAD
     protected function featured($query)
 =======
@@ -39,17 +42,20 @@ final class Testimonial extends Model
         $query->where('is_active', true);
     }
 
-    #[Scope]
-    protected function featured($query): void
->>>>>>> 9de41a1 (refactor: Add return type declarations to scope methods in Testimonial model for improved clarity)
+    public function scopeFeatured($query)
     {
-        return $query->where('is_featured', true);
+        $query->where('is_featured', true);
+    }
+
+    public function scopeOrdered($query)
+    {
+        $query->orderBy('order')->orderBy('created_at', 'desc');
     }
 
     #[Scope]
-    protected function ordered($query): void
+    protected function forLang($query, $lang)
     {
-        return $query->orderBy('order')->orderBy('created_at', 'desc');
+        $query->where('lang', $lang);
     }
 
     #[Scope]
