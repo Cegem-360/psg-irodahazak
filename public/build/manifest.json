@@ -1,10 +1,6 @@
 {
   "resources/css/app.css": {
-<<<<<<< HEAD
-    "file": "assets/app-BkJ3zaUy.css",
-=======
-    "file": "assets/app-BgGsVnBi.css",
->>>>>>> 7e8977e (Refactor code structure and remove redundant functions for improved readability and maintainability)
+    "file": "assets/app-qavgIuB2.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -145,21 +141,13 @@
     "src": "resources/images/welsec_logo_800x600.png"
   },
   "resources/js/app.js": {
-<<<<<<< HEAD
-    "file": "assets/app-NPQzhCaO.js",
-=======
-    "file": "assets/app-CsF2RY2o.js",
->>>>>>> 7e8977e (Refactor code structure and remove redundant functions for improved readability and maintainability)
+    "file": "assets/app-CYxwLmUJ.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
       "assets/app-CH_R9frQ.css",
-<<<<<<< HEAD
-      "assets/app-BkJ3zaUy.css"
-=======
-      "assets/app-BgGsVnBi.css"
->>>>>>> 7e8977e (Refactor code structure and remove redundant functions for improved readability and maintainability)
+      "assets/app-qavgIuB2.css"
     ],
     "assets": [
       "assets/psg-symbol-UIy-SfbG.svg"
