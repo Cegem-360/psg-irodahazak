@@ -19,6 +19,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
@@ -28,6 +29,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -60,6 +62,10 @@ final class PropertyResource extends Resource
                         'inactive' => 'Inactive',
                     ])
                     ->required(),
+                Toggle::make('featured')
+                    ->label('Kiemelt ajánlat')
+                    ->helperText('Kijelölés esetén az ingatlan megjelenik a kiemelt ajánlatok között a főoldalon.')
+                    ->default(false),
                 RichEditor::make('lead')
                     ->label('Bevezető')
                     ->columnSpanFull(),
@@ -276,6 +282,10 @@ final class PropertyResource extends Resource
                         default => 'gray',
                     })
                     ->searchable(),
+                IconColumn::make('featured')
+                    ->label('Kiemelt')
+                    ->boolean()
+                    ->sortable(),
                 TextColumn::make('images_count')
                     ->label('Képek száma')
                     ->counts('images'),
