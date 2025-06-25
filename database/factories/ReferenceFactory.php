@@ -19,6 +19,7 @@ final class ReferenceFactory extends Factory
      */
     public function definition(): array
     {
+<<<<<<< HEAD
         static $order = 0;
 
         return [
@@ -26,6 +27,13 @@ final class ReferenceFactory extends Factory
             'image' => null, // A képek manuálisan kerülnek feltöltésre
             'order' => $order++,
             'is_active' => fake()->boolean(80), // 80% eséllyel aktív
+=======
+        return [
+            'name' => $this->faker->company(),
+            'image' => $this->faker->imageUrl(400, 200, 'business'),
+            'order' => $this->faker->numberBetween(0, 100),
+            'is_active' => $this->faker->boolean(80), // 80% chance of being active
+>>>>>>> 0241347 (feat: Implement Reference resource with CRUD functionality and associated pages)
         ];
     }
 }

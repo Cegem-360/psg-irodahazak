@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -32,21 +33,6 @@ final class QuoteRequest extends Model
         return $this->belongsTo(Property::class);
     }
 
-    public function scopeNew($query)
-    {
-        return $query->where('status', 'new');
-    }
-
-    public function scopeContacted($query)
-    {
-        return $query->where('status', 'contacted');
-    }
-
-    public function scopeClosed($query)
-    {
-        return $query->where('status', 'closed');
-    }
-
     public function getStatusColorAttribute(): string
     {
         return match ($this->status) {
@@ -65,5 +51,23 @@ final class QuoteRequest extends Model
             'closed' => 'Lezárva',
             default => 'Ismeretlen',
         };
+    }
+
+    #[Scope]
+    protected function new($query): void
+    {
+        $query->where('status', 'new');
+    }
+
+    #[Scope]
+    protected function contacted($query): void
+    {
+        $query->where('status', 'contacted');
+    }
+
+    #[Scope]
+    protected function closed($query): void
+    {
+        $query->where('status', 'closed');
     }
 }

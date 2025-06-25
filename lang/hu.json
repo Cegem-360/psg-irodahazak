@@ -72,5 +72,11 @@
     "All rights reserved.": "Minden jog fenntartva.",
     "Company Name": "Cég neve",
     "The office building is currently 100% rented out!": "Az irodaház jelenleg 100%-ban bérbe adott!",
-    "Show agglomeration results too": "Agglomeráció találatait is mutassa"
+    "Show agglomeration results too": "Agglomeráció találatait is mutassa",
+    "Image": "Kép",
+    "Order Number": "Sorrend szám",
+    "Used for sorting references": "Referenciák rendezéséhez használt",
+    "Active": "Aktív",
+    "Order": "Sorrend",
+    "Is active": "Aktív"
 }

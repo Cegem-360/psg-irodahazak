@@ -6,7 +6,12 @@ namespace App\Providers;
 
 use App\Models\Gallery;
 use App\Observers\GalleryObserver;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\ServiceProvider;
 
@@ -39,5 +44,22 @@ final class AppServiceProvider extends ServiceProvider
         RichEditor::configureUsing(function (RichEditor $editor): void {
             $editor->translateLabel();
         });
+        FileUpload::configureUsing(function (FileUpload $upload): void {
+            $upload->translateLabel();
+        });
+
+        TextInput::configureUsing(function (TextInput $input): void {
+            $input->translateLabel();
+        });
+        Toggle::configureUsing(function (Toggle $toggle): void {
+            $toggle->translateLabel();
+        });
+        ImageColumn::configureUsing(function (ImageColumn $column): void {
+            $column->translateLabel();
+        });
+        IconColumn::configureUsing(function (IconColumn $column): void {
+            $column->translateLabel();
+        });
+
     }
 }

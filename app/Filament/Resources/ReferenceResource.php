@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+<<<<<<< HEAD
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Toggle;
@@ -24,6 +25,25 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+=======
+use App\Filament\Resources\ReferenceResource\Pages\CreateReference;
+use App\Filament\Resources\ReferenceResource\Pages\EditReference;
+use App\Filament\Resources\ReferenceResource\Pages\ListReferences;
+use App\Models\Reference;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TernaryFilter;
+>>>>>>> 0241347 (feat: Implement Reference resource with CRUD functionality and associated pages)
 use Filament\Tables\Table;
 
 final class ReferenceResource extends Resource
@@ -32,6 +52,7 @@ final class ReferenceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-star';
 
+<<<<<<< HEAD
     protected static ?string $navigationLabel = 'Referenciák';
 
     protected static ?string $modelLabel = 'Referencia';
@@ -39,12 +60,22 @@ final class ReferenceResource extends Resource
     protected static ?string $pluralModelLabel = 'Referenciák';
 
     protected static ?int $navigationSort = 4;
+=======
+    protected static ?string $navigationLabel = 'References';
+
+    protected static ?string $modelLabel = 'Reference';
+
+    protected static ?string $pluralModelLabel = 'References';
+
+    protected static ?int $navigationSort = 30;
+>>>>>>> 0241347 (feat: Implement Reference resource with CRUD functionality and associated pages)
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('name')
+<<<<<<< HEAD
                     ->label('Név')
                     ->required()
                     ->maxLength(255),
@@ -69,6 +100,24 @@ final class ReferenceResource extends Resource
                     ->helperText('0 = első, 1 = második, stb.'),
                 Toggle::make('is_active')
                     ->label('Aktív')
+=======
+                    ->required()
+                    ->maxLength(255),
+
+                FileUpload::make('image')
+                    ->required()
+                    ->image()
+                    ->imageEditor()
+                    ->directory('references'),
+
+                TextInput::make('order')
+                    ->numeric()
+                    ->default(0)
+                    ->label('Order Number')
+                    ->helperText(__('Used for sorting references')),
+
+                Toggle::make('is_active')
+>>>>>>> 0241347 (feat: Implement Reference resource with CRUD functionality and associated pages)
                     ->default(true),
             ]);
     }
@@ -77,6 +126,7 @@ final class ReferenceResource extends Resource
     {
         return $table
             ->columns([
+<<<<<<< HEAD
                 ImageColumn::make('image')
                     ->label('Kép')
                     ->circular()
@@ -106,11 +156,29 @@ final class ReferenceResource extends Resource
                 TextColumn::make('updated_at')
                     ->label('Módosítva')
                     ->dateTime('Y-m-d H:i')
+=======
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+
+                ImageColumn::make('image')
+                    ->size(60),
+
+                TextColumn::make('order')
+                    ->sortable(),
+
+                IconColumn::make('is_active')
+                    ->boolean(),
+
+                TextColumn::make('created_at')
+                    ->dateTime()
+>>>>>>> 0241347 (feat: Implement Reference resource with CRUD functionality and associated pages)
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TernaryFilter::make('is_active')
+<<<<<<< HEAD
                     ->label('Aktív')
                     ->placeholder('Összes')
                     ->trueLabel('Csak aktív')
@@ -131,6 +199,20 @@ final class ReferenceResource extends Resource
             ->defaultSort('order', 'asc')
             ->reorderable('order')
             ->paginationPageOptions([10, 25, 50]);
+=======
+                    ->label('Active Status'),
+            ])
+            ->actions([
+                EditAction::make(),
+                DeleteAction::make(),
+            ])
+            ->bulkActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ])
+            ->defaultSort('order', 'asc');
+>>>>>>> 0241347 (feat: Implement Reference resource with CRUD functionality and associated pages)
     }
 
     public static function getRelations(): array

@@ -98,10 +98,10 @@
                 <div class="field-value">{{ $propertyName }}</div>
             </div>
 
-            @if ($message)
+            @if ($userMessage)
                 <div class="message-box">
                     <div class="field-label">Üzenet:</div>
-                    <div class="field-value">{{ $message }}</div>
+                    <div class="field-value">{{ $userMessage }}</div>
                 </div>
             @endif
 
