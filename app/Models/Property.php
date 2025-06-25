@@ -150,12 +150,10 @@ final class Property extends Model
         })->toArray();
     }
 
-    /**
-     * Scope to get only featured properties
-     */
-    public function scopeFeatured(Builder $query): Builder
+    #[Scope]
+    protected function featured(Builder $query): void
     {
-        return $query->where('featured', true);
+        $query->where('featured', true);
     }
 
     #[Scope]

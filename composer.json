@@ -11,12 +11,14 @@
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.3.24",
+        "filament/spatie-laravel-media-library-plugin": "^3.2",
         "intervention/image": "^3.11",
         "laravel/framework": "^12.18",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6.3",
         "nunomaduro/essentials": "@dev",
-        "spatie/browsershot": "^5.0"
+        "spatie/browsershot": "^5.0",
+        "spatie/laravel-medialibrary": "^11.13"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",
