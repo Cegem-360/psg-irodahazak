@@ -303,7 +303,7 @@
                 <div class="mt-6 px-6 py-4 bg-gray-50">
                     @if ($property->lead)
                         <div class="text-sm text-gray-800 mb-3">
-                            <strong>{{ $property->lead }}</strong>
+                            <strong>{!! $property->lead !!} </strong>
                         </div>
                     @endif
 
@@ -314,6 +314,12 @@
                     @endif
                 </div>
             @endif
+            @if ($property->egyeb)
+                <div>
+                    {!! $property->egyeb !!}
+                </div>
+            @endif
+
         </div>
     </body>
 

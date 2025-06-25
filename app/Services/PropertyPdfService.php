@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use Symfony\Component\HttpFoundation\Response;
 use App\Models\Property;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Browsershot\Browsershot;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class PropertyPdfService
@@ -34,6 +34,7 @@ final class PropertyPdfService
             ->waitUntilNetworkIdle(config('pdf.browsershot.wait_until_network_idle', true))
             ->timeout(config('pdf.browsershot.timeout', 90))
             ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
+            ->showBrowserHeaderAndFooter()
             ->footerHtml($footerHtml);
 
         // Fájlnév generálása

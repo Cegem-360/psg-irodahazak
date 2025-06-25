@@ -24,7 +24,6 @@
         color: #1f2937;
     }
 </style>
-
 <div class="footer text-black">
     <p class="contact-line">KONTAKT: Fekete Richard, T.: +36 20 381 3917</p>
     <p class="contact-line">mail: richard.fekete@psg-irodahazak.hu</p>
