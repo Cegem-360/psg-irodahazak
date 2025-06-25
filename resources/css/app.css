@@ -158,3 +158,7 @@ table {
         @apply underline;
     }
 }
+
+li.jellemzok {
+    list-style-image: url(../images/psg-symbol.svg);
+}

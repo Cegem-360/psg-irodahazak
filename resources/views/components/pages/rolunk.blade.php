@@ -8,7 +8,7 @@
                 {{ __('About Us') }}</h2>
 
             <div class="max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
-                <div class="p-6 border-b border-gray-300 hover:brightness-95 transition-all duration-300 ease-in-out">
+                <div class="p-6">
                     <p class="mb-3 text-gray-600">
                         {{ __('About us page content 1') }}
                     </p>
@@ -19,6 +19,8 @@
                         {{ __('About us page content 3') }}
                     </p>
                 </div>
+                <img src="{{ Vite::asset('resources/images/psg_montazs.webp') }}"
+                    class="w-full h-auto mt-6 rounded-lg shadow-lg" alt="Rólunk" />
             </div>
 
         </div>

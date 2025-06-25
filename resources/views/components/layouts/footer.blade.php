@@ -13,7 +13,7 @@
                      <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">{{ __('Contact') }}</h2>
                      <ul class="text-gray-600">
                          <li class="mb-4">
-                             <h4 class="text-sm text-bold">Property Solution Group Kft.</h4>
+                             <h4 class="text-bold">Property Solution Group Kft.</h4>
                          </li>
                          <li class="mb-4">
                              <a href="tel:+36203813917 " class="hover:underline"> +36 20 381 3917 </a>
@@ -26,8 +26,7 @@
                                  class="hover:underline">{{ __('online contact') }}</a>
                          </li>
                          <li>
-                             <a href="#" class="hover:underline"
-                                 title="Coming soon">{{ __('login / registration') }}</a>
+                             <a href="#" class="hover:underline" title="Coming soon">{{ __('login') }}</a>
                          </li>
                      </ul>
                  </div>

@@ -78,6 +78,11 @@ final class Property extends Model
         'egyeb',
         'afa',
         'slug',
+        'featured',
+    ];
+
+    protected $casts = [
+        'featured' => 'boolean',
     ];
 
     public function services()
@@ -143,6 +148,14 @@ final class Property extends Model
         return $this->images->map(function ($image) use ($size) {
             return $image->getImageUrl($size);
         })->toArray();
+    }
+
+    /**
+     * Scope to get only featured properties
+     */
+    public function scopeFeatured(Builder $query): Builder
+    {
+        return $query->where('featured', true);
     }
 
     #[Scope]

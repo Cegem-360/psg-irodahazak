@@ -31,9 +31,9 @@
     <div class="flex flex-col items-center text-center space-y-4">
         <x-svg.handshake class="text-primary brightness-75 w-20 h-20" />
         <div class="text-5xl font-bold text-primary">
-            <span class="counter" data-to="50" data-suffix="+">0</span>
+            <span class="counter" data-to="100" data-suffix=" ezer+">0</span>
         </div>
-        <div class="text-lg font-semibold text-gray-700">tranzakció<br> évente</div>
+        <div class="text-lg font-semibold text-gray-700">m² bérbe adott <br>A-kategóriás iroda</div>
         <div class="w-12 border-b-2 border-primary/30 mt-2"></div>
     </div>
 </div>

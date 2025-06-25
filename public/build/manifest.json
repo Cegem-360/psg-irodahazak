@@ -1,6 +1,10 @@
 {
   "resources/css/app.css": {
+<<<<<<< HEAD
     "file": "assets/app-DOy6_V5o.css",
+=======
+    "file": "assets/app-BOgBLPqX.css",
+>>>>>>> main
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -108,6 +112,14 @@
     "file": "assets/psg-irodahazak-logo-Ct32wOUi.png",
     "src": "resources/images/psg-irodahazak-logo.png"
   },
+  "resources/images/psg-symbol.svg": {
+    "file": "assets/psg-symbol-UIy-SfbG.svg",
+    "src": "resources/images/psg-symbol.svg"
+  },
+  "resources/images/psg_montazs.webp": {
+    "file": "assets/psg_montazs-BQ0EqbRU.webp",
+    "src": "resources/images/psg_montazs.webp"
+  },
   "resources/images/reflections-in-modern-dutch-design-architecture-2025-03-23-22-04-59-utc.webp": {
     "file": "assets/reflections-in-modern-dutch-design-architecture-2025-03-23-22-04-59-utc-CHeEckbb.webp",
     "src": "resources/images/reflections-in-modern-dutch-design-architecture-2025-03-23-22-04-59-utc.webp"
@@ -133,13 +145,24 @@
     "src": "resources/images/welsec_logo_800x600.png"
   },
   "resources/js/app.js": {
+<<<<<<< HEAD
     "file": "assets/app-DHLQI6vP.js",
+=======
+    "file": "assets/app-XJqFbJ1K.js",
+>>>>>>> main
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
       "assets/app-CH_R9frQ.css",
+<<<<<<< HEAD
       "assets/app-DOy6_V5o.css"
+=======
+      "assets/app-BOgBLPqX.css"
+    ],
+    "assets": [
+      "assets/psg-symbol-UIy-SfbG.svg"
+>>>>>>> main
     ]
   },
   "resources/js/google-maps-utils.js": {
