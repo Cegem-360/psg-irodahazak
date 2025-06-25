@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\Section;
-use App\Filament\Resources\QuoteRequestResource\Pages\ListQuoteRequests;
 use App\Filament\Resources\QuoteRequestResource\Pages\CreateQuoteRequest;
-use App\Filament\Resources\QuoteRequestResource\Pages\ViewQuoteRequest;
 use App\Filament\Resources\QuoteRequestResource\Pages\EditQuoteRequest;
-use App\Filament\Resources\QuoteRequestResource\Pages;
+use App\Filament\Resources\QuoteRequestResource\Pages\ListQuoteRequests;
+use App\Filament\Resources\QuoteRequestResource\Pages\ViewQuoteRequest;
 use App\Models\QuoteRequest;
-use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -236,7 +234,9 @@ final class QuoteRequestResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return self::getModel()::where('status', 'new')->count() ?: null;
+        $count = self::getModel()::where('status', 'new')->count();
+
+        return $count > 0 ? (string) $count : null;
     }
 
     public static function getNavigationBadgeColor(): ?string

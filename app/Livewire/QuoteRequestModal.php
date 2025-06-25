@@ -7,6 +7,7 @@ namespace App\Livewire;
 use App\Models\Property;
 use App\Models\QuoteRequest;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -96,7 +97,7 @@ final class QuoteRequestModal extends Component
                 'name' => $this->name,
                 'phone' => $this->phone,
                 'email' => $this->email,
-                'message' => $this->message,
+                'userMessage' => $this->message,
                 'propertyName' => $this->selectedProperty ? Property::find($this->selectedProperty)?->title : 'Nincs megadva',
                 'quoteId' => $quoteRequest->id,
             ], function ($message): void {
@@ -118,6 +119,15 @@ final class QuoteRequestModal extends Component
             $this->closeModal();
 
         } catch (Exception $exception) {
+
+            Log::error('Quote request submission failed', [
+                'name' => $this->name,
+                'phone' => $this->phone,
+                'email' => $this->email,
+                'message' => $this->message,
+                'property_id' => $this->selectedProperty,
+                'error' => $exception->getMessage(),
+            ]);
             session()->flash('error', 'Hiba történt az árajánlat kérés küldése során. Kérjük, próbálja újra később.');
         }
     }
