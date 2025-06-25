@@ -1,6 +1,6 @@
 @php
     $currentLang = app()->getLocale();
-    $testimonials = \App\Models\Testimonial::active()->forLang($currentLang)->ordered()->limit(2)->get();
+    $testimonials = \App\Models\Testimonial::active()->forLang($currentLang)->ordered()->get();
 @endphp
 
 <div class="rolunk-mondtak mt-12">

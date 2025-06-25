@@ -59,14 +59,14 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @foreach ($this->getOffices() ?? [] as $office)
-                        <x-cards.ingatlan-card image="{{ $office->getFirstImageUrl('800x600') }}" small
-                            :title="$office->title" :description="$office->cim_irsz .
+                        <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title" :title="$office->title"
+                            :description="$office->cim_irsz .
                                 ' ' .
                                 $office->cim_varos .
                                 ', ' .
                                 $office->cim_utca .
                                 ' ' .
-                                $office->cim_hazszam" :link="route('properties.show-for-sale', $office)" />
+                                $office->cim_hazszam" :link="localized_route('properties.show', ['property' => $office->slug])" :key="$office->id" :small="true" />
                     @endforeach
                 </div>
             </div>

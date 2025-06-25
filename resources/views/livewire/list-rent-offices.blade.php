@@ -15,10 +15,31 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @foreach ($this->getOffices() ?? [] as $office)
-                        <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl()" :title="$office->title" :description="$office->getAddressFormated()"
-                            :link="localized_route('properties.show', ['property' => $office->slug])" :key="$office->id" :smal="true" />
+                        <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title" :title="$office->title"
+                            :description="$office->cim_irsz .
+                                ' ' .
+                                $office->cim_varos .
+                                ', ' .
+                                $office->cim_utca .
+                                ' ' .
+                                $office->cim_hazszam .
+                                '<br><strong>' .
+                                __('Rent:') .
+                                '</strong> ' .
+                                $office->min_berleti_dij .
+                                ' - ' .
+                                $office->max_berleti_dij .
+                                ' ' .
+                                $office->max_berleti_dij_addons .
+                                '<br><strong>' .
+                                __('Operating Fee:') .
+                                '</strong> ' .
+                                $office->uzemeletetesi_dij .
+                                ' ' .
+                                $office->uzemeletetesi_dij_addons" :link="localized_route('properties.show', ['property' => $office->slug])"
+                            :key="$office->id" :small="true" />
 
-                        <x-cards.ingatlan-card image="{{ $office->getFirstImageUrl('800x600') }}" small
+                        {{-- <x-cards.ingatlan-card image="{{ $office->getFirstImageUrl('800x600') }}" small
                             :title="$office->title" :description="$office->cim_irsz .
                                 ' ' .
                                 $office->cim_varos .
@@ -41,7 +62,7 @@
                                 ' ' .
                                 $office->uzemeletetesi_dij_addons"
                             :link="route('properties.show', ['property' => $office])" :property="$office"
-                            wire:key="office-{{ $office->id }}" />
+                            wire:key="office-{{ $office->id }}" /> --}}
                     @endforeach
                 </div>
             </div>
