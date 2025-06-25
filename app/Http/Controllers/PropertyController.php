@@ -21,8 +21,8 @@ final class PropertyController extends Controller
             $districts = array_map('trim', $districts); // Remove any extra whitespace
             $districts = array_filter($districts); // Remove empty values
 
-            if (! empty($districts)) {
-                $query->where(function ($q) use ($districts) {
+            if ($districts !== []) {
+                $query->where(function ($q) use ($districts): void {
                     foreach ($districts as $district) {
                         $q->orWhere('cim_varos', 'like', '%'.$district.'%');
                     }
@@ -42,7 +42,7 @@ final class PropertyController extends Controller
 
         // Filter by search term
         if (request('search')) {
-            $query->where(function ($q) {
+            $query->where(function ($q): void {
                 $q->where('title', 'like', '%'.request('search').'%')
                     ->orWhere('content', 'like', '%'.request('search').'%')
                     ->orWhere('lead', 'like', '%'.request('search').'%');

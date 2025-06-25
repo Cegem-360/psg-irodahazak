@@ -2,6 +2,24 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\TestimonialResource\Pages\ListTestimonials;
+use App\Filament\Resources\TestimonialResource\Pages\CreateTestimonial;
+use App\Filament\Resources\TestimonialResource\Pages\EditTestimonial;
 use App\Filament\Resources\TestimonialResource\Pages;
 use App\Filament\Resources\TestimonialResource\RelationManagers;
 use App\Models\Testimonial;
@@ -29,36 +47,36 @@ class TestimonialResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Ügyfél adatok')
+                Section::make('Ügyfél adatok')
                     ->schema([
-                        Forms\Components\TextInput::make('client_name')
+                        TextInput::make('client_name')
                             ->label('Ügyfél neve')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('client_position')
+                        TextInput::make('client_position')
                             ->label('Pozíció')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('client_company')
+                        TextInput::make('client_company')
                             ->label('Cég')
                             ->maxLength(255),
-                        Forms\Components\FileUpload::make('client_image')
+                        FileUpload::make('client_image')
                             ->label('Ügyfél képe')
                             ->image()
                             ->directory('testimonials/clients'),
-                        Forms\Components\FileUpload::make('company_logo')
+                        FileUpload::make('company_logo')
                             ->label('Cég logó')
                             ->image()
                             ->directory('testimonials/logos'),
                     ])->columns(2),
                     
-                Forms\Components\Section::make('Vélemény')
+                Section::make('Vélemény')
                     ->schema([
-                        Forms\Components\Textarea::make('testimonial')
+                        Textarea::make('testimonial')
                             ->label('Vélemény szöveg')
                             ->required()
                             ->rows(4)
                             ->columnSpanFull(),
-                        Forms\Components\Select::make('rating')
+                        Select::make('rating')
                             ->label('Értékelés')
                             ->options([
                                 1 => '1 csillag',
@@ -69,22 +87,22 @@ class TestimonialResource extends Resource
                             ])
                             ->default(5)
                             ->required(),
-                        Forms\Components\TextInput::make('project_type')
+                        TextInput::make('project_type')
                             ->label('Projekt típus')
                             ->maxLength(255)
                             ->placeholder('pl. Iroda bérlés, Ingatlan eladás'),
                     ])->columns(2),
                     
-                Forms\Components\Section::make('Beállítások')
+                Section::make('Beállítások')
                     ->schema([
-                        Forms\Components\Toggle::make('is_featured')
+                        Toggle::make('is_featured')
                             ->label('Kiemelt')
                             ->helperText('Kiemelt vélemények a főoldalon jelennek meg'),
-                        Forms\Components\Toggle::make('is_active')
+                        Toggle::make('is_active')
                             ->label('Aktív')
                             ->default(true)
                             ->helperText('Csak az aktív vélemények jelennek meg a weboldalon'),
-                        Forms\Components\TextInput::make('order')
+                        TextInput::make('order')
                             ->label('Sorrend')
                             ->numeric()
                             ->default(0)
@@ -97,25 +115,26 @@ class TestimonialResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('client_name')
+                TextColumn::make('client_name')
                     ->label('Ügyfél')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('client_company')
+                TextColumn::make('client_company')
                     ->label('Cég')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('testimonial')
+                TextColumn::make('testimonial')
                     ->label('Vélemény')
                     ->limit(50)
-                    ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
+                    ->tooltip(function (TextColumn $column): ?string {
                         $state = $column->getState();
                         if (strlen($state) <= 50) {
                             return null;
                         }
+
                         return $state;
                     }),
-                Tables\Columns\TextColumn::make('rating')
+                TextColumn::make('rating')
                     ->label('Értékelés')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -126,37 +145,37 @@ class TestimonialResource extends Resource
                     })
                     ->formatStateUsing(fn (string $state): string => $state . ' ⭐')
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_featured')
+                IconColumn::make('is_featured')
                     ->label('Kiemelt')
                     ->boolean()
                     ->trueIcon('heroicon-o-star')
                     ->falseIcon('heroicon-o-star')
                     ->trueColor('warning'),
-                Tables\Columns\IconColumn::make('is_active')
+                IconColumn::make('is_active')
                     ->label('Aktív')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('order')
+                TextColumn::make('order')
                     ->label('Sorrend')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Létrehozva')
                     ->dateTime('Y-m-d H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('is_featured')
+                TernaryFilter::make('is_featured')
                     ->label('Kiemelt')
                     ->placeholder('Összes')
                     ->trueLabel('Csak kiemelt')
                     ->falseLabel('Nem kiemelt'),
-                Tables\Filters\TernaryFilter::make('is_active')
+                TernaryFilter::make('is_active')
                     ->label('Státusz')
                     ->placeholder('Összes')
                     ->trueLabel('Aktív')
                     ->falseLabel('Inaktív'),
-                Tables\Filters\SelectFilter::make('rating')
+                SelectFilter::make('rating')
                     ->label('Értékelés')
                     ->options([
                         5 => '5 csillag',
@@ -167,13 +186,13 @@ class TestimonialResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('order')
@@ -190,9 +209,9 @@ class TestimonialResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTestimonials::route('/'),
-            'create' => Pages\CreateTestimonial::route('/create'),
-            'edit' => Pages\EditTestimonial::route('/{record}/edit'),
+            'index' => ListTestimonials::route('/'),
+            'create' => CreateTestimonial::route('/create'),
+            'edit' => EditTestimonial::route('/{record}/edit'),
         ];
     }
 }

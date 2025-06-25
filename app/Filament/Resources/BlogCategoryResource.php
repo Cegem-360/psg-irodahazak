@@ -4,6 +4,24 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Set;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ColorColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\BlogCategoryResource\RelationManagers\BlogPostsRelationManager;
+use App\Filament\Resources\BlogCategoryResource\Pages\ListBlogCategories;
+use App\Filament\Resources\BlogCategoryResource\Pages\CreateBlogCategory;
+use App\Filament\Resources\BlogCategoryResource\Pages\EditBlogCategory;
 use App\Filament\Resources\BlogCategoryResource\Pages;
 use App\Filament\Resources\BlogCategoryResource\RelationManagers;
 use App\Models\BlogCategory;
@@ -32,36 +50,36 @@ final class BlogCategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Alapadatok')
+                Section::make('Alapadatok')
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->label('Név')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                            ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
-                        Forms\Components\TextInput::make('slug')
+                        TextInput::make('slug')
                             ->label('URL slug')
                             ->required()
                             ->maxLength(255)
                             ->unique(BlogCategory::class, 'slug', ignoreRecord: true)
                             ->helperText('Automatikusan generálódik a névből'),
 
-                        Forms\Components\Textarea::make('description')
+                        Textarea::make('description')
                             ->label('Leírás')
                             ->maxLength(500)
                             ->rows(3),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Megjelenés')
+                Section::make('Megjelenés')
                     ->schema([
-                        Forms\Components\ColorPicker::make('color')
+                        ColorPicker::make('color')
                             ->label('Szín')
                             ->default('#3B82F6')
                             ->helperText('A kategória színe'),
 
-                        Forms\Components\Toggle::make('is_active')
+                        Toggle::make('is_active')
                             ->label('Aktív')
                             ->default(true)
                             ->helperText('Inaktív kategóriák nem jelennek meg a weboldalon'),
@@ -73,27 +91,27 @@ final class BlogCategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->label('Név')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('slug')
+                TextColumn::make('slug')
                     ->label('Slug')
                     ->searchable()
                     ->copyable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                Tables\Columns\ColorColumn::make('color')
+                ColorColumn::make('color')
                     ->label('Szín'),
 
-                Tables\Columns\TextColumn::make('posts_count')
+                TextColumn::make('posts_count')
                     ->label('Bejegyzések száma')
                     ->getStateUsing(fn (BlogCategory $record): int => $record->blogPosts()->count())
                     ->badge()
                     ->color('primary'),
 
-                Tables\Columns\IconColumn::make('is_active')
+                IconColumn::make('is_active')
                     ->label('Aktív')
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
@@ -101,26 +119,26 @@ final class BlogCategoryResource extends Resource
                     ->trueColor('success')
                     ->falseColor('danger'),
 
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Létrehozva')
                     ->dateTime('Y-m-d H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('is_active')
+                TernaryFilter::make('is_active')
                     ->label('Státusz')
                     ->placeholder('Mindegyik')
                     ->trueLabel('Aktív')
                     ->falseLabel('Inaktív'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('name');
@@ -129,16 +147,16 @@ final class BlogCategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\BlogPostsRelationManager::class,
+            BlogPostsRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBlogCategories::route('/'),
-            'create' => Pages\CreateBlogCategory::route('/create'),
-            'edit' => Pages\EditBlogCategory::route('/{record}/edit'),
+            'index' => ListBlogCategories::route('/'),
+            'create' => CreateBlogCategory::route('/create'),
+            'edit' => EditBlogCategory::route('/{record}/edit'),
         ];
     }
 }

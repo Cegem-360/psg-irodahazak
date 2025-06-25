@@ -24,7 +24,7 @@ final class BlogController extends Controller
 
         // Kategória szűrés
         if ($request->filled('category')) {
-            $query->whereHas('category', function ($q) use ($request) {
+            $query->whereHas('category', function ($q) use ($request): void {
                 $q->where('slug', $request->category);
             });
         }
@@ -32,7 +32,7 @@ final class BlogController extends Controller
         // Keresés
         if ($request->filled('search')) {
             $searchTerm = $request->search;
-            $query->where(function ($q) use ($searchTerm) {
+            $query->where(function ($q) use ($searchTerm): void {
                 $q->where('title', 'like', '%'.$searchTerm.'%')
                     ->orWhere('excerpt', 'like', '%'.$searchTerm.'%')
                     ->orWhere('content', 'like', '%'.$searchTerm.'%');
@@ -41,7 +41,7 @@ final class BlogController extends Controller
 
         $posts = $query->paginate(12);
 
-        return view('blog.index', compact('posts', 'categories'));
+        return view('blog.index', ['posts' => $posts, 'categories' => $categories]);
     }
 
     public function show(BlogPost $post): View
@@ -63,7 +63,7 @@ final class BlogController extends Controller
             ->limit(3)
             ->get();
 
-        return view('blog.show', compact('post', 'relatedPosts'));
+        return view('blog.show', ['post' => $post, 'relatedPosts' => $relatedPosts]);
     }
 
     public function category(BlogCategory $category): View
@@ -83,6 +83,6 @@ final class BlogController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('blog.category', compact('posts', 'category', 'categories'));
+        return view('blog.category', ['posts' => $posts, 'category' => $category, 'categories' => $categories]);
     }
 }

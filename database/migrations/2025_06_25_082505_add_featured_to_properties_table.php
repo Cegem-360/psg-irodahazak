@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('properties', function (Blueprint $table) {
+        Schema::table('properties', function (Blueprint $table): void {
             $table->boolean('featured')->default(false)->after('slug');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('properties', function (Blueprint $table) {
+        Schema::table('properties', function (Blueprint $table): void {
             $table->dropColumn('featured');
         });
     }

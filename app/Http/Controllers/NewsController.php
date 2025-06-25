@@ -14,7 +14,7 @@ final class NewsController extends Controller
     {
         $news = News::query()->published()->paginate();
 
-        return view('news.index', compact('news'));
+        return view('news.index', ['news' => $news]);
     }
 
     public function show(string $slug): View
@@ -26,6 +26,6 @@ final class NewsController extends Controller
         // Increment view count
         $news->incrementViews();
 
-        return view('news.show', compact('news'));
+        return view('news.show', ['news' => $news]);
     }
 }

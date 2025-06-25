@@ -4,7 +4,7 @@
         <meta name="robots" content="index, follow">
         <meta name="googlebot" content="index, follow">
         <meta name="description" content="{{ $news->excerpt }}">
-        <meta name="keywords" content="hír, {{ $news->category?->name }}, irodaház, irodabérlet">
+        <meta name="keywords" content="hír, irodaház, irodabérlet">
         <link rel="canonical" href="{{ Request::url() }}">
 
         <!-- Open Graph -->
@@ -17,7 +17,7 @@
         @endif
 
         <!-- Article specific -->
-        <meta property="article:published_time" content="{{ $news->published_at->toISOString() }}">
+        <meta property="article:published_time" content="{{ $news?->published_at?->toISOString() }}">
         <meta property="article:author" content="{{ $news->author->name }}">
         @if ($news->category)
             <meta property="article:section" content="{{ $news->category->name }}">
@@ -47,7 +47,7 @@
                                 Hírek
                             </a>
                         </li>
-                        @if ($news->category)
+                        {{--  @if ($news->category)
                             <li class="flex items-center">
                                 <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor"
                                     viewBox="0 0 20 20">
@@ -68,7 +68,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                             <span class="ml-4 text-gray-500 truncate">{{ $news->title }}</span>
-                        </li>
+                        </li> --}}
                     </ol>
                 </nav>
             </div>
@@ -80,13 +80,8 @@
                 <div class="p-8">
                     <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
                         <div class="flex items-center">
-                            @if ($news->category)
-                                <span class="inline-block px-3 py-1 rounded-full text-sm font-medium mr-3"
-                                    style="background-color: {{ $news->category->color }}20; color: {{ $news->category->color }}">
-                                    {{ $news->category->icon }} {{ $news->category->name }}
-                                </span>
-                            @endif
-                            <time>{{ $news->published_at->format('Y. F j. H:i') }}</time>
+
+                            <time>{{ $news?->published_at?->format('Y. F j. H:i') }}</time>
                         </div>
                         @if ($news->is_breaking)
                             <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
@@ -98,7 +93,7 @@
                     <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{{ $news->title }}</h1>
 
                     @if ($news->excerpt)
-                        <p class="text-xl text-gray-600 leading-relaxed mb-6">{{ $news->excerpt }}</p>
+                        <p class="text-xl text-gray-600 leading-relaxed mb-6">{!! $news->excerpt !!}</p>
                     @endif
 
                     <div class="flex items-center justify-between border-b pb-6 mb-8">
@@ -133,7 +128,7 @@
                 <!-- Article Content -->
                 <div class="px-8 pb-8">
                     <div class="prose prose-lg max-w-none">
-                        {!! nl2br(e($news->content)) !!}
+                        {!! $news->content !!}
                     </div>
                 </div>
             </article>

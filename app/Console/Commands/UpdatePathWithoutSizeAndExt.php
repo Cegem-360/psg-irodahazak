@@ -26,7 +26,7 @@ final class UpdatePathWithoutSizeAndExt extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $this->info('Starting to update path_without_size_and_ext...');
 
@@ -55,6 +55,7 @@ final class UpdatePathWithoutSizeAndExt extends Command
                 if (! $isDryRun) {
                     $gallery->update(['path_without_size_and_ext' => $pathWithoutSizeAndExt]);
                 }
+
                 $totalUpdated++;
             }
 
@@ -65,9 +66,9 @@ final class UpdatePathWithoutSizeAndExt extends Command
         $this->newLine();
 
         if ($isDryRun) {
-            $this->info("DRY RUN: Would update {$totalUpdated} gallery records");
+            $this->info(sprintf('DRY RUN: Would update %d gallery records', $totalUpdated));
         } else {
-            $this->info("Successfully updated {$totalUpdated} gallery records");
+            $this->info(sprintf('Successfully updated %d gallery records', $totalUpdated));
         }
 
         return 0;

@@ -106,7 +106,7 @@ final class ListRentOffices extends Component
             ->whereNotNull('maps_lng')
             ->where('maps_lat', '!=', '')
             ->where('maps_lng', '!=', '')
-            ->map(function ($office) {
+            ->map(function ($office): array {
                 return [
                     'id' => $office->id,
                     'title' => $office->title,
@@ -147,7 +147,7 @@ final class ListRentOffices extends Component
             $selectedDistricts = explode(',', $this->districts);
             $selectedDistricts = array_filter(array_map('trim', $selectedDistricts));
 
-            if (! empty($selectedDistricts)) {
+            if ($selectedDistricts !== []) {
                 $query->inDistricts($selectedDistricts);
             }
         }

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\BlogCategory;
+use App\Models\User;
+use App\Models\BlogPost;
 use Illuminate\Database\Seeder;
 
 final class BlogSeeder extends Seeder
@@ -53,33 +56,33 @@ final class BlogSeeder extends Seeder
         ];
 
         foreach ($categories as $categoryData) {
-            \App\Models\BlogCategory::firstOrCreate(
+            BlogCategory::firstOrCreate(
                 ['slug' => $categoryData['slug']],
                 $categoryData
             );
         }
 
         // Első felhasználó lekérése vagy létrehozása
-        $user = \App\Models\User::first();
+        $user = User::first();
         if (! $user) {
-            $user = \App\Models\User::factory()->create([
+            $user = User::factory()->create([
                 'name' => 'Admin User',
                 'email' => 'admin@example.com',
             ]);
         }
 
         // Blog bejegyzések létrehozása kategóriánként
-        $categories = \App\Models\BlogCategory::all();
+        $categories = BlogCategory::all();
 
         foreach ($categories as $category) {
             // 3-5 bejegyzés kategóriánként
             $postCount = rand(3, 5);
 
             for ($i = 0; $i < $postCount; $i++) {
-                \App\Models\BlogPost::factory()->create([
+                BlogPost::factory()->create([
                     'blog_category_id' => $category->id,
                     'user_id' => $user->id,
-                    'is_published' => rand(0, 1) ? true : false,
+                    'is_published' => (bool) rand(0, 1),
                 ]);
             }
         }

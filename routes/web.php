@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ImpresszumController;
@@ -88,7 +90,7 @@ Route::get('/hirek', [NewsController::class, 'index'])->name('news.index');
 Route::get('/hirek/{slug}', [NewsController::class, 'show'])->name('news.show');
 
 // English routes (different URLs, same functionality)
-Route::group(['as' => 'en.'], function () {
+Route::group(['as' => 'en.'], function (): void {
     Route::view('/contact', 'index')->name('home');
     Route::view('/data-sheet', 'index')->name('adatlap-oldal');
     Route::view('/offices-for-rent', 'index')->name('kiado-irodak');
@@ -158,14 +160,14 @@ Route::group(['as' => 'en.'], function () {
 });
 
 // Test route for PDF generation (remove in production)
-Route::get('/test-pdf/{property}', function (Property $property) {
+Route::get('/test-pdf/{property}', function (Property $property): StreamedResponse {
     $pdfService = new PropertyPdfService();
 
     return $pdfService->generatePdf($property);
 })->name('test.pdf');
 
 // PDF generation route for properties
-Route::get('/property-pdf/{property}', function (Property $property) {
+Route::get('/property-pdf/{property}', function (Property $property): Response {
     $pdfService = new PropertyPdfService();
 
     return $pdfService->generatePdfForView($property);
@@ -176,7 +178,7 @@ Route::get('/property-preview/{property}', function (Property $property) {
     // Betöltjük a kapcsolódó képek adatokat
     $property->load(['images']);
 
-    return view('pdf.property', compact('property'));
+    return view('pdf.property', ['property' => $property]);
 })->name('property.preview');
 
 // API routes (not localized)

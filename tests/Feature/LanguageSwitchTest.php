@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 final class LanguageSwitchTest extends TestCase
 {
-    public function test_language_switch_to_hungarian()
+    public function test_language_switch_to_hungarian(): void
     {
         // Switch to Hungarian (should go to homepage)
         $response = $this->get('/language/hu');
@@ -17,7 +17,7 @@ final class LanguageSwitchTest extends TestCase
         $response->assertSessionHas('locale', 'hu');
     }
 
-    public function test_language_switch_to_english()
+    public function test_language_switch_to_english(): void
     {
         // Switch to English (should go to English homepage /contact)
         $response = $this->get('/language/en');
@@ -26,7 +26,7 @@ final class LanguageSwitchTest extends TestCase
         $response->assertSessionHas('locale', 'en');
     }
 
-    public function test_language_switch_with_url_mapping()
+    public function test_language_switch_with_url_mapping(): void
     {
         // Test Hungarian contact page to English
         $response = $this->get('/language/en', [
@@ -50,13 +50,13 @@ final class LanguageSwitchTest extends TestCase
         $response->assertRedirect('/blog');
     }
 
-    public function test_invalid_locale_returns_404()
+    public function test_invalid_locale_returns_404(): void
     {
         $response = $this->get('/language/invalid');
         $response->assertStatus(404);
     }
 
-    public function test_english_urls_set_locale_automatically()
+    public function test_english_urls_set_locale_automatically(): void
     {
         // Accessing an English URL should set locale to 'en'
         $response = $this->get('/contact');
@@ -64,7 +64,7 @@ final class LanguageSwitchTest extends TestCase
         // Note: This would be tested in browser where session persists
     }
 
-    public function test_hungarian_urls_work_without_prefix()
+    public function test_hungarian_urls_work_without_prefix(): void
     {
         // Hungarian URLs should work normally
         $response = $this->get('/');

@@ -13,6 +13,6 @@ final class ImpresszumController extends Controller
     {
         $impresszum = Impresszum::getActive();
 
-        return view('impresszum', compact('impresszum'));
+        return view('impresszum', ['impresszum' => $impresszum]);
     }
 }

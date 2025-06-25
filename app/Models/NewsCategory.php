@@ -56,6 +56,7 @@ final class NewsCategory extends Model
             if (empty($category->slug)) {
                 $category->slug = Str::slug($category->name);
             }
+
             if (empty($category->sort_order)) {
                 $category->sort_order = self::max('sort_order') + 1;
             }

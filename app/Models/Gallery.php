@@ -134,8 +134,8 @@ final class Gallery extends Model
     {
         $images = $this->getAllImages();
 
-        return array_filter($images, function ($image) use ($size) {
-            return mb_strpos($image, "_{$size}.") !== false;
+        return array_filter($images, function ($image) use ($size): bool {
+            return mb_strpos($image, sprintf('_%s.', $size)) !== false;
         });
     }
 
@@ -146,7 +146,7 @@ final class Gallery extends Model
     {
         $images = $this->getImagesBySize($size);
 
-        return ! empty($images) ? array_values($images)[0] : null;
+        return $images === [] ? null : array_values($images)[0];
     }
 
     /**
@@ -154,7 +154,7 @@ final class Gallery extends Model
      */
     public function getImageUrlFromArray(string $filename): string
     {
-        $path = "property/{$this->target_table_id}/gallery/{$filename}";
+        $path = sprintf('property/%s/gallery/%s', $this->target_table_id, $filename);
 
         return Storage::url($path);
     }
