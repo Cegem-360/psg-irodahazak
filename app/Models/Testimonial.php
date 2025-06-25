@@ -31,19 +31,33 @@ final class Testimonial extends Model
     ];
 
     #[Scope]
+<<<<<<< HEAD
     protected function featured($query)
+=======
+    protected function active($query): void
+    {
+        $query->where('is_active', true);
+    }
+
+    #[Scope]
+    protected function featured($query): void
+>>>>>>> 9de41a1 (refactor: Add return type declarations to scope methods in Testimonial model for improved clarity)
     {
         return $query->where('is_featured', true);
     }
 
     #[Scope]
-    protected function ordered($query)
+    protected function ordered($query): void
     {
         return $query->orderBy('order')->orderBy('created_at', 'desc');
     }
 
     #[Scope]
+<<<<<<< HEAD
     protected function forLang($query, string $lang = 'hu')
+=======
+    protected function forLang($query, $lang): void
+>>>>>>> 9de41a1 (refactor: Add return type declarations to scope methods in Testimonial model for improved clarity)
     {
         return $query->where('lang', $lang);
     }
