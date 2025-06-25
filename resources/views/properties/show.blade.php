@@ -11,13 +11,13 @@
                     <x-cards.ingatlan-gallery-carousel :images="$property->galleryImages()" :title="$property->title" />
                 </div>
                 <div class="p-4">
-                    <h2 class="text-3xl">{{ __('Data') }}</h2>
+                    {{-- <h2 class="text-3xl">{{ __('Data') }}</h2> --}}
                     <table class="table-auto w-full mt-4">
                         <tbody>
-                            <tr>
+                            {{-- <tr>
                                 <td class="bold head">{{ __('Name') }}:</td>
                                 <td class="head">{{ $property->title }}</td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <td class="bold">{{ __('Address') }}:</td>
                                 <td>{{ $property->cim_irsz }} {{ $property->cim_varos }}, {{ $property->cim_utca }}
@@ -227,7 +227,7 @@
                                         });
                                 @endphp
                                 @foreach ($allItems as $item)
-                                    <li class="pb-1">{{ $item }}</li>
+                                    <li class="jellemzok pb-1">{{ $item }}</li>
                                 @endforeach
                             @endif
                         </ul>
