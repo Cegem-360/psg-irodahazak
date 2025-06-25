@@ -40,7 +40,7 @@
                         @endif
                         <div class="lg:w-2/3">
                             <p class="text-md italic text-justify">
-                                "{{ $testimonial->testimonial }}"
+                                "{!! $testimonial->testimonial !!}"
                                 <br>
                                 <br>
                                 <strong>
