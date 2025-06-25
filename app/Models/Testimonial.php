@@ -30,25 +30,25 @@ final class Testimonial extends Model
     ];
 
     #[Scope]
-    protected function active($query)
+    protected function active($query): void
     {
         $query->where('is_active', true);
     }
 
     #[Scope]
-    protected function featured($query)
+    protected function featured($query): void
     {
         $query->where('is_featured', true);
     }
 
     #[Scope]
-    protected function ordered($query)
+    protected function ordered($query): void
     {
         $query->orderBy('order')->orderBy('created_at', 'desc');
     }
 
     #[Scope]
-    protected function forLang($query, $lang)
+    protected function forLang($query, $lang): void
     {
         $query->where('lang', $lang);
     }
