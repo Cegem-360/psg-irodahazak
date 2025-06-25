@@ -1,10 +1,6 @@
 {
   "resources/css/app.css": {
-<<<<<<< HEAD
-    "file": "assets/app-DOy6_V5o.css",
-=======
-    "file": "assets/app-BOgBLPqX.css",
->>>>>>> main
+    "file": "assets/app-BkJ3zaUy.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -145,24 +141,16 @@
     "src": "resources/images/welsec_logo_800x600.png"
   },
   "resources/js/app.js": {
-<<<<<<< HEAD
-    "file": "assets/app-DHLQI6vP.js",
-=======
-    "file": "assets/app-XJqFbJ1K.js",
->>>>>>> main
+    "file": "assets/app-NPQzhCaO.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
       "assets/app-CH_R9frQ.css",
-<<<<<<< HEAD
-      "assets/app-DOy6_V5o.css"
-=======
-      "assets/app-BOgBLPqX.css"
+      "assets/app-BkJ3zaUy.css"
     ],
     "assets": [
       "assets/psg-symbol-UIy-SfbG.svg"
->>>>>>> main
     ]
   },
   "resources/js/google-maps-utils.js": {
