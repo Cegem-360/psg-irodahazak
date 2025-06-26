@@ -11,7 +11,8 @@ final class ImpresszumController extends Controller
 {
     public function show(): View
     {
-        $impresszum = Impresszum::getActive();
+        $language = app()->getLocale() ?? 'hu';
+        $impresszum = Impresszum::getActive($language);
 
         return view('impresszum', ['impresszum' => $impresszum]);
     }

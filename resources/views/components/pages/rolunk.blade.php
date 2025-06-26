@@ -1,4 +1,8 @@
 <div>
+    @php
+        $language = app()->getLocale() ?? 'hu';
+        $aboutUses = \App\Models\AboutUs::active()->byLanguage($language)->get();
+    @endphp
 
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
@@ -9,18 +13,16 @@
 
             <div class="max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div class="p-6">
-                    <p class="mb-3 text-gray-600">
-                        {{ __('About us page content 1') }}
-                    </p>
-                    <p class="mb-3 text-gray-600">
-                        {{ __('About us page content 2') }}
-                    </p>
-                    <p class="mb-3 text-gray-600">
-                        {{ __('About us page content 3') }}
-                    </p>
+                    @foreach ($aboutUses as $item)
+                        <p class="mb-3 text-gray-600">
+                            {!! $item->content !!}<br />
+                        </p>
+                    @endforeach
+
                 </div>
                 <img src="{{ Vite::asset('resources/images/psg_montazs.webp') }}"
-                    class="w-full h-auto mt-6 rounded-lg shadow-lg" alt="Rólunk" />
+                    class="w-full h-auto mt-6 rounded-lg shadow-lg"
+                    alt="{{ $aboutUses->first()?->title ?? __('About Us') }}" />
             </div>
 
         </div>

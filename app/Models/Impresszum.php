@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 
 final class Impresszum extends Model
@@ -21,33 +22,15 @@ final class Impresszum extends Model
         'is_active' => 'boolean',
     ];
 
-    /**
-     * Aktív impresszum lekérése nyelvek szerint
-     */
-    public static function getActive(?string $language = 'hu'): ?self
+    #[Scope]
+    public function byLanguage($query, $language)
     {
-        return self::where('is_active', true)
-            ->where('language', $language)
-            ->first();
+        return $query->where('language', $language);
     }
 
-    /**
-     * Impresszum tartalom lekérése nyelvek szerint
-     */
-    public static function getContent(?string $language = 'hu'): ?string
+    #[Scope]
+    protected function active($query)
     {
-        $impresszum = self::getActive($language);
-
-        return $impresszum?->content;
-    }
-
-    /**
-     * Impresszum cím lekérése nyelvek szerint
-     */
-    public static function getTitle(?string $language = 'hu'): ?string
-    {
-        $impresszum = self::getActive($language);
-
-        return $impresszum?->title;
+        return $query->where('is_active', true);
     }
 }

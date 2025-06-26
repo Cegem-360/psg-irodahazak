@@ -8,7 +8,6 @@ use App\Http\Controllers\ImpresszumController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PropertyController;
-use App\Http\Controllers\TestimonialController;
 use App\Models\Property;
 use App\Services\PropertyPdfService;
 use Illuminate\Support\Facades\Route;
@@ -24,8 +23,7 @@ Route::view('/adatlap-oldal', 'index')->name('adatlap-oldal');
 Route::view('/kiado-irodak', 'index')->name('kiado-irodak');
 Route::view('/elado-irodahazak', 'index')->name('elado-irodahazak');
 Route::view('/rolunk', 'index')->name('rolunk');
-Route::get('/rolunk-mondtak', [TestimonialController::class, 'index'])->name('testimonials.index');
-Route::get('/rolunk-mondtak/{testimonial}', [TestimonialController::class, 'show'])->name('testimonials.show');
+
 Route::view('/kapcsolat', 'index')->name('kapcsolat');
 Route::view('/adatvedelmi-nyilatkozat', 'index')->name('privacy-policy');
 Route::get('/impresszum', [ImpresszumController::class, 'show'])->name('impresszum');
