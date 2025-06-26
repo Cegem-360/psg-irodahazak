@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\NewsResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\NewsResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListNews extends ListRecords
+final class ListNews extends ListRecords
 {
     protected static string $resource = NewsResource::class;
 

@@ -4,7 +4,7 @@
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
             <h2 class="mt-4 mb-4 font-bold text-5xl text-center drop-shadow text-logogray/80">
-                {{ __('page.title.offices_for_rent') }}
+                {{ $title ?? __('page.rent_offices') }}
             </h2>
             <h4 class="text-xl text-center mb-8">({{ $totalOffices }} {{ __('page.results') }})</h4>
             <div
@@ -15,10 +15,8 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @foreach ($offices ?? [] as $office)
-                        <div wire:key="office-{{ $office->id }}">
-                            <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title"
-                                :title="$office->title" :description="$office->getAddressFormated()" :link="localized_route('properties.show', ['property' => $office->slug])" :small="true" />
-                        </div>
+                        <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title" :description="$office->getAddressFormated()"
+                            :link="localized_route('properties.show', ['property' => $office->slug])" :small="true" wire:key="office-{{ $office->id }}" />
                     @endforeach
                 </div>
             </div>

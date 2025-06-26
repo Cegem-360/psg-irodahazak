@@ -45,6 +45,8 @@ final class ListRentOffices extends Component
 
     public $officeDetails = [];
 
+    public ?string $title;
+
     public function mount($queryParams = []): void
     {
         // Initialize filters from queryParams if provided, otherwise from request parameters
@@ -60,6 +62,9 @@ final class ListRentOffices extends Component
 
         $this->updateTotalOffices();
         $this->getOffices();
+
+        $this->title = $queryParams['title'] ?? request('title', __('page.title.offices_for_rent'));
+
     }
 
     public function updateTotalOffices(): void

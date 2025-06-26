@@ -31,6 +31,7 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\TextInputColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -149,6 +150,21 @@ final class NewsResource extends Resource
                             ->required(),
                     ])
                     ->columns(3),
+
+                Section::make('Metaadatok')
+                    ->schema([
+                        DateTimePicker::make('created_at')
+                            ->label('Létrehozás időpontja')
+                            ->disabled()
+                            ->dehydrated(false),
+
+                        DateTimePicker::make('updated_at')
+                            ->label('Utolsó frissítés')
+                            ->disabled()
+                            ->dehydrated(false),
+                    ])
+                    ->columns(2)
+                    ->hiddenOn('create'),
             ]);
     }
 
@@ -159,18 +175,21 @@ final class NewsResource extends Resource
                 ImageColumn::make('featured_image')
                     ->label('Kép')
                     ->square()
+                    ->toggleable()
                     ->size(60),
 
                 TextColumn::make('title')
                     ->label('Cím')
                     ->searchable()
                     ->sortable()
+                    ->toggleable()
                     ->limit(50)
                     ->weight(FontWeight::Bold),
 
                 TextColumn::make('category.name')
                     ->label('Kategória')
                     ->badge()
+                    ->toggleable()
                     ->color(fn ($record) => $record->category?->color ?? 'gray'),
 
                 TextColumn::make('author.name')
@@ -181,6 +200,7 @@ final class NewsResource extends Resource
                 TextColumn::make('priority_label')
                     ->label('Prioritás')
                     ->badge()
+                    ->toggleable()
                     ->color(fn ($state): string => match ($state) {
                         'Kritikus' => 'danger',
                         'Sürgős' => 'warning',
@@ -193,6 +213,7 @@ final class NewsResource extends Resource
                 IconColumn::make('is_breaking')
                     ->label('Fontos')
                     ->boolean()
+                    ->toggleable()
                     ->trueIcon('heroicon-o-exclamation-triangle')
                     ->falseIcon('heroicon-o-minus')
                     ->trueColor('warning'),
@@ -200,6 +221,7 @@ final class NewsResource extends Resource
                 TextColumn::make('status')
                     ->label('Státusz')
                     ->badge()
+                    ->toggleable()
                     ->color(fn ($state): string => match ($state) {
                         'published' => 'success',
                         'scheduled' => 'info',
@@ -222,7 +244,18 @@ final class NewsResource extends Resource
                 TextColumn::make('published_at')
                     ->label('Publikálva')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
+
+                TextInputColumn::make('updated_at')
+                    ->label('Frissítve')
+                    ->type('date')
+                    ->getStateUsing(fn ($record) => $record->updated_at ? $record->updated_at->format('Y-m-d') : '')
+                    ->afterStateUpdated(function ($record, $state) {
+                        $record->update(['updated_at' => $state]);
+                    })
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make('created_at')
                     ->label('Létrehozva')

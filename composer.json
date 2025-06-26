@@ -10,6 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "bostos/reorderable-columns": "^1.1",
         "filament/filament": "^3.3.24",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "intervention/image": "^3.11",

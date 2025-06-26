@@ -6,9 +6,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class Impresszum extends Model
+final class AboutUs extends Model
 {
-    protected $table = 'impressum';
+    protected $table = 'about_us';
 
     protected $fillable = [
         'language',
@@ -22,7 +22,7 @@ final class Impresszum extends Model
     ];
 
     /**
-     * Aktív impresszum lekérése nyelvek szerint
+     * Aktív rólunk oldal lekérése nyelvek szerint
      */
     public static function getActive(?string $language = 'hu'): ?self
     {
@@ -32,22 +32,22 @@ final class Impresszum extends Model
     }
 
     /**
-     * Impresszum tartalom lekérése nyelvek szerint
+     * Rólunk oldal tartalom lekérése nyelvek szerint
      */
     public static function getContent(?string $language = 'hu'): ?string
     {
-        $impresszum = self::getActive($language);
+        $aboutUs = self::getActive($language);
 
-        return $impresszum?->content;
+        return $aboutUs?->content;
     }
 
     /**
-     * Impresszum cím lekérése nyelvek szerint
+     * Rólunk oldal cím lekérése nyelvek szerint
      */
     public static function getTitle(?string $language = 'hu'): ?string
     {
-        $impresszum = self::getActive($language);
+        $aboutUs = self::getActive($language);
 
-        return $impresszum?->title;
+        return $aboutUs?->title;
     }
 }

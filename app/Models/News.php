@@ -31,6 +31,8 @@ final class News extends Model
         'views_count',
         'priority',
         'is_breaking',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [
@@ -40,6 +42,9 @@ final class News extends Model
         'meta_data' => 'array',
         'views_count' => 'integer',
         'priority' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'date',
+
     ];
 
     // Relationships
