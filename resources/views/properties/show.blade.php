@@ -11,120 +11,149 @@
                     <x-cards.ingatlan-gallery-carousel :images="$property->galleryImages()" :title="$property->title" />
                 </div>
                 <div class="p-4">
-                    {{-- <h2 class="text-3xl">{{ __('Data') }}</h2> --}}
+
                     <table class="table-auto w-full mt-4">
                         <tbody>
-                            {{-- <tr>
-                                <td class="bold head">{{ __('Name') }}:</td>
-                                <td class="head">{{ $property->title }}</td>
-                            </tr> --}}
-                            <tr>
-                                <td class="bold">{{ __('Address') }}:</td>
-                                <td>{{ $property->cim_irsz }} {{ $property->cim_varos }}, {{ $property->cim_utca }}
-                                    {{ $property->cim_utca_addons ?? '' }} {{ $property->cim_hazszam }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bold">{{ __('Construction Year') }}:</td>
-                                <td>{{ $property->construction_year }}</td>
-                            </tr>
-                            <tr>
-                                <td class="bold">{{ __('Total Area') }}:</td>
-                                <td>{{ number_format($property->total_area) }}
-                                    {{ $property->osszterulet_addons ?? '' }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bold">{{ __('Currently Available') }}:</td>
-                                <td>{{ $property->jelenleg_kiado }}
-                                    {{ $property->jelenleg_kiado_addons ?? '' }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bold">{{ __('Min. Available') }}:</td>
-                                <td>{{ $property->min_kiado }}
-                                    {{ $property->min_kiado_addons ?? '' }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bold">{{ __('Rent') }}:</td>
-                                <td>{{ $property->min_berleti_dij }}{{ $property->max_berleti_dij ? ' - ' . $property->max_berleti_dij : '' }}
-                                    {{ $property->min_berleti_dij_addons ?? '' }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bold">{{ __('Operating Fee') }}:</td>
-                                <td>{{ $property->uzemeletetesi_dij }}
-                                    {{ $property->uzemeletetesi_dij_addons ?? '' }}</td>
-                                </td>
-                            </tr>
-                            @if ($property->raktar_terulet)
+                            @if ($property->elado_v_kiado === 'elado-iroda')
+                                {{-- Fields for office for sale --}}
                                 <tr>
-                                    <td class="bold">{{ __('Storage Area') }}:</td>
-                                    <td>{{ number_format($property->raktar_terulet) }}
-                                        {{ $property->raktar_terulet_addons ?? '' }}
+                                    <td class="bold">{{ __('Name') }}:</td>
+                                    <td>{{ $property->title }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">{{ __('Address') }}:</td>
+                                    <td>{{ $property->cim_irsz }} {{ $property->cim_varos }},</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">{{ __('Total Area') }}:</td>
+                                    <td>{{ number_format($property->total_area) }} m2</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">{{ __('Price') }}:</td>
+                                    <td>{{ $property->ar ?? '12 mEUR' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">{{ __('Parking') }}:</td>
+                                    <td>{{ $property->parkolas }}</td>
+                                </tr>
+                                @if ($property->kodszam)
+                                    <tr>
+                                        <td class="bold">{{ __('Code') }}:</td>
+                                        <td>{{ $property->kodszam }}</td>
+                                    </tr>
+                                @endif
+                            @else
+                                {{-- Default fields for rental offices --}}
+                                <tr>
+                                    <td class="bold">{{ __('Address') }}:</td>
+                                    <td>{{ $property->cim_irsz }} {{ $property->cim_varos }},
+                                        {{ $property->cim_utca }}
+                                        {{ $property->cim_utca_addons ?? '' }} {{ $property->cim_hazszam }}
                                     </td>
                                 </tr>
-                            @endif
-                            @if ($property->raktar_berleti_dij)
                                 <tr>
-                                    <td class="bold">{{ __('Storage Rent') }}:</td>
-                                    <td>{{ $property->raktar_berleti_dij }}
-                                        {{ $property->raktar_berleti_dij_addons ?? '' }}
+                                    <td class="bold">{{ __('Construction Year') }}:</td>
+                                    <td>{{ $property->construction_year }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">{{ __('Total Area') }}:</td>
+                                    <td>{{ number_format($property->total_area) }}
+                                        {{ $property->osszterulet_addons ?? '' }}
                                     </td>
                                 </tr>
-                            @endif
-                            <tr>
-                                <td class="bold">{{ __('Parking') }}:</td>
-                                <td>{{ $property->parkolas }}</td>
-                            </tr>
-                            <tr>
-                                <td class="bold">{{ __('Parking Fee') }}:</td>
-                                <td>{{ $property->min_parkolas_dija }}
-                                    {{ $property->min_parkolas_dija_addons ?? '' }}
-                                </td>
-                            </tr>
-                            @if ($property->kozos_teruleti_arany)
                                 <tr>
-                                    <td class="bold">{{ __('Common Area Ratio') }}:</td>
-                                    <td>{{ $property->kozos_teruleti_arany }}
-                                        {{ $property->kozos_teruleti_arany_addons ?? '' }}
+                                    <td class="bold">{{ __('Currently Available') }}:</td>
+                                    <td>{{ $property->jelenleg_kiado }}
+                                        {{ $property->jelenleg_kiado_addons ?? '' }}
                                     </td>
                                 </tr>
-                            @endif
-                            @if ($property->min_berleti_idoszak)
                                 <tr>
-                                    <td class="bold">{{ __('Min. Rental Period') }}:</td>
-                                    <td>
-                                        {{ $property->min_berleti_idoszak }}
-                                        {{ $property->min_berleti_idoszak_addons ?? '' }}
+                                    <td class="bold">{{ __('Min. Available') }}:</td>
+                                    <td>{{ $property->min_kiado }}
+                                        {{ $property->min_kiado_addons ?? '' }}
                                     </td>
                                 </tr>
-                            @endif
-                            @if ($property->kodszam)
                                 <tr>
-                                    <td class="bold">{{ __('Code') }}:</td>
-                                    <td>{{ $property->kodszam }}</td>
-                                </tr>
-                            @endif
-                            @if (!$property->jelenleg_kiado)
-                                <tr>
-                                    <td class="py-8 text-red-500 italic font-bold text-center text-xl" colspan="2">
-                                        {{ __('The office building is currently 100% rented out!') }}
+                                    <td class="bold">{{ __('Rent') }}:</td>
+                                    <td>{{ $property->min_berleti_dij }}{{ $property->max_berleti_dij ? ' - ' . $property->max_berleti_dij : '' }}
+                                        {{ $property->min_berleti_dij_addons ?? '' }}
                                     </td>
                                 </tr>
-                            @endif
+                                <tr>
+                                    <td class="bold">{{ __('Operating Fee') }}:</td>
+                                    <td>{{ $property->uzemeletetesi_dij }}
+                                        {{ $property->uzemeletetesi_dij_addons ?? '' }}</td>
+                                    </td>
+                                </tr>
+                                @if ($property->raktar_terulet)
+                                    <tr>
+                                        <td class="bold">{{ __('Storage Area') }}:</td>
+                                        <td>{{ number_format($property->raktar_terulet) }}
+                                            {{ $property->raktar_terulet_addons ?? '' }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($property->raktar_berleti_dij)
+                                    <tr>
+                                        <td class="bold">{{ __('Storage Rent') }}:</td>
+                                        <td>{{ $property->raktar_berleti_dij }}
+                                            {{ $property->raktar_berleti_dij_addons ?? '' }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                <tr>
+                                    <td class="bold">{{ __('Parking') }}:</td>
+                                    <td>{{ $property->parkolas }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">{{ __('Parking Fee') }}:</td>
+                                    <td>{{ $property->min_parkolas_dija }}
+                                        {{ $property->min_parkolas_dija_addons ?? '' }}
+                                    </td>
+                                </tr>
+                                @if ($property->kozos_teruleti_arany)
+                                    <tr>
+                                        <td class="bold">{{ __('Common Area Ratio') }}:</td>
+                                        <td>{{ $property->kozos_teruleti_arany }}
+                                            {{ $property->kozos_teruleti_arany_addons ?? '' }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($property->min_berleti_idoszak)
+                                    <tr>
+                                        <td class="bold">{{ __('Min. Rental Period') }}:</td>
+                                        <td>
+                                            {{ $property->min_berleti_idoszak }}
+                                            {{ $property->min_berleti_idoszak_addons ?? '' }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($property->kodszam)
+                                    <tr>
+                                        <td class="bold">{{ __('Code') }}:</td>
+                                        <td>{{ $property->kodszam }}</td>
+                                    </tr>
+                                @endif
+                                @if (!$property->jelenleg_kiado)
+                                    <tr>
+                                        <td class="py-8 text-red-500 italic font-bold text-center text-xl"
+                                            colspan="2">
+                                            {{ __('The office building is currently 100% rented out!') }}
+                                        </td>
+                                    </tr>
+                                @endif
 
-                            @if ($property->afa)
-                                <tr>
-                                    <td style="padding-top: 20px" class="bold" colspan="2">
-                                        @if ($property->afa /* == 'igen' */)
-                                            {{ __('The above fees are subject to an additional 27% VAT!') }}
-                                        @else
-                                            {{ __('The above fees are NOT subject to an additional 27% VAT!') }}
-                                        @endif
-                                    </td>
-                                </tr>
+                                @if ($property->afa)
+                                    <tr>
+                                        <td style="padding-top: 20px" class="bold" colspan="2">
+                                            @if ($property->afa /* == 'igen' */)
+                                                {{ __('The above fees are subject to an additional 27% VAT!') }}
+                                            @else
+                                                {{ __('The above fees are NOT subject to an additional 27% VAT!') }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
                             @endif
                         </tbody>
                     </table>

@@ -58,15 +58,19 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    @foreach ($this->getOffices() ?? [] as $office)
+                    @foreach ($offices ?? [] as $office)
                         <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title" :title="$office->title"
                             :description="$office->cim_irsz .
                                 ' ' .
                                 $office->cim_varos .
                                 ', ' .
-                                $office->cim_utca .
+                                '<br> <strong>Összterület:</strong> ' .
+                                $office->total_area .
+                                ' m²<br> <strong>Ár: </strong> ' .
+                                $office->min_berleti_dij .
                                 ' ' .
-                                $office->cim_hazszam" :link="localized_route('properties.show', ['property' => $office->slug])" :key="$office->id" :small="true" />
+                                $office->min_berleti_dij_addons" :link=" localized_route('properties.show', ['property'=> $office->slug])"
+                            :key="$office->id" :small="true" />
                     @endforeach
                 </div>
             </div>
