@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ImpresszumController;
@@ -14,6 +12,8 @@ use App\Http\Controllers\TestimonialController;
 use App\Models\Property;
 use App\Services\PropertyPdfService;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 // Language switcher route
 Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
@@ -83,6 +83,7 @@ Route::get('/budapest/{category}', function ($category) {
 Route::get('/ingatlanok', [PropertyController::class, 'index'])->name('properties.index');
 Route::get('/kiado-iroda/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
 Route::get('/elado-irodahaz/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
+Route::view('/kedvencek', 'pages.favorites')->name('favorites');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/kategoria/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
 Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
@@ -152,6 +153,7 @@ Route::group(['as' => 'en.'], function (): void {
 
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
     Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
+    Route::view('/favorites', 'pages.favorites')->name('favorites');
     Route::get('/news-blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/news-blog/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
     Route::get('/news-blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');

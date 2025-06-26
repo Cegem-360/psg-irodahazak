@@ -113,6 +113,18 @@
                                     @enderror
                                 </div>
 
+                                <!-- Company Field -->
+                                <div>
+                                    <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Cég
+                                        neve</label>
+                                    <input type="text" id="company" wire:model="company"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('company') border-red-500 @enderror"
+                                        placeholder="Adja meg a cég nevét">
+                                    @error('company')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
                                 <!-- Phone Field -->
                                 <div>
                                     <label for="phone"
@@ -133,18 +145,6 @@
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('email') border-red-500 @enderror"
                                         placeholder="pelda@email.hu">
                                     @error('email')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
-                                </div>
-
-                                <!-- Company Field -->
-                                <div>
-                                    <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Cég
-                                        neve</label>
-                                    <input type="text" id="company" wire:model="company"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('company') border-red-500 @enderror"
-                                        placeholder="Adja meg a cég nevét">
-                                    @error('company')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
