@@ -1,4 +1,4 @@
-@use('App\Models\Translate');
+@use('App\Models\Translate')
 <x-layouts.app>
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
