@@ -6,7 +6,7 @@ namespace App\Livewire;
 
 use App\Models\Property;
 use Exception;
-use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Cookie;
 use Livewire\Component;
 
 final class IngatlanCard extends Component
@@ -23,10 +23,13 @@ final class IngatlanCard extends Component
 
     public $small = false;
 
-    public $isFavorite = false;
+    public $favoritestatus = false;
 
-    public function mount(?Property $property = null, $title = null, $description = null, $image = null, $link = null, bool $small = false)
+    protected $listeners = ['favorites-updated' => 'handleFavoritesUpdate'];
+
+    public function mount(?Property $property, $title, $description = null, $image = null, $link = null, bool $small = false)
     {
+        $this->favoritestatus = false; // Initialize favorite status
         $this->property = $property;
         $this->title = $title;
         $this->description = $description;
@@ -62,33 +65,36 @@ final class IngatlanCard extends Component
         $favorites = $this->getFavorites();
         $propertyId = $this->property->id;
 
-        if ($this->isFavorite) {
+        if ($this->favoritestatus) {
             // Remove from favorites
             $favorites = array_filter($favorites, fn ($id) => $id !== $propertyId);
-            $this->isFavorite = false;
+            $this->favoritestatus = false;
         } else {
             // Add to favorites
             $favorites[] = $propertyId;
-            $this->isFavorite = true;
+            $this->favoritestatus = true;
         }
 
         $this->saveFavorites($favorites);
 
         // Dispatch event for other components to listen
-        $this->dispatch('favorites-updated', ['propertyId' => $propertyId, 'isFavorite' => $this->isFavorite]);
+        $this->dispatch('favorites-updated', propertyId: $propertyId, favoritestatus: $this->favoritestatus);
     }
 
-    #[On('favorites-updated')]
-    public function handleFavoritesUpdate($propertyId, $isFavorite)
+    public function handleFavoritesUpdate($propertyId, $favoritestatus)
     {
         if ($this->property && $this->property->id === $propertyId) {
-            $this->isFavorite = $isFavorite;
+            $this->favoritestatus = $favoritestatus;
         }
     }
 
     public function render()
     {
-        return view('livewire.ingatlan-card');
+        $this->favoritestatus = $this->favoritestatus ?? false;
+
+        return view('livewire.ingatlan-card', [
+            'favoritestatus' => $this->favoritestatus,
+        ]);
     }
 
     private function initializeFavoriteStatus(): void
@@ -96,14 +102,14 @@ final class IngatlanCard extends Component
         // Check if this property is in favorites
         if ($this->property) {
             $favorites = $this->getFavorites();
-            $this->isFavorite = in_array($this->property->id, $favorites);
+            $this->favoritestatus = in_array($this->property->id, $favorites);
         }
     }
 
     private function getFavorites(): array
     {
         try {
-            $favorites = $_COOKIE['property_favorites'] ?? '[]';
+            $favorites = Cookie::get('property_favorites', '[]');
             $decoded = json_decode($favorites, true);
 
             return is_array($decoded) ? $decoded : [];
@@ -112,12 +118,15 @@ final class IngatlanCard extends Component
         }
     }
 
-    private function saveFavorites(array $favorites): void
+    private function saveFavorites($favorites): void
     {
         // Remove duplicates and re-index
         $favorites = array_values(array_unique($favorites));
 
-        // Set cookie via JavaScript (since we can't set cookies directly in Livewire)
+        // Set cookie using Laravel's Cookie facade
+        Cookie::queue('property_favorites', json_encode($favorites), 60 * 24 * 365); // 365 days
+
+        // Also dispatch event for immediate JS update
         $this->dispatch('set-cookie', [
             'name' => 'property_favorites',
             'value' => json_encode($favorites),

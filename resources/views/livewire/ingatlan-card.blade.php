@@ -7,8 +7,8 @@
         @if ($property)
             <button wire:click="toggleFavorite"
                 class="absolute top-2 right-2 p-2 rounded-full shadow-lg transition-all duration-200 z-10
-                   {{ $isFavorite ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-white/80 hover:bg-white text-gray-700 hover:text-red-500' }}">
-                <svg class="w-5 h-5" fill="{{ $isFavorite ? 'currentColor' : 'none' }}" stroke="currentColor"
+                   {{ $favoritestatus ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-white/80 hover:bg-white text-gray-700 hover:text-red-500' }}">
+                <svg class="w-5 h-5" fill="{{ $favoritestatus ? 'currentColor' : 'none' }}" stroke="currentColor"
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
