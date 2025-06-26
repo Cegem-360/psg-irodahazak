@@ -1,4 +1,4 @@
-<div>
+<div wire:key="list-rent-offices" class="list-rent-offices">
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
@@ -14,55 +14,11 @@
                         style="width: 100%;"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    @foreach ($this->getOffices() ?? [] as $office)
-                        <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title" :title="$office->title"
-                            :description="$office->cim_irsz .
-                                ' ' .
-                                $office->cim_varos .
-                                ', ' .
-                                $office->cim_utca .
-                                ' ' .
-                                $office->cim_hazszam .
-                                '<br><strong>' .
-                                __('Rent:') .
-                                '</strong> ' .
-                                $office->min_berleti_dij .
-                                ' - ' .
-                                $office->max_berleti_dij .
-                                ' ' .
-                                $office->max_berleti_dij_addons .
-                                '<br><strong>' .
-                                __('Operating Fee:') .
-                                '</strong> ' .
-                                $office->uzemeletetesi_dij .
-                                ' ' .
-                                $office->uzemeletetesi_dij_addons" :link="localized_route('properties.show', ['property' => $office->slug])"
-                            :key="$office->id" :small="true" />
-
-                        {{-- <x-cards.ingatlan-card image="{{ $office->getFirstImageUrl('800x600') }}" small
-                            :title="$office->title" :description="$office->cim_irsz .
-                                ' ' .
-                                $office->cim_varos .
-                                ', ' .
-                                $office->cim_utca .
-                                ' ' .
-                                $office->cim_hazszam .
-                                '<br><strong>' .
-                                __('Rent:') .
-                                '</strong> ' .
-                                $office->min_berleti_dij .
-                                ' - ' .
-                                $office->max_berleti_dij .
-                                ' ' .
-                                $office->max_berleti_dij_addons .
-                                '<br><strong>' .
-                                __('Operating Fee:') .
-                                '</strong> ' .
-                                $office->uzemeletetesi_dij .
-                                ' ' .
-                                $office->uzemeletetesi_dij_addons"
-                            :link="route('properties.show', ['property' => $office])" :property="$office"
-                            wire:key="office-{{ $office->id }}" /> --}}
+                    @foreach ($offices ?? [] as $office)
+                        <div wire:key="office-{{ $office->id }}">
+                            <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title"
+                                :title="$office->title" :description="$office->getAddressFormated()" :link="localized_route('properties.show', ['property' => $office->slug])" :small="true" />
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -70,7 +26,7 @@
             <div
                 class="flex justify-center gap-8 max-w-screen-xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 {{-- Pagination --}}
-                {{ $this->getOffices()->links() }}
+                {{ $offices->links() }}
             </div>
         </div>
     </div>

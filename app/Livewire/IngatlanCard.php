@@ -8,9 +8,12 @@ use App\Models\Property;
 use Exception;
 use Illuminate\Support\Facades\Cookie;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 final class IngatlanCard extends Component
 {
+    use WithPagination;
+
     public $property;
 
     public $title;

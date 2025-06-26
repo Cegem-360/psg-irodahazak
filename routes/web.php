@@ -41,7 +41,7 @@ Route::get('/budapest/{category}', function ($category) {
             $queryParams['districts'] = '4,5,6,7,8,9,10,14,15,16,17,18,19,20';
             break;
         case 'kiado-belvarosi-irodak':
-            $queryParams['districts'] = '5,6,7,8,9';
+            $queryParams['districts'] = '5,6,7';
             break;
         case 'kiado-v-keruleti-irodak':
             $queryParams['districts'] = '5';

@@ -26,7 +26,6 @@
                     <!-- Modal Body -->
                     <div class="bg-white px-6 py-6">
                         <div class="text-gray-600">
-                            @dump($title)
                             <p class="text-lg font-medium mb-2">{{ $title['title'] }}</p>
 
                             <div class="mt-4 h-96 bg-gray-200 rounded-lg flex items-center justify-center">

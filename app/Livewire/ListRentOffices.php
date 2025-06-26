@@ -6,11 +6,12 @@ namespace App\Livewire;
 
 use App\Models\Property as Offices;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
 final class ListRentOffices extends Component
 {
-    use WithPagination;
+    use WithoutUrlPagination,WithPagination;
 
     public $search = '';
 
@@ -58,6 +59,7 @@ final class ListRentOffices extends Component
         $this->includeAgglomeration = $queryParams['include_agglomeration'] ?? request('include_agglomeration', false);
 
         $this->updateTotalOffices();
+        $this->getOffices();
     }
 
     public function updateTotalOffices(): void
@@ -68,7 +70,6 @@ final class ListRentOffices extends Component
     public function getOffices()
     {
         return $this->buildQuery()
-            ->with('images') // Eager load images
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
     }
@@ -87,18 +88,17 @@ final class ListRentOffices extends Component
 
     public function render()
     {
+        $offices = $this->getOffices();
+
         return view('livewire.list-rent-offices', [
-            'offices' => $this->getOffices(),
+            'offices' => $offices,
         ]);
     }
 
     public function getOfficesForMap()
     {
         // Get only the currently paginated offices that have coordinates
-        $paginatedOffices = $this->buildQuery()
-            ->with('images')
-            ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate($this->perPage);
+        $paginatedOffices = $this->getOffices();
 
         // Filter out offices without coordinates and transform to map format
         return $paginatedOffices->getCollection()
