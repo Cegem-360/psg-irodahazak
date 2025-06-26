@@ -23,6 +23,8 @@ final class IngatlanCard extends Component
 
     public $small = false;
 
+    public $swiper = false;
+
     public $favoritestatus = false;
 
     protected $listeners = ['favorites-updated' => 'handleFavoritesUpdate'];
