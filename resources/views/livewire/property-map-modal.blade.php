@@ -1,7 +1,13 @@
+@use('App\Models\Property')
 <div>
     <!-- Debug button - remove after testing -->
 
     @if ($showModal)
+        @php
+
+            $property = Property::find($title['propertyId']);
+
+        @endphp
         <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"
             wire:key="property-map-modal">
             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -28,13 +34,16 @@
                         <div class="text-gray-600">
                             <p class="text-lg font-medium mb-2">{{ $title['title'] }}</p>
 
-                            <div class="mt-4 h-96 bg-gray-200 rounded-lg flex items-center justify-center">
-                                <p class="text-gray-500">Itt jelenik meg a térkép</p>
-                                <!-- Itt lehet Google Maps vagy más térkép szolgáltatás integrálása -->
+                            <div class="mt-4 h-96 bg-gray-200 rounded-lg overflow-hidden">
                                 @if ($property)
-                                    <!-- Debug információ -->
-                                    <div class="absolute top-2 left-2 text-xs text-gray-400">
-                                        ID: {{ $property->id }}
+                                    {{-- Cím alapú keresés pin-nel --}}
+                                    <iframe
+                                        src="https://maps.google.com/maps?q={{ urlencode($property->cim_irsz . ' ' . $property->cim_varos . ', ' . $property->cim_utca . ' ' . $property->cim_hazszam . ($property->cim_utca_addons ? ', ' . $property->cim_utca_addons : '')) }}&hl={{ app()->getLocale() }}&z=16&output=embed"
+                                        width="100%" height="100%" style="border:0;" allowfullscreen=""
+                                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                @else
+                                    <div class="flex items-center justify-center h-full">
+                                        <p class="text-gray-500">Nem található térkép adat</p>
                                     </div>
                                 @endif
                             </div>

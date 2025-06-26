@@ -1,7 +1,8 @@
 <div>
     <div class="relative">
-        <h2 class="text-4xl text-center mt-24 mb-8">Találja meg velünk vállalkozása <span class="text-primary">új
-                ideális</span> otthonát</h2>
+        <h2 class="text-4xl text-center mt-24 mb-8">{{ __('Find your business with us') }} <span
+                class="text-primary">{{ __('new') }}
+                {{ __('ideal') }}</span> {{ __('home') }}</h2>
         <div class="absolute -right-8 -top-10 z-10 w-1/3 text-accent/40 blur-3xl"><x-svg.psg-irodahazak-symbol-1 />
         </div>
         <div class="absolute -left-8 -top-16 z-10 w-1/3 text-accent/30 blur-3xl"><x-svg.psg-irodahazak-symbol-2 />
@@ -27,14 +28,14 @@
                     <div
                         class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/10">
                         <!-- Térkép -->
-                        <h3 class="text-lg mb-4">Térképes keresés</h3>
+                        <h3 class="text-lg mb-4">{{ __('Map Search') }}</h3>
                         <div class="map-container">
                             <x-svg.bp-map class="h-96" />
                             <div id="selectedDistrictsDisplay" class="mt-2 text-sm text-primary font-semibold hidden">
-                                Kiválasztott kerületek: <span id="districtsNames"></span>
+                                {{ __('Selected Districts') }}: <span id="districtsNames"></span>
                                 <button type="button" id="clearSelections"
                                     class="ml-2 text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
-                                    Összes törlése
+                                    {{ __('Clear All') }}
                                 </button>
                             </div>
                         </div>
@@ -49,12 +50,12 @@
                     <div
                         class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/10">
                         <!-- Keresőmezők -->
-                        <h3 class="text-lg mb-4">Keresési feltételek</h3>
+                        <h3 class="text-lg mb-4">{{ __('Search Criteria') }}</h3>
                         <!-- Custom Multi-Select Dropdown -->
                         <div class="relative">
                             <button type="button" id="dropdownButton"
                                 class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-white text-left focus:ring-2 focus:ring-accent focus:border-accent flex justify-between items-center">
-                                <span id="dropdownText">Kerületek kiválasztása</span>
+                                <span id="dropdownText">{{ __('Select Districts') }}</span>
                                 <svg class="w-5 h-5 transition-transform duration-200" id="dropdownArrow" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -68,95 +69,95 @@
                                 <div class="p-2">
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="1" class="district-checkbox mr-2">
-                                        <span>I. kerület</span>
+                                        <span>I. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="2" class="district-checkbox mr-2">
-                                        <span>II. kerület</span>
+                                        <span>II. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="3" class="district-checkbox mr-2">
-                                        <span>III. kerület</span>
+                                        <span>III. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="4" class="district-checkbox mr-2">
-                                        <span>IV. kerület</span>
+                                        <span>IV. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="5" class="district-checkbox mr-2">
-                                        <span>V. kerület</span>
+                                        <span>V. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="6" class="district-checkbox mr-2">
-                                        <span>VI. kerület</span>
+                                        <span>VI. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="7" class="district-checkbox mr-2">
-                                        <span>VII. kerület</span>
+                                        <span>VII. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="8" class="district-checkbox mr-2">
-                                        <span>VIII. kerület</span>
+                                        <span>VIII. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="9" class="district-checkbox mr-2">
-                                        <span>IX. kerület</span>
+                                        <span>IX. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="10" class="district-checkbox mr-2">
-                                        <span>X. kerület</span>
+                                        <span>X. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="11" class="district-checkbox mr-2">
-                                        <span>XI. kerület</span>
+                                        <span>XI. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="12" class="district-checkbox mr-2">
-                                        <span>XII. kerület</span>
+                                        <span>XII. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="13" class="district-checkbox mr-2">
-                                        <span>XIII. kerület</span>
+                                        <span>XIII. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="14" class="district-checkbox mr-2">
-                                        <span>XIV. kerület</span>
+                                        <span>XIV. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="15" class="district-checkbox mr-2">
-                                        <span>XV. kerület</span>
+                                        <span>XV. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="16" class="district-checkbox mr-2">
-                                        <span>XVI. kerület</span>
+                                        <span>XVI. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="17" class="district-checkbox mr-2">
-                                        <span>XVII. kerület</span>
+                                        <span>XVII. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="18" class="district-checkbox mr-2">
-                                        <span>XVIII. kerület</span>
+                                        <span>XVIII. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="19" class="district-checkbox mr-2">
-                                        <span>XIX. kerület</span>
+                                        <span>XIX. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="20" class="district-checkbox mr-2">
-                                        <span>XX. kerület</span>
+                                        <span>XX. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="21" class="district-checkbox mr-2">
-                                        <span>XXI. kerület</span>
+                                        <span>XXI. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="22" class="district-checkbox mr-2">
-                                        <span>XXII. kerület</span>
+                                        <span>XXII. {{ __('district') }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="23" class="district-checkbox mr-2">
-                                        <span>XXIII. kerület</span>
+                                        <span>XXIII. {{ __('district') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -166,7 +167,7 @@
                         <div class="relative">
                             <button type="button" id="officeDropdownButton"
                                 class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-white text-left focus:ring-2 focus:ring-accent focus:border-accent flex justify-between items-center">
-                                <span id="officeDropdownText">Irodaház neve</span>
+                                <span id="officeDropdownText">{{ __('Office Building Name') }}</span>
                                 <svg class="w-5 h-5 transition-transform duration-200" id="officeDropdownArrow"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -184,7 +185,7 @@
                                 <!-- Search input inside dropdown -->
                                 <div class="p-3 border-b border-gray-200">
                                     <input type="text" id="officeSearchInput"
-                                        placeholder="Keresés irodaházak között..."
+                                        placeholder="{{ __('Search among office buildings...') }}"
                                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-accent focus:border-accent text-sm">
                                 </div>
 
@@ -192,9 +193,8 @@
                                 <div class="max-h-48 overflow-y-auto">
                                     <div id="officeResults" class="p-2">
                                         <!-- Static default options (will be replaced with dynamic content) -->
-                                        <div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option"
-                                            data-value="">
-                                            <div class="text-gray-500 italic">Összes irodaház</div>
+                                        <div class="office-option" data-value="">
+                                            <div class="text-gray-500 italic">{{ __('All Office Buildings') }}</div>
                                         </div>
                                     </div>
 
@@ -214,13 +214,13 @@
                                     </div>
 
                                     <div id="officeEmpty" class="p-4 text-center text-gray-500 hidden">
-                                        Nincs találat
+                                        {{ __('No results') }}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <input type="text" name="search" placeholder="Keresett kifejezés"
+                        <input type="text" name="search" placeholder="{{ __('Search term') }}"
                             class="w-full border border-gray-300 rounded-xl px-4 py-2"
                             value="{{ request('search') }}">
                     </div>
@@ -228,14 +228,14 @@
                     <div
                         class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/10">
                         <!-- Range szűrők -->
-                        <h3 class="text-lg mb-4">Szűrés paraméterek szerint</h3>
+                        <h3 class="text-lg mb-4">{{ __('Filter by Parameters') }}</h3>
                         <div class="space-y-2">
-                            <label class="text-sm font-semibold">Alapterület (m²)</label>
+                            <label class="text-sm font-semibold">{{ __('Floor Area') }} (m²)</label>
                             <input type="text" class="terulet-slider" name="terulet_range" value="" />
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-sm font-semibold">Bérleti díj (€/m²)</label>
+                            <label class="text-sm font-semibold">{{ __('Rental Fee') }} (€/m²)</label>
                             <input type="text" class="ar-slider" name="ar_range" value="" />
                         </div>
 
@@ -244,7 +244,7 @@
                             <button type="submit"
                                 class="w-full bg-primary/70 text-white font-semibold px-8 py-2 rounded hover:bg-accent/80 transition"
                                 onclick="console.log('Form submitted with districts:', document.getElementById('selectedDistricts').value);">
-                                KERESÉS
+                                {{ __('SEARCH') }}
                             </button>
                         </div>
                     </div>
@@ -410,11 +410,11 @@
             function updateDropdownText() {
                 const dropdownText = document.getElementById('dropdownText');
                 if (selectedDistricts.length === 0) {
-                    dropdownText.textContent = 'Kerületek kiválasztása';
+                    dropdownText.textContent = 'Select Districts';
                 } else if (selectedDistricts.length === 1) {
                     dropdownText.textContent = selectedDistricts[0];
                 } else {
-                    dropdownText.textContent = `${selectedDistricts.length} kerület kiválasztva`;
+                    dropdownText.textContent = `${selectedDistricts.length} districts selected`;
                 }
             }
 
@@ -595,7 +595,7 @@
 
                         // Build results HTML
                         let resultsHTML =
-                            '<div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option" data-value=""><div class="text-gray-500 italic">Összes irodaház</div></div>';
+                            '<div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option" data-value=""><div class="text-gray-500 italic">All Office Buildings</div></div>';
 
                         filteredOffices.forEach(office => {
                             resultsHTML += `
@@ -633,7 +633,7 @@
                 if (officeName) {
                     officeDropdownText.textContent = officeName;
                 } else {
-                    officeDropdownText.textContent = 'Irodaház neve';
+                    officeDropdownText.textContent = 'Office Building Name';
                 }
 
                 // Close dropdown

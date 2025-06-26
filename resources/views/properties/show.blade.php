@@ -15,7 +15,6 @@
                     <table class="table-auto w-full mt-4">
                         <tbody>
                             @if ($property->elado_v_kiado === 'elado-iroda')
-                                {{-- Fields for office for sale --}}
 
                                 <tr>
                                     <td class="bold">{{ __('Address') }}:</td>
