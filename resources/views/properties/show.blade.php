@@ -16,10 +16,7 @@
                         <tbody>
                             @if ($property->elado_v_kiado === 'elado-iroda')
                                 {{-- Fields for office for sale --}}
-                                <tr>
-                                    <td class="bold">{{ __('Name') }}:</td>
-                                    <td>{{ $property->title }}</td>
-                                </tr>
+
                                 <tr>
                                     <td class="bold">{{ __('Address') }}:</td>
                                     <td>{{ $property->cim_irsz }} {{ $property->cim_varos }},</td>
