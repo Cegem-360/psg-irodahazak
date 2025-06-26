@@ -5,7 +5,7 @@
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
             <h2 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
-                Kapcsolat</h2>
+                {{ __('contact.title') }}</h2>
 
             <div class="max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <!-- Kapcsolati információk szekció -->
@@ -78,29 +78,31 @@
                             </div>
                         @endif
 
-                        <h3 class="mb-6 text-3xl tracking-tight font-bold text-accent">Kapcsolatfelvétel</h3>
-                        <p class="mb-8 font-light text-gray-500 text-lg">Várjuk megkeresését! Töltse ki az alábbi
-                            űrlapot és hamarosan felvesszük Önnel a kapcsolatot.</p>
+                        <h3 class="mb-6 text-3xl tracking-tight font-bold text-accent">{{ __('contact.contact_form') }}
+                        </h3>
+                        <p class="mb-8 font-light text-gray-500 text-lg">{{ __('contact.contact_description') }}</p>
 
                         <form action="{{ route('contact.store') }}" method="POST" class="space-y-6">
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label for="contact_name" class="block mb-2 text-sm font-medium text-gray-900">Név
+                                    <label for="contact_name"
+                                        class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.name') }}
                                         *</label>
                                     <input type="text" id="contact_name" name="name" value="{{ old('name') }}"
                                         class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('name') border-red-500 @enderror"
-                                        placeholder="Az Ön neve" required>
+                                        placeholder="{{ __('contact.name_placeholder') }}" required>
                                     @error('name')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
                                     <label for="contact_email"
-                                        class="block mb-2 text-sm font-medium text-gray-900">Email cím *</label>
+                                        class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.email') }}
+                                        *</label>
                                     <input type="email" id="contact_email" name="email" value="{{ old('email') }}"
                                         class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('email') border-red-500 @enderror"
-                                        placeholder="email@example.hu" required>
+                                        placeholder="{{ __('contact.email_placeholder') }}" required>
                                     @error('email')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -110,21 +112,22 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label for="contact_phone"
-                                        class="block mb-2 text-sm font-medium text-gray-900">Telefonszám *</label>
+                                        class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.phone') }}
+                                        *</label>
                                     <input type="tel" id="contact_phone" name="phone" value="{{ old('phone') }}"
                                         class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('phone') border-red-500 @enderror"
-                                        placeholder="+36 00 000 0000" required>
+                                        placeholder="{{ __('contact.phone_placeholder') }}" required>
                                     @error('phone')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
                                     <label for="contact_company"
-                                        class="block mb-2 text-sm font-medium text-gray-900">Cég neve</label>
+                                        class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.company') }}</label>
                                     <input type="text" id="contact_company" name="company"
                                         value="{{ old('company') }}"
                                         class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('company') border-red-500 @enderror"
-                                        placeholder="Cég neve (opcionális)">
+                                        placeholder="{{ __('contact.company_placeholder') }}">
                                     @error('company')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -132,25 +135,29 @@
                             </div>
 
                             <div>
-                                <label for="contact_subject" class="block mb-2 text-sm font-medium text-gray-900">Tárgy
+                                <label for="contact_subject"
+                                    class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.subject') }}
                                     *</label>
                                 <select id="contact_subject" name="subject"
                                     class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('subject') border-red-500 @enderror"
                                     required>
-                                    <option value="">Válasszon témát</option>
+                                    <option value="">{{ __('contact.subject_placeholder') }}</option>
                                     <option value="iroda_keresese"
-                                        {{ old('subject') == 'iroda_keresese' ? 'selected' : '' }}>Iroda keresése
+                                        {{ old('subject') == 'iroda_keresese' ? 'selected' : '' }}>
+                                        {{ __('contact.subject_office_search') }}
                                     </option>
                                     <option value="iroda_kiadas"
-                                        {{ old('subject') == 'iroda_kiadas' ? 'selected' : '' }}>Iroda kiadása</option>
+                                        {{ old('subject') == 'iroda_kiadas' ? 'selected' : '' }}>
+                                        {{ __('contact.subject_office_rental') }}</option>
                                     <option value="ingatlan_ertekeles"
-                                        {{ old('subject') == 'ingatlan_ertekeles' ? 'selected' : '' }}>Ingatlan
-                                        értékelés</option>
+                                        {{ old('subject') == 'ingatlan_ertekeles' ? 'selected' : '' }}>
+                                        {{ __('contact.subject_property_valuation') }}</option>
                                     <option value="befektetes" {{ old('subject') == 'befektetes' ? 'selected' : '' }}>
-                                        Befektetési lehetőség</option>
+                                        {{ __('contact.subject_investment') }}</option>
                                     <option value="tanacadas" {{ old('subject') == 'tanacadas' ? 'selected' : '' }}>
-                                        Tanácsadás</option>
-                                    <option value="egyeb" {{ old('subject') == 'egyeb' ? 'selected' : '' }}>Egyéb
+                                        {{ __('contact.subject_consulting') }}</option>
+                                    <option value="egyeb" {{ old('subject') == 'egyeb' ? 'selected' : '' }}>
+                                        {{ __('contact.subject_other') }}
                                     </option>
                                 </select>
                                 @error('subject')
@@ -159,11 +166,12 @@
                             </div>
 
                             <div>
-                                <label for="contact_message" class="block mb-2 text-sm font-medium text-gray-900">Üzenet
+                                <label for="contact_message"
+                                    class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.message') }}
                                     *</label>
                                 <textarea id="contact_message" name="message" rows="6"
                                     class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 transition-colors @error('message') border-red-500 @enderror"
-                                    placeholder="Írja le részletesen, miben segíthetünk Önnek..." required>{{ old('message') }}</textarea>
+                                    placeholder="{{ __('contact.message_placeholder') }}" required>{{ old('message') }}</textarea>
                                 @error('message')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -177,12 +185,11 @@
                                         required>
                                 </div>
                                 <div class="ml-3 text-sm">
-                                    <label for="contact_privacy" class="font-light text-gray-500">Elfogadom az <a
+                                    <label for="contact_privacy"
+                                        class="font-light text-gray-500">{{ __('contact.privacy_text') }} <a
                                             class="font-medium text-primary hover:underline"
-                                            href="{{ localized_route('privacy-policy') }}">adatvédelmi
-                                            nyilatkozatot</a> és
-                                        hozzájárulok adataim
-                                        kezeléséhez. *</label>
+                                            href="{{ localized_route('privacy-policy') }}">{{ __('contact.privacy_policy') }}</a>
+                                        {{ __('contact.privacy_consent') }} *</label>
                                     @error('privacy')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -191,7 +198,7 @@
 
                             <button type="submit"
                                 class="w-full py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary hover:bg-primary/80 focus:ring-4 focus:outline-none focus:ring-primary-300 transition-colors">
-                                Üzenet küldése
+                                {{ __('contact.send_message') }}
                             </button>
                         </form>
                     </div>
@@ -200,26 +207,26 @@
                     <div class="space-y-6">
                         <!-- Nyitvatartás -->
                         <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-                            <h4 class="text-xl font-bold text-gray-800 mb-4">Nyitvatartás</h4>
+                            <h4 class="text-xl font-bold text-gray-800 mb-4">{{ __('contact.opening_hours') }}</h4>
                             <div class="space-y-2 text-gray-600">
                                 <div class="flex justify-between">
-                                    <span>Hétfő - Péntek:</span>
+                                    <span>{{ __('contact.monday_friday') }}</span>
                                     <span class="font-medium">9:00 - 18:00</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span>Szombat:</span>
+                                    <span>{{ __('contact.saturday') }}</span>
                                     <span class="font-medium">10:00 - 14:00</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span>Vasárnap:</span>
-                                    <span class="font-medium">Zárva</span>
+                                    <span>{{ __('contact.sunday') }}</span>
+                                    <span class="font-medium">{{ __('contact.closed') }}</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Szolgáltatások -->
                         <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-                            <h4 class="text-xl font-bold text-gray-800 mb-4">Szolgáltatásaink</h4>
+                            <h4 class="text-xl font-bold text-gray-800 mb-4">{{ __('contact.our_services') }}</h4>
                             <ul class="space-y-2 text-gray-600">
                                 <li class="flex items-center">
                                     <svg class="w-4 h-4 text-primary mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -227,7 +234,7 @@
                                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                             clip-rule="evenodd"></path>
                                     </svg>
-                                    Iroda keresés és ajánlat küldés
+                                    {{ __('contact.service_search') }}
                                 </li>
                                 <li class="flex items-center">
                                     <svg class="w-4 h-4 text-primary mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -235,7 +242,7 @@
                                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                             clip-rule="evenodd"></path>
                                     </svg>
-                                    Bérlőiképviselet
+                                    {{ __('contact.service_representation') }}
                                 </li>
                                 <li class="flex items-center">
                                     <svg class="w-4 h-4 text-primary mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -243,7 +250,7 @@
                                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                             clip-rule="evenodd"></path>
                                     </svg>
-                                    Ingatlan értékelés
+                                    {{ __('contact.service_valuation') }}
                                 </li>
                                 <li class="flex items-center">
                                     <svg class="w-4 h-4 text-primary mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -251,7 +258,7 @@
                                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                             clip-rule="evenodd"></path>
                                     </svg>
-                                    Befektetési tanácsadás
+                                    {{ __('contact.service_investment') }}
                                 </li>
                                 <li class="flex items-center">
                                     <svg class="w-4 h-4 text-primary mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -259,15 +266,15 @@
                                             d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                             clip-rule="evenodd"></path>
                                     </svg>
-                                    Piaci elemzések
+                                    {{ __('contact.service_analysis') }}
                                 </li>
                             </ul>
                         </div>
 
                         <!-- Gyors kapcsolatfelvétel -->
                         <div class="bg-gradient-to-r from-primary to-accent text-white rounded-xl p-6 shadow-lg">
-                            <h4 class="text-xl font-bold mb-4">Azonnali kapcsolat</h4>
-                            <p class="mb-4">Sürgős esetben hívjon minket telefonon!</p>
+                            <h4 class="text-xl font-bold mb-4">{{ __('contact.immediate_contact') }}</h4>
+                            <p class="mb-4">{{ __('contact.urgent_call') }}</p>
                             <a href="tel:+36203813917"
                                 class="inline-flex items-center px-4 py-2 bg-white text-primary rounded-lg font-medium hover:bg-gray-100 transition-colors">
                                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">

@@ -11,7 +11,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ $property->title }} - Ingatlan Adatlap</title>
+        <title>{{ $property->title }} - {{ __('Property Data Sheet') }}</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
@@ -129,12 +129,12 @@
                                 class="w-full h-[380px] object-cover block">
                         @else
                             <div class="w-full h-[380px] bg-gray-100 flex items-center justify-center text-gray-500">
-                                Kép nem elérhető
+                                {{ __('Image not available') }}
                             </div>
                         @endif
                     @else
                         <div class="w-full h-[380px] bg-gray-100 flex items-center justify-center text-gray-500">
-                            Kép nem elérhető
+                            {{ __('Image not available') }}
                         </div>
                     @endif
                 </div>
@@ -143,14 +143,14 @@
                 <div class="w-1/2 p-6 bg-gray-50 text-sm leading-snug">
                     @if ($property->construction_year)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Építés éve:</span>
+                            <span class="font-bold text-gray-600">{{ __('Construction Year') }}:</span>
                             <span class="font-medium text-gray-900">{{ $property->construction_year }}</span>
                         </div>
                     @endif
 
                     @if ($property->total_area)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Összterület:</span>
+                            <span class="font-bold text-gray-600">{{ __('Total Area') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format($property->total_area, 0, ',', ' ') }}
                                 m²</span>
@@ -159,7 +159,7 @@
 
                     @if ($property->jelenleg_kiado)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Jelenleg kiadó:</span>
+                            <span class="font-bold text-gray-600">{{ __('Currently Available') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format($property->jelenleg_kiado, 0, ',', ' ') }}
                                 m²</span>
@@ -168,7 +168,7 @@
 
                     @if ($property->min_kiado)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Min. kiadó:</span>
+                            <span class="font-bold text-gray-600">{{ __('Min. Available') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format($property->min_kiado, 0, ',', ' ') }}
                                 m²</span>
@@ -177,25 +177,25 @@
 
                     @if ($property->max_berleti_dij)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Bérleti díj:</span>
+                            <span class="font-bold text-gray-600">{{ __('Rent') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ $property->min_berleti_dij ? number_format($property->min_berleti_dij, 0, ',', ' ') . ' - ' : '' }}{{ number_format($property->max_berleti_dij, 0, ',', ' ') }}
-                                EUR/m²/hó</span>
+                                {{ __('EUR/m²/month') }}</span>
                         </div>
                     @endif
 
                     @if ($property->uzemeletetesi_dij)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Üzemeltetési díj:</span>
+                            <span class="font-bold text-gray-600">{{ __('Operating Fee') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format($property->uzemeletetesi_dij, 0, ',', ' ') }}
-                                HUF/m²/hó</span>
+                                {{ __('HUF/m²/month') }}</span>
                         </div>
                     @endif
 
                     @if ($property->raktar_terulet)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Raktár terület:</span>
+                            <span class="font-bold text-gray-600">{{ __('Storage Area') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format($property->raktar_terulet, 0, ',', ' ') }}
                                 m²</span>
@@ -204,55 +204,55 @@
 
                     @if ($property->raktar_berleti_dij)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Raktár bérleti díj:</span>
+                            <span class="font-bold text-gray-600">{{ __('Storage Rent') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format($property->raktar_berleti_dij, 0, ',', ' ') }}
-                                EUR/m²/hó</span>
+                                {{ __('EUR/m²/month') }}</span>
                         </div>
                     @endif
 
                     @if ($property->parkolas)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Parkolás:</span>
+                            <span class="font-bold text-gray-600">{{ __('Parking') }}:</span>
                             <span class="font-medium text-gray-900">{{ $property->parkolas }}</span>
                         </div>
                     @endif
 
                     @if ($property->parkolas_dija)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Parkolás díja:</span>
+                            <span class="font-bold text-gray-600">{{ __('Parking Fee') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ $property->min_parkolas_dija ? number_format($property->min_parkolas_dija, 0, ',', ' ') . ' - ' : '' }}{{ number_format($property->parkolas_dija, 0, ',', ' ') }}
-                                EUR/hely/hó</span>
+                                {{ __('EUR/space/month') }}</span>
                         </div>
                     @endif
 
                     @if ($property->kozos_teruleti_arany)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Közös területi arány:</span>
+                            <span class="font-bold text-gray-600">{{ __('Common Area Ratio') }}:</span>
                             <span class="font-medium text-gray-900">{{ $property->kozos_teruleti_arany }}%</span>
                         </div>
                     @endif
 
                     @if ($property->min_berleti_idoszak)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Min. bérleti időszak:</span>
-                            <span class="font-medium text-gray-900">{{ $property->min_berleti_idoszak }} év</span>
+                            <span class="font-bold text-gray-600">{{ __('Min. Rental Period') }}:</span>
+                            <span class="font-medium text-gray-900">{{ $property->min_berleti_idoszak }}
+                                {{ __('years') }}</span>
                         </div>
                     @endif
 
                     @if ($property->kodszam)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">Kódszám:</span>
+                            <span class="font-bold text-gray-600">{{ __('Code') }}:</span>
                             <span class="font-medium text-gray-900">{{ $property->kodszam }}</span>
                         </div>
                     @endif
 
                     @if ($property->afa && strtolower($property->afa) === 'igen')
                         <div class="mt-3 p-3 text-sm">
-                            <span class="font-bold text-gray-700">A fenti díjakra még</span>
-                            <span class="font-bold text-red-600 mx-1">27% ÁFA</span>
-                            <span class="font-bold text-gray-700">tevődik!</span>
+                            <span
+                                class="font-bold text-red-600">{{ __('The above fees are subject to an additional 27% VAT!') }}</span>
                         </div>
                     @endif
                 </div>
@@ -284,12 +284,12 @@
                                 @endphp
 
                                 @if ($galleryImageUrl)
-                                    <img src="{{ $galleryImageUrl }}" alt="{{ $image->alt ?? 'Ingatlan kép' }}"
+                                    <img src="{{ $galleryImageUrl }}" alt="{{ $image->alt ?? __('Property image') }}"
                                         class="w-full h-24 object-cover rounded border border-gray-200">
                                 @else
                                     <div
                                         class="w-full h-24 bg-gray-100 flex items-center justify-center rounded border border-gray-200 text-gray-500 text-xs">
-                                        Kép nem elérhető
+                                        {{ __('Image not available') }}
                                     </div>
                                 @endif
                             </div>

@@ -50,3 +50,22 @@
         </a>
     </div>
 </div>
+
+{{-- @script
+    <script>
+        // Listen for favorites-changed event and dispatch browser event
+        $wire.on('favorites-changed', (data) => {
+            window.dispatchEvent(new CustomEvent('favorites-updated', {
+                detail: data
+            }));
+        });
+
+        // Listen for set-cookie event and set the cookie
+        $wire.on('set-cookie', (data) => {
+            const cookieData = data[0];
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (cookieData.days * 24 * 60 * 60 * 1000));
+            document.cookie = `${cookieData.name}=${cookieData.value}; expires=${expires.toUTCString()}; path=/`;
+        });
+    </script>
+@endscript --}}

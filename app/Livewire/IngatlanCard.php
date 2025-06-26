@@ -134,5 +134,6 @@ final class IngatlanCard extends Component
             'value' => json_encode($favorites),
             'days' => 365,
         ]);
+
     }
 }

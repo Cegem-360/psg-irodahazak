@@ -18,8 +18,8 @@
                         <!-- Text and phone - appears on hover -->
                         <div class="hidden group-hover:block">
                             <div class="text-center mb-2">
-                                <div class="text-sm font-bold whitespace-nowrap">ONLINE</div>
-                                <div class="text-sm whitespace-nowrap">AJÁNLATKÉRÉS!</div>
+                                <div class="text-sm font-bold whitespace-nowrap">{{ __('modal.online') }}</div>
+                                <div class="text-sm whitespace-nowrap">{{ __('modal.quote_request') }}</div>
                             </div>
 
                             <!-- Phone number - clickable -->
@@ -37,7 +37,7 @@
 
                     <!-- Modal open button (invisible overlay) -->
                     <button wire:click="openModal" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                        title="Árajánlat kérés">
+                        title="{{ __('modal.quote_request_title') }}">
                     </button>
                 </div>
             </div>
@@ -63,13 +63,13 @@
                         <div class="bg-orange-500 px-6 py-4 relative">
                             <button wire:click="closeModal"
                                 class="absolute top-2 right-2 text-white hover:text-gray-200 p-2 z-10" type="button"
-                                title="Bezárás">
+                                title="{{ __('modal.close') }}">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M6 18L18 6M6 6l12 12"></path>
                                 </svg>
                             </button>
-                            <h3 class="text-lg font-semibold text-white">Online kapcsolatfelvétel</h3>
+                            <h3 class="text-lg font-semibold text-white">{{ __('modal.online_contact') }}</h3>
                         </div>
 
                         <!-- Modal Body -->
@@ -104,10 +104,10 @@
                                 <!-- Name Field -->
                                 <div>
                                     <label for="name"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Név</label>
+                                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('Name') }}</label>
                                     <input type="text" id="name" wire:model="name"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('name') border-red-500 @enderror"
-                                        placeholder="Adja meg a nevét">
+                                        placeholder="{{ __('modal.enter_your_name') }}">
                                     @error('name')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -115,11 +115,11 @@
 
                                 <!-- Company Field -->
                                 <div>
-                                    <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Cég
-                                        neve</label>
+                                    <label for="company"
+                                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.company_name') }}</label>
                                     <input type="text" id="company" wire:model="company"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('company') border-red-500 @enderror"
-                                        placeholder="Adja meg a cég nevét">
+                                        placeholder="{{ __('modal.enter_company_name') }}">
                                     @error('company')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -128,7 +128,7 @@
                                 <!-- Phone Field -->
                                 <div>
                                     <label for="phone"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Telefonszám</label>
+                                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.phone_number') }}</label>
                                     <input type="tel" id="phone" wire:model="phone"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('phone') border-red-500 @enderror"
                                         placeholder="+36 20 381 3917">
@@ -139,8 +139,8 @@
 
                                 <!-- Email Field -->
                                 <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail
-                                        cím</label>
+                                    <label for="email"
+                                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.email_address') }}</label>
                                     <input type="email" id="email" wire:model="email"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('email') border-red-500 @enderror"
                                         placeholder="pelda@email.hu">
@@ -151,11 +151,11 @@
 
                                 <!-- Property Selection -->
                                 <div>
-                                    <label for="property" class="block text-sm font-medium text-gray-700 mb-1">Irodaház
-                                        neve</label>
+                                    <label for="property"
+                                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.office_building_name') }}</label>
                                     <select id="property" wire:model="selectedProperty"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Válasszon irodaházat</option>
+                                        <option value="">{{ __('modal.select_office_building') }}</option>
                                         @foreach ($properties as $property)
                                             <option value="{{ $property->id }}">{{ $property->title }}</option>
                                         @endforeach
@@ -165,10 +165,10 @@
                                 <!-- Message Field -->
                                 <div>
                                     <label for="message"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Üzenet</label>
+                                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('Message') }}</label>
                                     <textarea id="message" wire:model="message" rows="4"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Írja le kérését..."></textarea>
+                                        placeholder="{{ __('modal.write_your_request') }}"></textarea>
                                 </div>
 
                                 <!-- Privacy Checkbox -->
@@ -179,10 +179,10 @@
                                     </div>
                                     <div class="ml-3 text-sm">
                                         <label for="privacy" class="font-light text-gray-500">
-                                            Elfogadom az
+                                            {{ __('modal.i_accept_the') }}
                                             <a class="font-medium text-blue-600 hover:underline"
                                                 href="{{ localized_route('privacy-policy') }}" target="_blank">
-                                                Adatkezelési tájékoztatót
+                                                {{ __('modal.privacy_policy') }}
                                             </a>
                                         </label>
                                         @error('privacy')
@@ -209,11 +209,11 @@
                                 <div class="flex space-x-3 pt-4">
                                     <button type="button" wire:click="closeModal"
                                         class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md transition-colors duration-200">
-                                        MÉGSE
+                                        {{ __('modal.cancel') }}
                                     </button>
                                     <button type="submit"
                                         class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200">
-                                        ELKÜLD
+                                        {{ __('modal.send') }}
                                     </button>
                                 </div>
                             </form>

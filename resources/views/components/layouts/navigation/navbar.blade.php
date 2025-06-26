@@ -51,6 +51,7 @@
                         class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['rolunk', 'en.rolunk']) ? 'active' : '' }}">
                         {{ __('navigation.about_us') }}</a>
                 </li>
+
                 <li>
                     <a href="https://psgirodahazak.blog.hu/"
                         class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['blog.*', 'en.blog.*']) ? 'active' : '' }}">
@@ -65,3 +66,59 @@
         </div>
     </div>
 </nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Update favorites count in navigation
+        function updateFavoritesCount() {
+            const favoritesCount = document.getElementById('favorites-count-nav');
+            if (!favoritesCount) return;
+
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            }
+
+            try {
+                const favorites = getCookie('property_favorites') || '[]';
+                const favoritesArray = JSON.parse(favorites);
+                const count = favoritesArray.length;
+
+                if (count > 0) {
+                    favoritesCount.textContent = count;
+                    favoritesCount.classList.remove('hidden');
+                } else {
+                    favoritesCount.classList.add('hidden');
+                }
+            } catch (e) {
+                favoritesCount.classList.add('hidden');
+            }
+        }
+
+        // Initial count
+        updateFavoritesCount();
+
+        // Listen for favorites updates from favorites page
+        window.addEventListener('nav-favorites-update', function(event) {
+            const favoritesCount = document.getElementById('favorites-count-nav');
+            if (!favoritesCount) return;
+
+            const count = event.detail.count;
+            if (count > 0) {
+                favoritesCount.textContent = count;
+                favoritesCount.classList.remove('hidden');
+            } else {
+                favoritesCount.classList.add('hidden');
+            }
+        });
+
+        // Listen for general favorites updates
+        window.addEventListener('favorites-updated', function() {
+            setTimeout(updateFavoritesCount, 100);
+        });
+
+        // Check periodically
+        setInterval(updateFavoritesCount, 3000);
+    });
+</script>
