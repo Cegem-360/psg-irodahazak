@@ -81,10 +81,21 @@ final class PropertyController extends Controller
 
         // Get similar properties from the same district (exact 4-digit postal code match)
         $postalCode = $property->cim_irsz;
-        $similarProperties = Property::where('id', '!=', $property->id)
+
+        // Apply the appropriate scope based on property type
+        $similarPropertiesQuery = Property::where('id', '!=', $property->id)
             ->where('cim_irsz', $postalCode)
             ->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
-            ->active()
+            ->active();
+
+        // If property is for sale, apply sale scope, otherwise apply rent scope
+        if ($property->elado_v_kiado === 'elado-iroda') {
+            $similarPropertiesQuery->sale();
+        } else {
+            $similarPropertiesQuery->rent();
+        }
+
+        $similarProperties = $similarPropertiesQuery
             ->inRandomOrder()
             ->limit(3)
             ->get();
@@ -95,8 +106,17 @@ final class PropertyController extends Controller
             $additionalCount = 3 - $similarProperties->count();
             $excludeIds = $similarProperties->pluck('id')->push($property->id)->toArray();
 
-            $additionalProperties = Property::whereNotIn('id', $excludeIds)
-                ->active()
+            $additionalQuery = Property::whereNotIn('id', $excludeIds)
+                ->active();
+
+            // Apply the same scope for additional properties
+            if ($property->elado_v_kiado === 'elado-iroda') {
+                $additionalQuery->sale();
+            } else {
+                $additionalQuery->rent();
+            }
+
+            $additionalProperties = $additionalQuery
                 ->inRandomOrder()
                 ->limit($additionalCount)
                 ->get();
