@@ -1,4 +1,3 @@
-<!-- if $swiper is true add swiper-slide class name -->
 <div
     class="{{ $swiper ? 'swiper-slide' : '' }} group relative bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl hover:brightness-95 transition-all duration-300 ease-in-out border border-white/15">
     <div class="relative">
