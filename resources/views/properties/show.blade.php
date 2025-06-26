@@ -1,3 +1,4 @@
+@use('App\Models\Translate');
 <x-layouts.app>
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
@@ -252,7 +253,13 @@
                                         });
                                 @endphp
                                 @foreach ($allItems as $item)
-                                    <li class="jellemzok pb-1">{{ $item }}</li>
+                                    <li class="jellemzok pb-1">
+                                        @if (app()->getLocale() === 'en')
+                                            {{ Translate::whereName($item)->first()?->translated ?? $item }}
+                                        @else
+                                            {{ $item }}
+                                        @endif
+                                    </li>
                                 @endforeach
                             @endif
                         </ul>

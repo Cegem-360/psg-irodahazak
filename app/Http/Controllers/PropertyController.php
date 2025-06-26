@@ -78,7 +78,6 @@ final class PropertyController extends Controller
      */
     public function show(Property $property)
     {
-        $property->load('images');
 
         // Get similar properties from the same district (exact 4-digit postal code match)
         $postalCode = $property->cim_irsz;

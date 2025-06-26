@@ -161,7 +161,7 @@ Route::group(['as' => 'en.'], function (): void {
     })->name('budapest.category');
 
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
-    Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
+    Route::get('/properties/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
     Route::view('/favorites', 'pages.favorites')->name('favorites');
     Route::get('/news-blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/news-blog/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
@@ -191,8 +191,3 @@ Route::get('/property-preview/{property}', function (Property $property) {
 
     return view('pdf.property', ['property' => $property]);
 })->name('property.preview');
-
-// API routes (not localized)
-Route::get('/api/properties/{property}/images', [PropertyController::class, 'images'])->name('api.properties.images');
-Route::get('/api/properties/{property}/images/{size}', [PropertyController::class, 'imagesWithSize'])->name('api.properties.images.size');
-Route::get('/api/search-office-names', [PropertyController::class, 'searchOfficeNames'])->name('api.search.office.names');
