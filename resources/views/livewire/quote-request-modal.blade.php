@@ -2,40 +2,42 @@
     <div>
         <!-- Small Tab (default state) - hover to expand -->
         @if (!$showModal)
-            <div class="fixed top-1/2 right-0 transform -translate-y-1/2 z-50 group">
-                <!-- Small Tab -->
-                <div class="group-hover:hidden">
-                    <button wire:click="openModal"
-                        class="bg-orange-500 hover:bg-orange-600 text-white p-3 rounded-l-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105"
-                        title="Árajánlat kérés">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <div class="fixed top-1/4 right-0 transform -translate-y-1/2 z-50 group">
+                <div
+                    class="bg-orange-500 hover:bg-orange-600 text-white rounded-l-lg shadow-lg transition-all duration-300 ease-in-out overflow-hidden
+                           w-12 group-hover:w-auto py-3 px-3">
+
+                    <!-- Content wrapper -->
+                    <div class="flex items-center group-hover:flex-col group-hover:space-y-2 space-x-0">
+                        <!-- Icon - always visible -->
+                        <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                             <path
                                 d="M3 5c0-1.1.9-2 2-2h2V1h10v2h2c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5zm12 5c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h7c.55 0 1-.45 1-1zm-3 4c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h4c.55 0 1-.45 1-1z" />
                         </svg>
-                    </button>
-                </div>
 
-                <!-- Expanded Button (on hover) -->
-                <div class="hidden group-hover:block">
-                    <button wire:click="openModal"
-                        class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-l-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex flex-col items-center space-y-2">
-                        <div class="flex items-center space-x-2">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M3 5c0-1.1.9-2 2-2h2V1h10v2h2c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5zm12 5c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h7c.55 0 1-.45 1-1zm-3 4c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h4c.55 0 1-.45 1-1z" />
-                            </svg>
-                            <div class="text-left">
-                                <div class="text-sm font-bold">ONLINE</div>
-                                <div class="text-sm">AJÁNLATKÉRÉS!</div>
+                        <!-- Text and phone - appears on hover -->
+                        <div class="hidden group-hover:block">
+                            <div class="text-center mb-2">
+                                <div class="text-sm font-bold whitespace-nowrap">ONLINE</div>
+                                <div class="text-sm whitespace-nowrap">AJÁNLATKÉRÉS!</div>
                             </div>
+
+                            <!-- Phone number - clickable -->
+                            <a href="tel:+36203813917"
+                                class="relative z-20 flex items-center justify-center space-x-1 text-white hover:text-yellow-300 transition-colors duration-200 p-1 rounded hover:bg-orange-600"
+                                onclick="event.stopPropagation()">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                </svg>
+                                <span class="text-xs hover:underline cursor-pointer">+36 20 381 3917</span>
+                            </a>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                            </svg>
-                            <span class="text-sm">+36 20 381 3917</span>
-                        </div>
+                    </div>
+
+                    <!-- Modal open button (invisible overlay) -->
+                    <button wire:click="openModal" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        title="Árajánlat kérés">
                     </button>
                 </div>
             </div>
@@ -44,19 +46,24 @@
         <!-- Modal -->
         @if ($showModal)
             <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
-                aria-modal="true">
+                aria-modal="true" x-data x-init="document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        $wire.closeModal();
+                    }
+                });">
                 <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <!-- Background overlay -->
                     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" wire:click="closeModal">
                     </div>
 
                     <!-- Modal panel -->
-                    <div
-                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                        <!-- Modal Header (Blue) -->
-                        <div class="bg-blue-500 px-6 py-4 relative">
+                    <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                        onclick="event.stopPropagation()">
+                        <!-- Modal Header (Orange) -->
+                        <div class="bg-orange-500 px-6 py-4 relative">
                             <button wire:click="closeModal"
-                                class="absolute top-2 right-2 text-white hover:text-gray-200 p-2">
+                                class="absolute top-2 right-2 text-white hover:text-gray-200 p-2 z-10" type="button"
+                                title="Bezárás">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M6 18L18 6M6 6l12 12"></path>
@@ -130,6 +137,18 @@
                                     @enderror
                                 </div>
 
+                                <!-- Company Field -->
+                                <div>
+                                    <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Cég
+                                        neve</label>
+                                    <input type="text" id="company" wire:model="company"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('company') border-red-500 @enderror"
+                                        placeholder="Adja meg a cég nevét">
+                                    @error('company')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
                                 <!-- Property Selection -->
                                 <div>
                                     <label for="property" class="block text-sm font-medium text-gray-700 mb-1">Irodaház
@@ -173,12 +192,17 @@
                                 </div>
 
                                 <!-- Phone Display -->
-                                <div class="flex items-center justify-center bg-gray-50 p-3 rounded-md">
-                                    <svg class="w-5 h-5 text-gray-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                    </svg>
-                                    <span class="text-gray-700 font-medium">+36 20 381 3917</span>
+                                <div class="flex items-center justify-center">
+                                    <a href="tel:+36203813917"
+                                        class="inline-flex items-center bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg cursor-pointer">
+                                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                        </svg>
+                                        <span class="font-medium hover:underline">
+                                            +36 20 381 3917
+                                        </span>
+                                    </a>
                                 </div>
 
                                 <!-- Submit Buttons -->
@@ -199,3 +223,4 @@
             </div>
         @endif
     </div>
+</div>

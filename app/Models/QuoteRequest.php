@@ -14,6 +14,7 @@ final class QuoteRequest extends Model
         'name',
         'phone',
         'email',
+        'company',
         'message',
         'property_id',
         'property_name',

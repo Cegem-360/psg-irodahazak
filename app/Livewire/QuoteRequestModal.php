@@ -21,6 +21,8 @@ final class QuoteRequestModal extends Component
 
     public $email = '';
 
+    public $company = '';
+
     public $message = '';
 
     public $selectedProperty;
@@ -33,6 +35,7 @@ final class QuoteRequestModal extends Component
         'name' => 'required|string|max:255',
         'phone' => 'required|string|max:20',
         'email' => 'required|email|max:255',
+        'company' => 'nullable|string|max:255',
         'message' => 'nullable|string|max:1000',
         'selectedProperty' => 'nullable|exists:properties,id',
         'privacy' => 'required|accepted',
@@ -81,6 +84,7 @@ final class QuoteRequestModal extends Component
                 'name' => $this->name,
                 'phone' => $this->phone,
                 'email' => $this->email,
+                'company' => $this->company,
                 'message' => $this->message,
                 'property_id' => $this->selectedProperty,
                 'property_name' => $this->selectedProperty ? Property::find($this->selectedProperty)?->title : null,
@@ -92,6 +96,7 @@ final class QuoteRequestModal extends Component
                 'name' => $this->name,
                 'phone' => $this->phone,
                 'email' => $this->email,
+                'company' => $this->company,
                 'userMessage' => $this->message,
                 'propertyName' => $this->selectedProperty ? Property::find($this->selectedProperty)?->title : 'Nincs megadva',
                 'quoteId' => $quoteRequest->id,
@@ -119,6 +124,7 @@ final class QuoteRequestModal extends Component
                 'name' => $this->name,
                 'phone' => $this->phone,
                 'email' => $this->email,
+                'company' => $this->company,
                 'message' => $this->message,
                 'property_id' => $this->selectedProperty,
                 'error' => $exception->getMessage(),
@@ -137,6 +143,7 @@ final class QuoteRequestModal extends Component
         $this->name = '';
         $this->phone = '';
         $this->email = '';
+        $this->company = '';
         $this->message = '';
         $this->selectedProperty = null;
         $this->privacy = false;
