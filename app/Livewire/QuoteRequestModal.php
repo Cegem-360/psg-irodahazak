@@ -15,8 +15,6 @@ final class QuoteRequestModal extends Component
 {
     public $showModal = false;
 
-    public $showTab = false;
-
     public $name = '';
 
     public $phone = '';
@@ -51,9 +49,8 @@ final class QuoteRequestModal extends Component
 
     public function mount(): void
     {
-        // Always show modal initially
+        // Always show the small tab initially
         $this->showModal = false;
-        $this->showTab = false;
 
         // Load all active properties for dropdown
         $this->properties = Property::active()
@@ -65,14 +62,12 @@ final class QuoteRequestModal extends Component
     public function openModal(): void
     {
         $this->showModal = true;
-        $this->showTab = false;
         session()->forget('quote_modal_closed');
     }
 
     public function closeModal(): void
     {
         $this->showModal = false;
-        $this->showTab = true;
         $this->resetForm();
     }
 
