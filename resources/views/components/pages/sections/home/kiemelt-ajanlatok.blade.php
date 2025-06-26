@@ -5,12 +5,20 @@
     <div class="kiemelt-ajanlatok relative z-10 container mx-auto pt-12 pb-20">
         <h2 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
             {{ __('Featured Offers') }}</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto">
-            @foreach (Property::active()->featured()->get() ?? [] as $property)
-                <livewire:ingatlan-card :property="$property" :image="$property->getFirstImageUrl()" :title="$property->title" :description="$property->getAddressFormated()"
-                    :link="localized_route('properties.show', ['property' => $property->slug])" :key="$property->id" :smal="true" />
-            @endforeach
-
+        <div
+            class="swiper kiemeltajanlatok-swiper !grid _grid-cols-1 md:grid-cols-2 lg:grid-cols-3_ gap-4 max-w-screen-xl mx-auto">
+            <div class="swiper-wrapper">
+                @foreach (Property::active()->featured()->get() ?? [] as $property)
+                    <livewire:ingatlan-card :property="$property" :image="$property->getFirstImageUrl()" :title="$property->title" :description="$property->getAddressFormated()"
+                        :link="localized_route('properties.show', ['property' => $property->slug])" :key="$property->id" :smal="true" :swiper="true" />
+                @endforeach
+            </div>
+            <div
+                class="swiper-button-prev kiemelt-button-prev reference-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
+            </div>
+            <div
+                class="swiper-button-next kiemelt-button-next reference-button-next !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
+            </div>
         </div>
     </div>
 </div>

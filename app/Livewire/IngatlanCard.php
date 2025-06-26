@@ -21,6 +21,8 @@ final class IngatlanCard extends Component
 
     public $small = false;
 
+    public $swiper = false;
+
     public function mount(?Property $property = null, $title = null, $description = null, $image = null, $link = null, $small = false)
     {
         $this->property = $property;

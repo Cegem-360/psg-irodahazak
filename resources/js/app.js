@@ -86,4 +86,28 @@ document.addEventListener("DOMContentLoaded", function () {
             prevEl: ".rolunkmondtak-button-prev",
         },
     });
+
+    const kiemeltajanlatokSwiper = new Swiper(".kiemeltajanlatok-swiper", {
+        direction: "horizontal",
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        loop: true,
+        slidesPerView: 3,
+        spaceBetween: 12,
+        breakpoints: {
+            // create responsive breakpoints matching Tailwind's breakpoints
+            640: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+        },
+        navigation: {
+            nextEl: ".kiemelt-button-next",
+            prevEl: ".kiemelt-button-prev",
+        },
+    });
 });

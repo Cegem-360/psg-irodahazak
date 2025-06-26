@@ -128,22 +128,21 @@ table {
         bottom: 10px;
     } */
 
-    .swiper-button-next,
-    .swiper-button-prev,
-    .reference-button-next,
-    .reference-button-prev {
+    .swiper-btns-next,
+    .swiper-button-prev {
         margin: 0!important;
         top: 50%;
         transform: translateY(-50%);
     }
 
-    .swiper-button-next, .reference-button-next {
+    .swiper-button-next {
         right: 10px;
     }
 
-    .swiper-button-prev, .reference-button-prev {
+    .swiper-button-prev {
         left: 10px;
     }
+
 
 .irs-from, .irs-to, .irs-single {
     @apply !bg-primary/80 !font-bold;
