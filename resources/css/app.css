@@ -133,16 +133,14 @@ table {
         margin: 0!important;
         top: 50%;
         transform: translateY(-50%);
+        --swiper-navigation-sides-offset: 10px;
     }
 
-    .swiper-button-next {
-        right: 10px;
+    .kiemelt-button-next,
+    .kiemelt-button-prev {
+          --swiper-navigation-top-offset: 60%;
+        --swiper-navigation-sides-offset: 0px;
     }
-
-    .swiper-button-prev {
-        left: 10px;
-    }
-
 
 .irs-from, .irs-to, .irs-single {
     @apply !bg-primary/80 !font-bold;

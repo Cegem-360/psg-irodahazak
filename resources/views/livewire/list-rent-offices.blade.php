@@ -10,10 +10,10 @@
             <div
                 class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div class="relative">
-                    <div wire:ignore id="map" class="sticky top-8 h-[120vh] rounded-lg border border-gray-300"
+                    <div wire:ignore id="map" class="sticky top-0 h-[120vh] rounded-lg border border-gray-300"
                         style="width: 100%;"></div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-fit">
                     @foreach ($offices ?? [] as $office)
                         <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title" :description="$office->getAddressFormated()"
                             :link="localized_route('properties.show', ['property' => $office->slug])" :small="true" wire:key="office-{{ $office->id }}" />

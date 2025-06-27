@@ -14,10 +14,10 @@
                 @endforeach
             </div>
             <div
-                class="swiper-button-prev kiemelt-button-prev reference-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
+                class="swiper-button-prev kiemelt-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
             </div>
             <div
-                class="swiper-button-next kiemelt-button-next reference-button-next !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
+                class="swiper-button-next kiemelt-button-next !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
             </div>
         </div>
     </div>
