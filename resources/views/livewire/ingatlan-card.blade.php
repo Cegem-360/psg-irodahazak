@@ -1,7 +1,7 @@
 <div
     class="{{ $swiper ? 'swiper-slide' : '' }} group relative bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl hover:brightness-95 transition-all duration-300 ease-in-out border border-white/15">
     <div class="relative">
-        @dump($images)
+        {{-- @dump($images) --}}
         <!-- Swiper slides for images -->
         @if ($minicarousel && count($images) > 0)
             <div class="swiper minicarousel-swiper !grid">
