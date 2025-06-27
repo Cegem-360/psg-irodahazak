@@ -19,6 +19,8 @@ final class IngatlanCard extends Component
 
     public $image;
 
+    public $images = [];
+
     public $link;
 
     public $small = false;
@@ -29,8 +31,9 @@ final class IngatlanCard extends Component
 
     protected $listeners = ['favorites-updated' => 'handleFavoritesUpdate'];
 
-    public function mount(?Property $property, $title, $description = null, $image = null, $link = null, bool $small = false)
+    public function mount(?Property $property, $title, $description = null, $image = null, $link = null, bool $small = false, $images = [])
     {
+        $this->images = $images; // Initialize images array
         $this->favoritestatus = false; // Initialize favorite status
         $this->property = $property;
         $this->title = $title;
