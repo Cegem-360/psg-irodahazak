@@ -1,66 +1,66 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<head>
-    <meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8" />
 
-    <meta name="application-name" content="{{ config('app.name') }}" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="application-name" content="{{ config('app.name') }}" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    @isset($title)
-        <title>{{ $title }}</title>
-    @else
-        <title>{{ __('page.title.default') }}</title>
-    @endisset
-    @isset($meta)
-        {{ $meta }}
-    @else
-        <meta name="robots" content="index, follow">
-        <meta name="googlebot" content="index, follow">
-        <meta name="description" content="">
-        <meta name="keywords" content="">
-        <link rel="canonical" href="{{ Request::url() }}">
-    @endisset
+        @isset($title)
+            <title>{{ $title }}</title>
+        @else
+            <title>{{ __('page.title.default') }}</title>
+        @endisset
+        @isset($meta)
+            {{ $meta }}
+        @else
+            <meta name="robots" content="index, follow">
+            <meta name="googlebot" content="index, follow">
+            <meta name="description" content="">
+            <meta name="keywords" content="">
+            <link rel="canonical" href="{{ Request::url() }}">
+        @endisset
 
-    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-    <style>
-        [x-cloak] {
-            display: none !important;
-        }
-    </style>
+        <style>
+            [x-cloak] {
+                display: none !important;
+            }
+        </style>
 
-    @filamentStyles
-    @vite(['resources/js/app.js', 'resources/css/app.css'])
+        @filamentStyles
+        @vite(['resources/js/app.js'])
 
-</head>
+    </head>
 
-<body class="antialiased">
-    <header>
-        <x-layouts.navigation.top-bar />
-        <x-layouts.navigation.hero />
-    </header>
-    <div class="relative">
-        <x-layouts.navigation.navbar />
-    </div>
+    <body class="antialiased">
+        <header>
+            <x-layouts.navigation.top-bar />
+            <x-layouts.navigation.hero />
+        </header>
+        <div class="relative">
+            <x-layouts.navigation.navbar />
+        </div>
 
-    {{ $slot }}
+        {{ $slot }}
 
-    @livewire('notifications')
+        @livewire('notifications')
 
-    @livewire('quote-request-modal')
+        @livewire('quote-request-modal')
 
-    @livewire('property-map-modal')
+        @livewire('property-map-modal')
 
-    @livewire('property-phone-modal')
+        @livewire('property-phone-modal')
 
-    <x-layouts.footer />
+        <x-layouts.footer />
 
-    @filamentScripts
-    @stack('scripts')
+        @filamentScripts
+        @stack('scripts')
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    </body>
 
 </html>
