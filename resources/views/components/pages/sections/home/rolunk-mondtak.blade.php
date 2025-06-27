@@ -25,7 +25,7 @@
                     @foreach ($testimonials ?? [] as $testimonial)
                         <div class="swiper-slide !flex flex-col lg:flex-row gap-8 p-12">
 
-                            <img src="{{ Vite::asset('resources/images/aegon_logo_800x600.png') }}"
+                            <img src="{{ $testimonial?->client_image ? Storage::url($testimonial->client_image) : Vite::asset('resources/images/psg-irodahazak-logo.png') }}"
                                 alt="{{ $testimonial->client_company }}"
                                 class="w-1/2 lg:w-1/3 h-fit object-contain rounded-lg mb-4 p-2 bg-white" />
 

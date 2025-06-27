@@ -46,6 +46,7 @@ final class TestimonialResource extends Resource
                     ->required()
                     ->columnSpanFull(),
                 FileUpload::make('client_image')
+                    ->directory('testimonial/images')
                     ->image(),
                 TextInput::make('company_logo')
                     ->maxLength(255),
