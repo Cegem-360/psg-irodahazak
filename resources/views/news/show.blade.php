@@ -96,6 +96,10 @@
                         <p class="text-xl text-gray-600 leading-relaxed mb-6">{!! $news->excerpt !!}</p>
                     @endif
 
+                    @if ($news->content)
+                        <p class="text-xl text-gray-600 leading-relaxed mb-6">{!! $news->content !!}</p>
+                    @endif
+
                     <div class="flex items-center justify-between border-b pb-6 mb-8">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
