@@ -1,4 +1,4 @@
-<div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pt-32 pb-0">
+<div class="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 pt-32 pb-0">
 
     {{-- 1. oszlop --}}
     <div class="flex flex-col items-center text-center space-y-4">

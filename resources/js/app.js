@@ -110,6 +110,17 @@ document.addEventListener("DOMContentLoaded", function () {
             prevEl: ".kiemelt-button-prev",
         },
     });
+    
+    const minicarouselSwiper = new Swiper(".minicarousel-swiper", {
+        direction: "horizontal",
+        loop: true,
+        slidesPerView: 1,
+        spaceBetween: 0,
+        navigation: {
+            nextEl: ".minicarousel-button-next",
+            prevEl: ".minicarousel-button-prev",
+        },
+    });
 });
 
 // Cookie management for favorites

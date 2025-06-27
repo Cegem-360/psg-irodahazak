@@ -2,7 +2,7 @@
 <div class="referenciak my-12">
     <h2 class="my-16 font-bold text-gray-500 text-5xl text-center drop-shadow text-logogray/80">
         Referenciák, akik velünk költöztek</h2>
-    <div class="py-8 bg-[#EFEFEF]">
+    <div class="relative py-8 bg-[#EFEFEF]">
         <div
             class="swiper reference-swiper !grid _grid-cols-2 sm:grid-cols-3 lg:grid-cols-5_ gap-4 max-w-screen-xl mx-auto">
             {{-- <div class="flex items-center justify-center p-4 bg-white rounded-xl">
@@ -32,12 +32,12 @@
                     </div>
                 @endforeach
             </div>
-            <div
-                class="swiper-button-prev reference-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
-            </div>
-            <div
-                class="swiper-button-next reference-button-next !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
-            </div>
+        </div>
+        <div
+            class="swiper-button-prev reference-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+        </div>
+        <div
+            class="swiper-button-next reference-button-next !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
         </div>
     </div>
 </div>

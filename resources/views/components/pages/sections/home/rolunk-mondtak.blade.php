@@ -18,12 +18,12 @@
         </div>
     </div>
     @if ($testimonials->count() > 0)
-        <div class="py-8 bg-gradient-to-b from-gray-400 to-accent/20">
+        <div class="relative py-4 bg-gradient-to-b from-gray-400 to-accent/20">
             <div
                 class="swiper rolunkmondtak-swiper relative z-50 !grid _grid-cols-1 md:grid-cols-2_ gap-2 max-w-screen-xl mx-auto">
                 <div class="swiper-wrapper">
                     @foreach ($testimonials ?? [] as $testimonial)
-                        <div class="swiper-slide !flex flex-col lg:flex-row gap-8 p-12">
+                        <div class="swiper-slide !flex flex-col lg:flex-row gap-8 p-12 pb-4">
 
                             <img src="{{ $testimonial?->client_image ? Storage::url($testimonial->client_image) : Vite::asset('resources/images/psg-irodahazak-logo.png') }}"
                                 alt="{{ $testimonial->client_company }}"
@@ -40,12 +40,12 @@
                         </div>
                     @endforeach
                 </div>
-                <div
-                    class="swiper-button-prev rolunkmondtak-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
-                </div>
-                <div
-                    class="swiper-button-next rolunkmondtak-button-next !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
-                </div>
+            </div>
+            <div
+                class="swiper-button-prev rolunkmondtak-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+            </div>
+            <div
+                class="swiper-button-next rolunkmondtak-button-next !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
             </div>
         </div>
     @endif

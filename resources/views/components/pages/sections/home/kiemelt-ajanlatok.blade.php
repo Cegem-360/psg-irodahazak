@@ -13,12 +13,12 @@
                         :link="localized_route('properties.show', ['property' => $property->slug])" :key="$property->id" :smal="true" :swiper="true" />
                 @endforeach
             </div>
-            <div
-                class="swiper-button-prev kiemelt-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
-            </div>
-            <div
-                class="swiper-button-next kiemelt-button-next !text-accent hover:bg-black/10 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
-            </div>
         </div>
+    </div>
+    <div
+        class="swiper-button-prev kiemelt-button-prev !text-accent bg-white/40 hover:bg-white/60 shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+    </div>
+    <div
+        class="swiper-button-next kiemelt-button-next !text-accent bg-white/40 hover:bg-white/60 shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
     </div>
 </div>

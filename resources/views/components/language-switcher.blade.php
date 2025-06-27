@@ -3,7 +3,7 @@
         $currentLocale = app()->getLocale();
     @endphp
 
-    <div class="lang-menu absolute top-8 right-8 flex items-center gap-4 flex-nowrap z-20">
+    <div class="lang-menu absolute top-4 lg:top-8 right-2 lg:right-8 flex items-center gap-4 flex-nowrap z-20">
         <a href="{{ localized_route('favorites') }}" title="{{ __('Favorites') }}"
             class="text-primary hover:text-logogray relative group">
             <svg id="favorites-heart-icon" class="w-6 h-6 transition-all duration-200" fill="none" stroke="currentColor"

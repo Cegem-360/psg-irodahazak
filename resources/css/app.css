@@ -138,8 +138,23 @@ table {
 
     .kiemelt-button-next,
     .kiemelt-button-prev {
-          --swiper-navigation-top-offset: 60%;
-        --swiper-navigation-sides-offset: 0px;
+        --swiper-navigation-size: 56px;
+        --swiper-navigation-top-offset: 58%;
+        --swiper-navigation-sides-offset: 30px;
+    }
+
+    .rolunkmondtak-button-next,
+    .rolunkmondtak-button-prev {
+        --swiper-navigation-size: 56px;
+        --swiper-navigation-top-offset: 50%;
+        --swiper-navigation-sides-offset: 30px;
+    }
+
+    .reference-button-next,
+    .reference-button-prev {
+        --swiper-navigation-size: 56px;
+        --swiper-navigation-top-offset: 50%;
+        --swiper-navigation-sides-offset: 30px;
     }
 
 .irs-from, .irs-to, .irs-single {
