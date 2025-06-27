@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         spaceBetween: 12,
         breakpoints: {
             // create responsive breakpoints matching Tailwind's breakpoints
-            640: {
+            320: {
                 slidesPerView: 2,
             },
             768: {
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         spaceBetween: 12,
         breakpoints: {
             // create responsive breakpoints matching Tailwind's breakpoints
-            640: {
+            320: {
                 slidesPerView: 1,
             },
             768: {
@@ -98,8 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
         spaceBetween: 12,
         breakpoints: {
             // create responsive breakpoints matching Tailwind's breakpoints
-            640: {
-                slidesPerView: 2,
+            320: {
+                slidesPerView: 1,
             },
             768: {
                 slidesPerView: 3,
