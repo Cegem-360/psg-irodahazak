@@ -2,7 +2,29 @@
     class="{{ $swiper ? 'swiper-slide' : '' }} group relative bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl hover:brightness-95 transition-all duration-300 ease-in-out border border-white/15">
     <div class="relative">
         @dump($images)
-        <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-auto object-cover aspect-[3/2]" />
+        <!-- Swiper slides for images -->
+        @if ($minicarousel && count($images) > 0)
+            <div class="swiper minicarousel-swiper !grid">
+                <div class="swiper-wrapper">
+                    @foreach ($images as $carouselimage)
+                        <div class="swiper-slide">
+                            <img src="{{ $carouselimage->path }}" alt="{{ $title }}"
+                                class="w-full h-auto object-cover aspect-[3/2]" />
+                        </div>
+                    @endforeach
+                </div>
+                <div
+                    class="swiper-button-prev minicarousel-button-prev !text-accent shadow bg-white/40 hover:bg-white/60 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
+                </div>
+                <div
+                    class="swiper-button-next minicarousel-button-next !text-accent shadow bg-white/40 hover:bg-white/60 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
+                </div>
+            </div>
+        @endif
+        <!-- Fallback image if no swiper -->
+        @if (!$minicarousel && $image)
+            <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-auto object-cover aspect-[3/2]" />
+        @endif
 
         <!-- Favorite button in top-right corner -->
         @if ($property)
@@ -18,7 +40,7 @@
         @endif
 
         <!-- Icon boxes positioned at bottom-right of image -->
-        <div class="absolute bottom-2 right-5 flex gap-1">
+        <div class="absolute bottom-2 right-5 flex gap-1 z-10">
             <!-- Map icon box -->
             <button wire:click="showMapModal"
                 class="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded shadow-lg transition-colors duration-200">
