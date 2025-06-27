@@ -8,7 +8,9 @@ import "ion-rangeslider";
 import "ion-rangeslider/css/ion.rangeSlider.css";
 
 import Swiper from "swiper/bundle";
+import "swiper/css";
 import "swiper/css/bundle";
+import "swiper/css/navigation";
 
 document.addEventListener("DOMContentLoaded", function () {
     const galleryCarouselSwiperThumbs = new Swiper(
@@ -110,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
             prevEl: ".kiemelt-button-prev",
         },
     });
-    
+
     const minicarouselSwiper = new Swiper(".minicarousel-swiper", {
         direction: "horizontal",
         loop: true,

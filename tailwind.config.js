@@ -12,16 +12,26 @@ export default {
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./vendor/filament/**/*.blade.php",
+        "./node_modules/swiper/**/*.{js,css}",
     ],
-    
+    safelist: [
+        // Swiper navigation classes
+        "swiper-button-next",
+        "swiper-button-prev",
+        "swiper-button-disabled",
+        {
+            pattern: /swiper-.*/,
+        },
+    ],
+
     theme: {
         extend: {
             colors: {
-                primary: 'rgb(var(--color-primary))',
-                secondary: 'rgb(var(--color-secondary))',
-                accent: 'hsl(var(--color-accent))',
-                accentdark: 'hsl(var(--color-accentdark))',
-                logogray: 'rgb(var(--color-logogray))',
+                primary: "rgb(var(--color-primary))",
+                secondary: "rgb(var(--color-secondary))",
+                accent: "hsl(var(--color-accent))",
+                accentdark: "hsl(var(--color-accentdark))",
+                logogray: "rgb(var(--color-logogray))",
             },
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],

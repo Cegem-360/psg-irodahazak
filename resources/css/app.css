@@ -176,3 +176,65 @@ table {
 li.jellemzok {
     list-style-image: url(../images/psg-symbol.svg);
 }
+
+/* Swiper Navigation Buttons - Ensure visibility in production */
+.swiper-button-next,
+.swiper-button-prev {
+    width: 27px !important;
+    height: 44px !important;
+    margin-top: calc(0px - (44px / 2)) !important;
+    background-size: 27px 44px !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-radius: 4px !important;
+    color: #007aff !important;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-family: swiper-icons !important;
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    color: #333 !important;
+}
+
+.swiper-button-next:after {
+    content: 'next' !important;
+}
+
+.swiper-button-prev:after {
+    content: 'prev' !important;
+}
+
+.swiper-button-disabled {
+    opacity: 0.35 !important;
+}
+
+/* Custom navigation button styles for your specific swipers */
+.reference-button-next,
+.reference-button-prev,
+.rolunkmondtak-button-next,
+.rolunkmondtak-button-prev,
+.kiemelt-button-next,
+.kiemelt-button-prev,
+.minicarousel-button-next,
+.minicarousel-button-prev {
+    width: 44px !important;
+    height: 44px !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 50% !important;
+    color: #333 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.reference-button-next:after,
+.reference-button-prev:after,
+.rolunkmondtak-button-next:after,
+.rolunkmondtak-button-prev:after,
+.kiemelt-button-next:after,
+.kiemelt-button-prev:after,
+.minicarousel-button-next:after,
+.minicarousel-button-prev:after {
+    font-size: 16px !important;
+    font-weight: bold !important;
+    color: #333 !important;
+}
