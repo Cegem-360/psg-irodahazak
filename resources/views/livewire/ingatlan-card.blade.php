@@ -8,7 +8,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($images as $carouselimage)
                         <div class="swiper-slide">
-                            <img src="{{ $carouselimage->path }}" alt="{{ $title }}"
+                            <img src="{{ Storage::url($carouselimage->path) }}" alt="{{ $title }}"
                                 class="w-full h-auto object-cover aspect-[3/2]" />
                         </div>
                     @endforeach
