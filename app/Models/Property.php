@@ -79,10 +79,15 @@ final class Property extends Model
         'afa',
         'slug',
         'featured',
+        'property_photos',
     ];
 
     protected $casts = [
         'featured' => 'boolean',
+        'property_photos' => 'array',
+        'tags' => 'array',
+        'services' => 'array',
+        'property_photos' => 'array',
     ];
 
     public function getAddressFormated()
@@ -331,14 +336,5 @@ final class Property extends Model
             get: fn ($value) => $value ?: Str::slug($this->title),
             set: fn ($value) => $value ?: Str::slug($this->title)
         );
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'tags' => 'array',
-            'services' => 'array',
-
-        ];
     }
 }
