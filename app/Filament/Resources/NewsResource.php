@@ -67,12 +67,14 @@ final class NewsResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
+                            ->live()
                             ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                         TextInput::make('slug')
                             ->label('Slug')
                             ->required()
                             ->maxLength(255)
+
                             ->unique(News::class, 'slug', ignoreRecord: true),
 
                         RichEditor::make('excerpt')
