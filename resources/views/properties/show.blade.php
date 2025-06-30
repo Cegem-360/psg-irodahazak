@@ -140,10 +140,10 @@
                                     </tr>
                                 @endif
 
-                                @if ($property->afa)
+                                @if ($property->vat)
                                     <tr>
                                         <td style="padding-top: 20px" class="bold" colspan="2">
-                                            @if ($property->afa /* == 'igen' */)
+                                            @if ($property->vat)
                                                 {{ __('The above fees are subject to an additional 27% VAT!') }}
                                             @else
                                                 {{ __('The above fees are NOT subject to an additional 27% VAT!') }}

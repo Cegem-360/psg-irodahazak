@@ -249,7 +249,7 @@
                         </div>
                     @endif
 
-                    @if ($property->afa && strtolower($property->afa) === 'igen')
+                    @if ($property->vat)
                         <div class="mt-3 p-3 text-sm">
                             <span
                                 class="font-bold text-red-600">{{ __('The above fees are subject to an additional 27% VAT!') }}</span>

@@ -35,7 +35,6 @@ final class Property extends Model
         'raktar_terulet',
         'raktar_berleti_dij',
         'parkolas',
-        'parkolas_dija',
         'kozos_teruleti_arany',
         'cim_irsz',
         'cim_varos',
@@ -49,7 +48,6 @@ final class Property extends Model
         'azonosito',
         'osszterulet_addons',
         'max_berleti_dij_addons',
-        'parkolas_dija_addons',
         'min_berleti_dij',
         'min_berleti_dij_addons',
         'raktar_terulet_addons',
@@ -76,7 +74,7 @@ final class Property extends Model
         'elado_v_kiado_addons',
         'updated',
         'egyeb',
-        'afa',
+        'vat',
         'slug',
         'featured',
         'property_photos',
@@ -84,6 +82,7 @@ final class Property extends Model
 
     protected $casts = [
         'featured' => 'boolean',
+        'vat' => 'boolean',
         'property_photos' => 'array',
         'tags' => 'array',
         'services' => 'array',
