@@ -1,5 +1,5 @@
 <nav
-    class="fixed lg:absolute top-11 lg:-top-0 lg:left-[50%] lg:-translate-x-[50%] lg:-translate-y-[50%] z-50 bg-white/40 backdrop-blur-[60px] lg:backdrop-blur-[0px] lg:bg-transparent px-4 lg:px-0 py-2.5">
+    class="fixed lg:absolute top-11 lg:-top-0 lg:left-[50%] lg:-translate-x-[50%] lg:-translate-y-[50%] z-50 bg-white/40 lg:bg-transparent px-4 lg:px-0 py-2.5">
     <div class="flex flex-wrap justify-start items-center mx-auto">
         <div class="flex items-center lg:order-2 space-x-3">
             <!-- Mobile language switcher -->
