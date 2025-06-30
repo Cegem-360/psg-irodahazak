@@ -29,6 +29,10 @@ Route::view('/adatvedelmi-nyilatkozat', 'index')->name('privacy-policy');
 Route::get('/impresszum', [ImpresszumController::class, 'show'])->name('impresszum');
 Route::post('/kapcsolat', [ContactController::class, 'store'])->name('contact.store');
 
+Route::middleware(['auth'])->group(function () {
+    Route::view('/kedvencek', 'pages.favorites')->name('favorites');
+});
+
 // Budapest irodaház kategória route-ok
 Route::get('/budapest/{category}', function ($category) {
     $queryParams = [];
@@ -92,7 +96,7 @@ Route::get('/budapest/{category}', function ($category) {
 Route::get('/ingatlanok', [PropertyController::class, 'index'])->name('properties.index');
 Route::get('/kiado-iroda/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
 Route::get('/elado-irodahaz/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
-Route::view('/kedvencek', 'pages.favorites')->name('favorites');
+
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/kategoria/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
 Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
