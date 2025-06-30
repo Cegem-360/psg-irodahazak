@@ -87,7 +87,6 @@ final class Property extends Model
         'property_photos' => 'array',
         'tags' => 'array',
         'services' => 'array',
-        'property_photos' => 'array',
     ];
 
     public function getAddressFormated()

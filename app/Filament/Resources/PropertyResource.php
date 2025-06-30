@@ -15,6 +15,7 @@ use App\Models\Property;
 use App\Models\Service;
 use App\Models\Tag;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -255,6 +256,16 @@ final class PropertyResource extends Resource
                 TextInput::make('afa')
                     ->label('ÁFA')
                     ->maxLength(255),
+                FileUpload::make('property_photos')
+                    ->label('Ingatlan fotók')
+                    ->image()
+                    ->multiple()
+                    ->disk('public')
+                    ->visibility('public')
+                    ->directory('property')
+                    ->preserveFilenames()
+                    ->openable()
+                    ->downloadable(),
             ]);
     }
 
