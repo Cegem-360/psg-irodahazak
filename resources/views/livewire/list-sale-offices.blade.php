@@ -69,7 +69,8 @@
                                 ' m²<br> <strong>Ár: </strong> ' .
                                 $office->min_berleti_dij .
                                 ' ' .
-                                $office->min_berleti_dij_addons" :link=" localized_route('properties.show', ['property'=> $office->slug])"
+                                $office->min_berleti_dij_addons"
+                            :link="localized_route('properties.show-for-sale', ['property'=> $office->slug])"
                             :key="$office->id" :small="true" />
                     @endforeach
                 </div>
