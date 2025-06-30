@@ -24,7 +24,7 @@
         @elseif (request()->routeIs('rolunk') || request()->routeIs('en.rolunk'))
             <x-pages.rolunk />
         @elseif (request()->routeIs('kapcsolat') || request()->routeIs('en.kapcsolat'))
-            <x-pages.kapcsolat />
+            @include('pages.contact')
         @endif
 
     </div>

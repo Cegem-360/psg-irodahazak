@@ -196,39 +196,7 @@
                                 {{ __('Contact Us!') }}</h2>
                             <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 sm:text-xl">
                                 {{ __('Request a personalized offer online!') }}</p>
-                            <form action="#" class="space-y-8">
-                                <div>
-                                    <label for="nev"
-                                        class="block mb-2 text-sm font-medium text-gray-900">{{ __('Your Name') }}</label>
-                                    <input type="text" id="nev"
-                                        class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
-                                        placeholder="{{ __('Your Name') }}" required>
-                                </div>
-                                <div>
-                                    <label for="email"
-                                        class="block mb-2 text-sm font-medium text-gray-900">{{ __('Your Email') }}</label>
-                                    <input type="email" id="email"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                                        placeholder="email@email.hu" required>
-                                </div>
-
-                                <div>
-                                    <label for="tel"
-                                        class="block mb-2 text-sm font-medium text-gray-900">{{ __('Your Phone Number') }}</label>
-                                    <input type="phone" id="tel"
-                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                                        placeholder="+36 00 000 0000" required>
-                                </div>
-                                <div class="sm:col-span-2">
-                                    <label for="message"
-                                        class="block mb-2 text-sm font-medium text-gray-900">{{ __('Message') }}</label>
-                                    <textarea id="message" rows="6"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
-                                        placeholder="{{ __('How can we help you?') }}"></textarea>
-                                </div>
-                                <button type="submit"
-                                    class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary/70 sm:w-fit hover:bg-accent/70 focus:ring-4 focus:outline-none focus:ring-primary-300">{{ __('Send') }}</button>
-                            </form>
+                            <x-forms.contact />
                         </div>
                     </section>
 
