@@ -180,21 +180,21 @@ li.jellemzok {
 /* Swiper Navigation Buttons - Ensure visibility in production */
 .swiper-button-next,
 .swiper-button-prev {
-    width: 27px !important;
+    /* width: 27px !important;
     height: 44px !important;
     margin-top: calc(0px - (44px / 2)) !important;
     background-size: 27px 44px !important;
     background-color: rgba(255, 255, 255, 0.8) !important;
     border-radius: 4px !important;
-    color: #007aff !important;
+    color: #007aff !important; */
 }
 
 .swiper-button-next:after,
 .swiper-button-prev:after {
     font-family: swiper-icons !important;
-    font-size: 20px !important;
+    /* font-size: 20px !important;
     font-weight: 900 !important;
-    color: #333 !important;
+    color: #333 !important; */
 }
 
 .swiper-button-next:after {
@@ -218,12 +218,13 @@ li.jellemzok {
 .kiemelt-button-prev,
 .minicarousel-button-next,
 .minicarousel-button-prev {
-    width: 44px !important;
-    height: 44px !important;
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    border-radius: 50% !important;
-    color: #333 !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    @apply  !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow;
+    /* width: 44px !important; */
+    /* height: 44px !important; */
+    /* background-color: rgba(255, 255, 255, 0.9) !important; */
+    /* border-radius: 50% !important; */
+    /* color: #333 !important; */
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important; */
 }
 
 .reference-button-next:after,
@@ -234,7 +235,7 @@ li.jellemzok {
 .kiemelt-button-prev:after,
 .minicarousel-button-next:after,
 .minicarousel-button-prev:after {
-    font-size: 16px !important;
+    /* font-size: 16px !important;
     font-weight: bold !important;
-    color: #333 !important;
+    color: #333 !important; */
 }
