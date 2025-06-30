@@ -72,9 +72,7 @@ final class NewsResource extends Resource
 
                         TextInput::make('slug')
                             ->label('Slug')
-                            ->required()
                             ->maxLength(255)
-
                             ->unique(News::class, 'slug', ignoreRecord: true),
 
                         RichEditor::make('excerpt')
