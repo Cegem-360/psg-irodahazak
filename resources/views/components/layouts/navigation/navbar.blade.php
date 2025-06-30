@@ -68,7 +68,7 @@
 </nav>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('livewire:initialized', function() {
         // Update favorites count in navigation
         function updateFavoritesCount() {
             const favoritesCount = document.getElementById('favorites-count-nav');

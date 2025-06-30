@@ -18,6 +18,7 @@ final class FavoritesList extends Component
     protected $listeners = [
         'favorites-updated' => 'refreshFavorites',
         'refresh-favorites' => 'refreshFavorites',
+        'openSendFavoritesModal' => 'openSendFavoritesModal',
     ];
 
     public function mount(): void
@@ -28,6 +29,11 @@ final class FavoritesList extends Component
     public function refreshFavorites(): void
     {
         $this->loadFavorites();
+    }
+
+    public function openSendFavoritesModal()
+    {
+        $this->dispatch('openSendFavoritesModal')->to('favorites-send-modal');
     }
 
     public function render()
@@ -46,7 +52,6 @@ final class FavoritesList extends Component
         if (! empty($favorites)) {
             $this->favoriteProperties = Property::whereIn('id', $favorites)
                 ->active()
-                ->with('images')
                 ->get();
         } else {
             $this->favoriteProperties = collect();

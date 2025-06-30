@@ -23,6 +23,18 @@
             @endif
         </div>
     </div>
+    @if ($favoriteCount > 0)
+        <div class="flex justify-end max-w-screen-xl mx-auto px-8 pt-8">
+            <button wire:click="$dispatch('openSendFavoritesModal')"
+                class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 12H8m8 0a4 4 0 11-8 0 4 4 0 018 0zm0 0v4m0-4V8"></path>
+                </svg>
+                Kedvencek elküldése e-mailben
+            </button>
+        </div>
+    @endif
 
     @if ($favoriteCount > 0)
         <div class="relative bg-white">
@@ -58,62 +70,7 @@
             </div>
         </div>
     @endif
+
+    <livewire:favorites-send-modal />
+
 </div>
-
-@script
-    <script>
-        // Listen for favorite changes and refresh the component
-        document.addEventListener('livewire:initialized', function() {
-            // Listen for the custom favorites-updated event
-            window.addEventListener('favorites-updated', function() {
-                $wire.$dispatch('refresh-favorites');
-            });
-
-            // Also check for cookie changes periodically (fallback)
-            let lastFavorites = '';
-
-            function checkFavorites() {
-                const currentFavorites = getCookie('property_favorites') || '[]';
-                if (currentFavorites !== lastFavorites) {
-                    lastFavorites = currentFavorites;
-                    $wire.$dispatch('refresh-favorites');
-
-                    // Update navigation count
-                    updateNavFavoritesCount();
-                }
-            }
-
-            function getCookie(name) {
-                const value = `; ${document.cookie}`;
-                const parts = value.split(`; ${name}=`);
-                if (parts.length === 2) return parts.pop().split(';').shift();
-            }
-
-            function updateNavFavoritesCount() {
-                try {
-                    const favorites = getCookie('property_favorites') || '[]';
-                    const favoritesArray = JSON.parse(favorites);
-                    const count = favoritesArray.length;
-
-                    // Dispatch event for navigation update
-                    window.dispatchEvent(new CustomEvent('nav-favorites-update', {
-                        detail: {
-                            count: count
-                        }
-                    }));
-                } catch (e) {
-                    console.error('Error updating nav favorites count:', e);
-                }
-            }
-
-            // Check every 2 seconds
-            setInterval(checkFavorites, 2000);
-
-            // Initial check
-            setTimeout(() => {
-                checkFavorites();
-                updateNavFavoritesCount();
-            }, 100);
-        });
-    </script>
-@endscript

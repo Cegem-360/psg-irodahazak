@@ -92,7 +92,9 @@ Route::get('/budapest/{category}', function ($category) {
 
     return view('pages.filter', ['queryParams' => $queryParams]);
 })->name('budapest.category');
-
+/* Route::get('/login', function () {
+    return redirect()->route('filament.admin.auth.login'); // Redirect to the login page
+})->name('login'); */
 Route::get('/ingatlanok', [PropertyController::class, 'index'])->name('properties.index');
 Route::get('/kiado-iroda/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
 Route::get('/elado-irodahaz/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
@@ -190,8 +192,5 @@ Route::get('/property-pdf/{property}', function (Property $property): Response {
 
 // PDF preview route (HTML only, no PDF generation)
 Route::get('/property-preview/{property}', function (Property $property) {
-    // Betöltjük a kapcsolódó képek adatokat
-    $property->load(['images']);
-
     return view('pdf.property', ['property' => $property]);
 })->name('property.preview');
