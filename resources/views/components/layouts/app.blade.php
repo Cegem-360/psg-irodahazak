@@ -36,7 +36,7 @@
 
     </head>
 
-    <body class="antialiased">
+    <body class="antialiased" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
         <header>
             <x-layouts.navigation.top-bar />
             <x-layouts.navigation.hero />

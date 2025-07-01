@@ -13,10 +13,6 @@
             class=" hidden lg:flex items-center px-8 py-6 hover:bg-primary/80 duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]">
             {{ __('navigation.online_contact') }}
         </a>
-        <a href="#"
-            class=" hidden lg:flex items-center px-8 py-6 hover:bg-primary/80 duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]"
-            title="{{ __('navigation.coming_soon') }}">
-            {{ __('navigation.login') }}
-        </a>
+
     </div>
 </div>

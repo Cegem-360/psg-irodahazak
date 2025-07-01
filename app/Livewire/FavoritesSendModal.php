@@ -60,6 +60,8 @@ final class FavoritesSendModal extends Component
         ));
         $this->showSendModal = false;
         session()->flash('success', 'Az ajánlatot elküldtük!');
+        Cookie::queue(Cookie::forget('property_favorites'));
+        session()->flash('success', 'A kedvencek listája kiürítve!');
     }
 
     public function showModal(): void
