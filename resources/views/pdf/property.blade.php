@@ -151,8 +151,7 @@
                     @if ($property->total_area)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Total Area') }}:</span>
-                            <span
-                                class="font-medium text-gray-900">{{ number_format($property->total_area, 0, ',', ' ') }}
+                            <span class="font-medium text-gray-900">{{ $property->total_area }}
                                 m²</span>
                         </div>
                     @endif

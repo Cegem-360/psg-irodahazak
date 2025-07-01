@@ -50,7 +50,7 @@
     "Offices for rent in District V": "Kiadó irodák V. kerület",
     "Offices for rent on Váci street": "Váci úti Kiadó Irodák ",
     "Offices for rent in Buda": "Budai Kiadó Irodák",
-    "Offices for rent in inner Buda": "Kiadó belvárosi budai irodák",
+    "Offices for rent in inner Buda": "Kiadó bel-budai irodák",
     "Offices for rent in District XI": "Kiadó irodák XI. kerület",
     "Green offices for rent": "Kiadó zöld irodák",
     "Classic office buildings for rent": "Kiadó klasszikus irodaházak",
@@ -82,8 +82,8 @@
     "Find your business with us": "Találja meg velünk vállalkozása",
     "new": "új",
     "ideal": "ideális",
-    "home": "otthon",
-    "Home": "Otthon",
+    "home": "főoldal",
+    "Home": "Főoldal",
     "Menu": "Menü",
     "Legal Statements": "Jogi nyilatkozatok",
     "online contact": "online kapcsolatfelvétel",
@@ -177,6 +177,10 @@
     "Featured Offers": "Kiemelt ajánlatok",
     "district": "kerület",
     "count": "db",
-    "Total Area": "Összterület",
-    "Price": "Ár"
+    "Rental fee": "Bérleti díj",
+    "login": "Bejelentkezés",
+    "property for rent": "Kiadó",
+    "Rent offices in downtown": "Kiadó belvárosi irodák",
+    "Rent offices on Váci street": "Kiadó Váci úti irodák",
+    "Rent offices in Buda": "Kiadó budai irodák"
 }

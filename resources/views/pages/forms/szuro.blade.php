@@ -566,10 +566,8 @@
 
                 // Static office names for now (later can be replaced with AJAX call)
                 const offices = [
-                    @php
-                        $offices = \App\Models\Property::active()->get();
-                    @endphp
-                    @foreach ($offices as $office)
+
+                    @foreach (Property::active()->orderBy('title')->get() as $office)
                         {
                             title: '{{ addslashes($office->title) }}',
                             city: '{{ addslashes($office->cim_irsz ?? 'Budapest') }}'

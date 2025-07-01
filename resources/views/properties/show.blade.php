@@ -23,7 +23,7 @@
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Total Area') }}:</td>
-                                    <td>{{ number_format($property->total_area) }} m2</td>
+                                    <td>{{ $property->total_area }} m2</td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Price') }}:</td>
@@ -54,7 +54,7 @@
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Total Area') }}:</td>
-                                    <td>{{ number_format($property->total_area) }}
+                                    <td>{{ $property->total_area }}
                                         {{ $property->osszterulet_addons ?? '' }}
                                     </td>
                                 </tr>
@@ -252,54 +252,20 @@
             <h2 class="mt-4 mb-16 font-font-bold text-5xl text-center drop-shadow text-logogray/80">
                 {{ __('Similar Offices') }}</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto">
-                @if ($similarProperties && $similarProperties->count() > 0)
-                    @foreach ($similarProperties as $similarProperty)
+                @foreach ($similarProperties ?? [] as $similarProperty)
+                    @if ($similarProperty->isRent())
                         <x-cards.ingatlan-card
                             image="{{ $similarProperty->getFirstImageUrl('384x246') ?: Vite::asset('resources/images/default-office.jpg') }}"
-                            title="{{ $similarProperty->title }}" :description="$similarProperty->cim_irsz .
-                                ' ' .
-                                $similarProperty->cim_varos .
-                                ', ' .
-                                $similarProperty->cim_utca .
-                                ' ' .
-                                $similarProperty->cim_hazszam .
-                                ($similarProperty->cim_utca_addons ? ', ' . $similarProperty->cim_utca_addons : '') .
-                                '<br>' .
-                                '<strong>' .
-                                __('Rent:') .
-                                '</strong> ' .
-                                ($similarProperty->min_berleti_dij ?: __('Please inquire')) .
-                                ($similarProperty->max_berleti_dij ? ' - ' . $similarProperty->max_berleti_dij : '') .
-                                '<br>' .
-                                '<strong>' .
-                                __('Operating Fee:') .
-                                '</strong> ' .
-                                ($similarProperty->uzemeletetesi_dij ?: __('Please inquire'))"
+                            title="{{ $similarProperty->title }}" :description="$similarProperty->getAddressFormated()"
                             link="{{ route('properties.show', $similarProperty->slug) }}" />
-                    @endforeach
-                @else
-                    <x-cards.ingatlan-card
-                        image="{{ Vite::asset('resources/images/andrassy_palace_iroda_5__384x246.jpg') }}"
-                        title="Andrássy Palace Iroda" :description="'1061 Budapest, Andrássy út 9.<br><strong>' .
-                            __('Rent:') .
-                            '</strong> 16 - 17 EUR/m2/hó<br><strong>' .
-                            __('Operating Fee:') .
-                            '</strong> 2990 HUF/m2/hó'" link="/adatlap-oldal/" />
-                    <x-cards.ingatlan-card
-                        image="{{ Vite::asset('resources/images/arena_corner_irodahaz_1__384x246.jpg') }}"
-                        title="Arena Corner" :description="'1087 Budapest, Hungária körút 40.<br><strong>' .
-                            __('Rent:') .
-                            '</strong> 14.5 - 15.5 EUR/m2/hó<br><strong>' .
-                            __('Operating Fee:') .
-                            '</strong> 2200 HUF/m2/hó'" link="/adatlap-oldal/" />
-                    <x-cards.ingatlan-card
-                        image="{{ Vite::asset('resources/images/bank_center_1_2_3_4_5_384x246.jpg') }}"
-                        title="Bank Center" :description="'1054 Budapest, Szabadság tér 7.<br><strong>' .
-                            __('Rent:') .
-                            '</strong> 22 - 26 EUR/m2/hó<br><strong>' .
-                            __('Operating Fee:') .
-                            '</strong> 2700 HUF/m2/hó'" link="/adatlap-oldal/" />
-                @endif
+                    @else
+                        <x-cards.ingatlan-card
+                            image="{{ $similarProperty->getFirstImageUrl('384x246') ?: Vite::asset('resources/images/default-office.jpg') }}"
+                            title="{{ $similarProperty->title }}" :description="$similarProperty->getAddressFormatedForSale()"
+                            link="{{ route('properties.show', $similarProperty->slug) }}" />
+                    @endif
+                @endforeach
+
             </div>
         </div>
     </div>

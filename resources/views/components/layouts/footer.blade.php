@@ -29,7 +29,7 @@
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('online contact') }}</a>
                          </li>
                          <li>
-                             <a href="#"
+                             <a href="{{ route('filament.admin.auth.login') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200"
                                  title="Coming soon">{{ __('login') }}</a>
                          </li>
