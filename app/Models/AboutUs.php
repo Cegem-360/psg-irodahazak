@@ -23,13 +23,13 @@ final class AboutUs extends Model
     ];
 
     #[Scope]
-    public function byLanguage($query, $language)
+    public function byLanguage($query, $language): void
     {
         $query->where('language', $language);
     }
 
     #[Scope]
-    protected function active($query)
+    protected function active($query): void
     {
         $query->where('is_active', true);
     }

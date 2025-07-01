@@ -33,7 +33,7 @@ final class IngatlanCard extends Component
 
     protected $listeners = ['favorites-updated' => 'handleFavoritesUpdate'];
 
-    public function mount(?Property $property, $title, $description = null, $image = null, $link = null, bool $small = false, $images = [])
+    public function mount(?Property $property, $title, $description = null, $image = null, $link = null, bool $small = false, $images = []): void
     {
         $this->images = $images; // Initialize images array
         $this->favoritestatus = false; // Initialize favorite status
@@ -47,7 +47,7 @@ final class IngatlanCard extends Component
         $this->initializeFavoriteStatus();
     }
 
-    public function showMapModal()
+    public function showMapModal(): void
     {
         $this->dispatch('show-map-modal', [
             'propertyId' => $this->property?->id,
@@ -55,7 +55,7 @@ final class IngatlanCard extends Component
         ]);
     }
 
-    public function showPhoneModal()
+    public function showPhoneModal(): void
     {
         $this->dispatch('show-phone-modal', [
             'propertyId' => $this->property?->id,
@@ -63,7 +63,7 @@ final class IngatlanCard extends Component
         ]);
     }
 
-    public function toggleFavorite()
+    public function toggleFavorite(): void
     {
         if (! $this->property) {
             return;
@@ -74,7 +74,7 @@ final class IngatlanCard extends Component
 
         if ($this->favoritestatus) {
             // Remove from favorites
-            $favorites = array_filter($favorites, fn ($id) => $id !== $propertyId);
+            $favorites = array_filter($favorites, fn ($id): bool => $id !== $propertyId);
             $this->favoritestatus = false;
         } else {
             // Add to favorites
@@ -88,7 +88,7 @@ final class IngatlanCard extends Component
         $this->dispatch('favorites-updated', propertyId: $propertyId, favoritestatus: $this->favoritestatus);
     }
 
-    public function handleFavoritesUpdate($propertyId, $favoritestatus)
+    public function handleFavoritesUpdate($propertyId, $favoritestatus): void
     {
         if ($this->property && $this->property->id === $propertyId) {
             $this->favoritestatus = $favoritestatus;
@@ -120,12 +120,12 @@ final class IngatlanCard extends Component
             $decoded = json_decode($favorites, true);
 
             return is_array($decoded) ? $decoded : [];
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return [];
         }
     }
 
-    private function saveFavorites($favorites): void
+    private function saveFavorites(array $favorites): void
     {
         // Remove duplicates and re-index
         $favorites = array_values(array_unique($favorites));

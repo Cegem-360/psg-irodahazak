@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ImpresszumResource\Pages;
+use App\Filament\Resources\ImpresszumResource\Pages\CreateImpresszum;
+use App\Filament\Resources\ImpresszumResource\Pages\EditImpresszum;
+use App\Filament\Resources\ImpresszumResource\Pages\ListImpresszums;
 use App\Models\Impresszum;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
@@ -84,7 +86,7 @@ final class ImpresszumResource extends Resource
                         'en' => 'English',
                         default => $state,
                     })
-                    ->color(fn ($state) => match ($state) {
+                    ->color(fn ($state): string => match ($state) {
                         'hu' => 'success',
                         'en' => 'info',
                         default => 'gray',
@@ -142,9 +144,9 @@ final class ImpresszumResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListImpresszums::route('/'),
-            'create' => Pages\CreateImpresszum::route('/create'),
-            'edit' => Pages\EditImpresszum::route('/{record}/edit'),
+            'index' => ListImpresszums::route('/'),
+            'create' => CreateImpresszum::route('/create'),
+            'edit' => EditImpresszum::route('/{record}/edit'),
         ];
     }
 }

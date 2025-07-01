@@ -37,7 +37,7 @@ final class ImagesRelationManager extends RelationManager
                     ->image()
                     ->label('Kép feltöltése')
                     ->required()
-                    ->disk('public')
+
                     ->directory(function (Gallery $record): string {
                         return 'property/'.$record->target_table_id.'/gallery';
                     })

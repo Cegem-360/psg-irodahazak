@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\PostCodeResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\PostCodeResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListPostCodes extends ListRecords
+final class ListPostCodes extends ListRecords
 {
     protected static string $resource = PostCodeResource::class;
 

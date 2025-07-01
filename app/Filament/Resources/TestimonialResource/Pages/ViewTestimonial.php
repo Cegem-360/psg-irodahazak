@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\TestimonialResource\Pages;
 
-use Filament\Actions\EditAction;
 use App\Filament\Resources\TestimonialResource;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewTestimonial extends ViewRecord
+final class ViewTestimonial extends ViewRecord
 {
     protected static string $resource = TestimonialResource::class;
 

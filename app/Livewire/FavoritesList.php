@@ -31,7 +31,7 @@ final class FavoritesList extends Component
         $this->loadFavorites();
     }
 
-    public function openSendFavoritesModal()
+    public function openSendFavoritesModal(): void
     {
         $this->dispatch('openSendFavoritesModal')->to('favorites-send-modal');
     }
@@ -49,7 +49,7 @@ final class FavoritesList extends Component
         $favorites = $this->getFavorites();
         $this->favoriteCount = count($favorites);
 
-        if (! empty($favorites)) {
+        if ($favorites !== []) {
             $this->favoriteProperties = Property::whereIn('id', $favorites)
                 ->active()
                 ->get();
@@ -65,7 +65,7 @@ final class FavoritesList extends Component
             $decoded = json_decode($favorites, true);
 
             return is_array($decoded) ? $decoded : [];
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return [];
         }
     }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('about_us', function (Blueprint $table) {
+        Schema::table('about_us', function (Blueprint $table): void {
             $table->string('language', 2)->default('hu')->after('id');
             $table->index(['language', 'is_active']);
         });
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('about_us', function (Blueprint $table) {
+        Schema::table('about_us', function (Blueprint $table): void {
             $table->dropIndex(['language', 'is_active']);
             $table->dropColumn('language');
         });

@@ -251,7 +251,7 @@ final class NewsResource extends Resource
                     ->label('Frissítve')
                     ->type('date')
                     ->getStateUsing(fn ($record) => $record->updated_at ? $record->updated_at->format('Y-m-d') : '')
-                    ->afterStateUpdated(function ($record, $state) {
+                    ->afterStateUpdated(function ($record, $state): void {
                         $record->update(['updated_at' => $state]);
                     })
                     ->sortable()

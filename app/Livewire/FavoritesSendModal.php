@@ -31,17 +31,17 @@ final class FavoritesSendModal extends Component
 
     protected $listeners = ['openSendFavoritesModal' => 'showModal'];
 
-    public function mount()
+    public function mount(): void
     {
         $this->bodyText = 'proba';
         $this->salutation = 'Cegem360';
         $this->loadProperties();
     }
 
-    public function loadProperties()
+    public function loadProperties(): void
     {
         $favorites = json_decode(Cookie::get('property_favorites', '[]'), true);
-        $this->properties = Property::whereIn('id', $favorites)->get()->map(function ($property) {
+        $this->properties = Property::whereIn('id', $favorites)->get()->map(function ($property): array {
             return [
                 'title' => $property->title,
                 'url' => route('properties.show', ['property' => $property->slug]),
@@ -49,7 +49,7 @@ final class FavoritesSendModal extends Component
         })->toArray();
     }
 
-    public function sendFavorites()
+    public function sendFavorites(): void
     {
         $this->validate();
         Mail::to($this->recipientEmail)->send(new FavoritesSendMail(
@@ -62,7 +62,7 @@ final class FavoritesSendModal extends Component
         session()->flash('success', 'Az ajánlatot elküldtük!');
     }
 
-    public function showModal()
+    public function showModal(): void
     {
         $this->showSendModal = true;
     }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AboutUsResource\Pages;
+use App\Filament\Resources\AboutUsResource\Pages\CreateAboutUs;
+use App\Filament\Resources\AboutUsResource\Pages\EditAboutUs;
+use App\Filament\Resources\AboutUsResource\Pages\ListAboutUs;
 use App\Models\AboutUs;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
@@ -83,7 +85,7 @@ final class AboutUsResource extends Resource
                         'en' => 'English',
                         default => $state,
                     })
-                    ->color(fn ($state) => match ($state) {
+                    ->color(fn ($state): string => match ($state) {
                         'hu' => 'success',
                         'en' => 'info',
                         default => 'gray',
@@ -141,9 +143,9 @@ final class AboutUsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAboutUs::route('/'),
-            'create' => Pages\CreateAboutUs::route('/create'),
-            'edit' => Pages\EditAboutUs::route('/{record}/edit'),
+            'index' => ListAboutUs::route('/'),
+            'create' => CreateAboutUs::route('/create'),
+            'edit' => EditAboutUs::route('/{record}/edit'),
         ];
     }
 }

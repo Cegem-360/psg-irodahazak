@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Eloquent\Collection;
 use App\Models\Reference;
+use Illuminate\Database\Eloquent\Collection;
 
 if (! function_exists('localized_route')) {
     /**

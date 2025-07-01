@@ -29,7 +29,7 @@ Route::view('/adatvedelmi-nyilatkozat', 'index')->name('privacy-policy');
 Route::get('/impresszum', [ImpresszumController::class, 'show'])->name('impresszum');
 Route::post('/kapcsolat', [ContactController::class, 'store'])->name('contact.store');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function (): void {
     Route::view('/kedvencek', 'pages.favorites')->name('favorites');
 });
 

@@ -11,13 +11,13 @@ final class PropertyMapModal extends Component
 {
     public $showModal = false;
 
-    public $property = null;
+    public $property;
 
     public $title = '';
 
     protected $listeners = ['show-map-modal' => 'openModal'];
 
-    public function openModal($title, $propertyId = null)
+    public function openModal($title, $propertyId = null): void
     {
         $this->title = $title;
 
@@ -29,7 +29,7 @@ final class PropertyMapModal extends Component
         $this->showModal = true;
     }
 
-    public function closeModal()
+    public function closeModal(): void
     {
         $this->showModal = false;
         $this->reset(['property', 'title']);

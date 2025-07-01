@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ContentResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\ContentResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListContents extends ListRecords
+final class ListContents extends ListRecords
 {
     protected static string $resource = ContentResource::class;
 

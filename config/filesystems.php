@@ -61,6 +61,14 @@ return [
             'throw' => false,
             'report' => false,
         ],
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => env('FTP_HOST', 'sftp.szervered.hu'),
+            'username' => env('FTP_USERNAME', 'ftp_felhasznalo'),
+            'password' => env('FTP_PASSWORD', 'ftp_jelszo'),
+            'root' => env('FTP_ROOT', storage_path('app/public')),
+            'port' => 22,
+        ],
 
     ],
 

@@ -1,3 +1,4 @@
+@use('App\Models\Property')
 <div>
     <div class="relative">
         <h2 class="text-4xl text-center mt-24 mb-8">{{ __('Find your business with us') }} <span
@@ -30,7 +31,8 @@
                         <!-- Térkép -->
                         <h3 class="text-lg mb-4">{{ __('Map Search') }}</h3>
                         <div class="map-container">
-                            <x-svg.bp-map class="h-96" />
+                            {{-- Térkép --}}
+                            <x-svg.bp-map class="h-96" :districts_properties_count="Property::countByDistrict()" />
                             <div id="selectedDistrictsDisplay" class="mt-2 text-sm text-primary font-semibold hidden">
                                 {{ __('Selected Districts') }}: <span id="districtsNames"></span>
                                 <button type="button" id="clearSelections"
@@ -43,7 +45,7 @@
                             <input type="checkbox" name="include_agglomeration" value="1"
                                 class="mr-2 appearance-none checked:bg-accent focus:ring-accent"
                                 {{ request('include_agglomeration') ? 'checked' : '' }}>
-                            {{ __('Show agglomeration results too') }}
+                            {{ __('Show agglomeration results only') }}
                         </label>
                     </div>
 

@@ -10,7 +10,8 @@ use Illuminate\Queue\SerializesModels;
 
 final class FavoritesSendMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $recipientName;
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use App\Models\BlogCategory;
-use App\Models\User;
 use App\Models\BlogPost;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<BlogPost>

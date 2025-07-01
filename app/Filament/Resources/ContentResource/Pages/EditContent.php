@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ContentResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\ContentResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditContent extends EditRecord
+final class EditContent extends EditRecord
 {
     protected static string $resource = ContentResource::class;
 

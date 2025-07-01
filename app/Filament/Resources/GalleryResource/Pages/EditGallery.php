@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\GalleryResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\GalleryResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditGallery extends EditRecord
+final class EditGallery extends EditRecord
 {
     protected static string $resource = GalleryResource::class;
 

@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TranslateResource\Pages;
+use App\Filament\Resources\TranslateResource\Pages\CreateTranslate;
+use App\Filament\Resources\TranslateResource\Pages\EditTranslate;
+use App\Filament\Resources\TranslateResource\Pages\ListTranslates;
+use App\Filament\Resources\TranslateResource\Pages\ViewTranslate;
 use App\Models\Translate;
-use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 final class TranslateResource extends Resource
@@ -22,14 +30,14 @@ final class TranslateResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('translated')
+                TextInput::make('translated')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('date'),
-                Forms\Components\TextInput::make('lang')
+                DateTimePicker::make('date'),
+                TextInput::make('lang')
                     ->maxLength(2)
                     ->default('EN'),
             ]);
@@ -39,26 +47,26 @@ final class TranslateResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('translated')
+                TextColumn::make('translated')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('date')
+                TextColumn::make('date')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('lang')
+                TextColumn::make('lang')
                     ->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -73,10 +81,10 @@ final class TranslateResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTranslates::route('/'),
-            'create' => Pages\CreateTranslate::route('/create'),
-            'view' => Pages\ViewTranslate::route('/{record}'),
-            'edit' => Pages\EditTranslate::route('/{record}/edit'),
+            'index' => ListTranslates::route('/'),
+            'create' => CreateTranslate::route('/create'),
+            'view' => ViewTranslate::route('/{record}'),
+            'edit' => EditTranslate::route('/{record}/edit'),
         ];
     }
 }

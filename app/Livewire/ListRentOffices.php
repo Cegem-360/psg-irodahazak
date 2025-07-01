@@ -11,7 +11,8 @@ use Livewire\WithPagination;
 
 final class ListRentOffices extends Component
 {
-    use WithoutUrlPagination,WithPagination;
+    use WithoutUrlPagination;
+    use WithPagination;
 
     public $search = '';
 
@@ -59,6 +60,11 @@ final class ListRentOffices extends Component
         $this->priceMin = $queryParams['price_min'] ?? request('price_min', '');
         $this->priceMax = $queryParams['price_max'] ?? request('price_max', '');
         $this->includeAgglomeration = $queryParams['include_agglomeration'] ?? request('include_agglomeration', false);
+        if ($this->officeName) {
+            $office = Offices::where('title', $this->officeName)->first();
+
+            $this->redirect(route('properties.show', ['property' => $office]));
+        }
 
         $this->updateTotalOffices();
         $this->getOffices();
@@ -135,6 +141,32 @@ final class ListRentOffices extends Component
         // If agglomeration is not included, only show Budapest properties
         if (! $this->includeAgglomeration) {
             $query->budapestOnly();
+        }
+
+        // If agglomeration is included, return only agglomeration properties and skip district filters
+        if ($this->includeAgglomeration) {
+            // Apply office name filter
+            if ($this->officeName) {
+                $query->byOfficeName($this->officeName);
+            }
+
+            // Apply area range filter
+            if ($this->areaMin || $this->areaMax) {
+                $query->areaRange(
+                    $this->areaMin ? (int) $this->areaMin : null,
+                    $this->areaMax ? (int) $this->areaMax : null
+                );
+            }
+
+            // Apply price range filter
+            if ($this->priceMin || $this->priceMax) {
+                $query->priceRange(
+                    $this->priceMin ? (int) $this->priceMin : null,
+                    $this->priceMax ? (int) $this->priceMax : null
+                );
+            }
+
+            return $query->agglomeration();
         }
 
         // Apply search filter

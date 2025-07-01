@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 final class Property extends Model
@@ -88,21 +89,45 @@ final class Property extends Model
         'services' => 'array',
     ];
 
-    public function getAddressFormated()
+    public static function countByDistrict(): array
     {
-        $address = mb_trim("{$this->cim_irsz} {$this->cim_varos}, {$this->cim_utca} {$this->cim_hazszam}");
+        // Kerületek római számmal
+        $romanNumerals = [
+            1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V',
+            6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
+            11 => 'XI', 12 => 'XII', 13 => 'XIII', 14 => 'XIV', 15 => 'XV',
+            16 => 'XVI', 17 => 'XVII', 18 => 'XVIII', 19 => 'XIX', 20 => 'XX',
+            21 => 'XXI', 22 => 'XXII', 23 => 'XXIII',
+        ];
+
+        $result = [];
+
+        foreach (array_keys($romanNumerals) as $num) {
+            $count = self::where(function ($q) use ($num): void {
+                $q->budapestOnly()->inDistrict((string) $num);
+            })->count();
+
+            $result[$num] = $count;
+        }
+
+        return $result;
+    }
+
+    public function getAddressFormated(): string
+    {
+        $address = mb_trim(sprintf('%s %s, %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, $this->cim_hazszam));
         $rent = __('Rental fee');
         $address .= '<br><strong>'.$rent.':</strong> '.$this->min_berleti_dij.' - '.$this->max_berleti_dij.' EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>'.$this->uzemeletetesi_dij.' HUF/m2/hó';
 
         return $address ?: null;
     }
 
-    public function services()
+    public function services(): HasMany
     {
         return $this->hasMany(Service::class);
     }
 
-    public function tags()
+    public function tags(): HasMany
     {
         return $this->hasMany(Tag::class);
     }
@@ -190,6 +215,12 @@ final class Property extends Model
     protected function rent(Builder $query): void
     {
         $query->where('elado_v_kiado', 'kiado-iroda');
+    }
+
+    #[Scope]
+    protected function agglomeration(Builder $query): void
+    {
+        $query->where('cim_varos', '!=', 'Budapest');
     }
 
     #[Scope]

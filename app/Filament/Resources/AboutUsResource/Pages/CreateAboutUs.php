@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\AboutUsResource\Pages;
 
 use App\Filament\Resources\AboutUsResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateAboutUs extends CreateRecord
+final class CreateAboutUs extends CreateRecord
 {
     protected static string $resource = AboutUsResource::class;
 }
