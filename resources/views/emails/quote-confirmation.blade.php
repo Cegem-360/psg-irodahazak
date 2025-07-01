@@ -68,10 +68,6 @@
             <p>Köszönjük, hogy online árajánlatot kért tőlünk. Kérését megkaptuk és munkatársunk <strong>24 órán
                     belül</strong> felveszi Önnel a kapcsolatot.</p>
 
-            @if ($propertyName !== 'Nincs megadva')
-                <p><strong>Kiválasztott irodaház:</strong> {{ $propertyName }}</p>
-            @endif
-
             <h3>Elérhetőségeink:</h3>
             <div class="contact-info">
                 <div class="contact-item">

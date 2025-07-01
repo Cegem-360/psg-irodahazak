@@ -82,6 +82,10 @@
                 <div class="field-label">Név:</div>
                 <div class="field-value">{{ $name }}</div>
             </div>
+            <div class="field">
+                <div class="field-label">Cég:</div>
+                <div class="field-value">{{ $company }}</div>
+            </div>
 
             <div class="field">
                 <div class="field-label">Telefonszám:</div>
@@ -92,10 +96,9 @@
                 <div class="field-label">Email cím:</div>
                 <div class="field-value">{{ $email }}</div>
             </div>
-
             <div class="field">
-                <div class="field-label">Kiválasztott irodaház:</div>
-                <div class="field-value">{{ $propertyName }}</div>
+                <div class="field-label">Tárgy:</div>
+                <div class="field-value">{{ $subject }}</div>
             </div>
 
             @if ($userMessage)

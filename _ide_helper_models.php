@@ -556,7 +556,6 @@ namespace App\Models{
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read string $status_color
  * @property-read string $status_label
- * @property-read \App\Models\Property|null $property
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest query()

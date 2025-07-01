@@ -1,3 +1,5 @@
+@props(['selected_property_id' => null])
+@use('App\Models\Property')
 <form action="{{ route('contact.store') }}" method="POST" class="space-y-6">
     @csrf
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -47,26 +49,22 @@
     </div>
 
     <div>
-        <label for="contact_subject" class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.subject') }}
+        @php
+
+        @endphp
+        <label for="selected_property_id"
+            class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.subject') }}
             *</label>
-        <select id="contact_subject" name="subject"
+        <select id="selected_property_id" name="selected_property_id"
             class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('subject') border-red-500 @enderror"
             required>
             <option value="">{{ __('contact.subject_placeholder') }}</option>
-            <option value="iroda_keresese" {{ old('subject') == 'iroda_keresese' ? 'selected' : '' }}>
-                {{ __('contact.subject_office_search') }}
-            </option>
-            <option value="iroda_kiadas" {{ old('subject') == 'iroda_kiadas' ? 'selected' : '' }}>
-                {{ __('contact.subject_office_rental') }}</option>
-            <option value="ingatlan_ertekeles" {{ old('subject') == 'ingatlan_ertekeles' ? 'selected' : '' }}>
-                {{ __('contact.subject_property_valuation') }}</option>
-            <option value="befektetes" {{ old('subject') == 'befektetes' ? 'selected' : '' }}>
-                {{ __('contact.subject_investment') }}</option>
-            <option value="tanacadas" {{ old('subject') == 'tanacadas' ? 'selected' : '' }}>
-                {{ __('contact.subject_consulting') }}</option>
-            <option value="egyeb" {{ old('subject') == 'egyeb' ? 'selected' : '' }}>
-                {{ __('contact.subject_other') }}
-            </option>
+
+            @foreach (Property::all() as $property)
+                <option value="{{ $property->id }}" {{ $selected_property_id == $property->id ? 'selected' : '' }}>
+                    {{ $property->title }}
+                </option>
+            @endforeach
         </select>
         @error('subject')
             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

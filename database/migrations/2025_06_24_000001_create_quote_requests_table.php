@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Property;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,8 +16,8 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email');
             $table->text('message')->nullable();
-            $table->foreignIdFor(Property::class)->nullable();
-            $table->string('property_name')->nullable();
+            $table->string('company')->nullable();
+            $table->string('subject')->nullable();
             $table->string('status')->default('new'); // new, contacted, closed
             $table->timestamp('contacted_at')->nullable();
             $table->text('notes')->nullable();

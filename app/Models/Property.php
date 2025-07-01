@@ -117,7 +117,7 @@ final class Property extends Model
     {
         $address = mb_trim(sprintf('%s %s, %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, $this->cim_hazszam));
         $rent = __('Rental fee');
-        $address .= '<br><strong>'.$rent.':</strong> '.$this->min_berleti_dij.' - '.$this->max_berleti_dij.' EUR/m2/hó<br><strong>Üzemeltetési díj: </strong>'.$this->uzemeletetesi_dij.' HUF/m2/hó';
+        $address .= '<br><strong>'.$rent.':</strong> '.$this->min_berleti_dij.' - '.$this->max_berleti_dij.' EUR/m2/hó<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' HUF/m2/hó';
 
         return $address ?: null;
     }

@@ -6,7 +6,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class QuoteRequest extends Model
 {
@@ -16,8 +15,7 @@ final class QuoteRequest extends Model
         'email',
         'company',
         'message',
-        'property_id',
-        'property_name',
+        'subject',
         'status',
         'contacted_at',
         'notes',
@@ -28,11 +26,6 @@ final class QuoteRequest extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    public function property(): BelongsTo
-    {
-        return $this->belongsTo(Property::class);
-    }
 
     public function getStatusColorAttribute(): string
     {

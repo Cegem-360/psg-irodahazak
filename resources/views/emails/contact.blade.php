@@ -91,40 +91,15 @@
             <div class="field">
                 <div class="field-label">Tárgy:</div>
                 <div class="field-value">
-                    @switch($subject)
-                        @case('iroda_keresese')
-                            Iroda keresése
-                        @break
 
-                        @case('iroda_kiadas')
-                            Iroda kiadása
-                        @break
+                    {{ $property_title }}
 
-                        @case('ingatlan_ertekeles')
-                            Ingatlan értékelés
-                        @break
-
-                        @case('befektetes')
-                            Befektetési lehetőség
-                        @break
-
-                        @case('tanacadas')
-                            Tanácsadás
-                        @break
-
-                        @case('egyeb')
-                            Egyéb
-                        @break
-
-                        @default
-                            {{ $subject }}
-                    @endswitch
                 </div>
             </div>
 
             <div class="message-box">
                 <div class="field-label">Üzenet:</div>
-                <div class="field-value">{{ $message }}</div>
+                <div class="field-value">{{ $userMessage }}</div>
             </div>
 
             <p style="margin-top: 30px; font-size: 14px; color: #666;">

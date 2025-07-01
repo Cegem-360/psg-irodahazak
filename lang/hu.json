@@ -168,7 +168,7 @@
     "contact.closed": "Zárva",
     "contact.our_services": "Szolgáltatásaink",
     "contact.service_search": "Iroda keresés és ajánlat küldés",
-    "contact.service_representation": "Bérlőiképviselet",
+    "contact.service_representation": "bérlőképviselet",
     "contact.service_valuation": "Ingatlan értékelés",
     "contact.service_investment": "Befektetési tanácsadás",
     "contact.service_analysis": "Piaci elemzések",
@@ -182,5 +182,9 @@
     "property for rent": "Kiadó",
     "Rent offices in downtown": "Kiadó belvárosi irodák",
     "Rent offices on Váci street": "Kiadó Váci úti irodák",
-    "Rent offices in Buda": "Kiadó budai irodák"
+    "Rent offices in Buda": "Kiadó budai irodák",
+    "modal.subject": "Tárgy",
+    "modal.select_subject": "Válasszon tárgyat",
+    "modal.enter_subject": "Adja meg a tárgyat",
+    "modal.property_name": "Ingatlan neve"
 }

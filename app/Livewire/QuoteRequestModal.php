@@ -25,7 +25,7 @@ final class QuoteRequestModal extends Component
 
     public $message = '';
 
-    public $selectedProperty;
+    public $subject = '';
 
     public $properties = [];
 
@@ -37,7 +37,7 @@ final class QuoteRequestModal extends Component
         'email' => 'required|email|max:255',
         'company' => 'nullable|string|max:255',
         'message' => 'nullable|string|max:1000',
-        'selectedProperty' => 'nullable|exists:properties,id',
+        'subject' => 'nullable|string|max:255',
         'privacy' => 'required|accepted',
     ];
 
@@ -52,8 +52,9 @@ final class QuoteRequestModal extends Component
 
     public function mount(): void
     {
-        // Always show the small tab initially
-        $this->showModal = false;
+
+        // Show modal only if not closed before (session)
+        $this->showModal = ! session()->has('quote_modal_closed');
 
         // Load all active properties for dropdown
         $this->properties = Property::active()
@@ -71,6 +72,7 @@ final class QuoteRequestModal extends Component
     public function closeModal(): void
     {
         $this->showModal = false;
+        session()->put('quote_modal_closed', true);
         $this->resetForm();
     }
 
@@ -86,8 +88,7 @@ final class QuoteRequestModal extends Component
                 'email' => $this->email,
                 'company' => $this->company,
                 'message' => $this->message,
-                'property_id' => $this->selectedProperty,
-                'property_name' => $this->selectedProperty ? Property::find($this->selectedProperty)?->title : null,
+                'subject' => $this->subject,
                 'status' => 'new',
             ]);
 
@@ -97,22 +98,21 @@ final class QuoteRequestModal extends Component
                 'phone' => $this->phone,
                 'email' => $this->email,
                 'company' => $this->company,
+                'subject' => $this->subject,
                 'userMessage' => $this->message,
-                'propertyName' => $this->selectedProperty ? Property::find($this->selectedProperty)?->title : 'Nincs megadva',
                 'quoteId' => $quoteRequest->id,
             ], function ($message): void {
                 $message->to('info@psg-irodahazak.hu')
-                    ->subject('Új árajánlat kérés érkezett')
+                    ->subject($this->subject ?: 'Új árajánlat kérés érkezett')
                     ->replyTo($this->email, $this->name);
             });
 
             // Send confirmation email to user
             Mail::send('emails.quote-confirmation', [
                 'name' => $this->name,
-                'propertyName' => $this->selectedProperty ? Property::find($this->selectedProperty)?->title : 'Nincs megadva',
             ], function ($message): void {
                 $message->to($this->email, $this->name)
-                    ->subject('Árajánlat kérés megerősítése - PSG Irodaházak');
+                    ->subject($this->subject ?: 'Árajánlat kérés megerősítése - PSG Irodaházak');
             });
 
             session()->flash('success', 'Köszönjük az érdeklődését! Hamarosan felvesszük Önnel a kapcsolatot.');
@@ -126,7 +126,7 @@ final class QuoteRequestModal extends Component
                 'email' => $this->email,
                 'company' => $this->company,
                 'message' => $this->message,
-                'property_id' => $this->selectedProperty,
+                'subject' => $this->subject,
                 'error' => $exception->getMessage(),
             ]);
             session()->flash('error', 'Hiba történt az árajánlat kérés küldése során. Kérjük, próbálja újra később.');
@@ -145,7 +145,7 @@ final class QuoteRequestModal extends Component
         $this->email = '';
         $this->company = '';
         $this->message = '';
-        $this->selectedProperty = null;
+        $this->subject = '';
         $this->privacy = false;
         $this->resetValidation();
     }

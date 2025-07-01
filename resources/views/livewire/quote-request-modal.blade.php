@@ -150,72 +150,80 @@
                                 </div>
 
                                 <!-- Property Selection -->
+                                <!-- Subject Field (as select option) -->
                                 <div>
-                                    <label for="property"
-                                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.office_building_name') }}</label>
-                                    <select id="property" wire:model="selectedProperty"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">{{ __('modal.select_office_building') }}</option>
-                                        @foreach ($properties as $property)
-                                            <option value="{{ $property->id }}">{{ $property->title }}</option>
-                                        @endforeach
+                                    <label for="subject"
+                                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.subject') }}</label>
+                                    <select id="subject" wire:model="subject"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('subject') border-red-500 @enderror">
+                                        <option value="">{{ __('modal.select_subject') }}</option>
+                                        <option value="iroda keresése">Iroda keresése</option>
+                                        <option value="iroda kiadás">Iroda kiadása</option>
+                                        <option value="ingatlan értékelés">Ingatlan értékelés</option>
+                                        <option value="befektetés">Befektetési lehetőség</option>
+                                        <option value="tanácsadás">Tanácsadás</option>
+                                        <option value="egyéb">Egyéb</option>
                                     </select>
+                                    @error('subject')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
                                 </div>
-
-                                <!-- Message Field -->
                                 <div>
-                                    <label for="message"
-                                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('Message') }}</label>
-                                    <textarea id="message" wire:model="message" rows="4"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="{{ __('modal.write_your_request') }}"></textarea>
-                                </div>
 
-                                <!-- Privacy Checkbox -->
-                                <div class="flex items-start">
-                                    <div class="flex items-center h-5">
-                                        <input id="privacy" type="checkbox" wire:model="privacy"
-                                            class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 @error('privacy') border-red-500 @enderror">
+                                    <!-- Message Field -->
+                                    <div>
+                                        <label for="message"
+                                            class="block text-sm font-medium text-gray-700 mb-1">{{ __('Message') }}</label>
+                                        <textarea id="message" wire:model="message" rows="4"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="{{ __('modal.write_your_request') }}"></textarea>
                                     </div>
-                                    <div class="ml-3 text-sm">
-                                        <label for="privacy" class="font-light text-gray-500">
-                                            {{ __('modal.i_accept_the') }}
-                                            <a class="font-medium text-blue-600 hover:underline"
-                                                href="{{ localized_route('privacy-policy') }}" target="_blank">
-                                                {{ __('modal.privacy_policy') }}
-                                            </a>
-                                        </label>
-                                        @error('privacy')
-                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                        @enderror
+
+                                    <!-- Privacy Checkbox -->
+                                    <div class="flex items-start">
+                                        <div class="flex items-center h-5">
+                                            <input id="privacy" type="checkbox" wire:model="privacy"
+                                                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 @error('privacy') border-red-500 @enderror">
+                                        </div>
+                                        <div class="ml-3 text-sm">
+                                            <label for="privacy" class="font-light text-gray-500">
+                                                {{ __('modal.i_accept_the') }}
+                                                <a class="font-medium text-blue-600 hover:underline"
+                                                    href="{{ localized_route('privacy-policy') }}" target="_blank">
+                                                    {{ __('modal.privacy_policy') }}
+                                                </a>
+                                            </label>
+                                            @error('privacy')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Phone Display -->
-                                <div class="flex items-center justify-center">
-                                    <a href="tel:+36203813917"
-                                        class="inline-flex items-center bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg cursor-pointer">
-                                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                            <path
-                                                d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                        </svg>
-                                        <span class="font-medium hover:underline">
-                                            +36 20 381 3917
-                                        </span>
-                                    </a>
-                                </div>
+                                    <!-- Phone Display -->
+                                    <div class="flex items-center justify-center">
+                                        <a href="tel:+36203813917"
+                                            class="inline-flex items-center bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg cursor-pointer">
+                                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                <path
+                                                    d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                            </svg>
+                                            <span class="font-medium hover:underline">
+                                                +36 20 381 3917
+                                            </span>
+                                        </a>
+                                    </div>
 
-                                <!-- Submit Buttons -->
-                                <div class="flex space-x-3 pt-4">
-                                    <button type="button" wire:click="closeModal"
-                                        class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md transition-colors duration-200">
-                                        {{ __('modal.cancel') }}
-                                    </button>
-                                    <button type="submit"
-                                        class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200">
-                                        {{ __('modal.send') }}
-                                    </button>
-                                </div>
+                                    <!-- Submit Buttons -->
+                                    <div class="flex space-x-3 pt-4">
+                                        <button type="button" wire:click="closeModal"
+                                            class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md transition-colors duration-200">
+                                            {{ __('modal.cancel') }}
+                                        </button>
+                                        <button type="submit"
+                                            class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200">
+                                            {{ __('modal.send') }}
+                                        </button>
+                                    </div>
                             </form>
                         </div>
                     </div>

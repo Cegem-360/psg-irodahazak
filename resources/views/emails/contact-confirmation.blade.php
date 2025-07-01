@@ -71,36 +71,9 @@
             <p><strong>Az Ön üzenete:</strong></p>
             <div class="contact-info">
                 <p><strong>Tárgy:</strong>
-                    @switch($subject)
-                        @case('iroda_keresese')
-                            Iroda keresése
-                        @break
-
-                        @case('iroda_kiadas')
-                            Iroda kiadása
-                        @break
-
-                        @case('ingatlan_ertekeles')
-                            Ingatlan értékelés
-                        @break
-
-                        @case('befektetes')
-                            Befektetési lehetőség
-                        @break
-
-                        @case('tanacadas')
-                            Tanácsadás
-                        @break
-
-                        @case('egyeb')
-                            Egyéb
-                        @break
-
-                        @default
-                            {{ $subject }}
-                    @endswitch
+                    {{ $property_title }}
                 </p>
-                <p style="margin-top: 15px;">{{ $message }}</p>
+                <p style="margin-top: 15px;">{{ $userMessage }}</p>
             </div>
 
             <h3>Elérhetőségeink:</h3>
