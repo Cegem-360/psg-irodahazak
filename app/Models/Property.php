@@ -122,6 +122,11 @@ final class Property extends Model
         return $address ?: null;
     }
 
+    public function getAddressFormatedForSale(): string
+    {
+        return "{$this->cim_irsz} {$this->cim_varos},<br><strong>".__('Total Area').":</strong> {$this->total_area} m²<br><strong>".__('Price').":</strong> {$this->min_berleti_dij} {$this->min_berleti_dij_addons}";
+    }
+
     public function services(): HasMany
     {
         return $this->hasMany(Service::class);
@@ -132,7 +137,7 @@ final class Property extends Model
         return $this->hasMany(Tag::class);
     }
 
-    public function images()
+    public function images(): HasMany
     {
         return $this->hasMany(Gallery::class, 'target_table_id')
             ->where('target_table', 'property')
@@ -185,6 +190,16 @@ final class Property extends Model
         return $this->images->map(function ($image) use ($size) {
             return $image->getImageUrl($size);
         })->toArray();
+    }
+
+    public function isRent(): bool
+    {
+        return $this->elado_v_kiado === 'kiado-iroda';
+    }
+
+    public function isSale(): bool
+    {
+        return $this->elado_v_kiado === 'elado-iroda';
     }
 
     #[Scope]

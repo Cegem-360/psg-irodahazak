@@ -159,22 +159,24 @@
             <div
                 class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div>
-                    @if ()
-                        
-                    @endif
-                    @if ($property->maps_lat && $property->maps_lng)
-                        {{-- Ingyenes: Koordináta alapú térkép pin-nel --}}
-                        <iframe
-                            src="https://maps.google.com/maps?q={{ $property->maps_lat }},{{ $property->maps_lng }}&hl={{ app()->getLocale() }}&z=16&output=embed"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    @if (!$property->isSale())
+                        @if ($property->maps_lat && $property->maps_lng)
+                            {{-- Ingyenes: Koordináta alapú térkép pin-nel --}}
+                            <iframe
+                                src="https://maps.google.com/maps?q={{ $property->maps_lat }},{{ $property->maps_lng }}&hl={{ app()->getLocale() }}&z=16&output=embed"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        @else
+                            {{-- Ingyenes: Cím alapú keresés pin-nel --}}
+                            <iframe
+                                src="https://maps.google.com/maps?q={{ urlencode($property->cim_irsz . ' ' . $property->cim_varos . ', ' . $property->cim_utca . ' ' . $property->cim_hazszam . ($property->cim_utca_addons ? ', ' . $property->cim_utca_addons : '')) }}&hl={{ app()->getLocale() }}&z=16&output=embed"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        @endif
                     @else
-                        {{-- Ingyenes: Cím alapú keresés pin-nel --}}
-                        <iframe
-                            src="https://maps.google.com/maps?q={{ urlencode($property->cim_irsz . ' ' . $property->cim_varos . ', ' . $property->cim_utca . ' ' . $property->cim_hazszam . ($property->cim_utca_addons ? ', ' . $property->cim_utca_addons : '')) }}&hl={{ app()->getLocale() }}&z=16&output=embed"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <x-forms.contact />
                     @endif
+
                 </div>
                 <div class="p-4">
                     <h2 class="text-3xl">{{ __(':title Presentation', ['title' => $property->title]) }}</h2>
@@ -190,56 +192,59 @@
 
                 </div>
             </div>
-            <div
-                class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
-                <div class="">
-                    <section class="bg-white rounded-xl">
-                        <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-                            <h2 class="mb-4 text-4xl tracking-tight font-extrafont-bold text-center text-accent">
-                                {{ __('Contact Us!') }}</h2>
-                            <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 sm:text-xl">
-                                {{ __('Request a personalized offer online!') }}</p>
-                            <x-forms.contact />
-                        </div>
-                    </section>
+            @if (!$property->isSale())
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+                    <div class="">
+                        <section class="bg-white rounded-xl">
+                            <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+                                <h2 class="mb-4 text-4xl tracking-tight font-extrafont-bold text-center text-accent">
+                                    {{ __('Contact Us!') }}</h2>
+                                <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 sm:text-xl">
+                                    {{ __('Request a personalized offer online!') }}</p>
+                                <x-forms.contact />
+                            </div>
+                        </section>
 
-                </div>
-                <div class="space-y-4 p-4">
-                    <div class="space-y-4">
-                        <h2 class="text-3xl">{{ __('Features') }}</h2>
-                        <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
-                            @if ($property->services && count($property->services) > 0)
-                                @php
-                                    $allItems = collect($property->services)
-                                        ->merge($property->tags ?? [])
-                                        ->sortBy(function ($item) {
-                                            // Ékezetek eltávolítása és kisbetűsítés a rendezéshez
-                                            $normalized = strtolower($item);
-                                            $normalized = str_replace(
-                                                ['á', 'é', 'í', 'ó', 'ő', 'ú', 'ű', 'ü', 'ö'],
-                                                ['a', 'e', 'i', 'o', 'o', 'u', 'u', 'u', 'o'],
-                                                $normalized,
-                                            );
-                                            return $normalized;
-                                        });
-                                @endphp
-                                @foreach ($allItems as $item)
-                                    <li class="jellemzok pb-1">
-                                        @if (app()->getLocale() === 'en')
-                                            {{ Translate::whereName($item)->first()?->translated ?? $item }}
-                                        @else
-                                            {{ $item }}
-                                        @endif
-                                    </li>
-                                @endforeach
-                            @endif
-                        </ul>
                     </div>
+                    <div class="space-y-4 p-4">
+                        <div class="space-y-4">
+                            <h2 class="text-3xl">{{ __('Features') }}</h2>
+                            <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
+                                @if ($property->services && count($property->services) > 0)
+                                    @php
+                                        $allItems = collect($property->services)
+                                            ->merge($property->tags ?? [])
+                                            ->sortBy(function ($item) {
+                                                // Ékezetek eltávolítása és kisbetűsítés a rendezéshez
+                                                $normalized = strtolower($item);
+                                                $normalized = str_replace(
+                                                    ['á', 'é', 'í', 'ó', 'ő', 'ú', 'ű', 'ü', 'ö'],
+                                                    ['a', 'e', 'i', 'o', 'o', 'u', 'u', 'u', 'o'],
+                                                    $normalized,
+                                                );
+                                                return $normalized;
+                                            });
+                                    @endphp
+                                    @foreach ($allItems as $item)
+                                        <li class="jellemzok pb-1">
+                                            @if (app()->getLocale() === 'en')
+                                                {{ Translate::whereName($item)->first()?->translated ?? $item }}
+                                            @else
+                                                {{ $item }}
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        </div>
 
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
+
     <div class="relative bg-cover bg-center bg-no-repeat"
         style="background-image: url({{ Vite::asset('resources/images/the-office-building-2025-04-02-15-55-34-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white to-white/30"></div>

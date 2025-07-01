@@ -65,7 +65,7 @@
     <div class="{{ $small ? 'p-3 pl-4' : 'p-6 pl-8' }}">
         <h3 class="{{ $small ? 'text-lg' : 'text-xl' }} font-bold mb-2">{{ $title }}</h3>
         <p class="{{ $small ? 'text-gray-700 text-xs min-h-16' : 'text-gray-700 min-h-24' }}">
-            {!! $description !!}
+            {!! $description ?? 'Nincs' !!}
         </p>
         <a href="{{ $link ?? '#' }}"
             class="inline-block {{ $small ? 'mb-2 px-3 py-1 text-sm' : 'mb-4 px-6 py-2' }} bg-primary/70 text-white rounded group-hover:bg-primary/90 transition-colors duration-300 ease-in-out">

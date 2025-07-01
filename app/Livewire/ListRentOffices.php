@@ -63,7 +63,7 @@ final class ListRentOffices extends Component
         if ($this->officeName) {
             $office = Offices::where('title', $this->officeName)->first();
 
-            $this->redirect(route('properties.show', ['property' => $office]));
+            $this->redirect(localized_route('properties.show', ['property' => $office->slug]));
         }
 
         $this->updateTotalOffices();

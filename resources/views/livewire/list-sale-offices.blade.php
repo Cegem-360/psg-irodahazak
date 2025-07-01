@@ -60,18 +60,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     @foreach ($offices ?? [] as $office)
                         <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title" :title="$office->title"
-                            :description="$office->cim_irsz .
-                                ' ' .
-                                $office->cim_varos .
-                                ', ' .
-                                '<br> <strong>Összterület:</strong> ' .
-                                $office->total_area .
-                                ' m²<br> <strong>Ár: </strong> ' .
-                                $office->min_berleti_dij .
-                                ' ' .
-                                $office->min_berleti_dij_addons"
-                            :link="localized_route('properties.show-for-sale', ['property'=> $office->slug])"
-                            :key="$office->id" :small="true" />
+                            :description="$office->getAddressFormatedForSale()" :link="localized_route('properties.show-for-sale', ['property' => $office->slug])" :key="$office->id" :small="true" />
                     @endforeach
                 </div>
             </div>
