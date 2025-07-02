@@ -86,7 +86,7 @@ Route::group(['as' => 'en.'], function (): void {
 
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
     Route::get('/properties/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
-    Route::get('/properties/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
+    Route::get('/properties-for-sale/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
     Route::view('/favorites', 'pages.favorites')->name('favorites');
     Route::get('/news-blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/news-blog/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
