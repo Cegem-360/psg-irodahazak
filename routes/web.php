@@ -56,16 +56,13 @@ Route::get('/blog/kategoria/{category:slug}', [BlogController::class, 'category'
 Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/hirek', [NewsController::class, 'index'])->name('news.index');
 Route::get('/hirek/{slug}', [NewsController::class, 'show'])->name('news.show');
-Route::get('office-buildings-for-sale', function () {
-    return redirect()->route('en.properties.show-for-sale');
-})->name('en.elado-irodahazak');
+
 // English routes (different URLs, same functionality)
 Route::group(['as' => 'en.'], function (): void {
     Route::view('/contact', 'index')->name('home');
     Route::view('/data-sheet', 'index')->name('adatlap-oldal');
     Route::view('/offices-for-rent', 'index')->name('kiado-irodak');
     Route::view('/office-buildings-for-sale', 'index')->name('elado-irodahazak');
-    Route::view('/office-buildings-for-sale', 'index')->name('properties.show-for-sale');
     Route::view('/about-us', 'index')->name('rolunk');
     Route::view('/contact-us', 'index')->name('kapcsolat');
     Route::view('/privacy-policy', 'index')->name('privacy-policy');
@@ -79,7 +76,7 @@ Route::group(['as' => 'en.'], function (): void {
         /*   $queryParams['category'] = $category; */
 
         if ($category === 'elado-irodak') {
-            return redirect()->route('en.properties.show-for-sale');
+            return redirect()->route('en.elado-irodahazak');
         }
 
         return redirect()->route('en.kiado-irodak');
