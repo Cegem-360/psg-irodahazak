@@ -38,7 +38,7 @@
                 </li>
                 <li>
                     <a href="{{ localized_route('elado-irodahazak') }}"
-                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['elado-irodahazak', 'en.elado-irodahazak']) ? 'active' : '' }}">
+                        class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['elado-irodahazak', 'en.properties.show-for-sale']) ? 'active' : '' }}">
                         {{ __('navigation.office_buildings_for_sale') }}</a>
                 </li>
                 @if (app()->getLocale() === 'hu')

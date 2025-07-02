@@ -19,7 +19,7 @@
             <x-pages.adatlap-oldal />
         @elseif (request()->routeIs('kiado-irodak') || request()->routeIs('en.kiado-irodak'))
             @include('pages.offices-for-rent')
-        @elseif (request()->routeIs('elado-irodahazak') || request()->routeIs('en.elado-irodahazak'))
+        @elseif (request()->routeIs('elado-irodahazak') || request()->routeIs('en.properties.show-for-sale'))
             @include('pages.offices-for-sale')
         @elseif (request()->routeIs('rolunk') || request()->routeIs('en.rolunk'))
             <x-pages.rolunk />
