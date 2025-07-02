@@ -13,10 +13,14 @@ final class Translate extends Model
         'translated',
         'date',
         'lang',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [
         'date' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     protected $attributes = [

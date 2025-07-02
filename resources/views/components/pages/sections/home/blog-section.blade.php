@@ -2,7 +2,7 @@
     <div class="max-w-screen-xl mx-auto px-4 pt-6 pb-16 space-y-8">
         <h2 class="">
             <span
-                class="bg-gradient-to-r from-accentdark to-accent text-white text-2xl font-bold py-2 px-6 rounded">BLOG</span>
+                class="bg-gradient-to-r from-accentdark to-accent text-white text-2xl font-bold py-2 px-6 rounded">{{ __('BLOG') }}</span>
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto">

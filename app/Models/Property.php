@@ -134,11 +134,6 @@ final class Property extends Model
             ->orderBy('ord');
     }
 
-    public function category(): HasMany
-    {
-        return $this->hasMany(Category::class);
-    }
-
     public function getAddressFormated(): string
     {
         $address = mb_trim(sprintf('%s %s, %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, $this->cim_hazszam));
@@ -150,7 +145,7 @@ final class Property extends Model
 
     public function getAddressFormatedForSale(): string
     {
-        return "{$this->cim_irsz} {$this->cim_varos},<br><strong>".__('Total Area').":</strong> {$this->total_area} m²<br><strong>".__('Price').":</strong> {$this->min_berleti_dij} {$this->min_berleti_dij_addons}";
+        return sprintf('%s %s,<br><strong>', $this->cim_irsz, $this->cim_varos).__('Total Area').sprintf(':</strong> %s m²<br><strong>', $this->total_area).__('Price').sprintf(':</strong> %s %s', $this->min_berleti_dij, $this->min_berleti_dij_addons);
     }
 
     /**
@@ -212,17 +207,10 @@ final class Property extends Model
     }
 
     #[Scope]
-    protected function byCategory(Builder $query, string|array $category): void
+    protected function byCategory(Builder $query, string $category): void
     {
-        if (is_array($category)) {
-            $query->whereHas('category', function (Builder $q) use ($category): void {
-                $q->whereIn('name', $category);
-            });
-        } else {
-            $query->whereHas('category', function (Builder $q) use ($category): void {
-                $q->where('name', $category);
-            });
-        }
+        $query->whereJsonContains('categories', $category);
+
     }
 
     #[Scope]

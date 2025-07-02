@@ -428,8 +428,7 @@ final class PropertyResource extends Resource
             'create' => CreateProperty::route('/create'),
             'view' => ViewProperty::route('/{record}'),
             'edit' => EditProperty::route('/{record}/edit'),
-            'rent' => PropertyResource\Pages\ListRentProperties::route('/rent'),
-            'sale' => PropertyResource\Pages\ListSaleProperties::route('/sale'),
+
         ];
     }
 }

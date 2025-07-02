@@ -4,7 +4,7 @@
     <div class="max-w-screen-xl mx-auto px-4 py-16 space-y-8">
         <h2 class="">
             <span
-                class="bg-gradient-to-r from-accentdark to-accent text-white text-2xl font-bold py-2 px-6 rounded">HÍREK</span>
+                class="uppercase bg-gradient-to-r from-accentdark to-accent text-white text-2xl font-bold py-2 px-6 rounded">{{ __('News') }}</span>
         </h2>
 
         <div class="grid grid-cols-1 gap-4 md:gap-8 max-w-screen-xl mx-auto">
@@ -16,8 +16,7 @@
                     <div class="p-8 pt-10">
                         {!! $news->excerpt !!}
                         <a href="{{ localized_route('news.show', ['slug' => $news->slug]) }}"
-                            class="inline-block mt-6 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">Teljes
-                            cikk</a>
+                            class="inline-block mt-6 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">{{ __('Full article') }}</a>
                     </div>
                 </div>
             @endforeach

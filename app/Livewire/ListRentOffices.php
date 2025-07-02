@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Models\Category;
 use App\Models\Property as Offices;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
@@ -48,7 +49,7 @@ final class ListRentOffices extends Component
 
     public ?string $title;
 
-    public ?string $category;
+    public ?string $category = null;
 
     public function mount($queryParams = []): void
     {
@@ -62,7 +63,7 @@ final class ListRentOffices extends Component
         $this->priceMin = $queryParams['price_min'] ?? request('price_min', '');
         $this->priceMax = $queryParams['price_max'] ?? request('price_max', '');
         $this->includeAgglomeration = $queryParams['include_agglomeration'] ?? request('include_agglomeration', false);
-        $this->category = $queryParams['category'] ?? request('category', 'kiado-irodak');
+        $this->category = $queryParams['category'] ?? request('category', null);
         if ($this->officeName) {
             $office = Offices::where('title', $this->officeName)->first();
 
@@ -103,14 +104,7 @@ final class ListRentOffices extends Component
 
     public function render()
     {
-        if ($this->category) {
-            $offices = Offices::query()
-                ->byCategory($this->category)
-                ->rent()
-                ->active()
-                ->orderBy($this->sortField, $this->sortDirection)
-                ->paginate($this->perPage);
-        }
+
         $offices = $this->getOffices();
 
         return view('livewire.list-rent-offices', [
@@ -155,35 +149,56 @@ final class ListRentOffices extends Component
             $query->budapestOnly();
         }
 
-        // If agglomeration is included, return only agglomeration properties and skip district filters
-        if ($this->includeAgglomeration) {
-            // Apply office name filter
-            if ($this->officeName) {
-                $query->byOfficeName($this->officeName);
-            }
-
-            // Apply area range filter
-            if ($this->areaMin || $this->areaMax) {
-                $query->areaRange(
-                    $this->areaMin ? (int) $this->areaMin : null,
-                    $this->areaMax ? (int) $this->areaMax : null
-                );
-            }
-
-            // Apply price range filter
-            if ($this->priceMin || $this->priceMax) {
-                $query->priceRange(
-                    $this->priceMin ? (int) $this->priceMin : null,
-                    $this->priceMax ? (int) $this->priceMax : null
-                );
-            }
-
-            return $query->agglomeration();
+        if ($this->category) {
+            $category_model = Category::where('slug', $this->category)->first();
+            $query->byCategory($category_model->name);
         }
 
         // Apply search filter
         if ($this->search) {
-            $query->searchText($this->search);
+            $searchTerms = explode(' ', mb_trim($this->search));
+
+            if (
+                mb_stripos($this->search, '2 csöves fan-coil') !== false ||
+                mb_stripos($this->search, '2 csoves fan-coil') !== false ||
+                mb_stripos($this->search, '2 csöves') !== false ||
+                mb_stripos($this->search, '2 csoves') !== false
+            ) {
+                $query->whereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%2 csöves fan-coil%']);
+            } elseif (
+                mb_stripos($this->search, '4 csöves fan-coil') !== false ||
+                mb_stripos($this->search, '4 csoves fan-coil') !== false ||
+                mb_stripos($this->search, '4 csöves') !== false ||
+                mb_stripos($this->search, '4 csoves') !== false
+            ) {
+                $query->whereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%4 csöves fan-coil%']);
+            } else {
+                $query->searchText($this->search);
+            }
+        }
+        // Apply area range filter
+        if ($this->areaMin || $this->areaMax) {
+            $query->areaRange(
+                $this->areaMin ? (int) $this->areaMin : null,
+                $this->areaMax ? (int) $this->areaMax : null
+            );
+        }
+
+        // Apply price range filter
+        if ($this->priceMin || $this->priceMax) {
+            $query->priceRange(
+                $this->priceMin ? (int) $this->priceMin : null,
+                $this->priceMax ? (int) $this->priceMax : null
+            );
+        }
+        // Apply office name filter
+        if ($this->officeName) {
+            $query->byOfficeName($this->officeName);
+        }
+        // If agglomeration is included, return only agglomeration properties and skip district filters
+        if ($this->includeAgglomeration) {
+
+            return $query->agglomeration();
         }
 
         // Apply district filter (single district for backward compatibility)
@@ -199,27 +214,6 @@ final class ListRentOffices extends Component
             if ($selectedDistricts !== []) {
                 $query->inDistricts($selectedDistricts);
             }
-        }
-
-        // Apply office name filter
-        if ($this->officeName) {
-            $query->byOfficeName($this->officeName);
-        }
-
-        // Apply area range filter
-        if ($this->areaMin || $this->areaMax) {
-            $query->areaRange(
-                $this->areaMin ? (int) $this->areaMin : null,
-                $this->areaMax ? (int) $this->areaMax : null
-            );
-        }
-
-        // Apply price range filter
-        if ($this->priceMin || $this->priceMax) {
-            $query->priceRange(
-                $this->priceMin ? (int) $this->priceMin : null,
-                $this->priceMax ? (int) $this->priceMax : null
-            );
         }
 
         return $query;

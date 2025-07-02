@@ -5,8 +5,9 @@
 
 <div class="rolunk-mondtak mt-12">
     <div class="relative">
-        <h2 class="my-16 font-bold text-gray-500 text-5xl text-center drop-shadow text-logogray/80">
-            Rólunk mondták</h2>
+        <h2 class="my-16 font-bold text-accent text-5xl text-center drop-shadow text-logogray/80">
+            {{ __('Testimonials') }}
+        </h2>
         <div class="absolute -right-8 -top-10 z-1 w-1/3 text-accent/30 blur-3xl">
             <x-svg.psg-irodahazak-symbol-1 />
         </div>
