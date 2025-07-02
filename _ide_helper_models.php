@@ -703,14 +703,18 @@ namespace App\Models{
  * @property string $translated
  * @property \Carbon\CarbonImmutable|null $date
  * @property string|null $lang
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Translate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Translate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Translate query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Translate whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Translate whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Translate whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Translate whereLang($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Translate whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Translate whereTranslated($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Translate whereUpdatedAt($value)
  */
 	final class Translate extends \Eloquent {}
 }
