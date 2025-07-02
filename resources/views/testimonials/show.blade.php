@@ -13,7 +13,7 @@
                 <nav class="flex" aria-label="Breadcrumb">
                     <ol class="flex items-center space-x-4">
                         <li>
-                            <a href="{{ route('home') }}" class="text-gray-500 hover:text-gray-700">
+                            <a href="{{ localized_route('home') }}" class="text-gray-500 hover:text-gray-700">
                                 {{ __('Főoldal') }}
                             </a>
                         </li>
@@ -22,7 +22,8 @@
                                 fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                 <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
                             </svg>
-                            <a href="{{ route('testimonials.index') }}" class="text-gray-500 hover:text-gray-700">
+                            <a href="{{ localized_route('testimonials.index') }}"
+                                class="text-gray-500 hover:text-gray-700">
                                 {{ __('Rólunk mondták') }}
                             </a>
                         </li>
