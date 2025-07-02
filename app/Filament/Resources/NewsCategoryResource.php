@@ -30,6 +30,8 @@ final class NewsCategoryResource extends Resource
 {
     protected static ?string $model = NewsCategory::class;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $navigationIcon = 'heroicon-o-folder';
 
     protected static ?string $navigationLabel = 'Hírkategóriák';

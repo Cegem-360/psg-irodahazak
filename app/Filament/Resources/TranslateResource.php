@@ -26,6 +26,14 @@ final class TranslateResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Fordítások';
+
+    protected static ?string $modelLabel = 'Fordítás';
+
+    protected static ?string $pluralModelLabel = 'Fordítások';
+
+    protected static ?string $navigationGroup = 'Fordítások';
+
     public static function form(Form $form): Form
     {
         return $form

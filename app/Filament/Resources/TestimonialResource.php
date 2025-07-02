@@ -10,8 +10,8 @@ use App\Filament\Resources\TestimonialResource\Pages\ListTestimonials;
 use App\Filament\Resources\TestimonialResource\Pages\ViewTestimonial;
 use App\Models\Testimonial;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -21,7 +21,6 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -31,39 +30,37 @@ final class TestimonialResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Rolunk mondták';
+
+    protected static ?string $modelLabel = 'Rolunk';
+
+    protected static ?string $pluralModelLabel = 'Rolunk';
+
+    protected static ?string $navigationGroup = 'Rolunk mondták';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('client_name')
+                    ->label('Név')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('client_position')
-                    ->maxLength(255),
-                TextInput::make('client_company')
-                    ->maxLength(255),
-                Textarea::make('testimonial')
+
+                RichEditor::make('testimonial')
+                    ->label('Vélemény')
                     ->required()
                     ->columnSpanFull(),
                 FileUpload::make('client_image')
+                    ->label('Ügyfél képe')
                     ->directory('testimonial/images')
                     ->image(),
-                TextInput::make('company_logo')
-                    ->maxLength(255),
-                TextInput::make('rating')
-                    ->required()
-                    ->numeric()
-                    ->default(5),
-                TextInput::make('project_type')
-                    ->maxLength(255),
+
                 Toggle::make('is_featured')
                     ->required(),
                 Toggle::make('is_active')
                     ->required(),
-                TextInput::make('order')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
+
                 Select::make('lang')
                     ->required()
                     ->options([
@@ -79,27 +76,19 @@ final class TestimonialResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('client_name')
+                    ->label('Cím')
                     ->searchable(),
-                TextColumn::make('client_position')
-                    ->searchable(),
-                TextColumn::make('client_company')
-                    ->searchable(),
-                ImageColumn::make('client_image'),
-                TextColumn::make('company_logo')
-                    ->searchable(),
-                TextColumn::make('rating')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('project_type')
-                    ->searchable(),
-                IconColumn::make('is_featured')
-                    ->boolean(),
                 IconColumn::make('is_active')
+                    ->label('Aktív')
                     ->boolean(),
-                TextColumn::make('order')
-                    ->numeric()
-                    ->sortable(),
+
+                TextColumn::make('testimonial')
+                    ->label('Vélemény')
+                    ->searchable()
+                    ->limit(50),
+
                 TextColumn::make('lang')
+                    ->label('Nyelv')
                     ->sortable()
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'hu' => 'Magyar',
@@ -107,9 +96,9 @@ final class TestimonialResource extends Resource
                         default => $state,
                     }),
                 TextColumn::make('created_at')
+                    ->label('Létrehozva')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

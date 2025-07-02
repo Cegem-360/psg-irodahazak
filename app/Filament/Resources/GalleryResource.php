@@ -38,6 +38,8 @@ final class GalleryResource extends Resource
 
     protected static ?string $navigationGroup = 'Média';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form

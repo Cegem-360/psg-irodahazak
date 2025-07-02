@@ -24,10 +24,6 @@
     <div class="p-6">
         <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $property->title }}</h3>
 
-        @if ($property->lead)
-            <p class="text-gray-600 text-sm mb-4">{{ Str::limit(strip_tags($property->lead), 120) }}</p>
-        @endif
-
         <div class="flex justify-between items-center">
             @if ($property->images->count() > 0)
                 <span class="text-sm text-gray-500">{{ $property->images->count() }} kép</span>

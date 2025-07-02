@@ -23,7 +23,6 @@ use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -59,7 +58,9 @@ final class QuoteRequestResource extends Resource
                             ->label('Telefonszám')
                             ->required()
                             ->maxLength(20),
-
+                        TextInput::make('company')
+                            ->label('Cég (opcionális)')
+                            ->maxLength(255),
                         TextInput::make('email')
                             ->label('Email cím')
                             ->email()
@@ -70,16 +71,10 @@ final class QuoteRequestResource extends Resource
 
                 Section::make('Kérés részletei')
                     ->schema([
-                        Select::make('property_id')
-                            ->label('Ingatlan')
-                            ->relationship('property', 'title')
-                            ->searchable()
-                            ->preload(),
-
-                        TextInput::make('property_name')
-                            ->label('Ingatlan neve (mentett)')
-                            ->disabled()
-                            ->dehydrated(false),
+                        TextInput::make('subject')
+                            ->label('Tárgy')
+                            ->required()
+                            ->maxLength(255),
 
                         Textarea::make('message')
                             ->label('Üzenet')
@@ -121,7 +116,8 @@ final class QuoteRequestResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                BadgeColumn::make('status')
+                TextColumn::make('status')
+                    ->badge()
                     ->label('Állapot')
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'new' => 'Új',
@@ -149,11 +145,10 @@ final class QuoteRequestResource extends Resource
                     ->label('Email')
                     ->searchable(),
 
-                TextColumn::make('property.title')
-                    ->label('Ingatlan')
+                TextColumn::make('subject')
+                    ->label('Tárgy')
                     ->searchable()
-                    ->sortable()
-                    ->default('Nincs megadva'),
+                    ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label('Létrehozva')

@@ -18,7 +18,6 @@ final class Property extends Model
     protected $fillable = [
         'title',
         'status',
-        'lead',
         'content',
         'date',
         'ord',
@@ -79,9 +78,13 @@ final class Property extends Model
         'slug',
         'featured',
         'property_photos',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [
+        'updated_at' => 'datetime',
+        'created_at' => 'datetime',
         'featured' => 'boolean',
         'vat' => 'boolean',
         'property_photos' => 'array',
@@ -334,7 +337,6 @@ final class Property extends Model
                 $q->where(function (Builder $subQ) use ($term): void {
                     $subQ->where('title', 'like', '%'.$term.'%')
                         ->orWhere('content', 'like', '%'.$term.'%')
-                        ->orWhere('lead', 'like', '%'.$term.'%')
                         // Tags tömb mezőben keresés - case-insensitive JSON keresés
                         ->orWhereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%'.$term.'%'])
                         // Services tömb mezőben keresés - case-insensitive JSON keresés

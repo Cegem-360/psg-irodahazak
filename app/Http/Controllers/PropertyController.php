@@ -44,8 +44,7 @@ final class PropertyController extends Controller
         if (request('search')) {
             $query->where(function ($q): void {
                 $q->where('title', 'like', '%'.request('search').'%')
-                    ->orWhere('content', 'like', '%'.request('search').'%')
-                    ->orWhere('lead', 'like', '%'.request('search').'%');
+                    ->orWhere('content', 'like', '%'.request('search').'%');
             });
         }
 

@@ -35,6 +35,8 @@ final class ContentResource extends Resource
 
     protected static ?string $navigationGroup = 'Tartalomkezelés';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form

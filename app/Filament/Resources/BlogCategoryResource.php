@@ -42,6 +42,8 @@ final class BlogCategoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Blog';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form

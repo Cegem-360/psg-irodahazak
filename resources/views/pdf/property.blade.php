@@ -1,5 +1,5 @@
 @use('Illuminate\Support\Facades\Storage')
-
+{{-- @use('') --}}
 {{-- 
     PSG Ingatlan PDF Template
     Fejlett képkeresési logikával és Storage API használatával
@@ -50,10 +50,11 @@
                 <div class="text-center pt-8">
                     <h1 class="text-xl font-bold mb-1">{{ $property->title }}</h1>
                     <div class="text-sm font-medium opacity-90">
-                        @if ($property->cim_irsz && $property->cim_varos && $property->cim_utca && $property->cim_hazszam)
-                            {{ $property->cim_irsz }} {{ $property->cim_varos }}, {{ $property->cim_utca }}
-                            {{ $property->cim_hazszam }}.
-                        @endif
+
+                        {{ $property->cim_irsz ?? '' }} {{ $property->cim_varos ?? '' }},
+                        {{ $property->cim_utca ?? '' }} {{ $property->cim_utca_addons ?? '' }}
+                        {{ $property->cim_hazszam ?? '' }}
+
                     </div>
                 </div>
             </div>
@@ -217,7 +218,7 @@
                         </div>
                     @endif
 
-                    @if ($property->parkolas_dija)
+                    @if ($property->min_parkolas_dija)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Parking Fee') }}:</span>
                             <span
@@ -296,26 +297,25 @@
                     </div>
                 </div>
             @endif
-
-            <!-- Description -->
-            @if ($property->content || $property->lead)
+            <!-- Egyéb mezők -->
+            @if ($property->egyeb)
                 <div class="mt-6 px-6 py-4 bg-gray-50">
-                    @if ($property->lead)
-                        <div class="text-sm text-gray-800 mb-3">
-                            <strong>{!! $property->lead !!} </strong>
-                        </div>
-                    @endif
-
-                    @if ($property->content)
-                        <div class="text-sm text-gray-700 leading-relaxed">
-                            {!! $property->content !!}
-                        </div>
-                    @endif
+                    <div class="text-sm text-gray-700 leading-relaxed">
+                        @php
+                            $Parsedown = new Parsedown();
+                            $Parsedown->setMarkupEscaped(true);
+                            echo $Parsedown->text($property->egyeb);
+                        @endphp
+                    </div>
                 </div>
             @endif
-            @if ($property->egyeb)
-                <div>
-                    {!! $property->egyeb !!}
+
+            <!-- Description -->
+            @if ($property->content)
+                <div class="mt-6 px-6 py-4 bg-gray-50">
+                    <div class="text-sm text-gray-700 leading-relaxed">
+                        {!! $property->content !!}
+                    </div>
                 </div>
             @endif
 

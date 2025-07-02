@@ -547,8 +547,7 @@ namespace App\Models{
  * @property string $email
  * @property string|null $company
  * @property string|null $message
- * @property int|null $property_id
- * @property string|null $property_name
+ * @property string|null $subject
  * @property string $status
  * @property \Carbon\CarbonImmutable|null $contacted_at
  * @property string|null $notes
@@ -568,9 +567,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest whereNotes($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest wherePropertyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest wherePropertyName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest whereSubject($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest whereUpdatedAt($value)
  */
 	final class QuoteRequest extends \Eloquent {}

@@ -35,6 +35,8 @@ final class ReferenceResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Referenciák';
 
+    protected static ?string $navigationGroup = 'Referenciák';
+
     protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
