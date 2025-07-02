@@ -62,7 +62,7 @@ Route::group(['as' => 'en.'], function (): void {
     Route::view('/contact', 'index')->name('home');
     Route::view('/data-sheet', 'index')->name('adatlap-oldal');
     Route::view('/offices-for-rent', 'index')->name('kiado-irodak');
-    Route::view('/office-buildings-for-sale', 'index')->name('elado-irodahazak');
+    Route::view('/office-buildings-for-sale', 'index')->name('properties.show-for-sale');
     Route::view('/about-us', 'index')->name('rolunk');
     Route::view('/contact-us', 'index')->name('kapcsolat');
     Route::view('/privacy-policy', 'index')->name('privacy-policy');
