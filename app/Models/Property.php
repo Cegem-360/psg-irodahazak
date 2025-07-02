@@ -69,9 +69,9 @@ final class Property extends Model
         'lang',
         'cimke',
         'service',
+        'categories',
         'maps',
         'elado_v_kiado',
-        'elado_v_kiado_addons',
         'updated',
         'egyeb',
         'vat',
@@ -90,6 +90,7 @@ final class Property extends Model
         'property_photos' => 'array',
         'tags' => 'array',
         'services' => 'array',
+        'categories' => 'array',
     ];
 
     public static function countByDistrict(): array
@@ -116,20 +117,6 @@ final class Property extends Model
         return $result;
     }
 
-    public function getAddressFormated(): string
-    {
-        $address = mb_trim(sprintf('%s %s, %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, $this->cim_hazszam));
-        $rent = __('Rental fee');
-        $address .= '<br><strong>'.$rent.':</strong> '.$this->min_berleti_dij.' - '.$this->max_berleti_dij.' EUR/m2/hó<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' HUF/m2/hó';
-
-        return $address ?: null;
-    }
-
-    public function getAddressFormatedForSale(): string
-    {
-        return "{$this->cim_irsz} {$this->cim_varos},<br><strong>".__('Total Area').":</strong> {$this->total_area} m²<br><strong>".__('Price').":</strong> {$this->min_berleti_dij} {$this->min_berleti_dij_addons}";
-    }
-
     public function services(): HasMany
     {
         return $this->hasMany(Service::class);
@@ -145,6 +132,25 @@ final class Property extends Model
         return $this->hasMany(Gallery::class, 'target_table_id')
             ->where('target_table', 'property')
             ->orderBy('ord');
+    }
+
+    public function category(): HasMany
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function getAddressFormated(): string
+    {
+        $address = mb_trim(sprintf('%s %s, %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, $this->cim_hazszam));
+        $rent = __('Rental fee');
+        $address .= '<br><strong>'.$rent.':</strong> '.$this->min_berleti_dij.' - '.$this->max_berleti_dij.' EUR/m2/hó<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' HUF/m2/hó';
+
+        return $address ?: null;
+    }
+
+    public function getAddressFormatedForSale(): string
+    {
+        return "{$this->cim_irsz} {$this->cim_varos},<br><strong>".__('Total Area').":</strong> {$this->total_area} m²<br><strong>".__('Price').":</strong> {$this->min_berleti_dij} {$this->min_berleti_dij_addons}";
     }
 
     /**
@@ -203,6 +209,20 @@ final class Property extends Model
     public function isSale(): bool
     {
         return $this->elado_v_kiado === 'elado-iroda';
+    }
+
+    #[Scope]
+    protected function byCategory(Builder $query, string|array $category): void
+    {
+        if (is_array($category)) {
+            $query->whereHas('category', function (Builder $q) use ($category): void {
+                $q->whereIn('name', $category);
+            });
+        } else {
+            $query->whereHas('category', function (Builder $q) use ($category): void {
+                $q->where('name', $category);
+            });
+        }
     }
 
     #[Scope]

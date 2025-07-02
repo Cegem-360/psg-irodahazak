@@ -118,6 +118,17 @@ namespace App\Models{
 /**
  * 
  *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category query()
+ */
+	final class Category extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property int $id
  * @property string|null $title
  * @property string|null $status
@@ -398,7 +409,6 @@ namespace App\Models{
  * @property bool $featured
  * @property array<array-key, mixed>|null $property_photos
  * @property string|null $status
- * @property string|null $lead
  * @property string|null $content
  * @property string $date
  * @property int|null $ord
@@ -424,6 +434,7 @@ namespace App\Models{
  * @property string|null $cim_hazszam
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Service> $services
+ * @property array<array-key, mixed>|null $categories
  * @property string|null $maps_lat
  * @property string|null $maps_lng
  * @property string|null $azonosito
@@ -452,12 +463,13 @@ namespace App\Models{
  * @property string|null $service
  * @property string|null $maps
  * @property string|null $elado_v_kiado
- * @property string|null $elado_v_kiado_addons
  * @property string|null $updated
  * @property string|null $egyeb
  * @property bool $vat
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Category> $category
+ * @property-read int|null $category_count
  * @property-read string|null $first_image_url
  * @property-read array $image_urls
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Gallery> $images
@@ -468,6 +480,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereAzonosito($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCategories($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCimHazszam($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCimIrsz($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCimUtca($value)
@@ -481,7 +494,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereDistrict($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereEgyeb($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereEladoVKiado($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereEladoVKiadoAddons($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereEnContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereFeatured($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereId($value)
@@ -491,7 +503,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereKozosTeruletiArany($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereKozosTeruletiAranyAddons($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereLang($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereLead($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereMaps($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereMapsLat($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereMapsLng($value)
@@ -646,16 +657,13 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $client_name
- * @property string|null $client_position
  * @property string|null $client_company
  * @property string $testimonial
  * @property string|null $client_image
- * @property string|null $company_logo
- * @property int $rating
  * @property string|null $project_type
  * @property bool $is_featured
  * @property bool $is_active
- * @property int $order
+ * @property int|null $order
  * @property string $lang
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
@@ -665,8 +673,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereClientCompany($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereClientImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereClientName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereClientPosition($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereCompanyLogo($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereIsActive($value)
@@ -674,7 +680,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereLang($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereProjectType($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereRating($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereTestimonial($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereUpdatedAt($value)
  */

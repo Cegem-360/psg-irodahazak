@@ -224,6 +224,7 @@
                                             {{ __('modal.send') }}
                                         </button>
                                     </div>
+                                </div>
                             </form>
                         </div>
                     </div>
