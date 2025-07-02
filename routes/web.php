@@ -59,7 +59,6 @@ Route::get('/hirek/{slug}', [NewsController::class, 'show'])->name('news.show');
 
 // English routes (different URLs, same functionality)
 Route::group(['as' => 'en.'], function (): void {
-    Route::view('/', 'index')->name('home');
     Route::view('/contact', 'index')->name('home');
     Route::view('/data-sheet', 'index')->name('adatlap-oldal');
     Route::view('/offices-for-rent', 'index')->name('kiado-irodak');
@@ -74,7 +73,7 @@ Route::group(['as' => 'en.'], function (): void {
     Route::get('/budapest-en/{category}', function ($category) {
         $queryParams = [];
 
-        $queryParams['category'] = $category;
+        /*   $queryParams['category'] = $category; */
 
         if ($category === 'elado-irodak') {
             return redirect()->route('en.elado-irodahazak');
