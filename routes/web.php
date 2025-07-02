@@ -60,7 +60,7 @@ Route::get('/hirek/{slug}', [NewsController::class, 'show'])->name('news.show');
 // English routes (different URLs, same functionality)
 Route::group(['as' => 'en.'], function (): void {
     Route::view('/', 'index')->name('home');
-    /* Route::view('/contact', 'index')->name('home'); */
+    Route::view('/contact', 'index')->name('home');
     Route::view('/data-sheet', 'index')->name('adatlap-oldal');
     Route::view('/offices-for-rent', 'index')->name('kiado-irodak');
     Route::view('/office-buildings-for-sale', 'index')->name('elado-irodahazak');
