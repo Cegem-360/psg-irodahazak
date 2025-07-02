@@ -76,7 +76,7 @@ Route::group(['as' => 'en.'], function (): void {
         /*   $queryParams['category'] = $category; */
 
         if ($category === 'elado-irodak') {
-            return redirect()->route('en.elado-irodahazak');
+            return redirect()->route('en.properties.show-for-sale');
         }
 
         return redirect()->route('en.kiado-irodak');
