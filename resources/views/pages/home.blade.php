@@ -58,6 +58,8 @@
 
     <x-pages.sections.home.blog-section />
 
-    <x-pages.sections.home.hirek-section />
+    @if (app()->getLocale() === 'hu')
+        <x-pages.sections.home.hirek-section />
+    @endif
 
 </div>
