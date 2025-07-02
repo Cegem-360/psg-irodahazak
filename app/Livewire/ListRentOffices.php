@@ -48,6 +48,8 @@ final class ListRentOffices extends Component
 
     public ?string $title;
 
+    public ?string $category;
+
     public function mount($queryParams = []): void
     {
         // Initialize filters from queryParams if provided, otherwise from request parameters
@@ -60,6 +62,7 @@ final class ListRentOffices extends Component
         $this->priceMin = $queryParams['price_min'] ?? request('price_min', '');
         $this->priceMax = $queryParams['price_max'] ?? request('price_max', '');
         $this->includeAgglomeration = $queryParams['include_agglomeration'] ?? request('include_agglomeration', false);
+        $this->category = $queryParams['category'] ?? request('category', 'kiado-irodak');
         if ($this->officeName) {
             $office = Offices::where('title', $this->officeName)->first();
 
@@ -67,6 +70,7 @@ final class ListRentOffices extends Component
         }
 
         $this->updateTotalOffices();
+
         $this->getOffices();
 
         $this->title = $queryParams['title'] ?? request('title', __('page.title.offices_for_rent'));
@@ -99,6 +103,14 @@ final class ListRentOffices extends Component
 
     public function render()
     {
+        if ($this->category) {
+            $offices = Offices::query()
+                ->byCategory($this->category)
+                ->rent()
+                ->active()
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate($this->perPage);
+        }
         $offices = $this->getOffices();
 
         return view('livewire.list-rent-offices', [

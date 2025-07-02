@@ -36,58 +36,10 @@ Route::middleware(['auth'])->group(function (): void {
 // Budapest irodaház kategória route-ok
 Route::get('/budapest/{category}', function ($category) {
     $queryParams = [];
+    $queryParams['category'] = $category;
 
-    // Kerület alapú szűrések
-    switch ($category) {
-        case 'kiado-pesti-irodak':
-            $queryParams['districts'] = '4,5,6,7,8,9,10,14,15,16,17,18,19,20';
-            $queryParams['title'] = 'Kiadó pesti irodák';
-            break;
-        case 'kiado-belvarosi-irodak':
-            $queryParams['districts'] = '5,6,7';
-            $queryParams['title'] = 'Kiadó belvárosi irodák';
-            break;
-        case 'kiado-v-keruleti-irodak':
-            $queryParams['districts'] = '5';
-            $queryParams['title'] = 'Kiadó V. kerületi irodák';
-            break;
-        case 'kiado-vaci-uti-irodak':
-            $queryParams['districts'] = '13,14';
-            $queryParams['title'] = 'Kiadó Váci úti irodák';
-            break;
-        case 'kiado-budai-irodak':
-            $queryParams['districts'] = '1,2,3,11,12,22';
-            $queryParams['title'] = 'Kiadó budai irodák';
-            break;
-        case 'kiado-bel-budai-irodak':
-            $queryParams['districts'] = '1,2,11,12';
-            $queryParams['title'] = 'Kiadó bel-budai irodák';
-            break;
-        case 'kiado-xi-keruleti-irodak':
-            $queryParams['districts'] = '11';
-            $queryParams['title'] = 'Kiadó XI. kerületi irodák';
-            break;
-        case 'kiado-azonnali-szolgaltatott-irodak':
-            $queryParams['search'] = 'szolgáltatott';
-            $queryParams['title'] = 'Kiadó azonnali szolgáltatott irodák';
-            break;
-        case 'kiado-zold-irodak':
-            $queryParams['search'] = 'zöld';
-            $queryParams['title'] = 'Kiadó zöld irodák';
-            break;
-        case 'kiado-klasszikus-irodahazak':
-            $queryParams['search'] = 'klasszikus';
-            $queryParams['title'] = 'Kiadó klasszikus irodaházak';
-            break;
-        case 'kiado-uj-irodahazak':
-            $queryParams['search'] = 'új';
-            $queryParams['title'] = 'Kiadó új irodaházak';
-            break;
-        case 'elado-irodak':
-            return redirect()->route('elado-irodahazak');
-        default:
-            // Ha nincs találat, átirányítás a főoldalra
-            return redirect()->route('kiado-irodak');
+    if ($category === 'elado-irodak') {
+        return redirect()->route('elado-irodahazak');
     }
 
     return view('pages.filter', ['queryParams' => $queryParams]);

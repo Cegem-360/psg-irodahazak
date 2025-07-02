@@ -11,6 +11,7 @@ use App\Filament\Resources\PropertyResource\Pages\EditProperty;
 use App\Filament\Resources\PropertyResource\Pages\ListProperties;
 use App\Filament\Resources\PropertyResource\Pages\ViewProperty;
 use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
+use App\Models\Category;
 use App\Models\Property;
 use App\Models\Service;
 use App\Models\Tag;
@@ -40,7 +41,7 @@ final class PropertyResource extends Resource
 {
     protected static ?string $model = Property::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $navigationLabel = 'Ingatlanok';
 
@@ -281,6 +282,12 @@ final class PropertyResource extends Resource
                 Select::make('services')
                     ->label('Szolgáltatások')
                     ->options(Service::all()->pluck('name', 'id'))
+                    ->preload()
+                    ->multiple()
+                    ->columnSpanFull(),
+                Select::make('categories')
+                    ->label('Kategóriák')
+                    ->options(Category::all()->pluck('name', 'id'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
