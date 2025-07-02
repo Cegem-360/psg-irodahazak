@@ -27,35 +27,49 @@
     <div class="min-h-screen bg-gray-50">
         <!-- Breadcrumb -->
 
-        <!-- Featured Image -->
-        @if ($news->featured_image)
-            <div class="px-8 mb-8">
-                <img src="{{ Storage::url($news->featured_image) }}" alt="{{ $news->title }}"
-                    class="w-full h-64 lg:h-96 object-cover rounded-lg">
-            </div>
-        @endif
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <article class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <!-- Article Header -->
+                <div class="p-8">
 
-        <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{{ $news->title }}</h1>
+                    <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{{ $news->title }}</h1>
 
-        <!-- Article Content -->
-        <div class="px-8 pb-8">
-            <div class="prose prose-lg max-w-none">
-                {!! $news->content !!}
+                </div>
+
+                <!-- Featured Image -->
+                @if ($news->featured_image)
+                    <div class="px-8 mb-8">
+                        <img src="{{ Storage::url($news->featured_image) }}" alt="{{ $news->title }}"
+                            class="w-full h-64 lg:h-96 object-cover rounded-lg">
+                    </div>
+                @endif
+
+                <!-- Article Content -->
+                <div class="px-8 pb-8">
+                    <div class="prose prose-lg max-w-none">
+                        {!! $news->excerpt !!}
+                    </div>
+                </div>
+
+                <!-- Article Content -->
+                <div class="px-8 pb-8">
+                    <div class="prose prose-lg max-w-none">
+                        {!! $news->content !!}
+                    </div>
+                </div>
+            </article>
+
+            <!-- Back to News -->
+            <div class="mt-12 text-center">
+                <a href="{{ localized_route('news.index') }}"
+                    class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition duration-150">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                        </path>
+                    </svg>
+                    Vissza a hírekhez
+                </a>
             </div>
         </div>
-        </article>
-
-        <!-- Back to News -->
-        <div class="mt-12 text-center">
-            <a href="{{ localized_route('news.index') }}"
-                class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition duration-150">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
-                    </path>
-                </svg>
-                Vissza a hírekhez
-            </a>
-        </div>
-    </div>
     </div>
 </x-layouts.app>
