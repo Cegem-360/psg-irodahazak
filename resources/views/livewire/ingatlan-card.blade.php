@@ -8,7 +8,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($images as $carouselimage)
                         <div class="swiper-slide">
-                            <img src="{{ Storage::url($carouselimage->path) }}" alt="{{ $title }}"
+                            <img src="{{ $carouselimage->getImageUrl('800x600', 'jpg') }}" alt="{{ $title }}"
                                 class="w-full h-auto object-cover aspect-[3/2]" />
                         </div>
                     @endforeach
@@ -27,17 +27,19 @@
         @endif
 
         <!-- Favorite button in top-right corner -->
-        @if ($property)
-            <button wire:click="toggleFavorite"
-                class="absolute top-2 right-2 p-2 rounded-full shadow-lg transition-all duration-200 z-10
+        @auth
+            @if ($property)
+                <button wire:click="toggleFavorite"
+                    class="absolute top-2 right-2 p-2 rounded-full shadow-lg transition-all duration-200 z-10
                    {{ $favoritestatus ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-white/80 hover:bg-white text-gray-700 hover:text-red-500' }}">
-                <svg class="w-5 h-5" fill="{{ $favoritestatus ? 'currentColor' : 'none' }}" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-            </button>
-        @endif
+                    <svg class="w-5 h-5" fill="{{ $favoritestatus ? 'currentColor' : 'none' }}" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                </button>
+            @endif
+        @endauth
 
         <!-- Icon boxes positioned at bottom-right of image -->
         <div class="absolute bottom-2 right-5 flex gap-1 z-10">

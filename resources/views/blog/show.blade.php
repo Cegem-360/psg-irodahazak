@@ -47,7 +47,7 @@
                 <nav class="flex items-center space-x-2 text-sm text-gray-500">
                     <a href="{{ localized_route('home') }}" class="hover:text-blue-600">Főoldal</a>
                     <span>/</span>
-                    <a href="{{ localized_route('blog.index') }}" class="hover:text-blue-600">Blog</a>
+                    <a href="#" class="hover:text-blue-600">Blog</a>
                     <span>/</span>
                     <a href="{{ localized_route('blog.category', ['slug' => $post->category->slug]) }}"
                         class="hover:text-blue-600">{{ $post->category->name }}</a>

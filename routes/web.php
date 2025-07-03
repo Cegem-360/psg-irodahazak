@@ -25,7 +25,8 @@ Route::view('/elado-irodahazak', 'index')->name('elado-irodahazak');
 Route::view('/rolunk', 'index')->name('rolunk');
 
 Route::view('/kapcsolat', 'index')->name('kapcsolat');
-Route::view('/adatvedelmi-nyilatkozat', 'index')->name('privacy-policy');
+Route::view('/adatvedelmi-nyilatkozat', 'pages.privacy-policy')->name('privacy-policy');
+
 Route::get('/impresszum', [ImpresszumController::class, 'show'])->name('impresszum');
 Route::post('/kapcsolat', [ContactController::class, 'store'])->name('contact.store');
 
@@ -51,9 +52,6 @@ Route::get('/ingatlanok', [PropertyController::class, 'index'])->name('propertie
 Route::get('/kiado-iroda/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
 Route::get('/elado-irodahaz/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
 
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/kategoria/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
-Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/hirek', [NewsController::class, 'index'])->name('news.index');
 Route::get('/hirek/{slug}', [NewsController::class, 'show'])->name('news.show');
 
@@ -65,7 +63,7 @@ Route::group(['as' => 'en.'], function (): void {
     Route::view('/office-buildings-for-sale', 'index')->name('elado-irodahazak');
     Route::view('/about-us', 'index')->name('rolunk');
     Route::view('/contact-us', 'index')->name('kapcsolat');
-    Route::view('/privacy-policy', 'index')->name('privacy-policy');
+    Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
     Route::view('/impressum', 'index')->name('impresszum');
     Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 

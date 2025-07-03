@@ -41,7 +41,7 @@ final class BlogController extends Controller
 
         $posts = $query->paginate(12);
 
-        return view('blog.index', ['posts' => $posts, 'categories' => $categories]);
+        return view('index');
     }
 
     public function show(BlogPost $post): View

@@ -40,7 +40,7 @@
                 <div
                     class="flex items-center justify-center text-xl text-center text-white _bg-accentdark/90_ bg-logogray backdrop-blur-xl h-[4.5rem] group-hover:bg-accent {{-- group-hover:h-24 --}} duration-1000 transition-all ease-[cubic-bezier(0.19,1,0.22,1)]">
                     <h2 class="group-hover:scale-110 duration-1000 transition-all ease-[cubic-bezier(0.19,1,0.22,1)]">
-                        {{ __('Offices for rent with immediate serviced') }}</h2>
+                        {{ __('Serviced offices') }}</h2>
                 </div>
             </a>
         </div>

@@ -40,7 +40,7 @@
                      <ul class="text-gray-600">
                          <li class="mb-4">
                              <a href="{{ localized_route('home') }}"
-                                 class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Home') }}</a>
+                                 class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('homepage') }}</a>
                          </li>
                          <li class="mb-4">
                              <a href="{{ localized_route('kiado-irodak') }}"
@@ -50,10 +50,12 @@
                              <a href="{{ localized_route('elado-irodahazak') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Office Buildings for Sale') }}</a>
                          </li>
-                         <li class="mb-4">
-                             <a href="{{ localized_route('news.index') }}"
-                                 class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('News') }}</a>
-                         </li>
+                         @if (app()->getLocale() === 'hu')
+                             <li class="mb-4">
+                                 <a href="{{ localized_route('news.index') }}"
+                                     class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('News') }}</a>
+                             </li>
+                         @endif
                      </ul>
                  </div>
                  <div>
@@ -63,9 +65,7 @@
                              <a href="{{ localized_route('rolunk') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('About Us') }}</a>
                          </li>
-                         <li class="mb-4">
-                             <a href="{{ localized_route('blog.index') }}"
-                                 class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Blog') }}</a>
+
                          </li>
                          <li>
                              <a href="{{ localized_route('kapcsolat') }}"

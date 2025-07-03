@@ -108,7 +108,7 @@ final class Property extends Model
 
         foreach (array_keys($romanNumerals) as $num) {
             $count = self::where(function ($q) use ($num): void {
-                $q->budapestOnly()->inDistrict((string) $num);
+                $q->rent()->active()->budapestOnly()->inDistrict((string) $num);
             })->count();
 
             $result[$num] = $count;
@@ -136,9 +136,9 @@ final class Property extends Model
 
     public function getAddressFormated(): string
     {
-        $address = mb_trim(sprintf('%s %s, %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, $this->cim_hazszam));
+        $address = mb_trim(sprintf('%s %s, %s %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, $this->cim_utca_addons, $this->cim_hazszam));
         $rent = __('Rental fee');
-        $address .= '<br><strong>'.$rent.':</strong> '.$this->min_berleti_dij.' - '.$this->max_berleti_dij.' EUR/m2/hó<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' HUF/m2/hó';
+        $address .= '<br><strong>'.$rent.':</strong> '.$this->min_berleti_dij.' - '.$this->max_berleti_dij.' '.$this->max_berleti_dij_addons.'<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' HUF/m2/hó';
 
         return $address ?: null;
     }

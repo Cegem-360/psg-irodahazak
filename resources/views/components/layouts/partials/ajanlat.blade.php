@@ -16,7 +16,7 @@
                 <li>
                     <a href="{{ localized_route('budapest.category', ['category' => 'kiado-azonnali-szolgaltatott-irodak']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
-                        {{ __('property for rent') }} {{ __('Offices for rent with immediate serviced') }}
+                        {{ __('serviced offices') }}
                     </a>
                 </li>
                 <li>

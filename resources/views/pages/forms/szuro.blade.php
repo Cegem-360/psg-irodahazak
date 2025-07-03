@@ -1,9 +1,13 @@
 @use('App\Models\Property')
 <div>
     <div class="relative">
-        <h2 class="text-4xl text-center mt-24 mb-8">{{ __('Find your business with us') }} <span
-                class="text-primary">{{ __('new') }}
-                {{ __('ideal') }}</span> {{ __('home') }}</h2>
+        <h2 class="text-4xl text-center mt-24 mb-8">
+            {{ __('filter.title.first') }}
+            <span class="text-primary">
+                {{ __('new ideal') }}
+            </span>
+            {{ __('filter.title.second') }}
+        </h2>
         <div class="absolute -right-8 -top-10 z-10 w-1/3 text-accent/40 blur-3xl"><x-svg.psg-irodahazak-symbol-1 />
         </div>
         <div class="absolute -left-8 -top-16 z-10 w-1/3 text-accent/30 blur-3xl"><x-svg.psg-irodahazak-symbol-2 />
@@ -567,7 +571,7 @@
                 // Static office names for now (later can be replaced with AJAX call)
                 const offices = [
 
-                    @foreach (Property::active()->orderBy('title')->get() as $office)
+                    @foreach (Property::rent()->active()->orderBy('title')->get() as $office)
                         {
                             title: '{{ addslashes($office->title) }}',
                             city: '{{ addslashes($office->cim_irsz ?? 'Budapest') }}'
@@ -595,7 +599,7 @@
 
                         // Build results HTML
                         let resultsHTML =
-                            '<div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option" data-value=""><div class="text-gray-500 italic">All Office Buildings</div></div>';
+                            '<div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option" data-value=""><div class="text-gray-500 italic">{{ __('All Office Buildings') }}</div></div>';
 
                         filteredOffices.forEach(office => {
                             resultsHTML += `
@@ -633,7 +637,7 @@
                 if (officeName) {
                     officeDropdownText.textContent = officeName;
                 } else {
-                    officeDropdownText.textContent = 'Office Building Name';
+                    officeDropdownText.textContent = '{{ __('modal.office_building_name') }}';
                 }
 
                 // Close dropdown

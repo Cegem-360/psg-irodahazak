@@ -9,6 +9,7 @@ use App\Models\QuoteRequest;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 final class QuoteRequestModal extends Component
@@ -50,11 +51,16 @@ final class QuoteRequestModal extends Component
         'privacy.accepted' => 'Az adatvédelmi nyilatkozat elfogadása kötelező.',
     ];
 
+    protected $listeners = [
+        'open-request-quote-modal' => 'openModal',
+        'close-request-quote-modal' => 'closeModal',
+    ];
+
     public function mount(): void
     {
 
         // Show modal only if not closed before (session)
-        $this->showModal = ! session()->has('quote_modal_closed');
+        $this->showModal = ! Session::has('quote_modal_closed');
 
         // Load all active properties for dropdown
         $this->properties = Property::active()
@@ -66,13 +72,13 @@ final class QuoteRequestModal extends Component
     public function openModal(): void
     {
         $this->showModal = true;
-        session()->forget('quote_modal_closed');
+        Session::forget('quote_modal_closed');
     }
 
     public function closeModal(): void
     {
         $this->showModal = false;
-        session()->put('quote_modal_closed', true);
+        Session::put('quote_modal_closed', true);
         $this->resetForm();
     }
 
@@ -115,7 +121,7 @@ final class QuoteRequestModal extends Component
                     ->subject($this->subject ?: 'Árajánlat kérés megerősítése - PSG Irodaházak');
             });
 
-            session()->flash('success', 'Köszönjük az érdeklődését! Hamarosan felvesszük Önnel a kapcsolatot.');
+            Session::flash('success', 'Köszönjük az érdeklődését! Hamarosan felvesszük Önnel a kapcsolatot.');
             $this->closeModal();
 
         } catch (Exception $exception) {
@@ -129,7 +135,7 @@ final class QuoteRequestModal extends Component
                 'subject' => $this->subject,
                 'error' => $exception->getMessage(),
             ]);
-            session()->flash('error', 'Hiba történt az árajánlat kérés küldése során. Kérjük, próbálja újra később.');
+            Session::flash('error', 'Hiba történt az árajánlat kérés küldése során. Kérjük, próbálja újra később.');
         }
     }
 

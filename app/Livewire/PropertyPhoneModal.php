@@ -35,6 +35,13 @@ final class PropertyPhoneModal extends Component
         $this->reset(['property', 'title']);
     }
 
+    public function openContactModal(): void
+    {
+        $this->dispatch('open-request-quote-modal');
+        $this->closeModal();
+
+    }
+
     public function render()
     {
         return view('livewire.property-phone-modal');

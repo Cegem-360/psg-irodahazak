@@ -40,11 +40,11 @@ final class ImportContentsToNews extends Command
 
         foreach ($contents as $content) {
             News::updateOrCreate(
-                ['title' => $content->title],
+                ['title' => str_replace(['\"'], ['"', ''], $content->title)],
                 [
-
-                    'excerpt' => $content->lead,
-                    'content' => $content->content,
+                    'title' => str_replace(['\"'], ['"', ''], $content->title),
+                    'excerpt' => str_replace(['\"', '\n'], ['"', "\n\r"], $content->lead),
+                    'content' => str_replace(['\"', '\n'], ['"', "\n\r"], $content->content),
 
                 ]
             );
