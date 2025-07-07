@@ -344,7 +344,6 @@ final class PropertyResource extends Resource
                     ->panelLayout('grid')
                     ->visibility('public')
                     ->directory(fn ($record): string => 'property/'.$record->id.'/gallery_images')
-                    ->preserveFilenames()
                     ->openable()
                     ->downloadable()
                     ->columnSpanFull()
