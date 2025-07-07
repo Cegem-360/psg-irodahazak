@@ -241,9 +241,13 @@ final class NewsResource extends Resource
                     ->sortable()
                     ->toggleable(),
 
-                TextColumn::make('published_at')
+                TextInputColumn::make('published_at')
                     ->label('Publikálva')
-                    ->dateTime()
+                    ->type('date')
+                    ->getStateUsing(fn ($record) => $record->published_at ? $record->published_at->format('Y-m-d') : '')
+                    ->afterStateUpdated(function ($record, $state): void {
+                        $record->update(['published_at' => $state]);
+                    })
                     ->sortable()
                     ->toggleable(),
 
