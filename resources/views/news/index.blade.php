@@ -19,7 +19,7 @@
                 @foreach ($news as $index => $article)
                     <div
                         class="relative flex flex-col md:flex-row justify-start items-center gap-6 p-6 border-b border-gray-300 hover:brightness-95 transition-all duration-300 ease-in-out">
-                        <p class="text-gray-600">{{ $article->updated_at->format('Y.m.d.') }}</p>
+                        <p class="text-gray-600">{{ $article->published_at->format('Y.m.d.') }}</p>
                         <h3 class="text-xl font-semibold">{{ $article->title }}</h3>
                         <div class="md:ml-auto">
                             <a href="{{ localized_route('news.show', ['slug' => $article->slug]) }}"
