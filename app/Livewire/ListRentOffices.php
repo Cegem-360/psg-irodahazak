@@ -157,8 +157,6 @@ final class ListRentOffices extends Component
 
         // Apply search filter
         if ($this->search) {
-            $searchTerms = explode(' ', mb_trim($this->search));
-
             if (
                 mb_stripos($this->search, '2 csöves fan-coil') !== false ||
                 mb_stripos($this->search, '2 csoves fan-coil') !== false ||
@@ -179,10 +177,10 @@ final class ListRentOffices extends Component
         }
         // Apply area range filter
         if ($this->areaMin || $this->areaMax) {
-            $query->areaRange(
-                $this->areaMin ? (int) $this->areaMin : null,
-                $this->areaMax ? (int) $this->areaMax : null
-            );
+            $query->whereBetween('jelenleg_kiado', [
+                $this->areaMin ? (int) $this->areaMin : 0,
+                $this->areaMax ? (int) $this->areaMax : 3000,
+            ]);
         }
 
         // Apply price range filter

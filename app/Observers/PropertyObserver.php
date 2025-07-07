@@ -17,11 +17,11 @@ final class PropertyObserver
         $deletedPhotos = array_diff($originalPhotos, $newPhotos);
 
         foreach ($deletedPhotos as $photo) {
-            $filePath = 'property/'.$property->id.'/gallery_images/'.$photo;
-            if (Storage::disk('public')->exists($filePath)) {
-                Storage::disk('public')->delete($filePath);
+
+            if (Storage::disk('public')->exists($photo)) {
+                Storage::disk('public')->delete($photo);
             }
-            Log::info("Deleted property photo: {$filePath}");
+            Log::info("Deleted property photo: {$photo}");
         }
     }
 }
