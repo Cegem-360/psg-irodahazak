@@ -179,6 +179,6 @@ final class News extends Model
     #[Scope]
     protected function published(Builder $query): void
     {
-        $query->where('is_published', true);
+        $query->where('status', 'published');
     }
 }
