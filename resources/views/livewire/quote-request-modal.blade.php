@@ -143,7 +143,7 @@
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.email_address') }}</label>
                                     <input type="email" id="email" wire:model="email"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('email') border-red-500 @enderror"
-                                        placeholder="pelda@email.hu">
+                                        placeholder="{{ app()->getLocale() === 'en' ? 'example@email.com' : 'pelda@email.hu' }}">
                                     @error('email')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
