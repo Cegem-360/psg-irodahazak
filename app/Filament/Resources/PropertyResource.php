@@ -275,19 +275,19 @@ final class PropertyResource extends Resource
 
                 Select::make('tags')
                     ->label('Címkék')
-                    ->options(Tag::all()->pluck('name', 'id'))
+                    ->options(Tag::all()->pluck('name', 'name'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
                 Select::make('services')
                     ->label('Szolgáltatások')
-                    ->options(Service::all()->pluck('name', 'id'))
+                    ->options(Service::all()->pluck('name', 'name'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
                 Select::make('categories')
                     ->label('Kategóriák')
-                    ->options(Category::all()->pluck('name', 'id'))
+                    ->options(Category::all()->pluck('name', 'name'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
