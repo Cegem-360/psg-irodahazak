@@ -65,6 +65,13 @@ final class ListSaleProperties extends Page implements HasTable
             ->filters([
                 //
             ])
+            ->headerActions([
+                Action::make('create')
+                    ->label('Új ingatlan hozzáadása')
+                    ->icon('heroicon-o-plus')
+                    ->color('primary')
+                    ->url(PropertyResource::getUrl('create')),
+            ])
             ->actions([
 
                 EditAction::make()->url(fn (Property $record) => PropertyResource::getUrl('edit', ['record' => $record])),

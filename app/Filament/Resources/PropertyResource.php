@@ -15,6 +15,7 @@ use App\Models\Category;
 use App\Models\Property;
 use App\Models\Service;
 use App\Models\Tag;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -264,24 +265,27 @@ final class PropertyResource extends Resource
                             TextInput::make('cim_hazszam')
                                 ->label('Házszám')
                                 ->maxLength(255),
-                            TextInput::make('maps_lat')
-                                ->label('Térkép szélesség')
-                                ->maxLength(255),
-                            TextInput::make('maps_lng')
-                                ->label('Térkép hosszúság')
-                                ->maxLength(255),
+                            Grid::make()
+                                ->schema([
+                                    TextInput::make('maps_lat')
+                                        ->label('Térkép szélesség')
+                                        ->maxLength(255),
+                                    TextInput::make('maps_lng')
+                                        ->label('Térkép hosszúság')
+                                        ->maxLength(255),
+                                ]),
                         ]),
                 ]),
 
                 Select::make('tags')
                     ->label('Címkék')
-                    ->options(Tag::all()->pluck('name', 'name'))
+                    ->options(Tag::orderBy('name')->get()->pluck('name', 'name'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
                 Select::make('services')
                     ->label('Szolgáltatások')
-                    ->options(Service::all()->pluck('name', 'name'))
+                    ->options(Service::orderBy('name')->get()->pluck('name', 'name'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
@@ -322,9 +326,8 @@ final class PropertyResource extends Resource
                         'elado-iroda' => 'Eladó',
                     ])
                     ->required(),
-                TextInput::make('updated')
-                    ->label('Frissítve')
-                    ->maxLength(10),
+                DatePicker::make('updated')
+                    ->label('Frissítve'),
                 MarkdownEditor::make('egyeb')
                     ->label('Egyéb')
                     ->columnSpanFull(),
