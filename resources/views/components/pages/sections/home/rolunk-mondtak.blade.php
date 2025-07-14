@@ -31,7 +31,7 @@
                                 class="w-1/2 lg:w-1/3 h-fit object-contain rounded-lg mb-4 p-2 bg-white" />
 
                             <div class="lg:w-2/3 text-md italic text-justify">
-                                {!! $testimonial->testimonial !!}
+                                {!! preg_replace(['/^<p>/', '/<\/p>$/'], ['<p>”', '„</p>'], $testimonial->testimonial) !!}
                                 <br>
                                 <br>
                                 <strong>

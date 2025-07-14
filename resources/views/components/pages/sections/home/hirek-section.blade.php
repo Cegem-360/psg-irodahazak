@@ -13,7 +13,16 @@
                 <div class="grid md:grid-cols-2 gap-4 bg-white rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl">
                     <img src="{{ Storage::url($news->featured_image) }}" alt=""
                         class="md:order-2 w-full h-auto object-cover aspect-[16/9]" />
+
                     <div class="p-8 pt-10">
+                        <div>
+                            <div class="p-8 pt-10 flex items-center justify-between">
+                                <h3 class="text-xl font-semibold mb-4">{{ $news->title }}</h3>
+                                <span
+                                    class="text-orange-500 font-medium mb-4">{{ $news->published_at->format('Y.m.d') }}</span>
+                            </div>
+
+                        </div>
                         {!! $news->excerpt !!}
                         <a href="{{ localized_route('news.show', ['slug' => $news->slug]) }}"
                             class="inline-block mt-6 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">{{ __('Full article') }}</a>

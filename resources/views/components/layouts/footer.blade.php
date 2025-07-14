@@ -40,7 +40,7 @@
                      <ul class="text-gray-600">
                          <li class="mb-4">
                              <a href="{{ localized_route('home') }}"
-                                 class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('homepage') }}</a>
+                                 class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Homepage') }}</a>
                          </li>
                          <li class="mb-4">
                              <a href="{{ localized_route('kiado-irodak') }}"

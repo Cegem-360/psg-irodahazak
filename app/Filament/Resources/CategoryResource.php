@@ -42,7 +42,7 @@ final class CategoryResource extends Resource
                 TextInput::make('name')
                     ->required()
                     ->live()
-                    ->afterStateUpdated(function (string $state, Set $set) {
+                    ->afterStateUpdated(function (string $state, Set $set): void {
                         $set('slug', Str::slug($state));
                     })
                     ->maxLength(255),

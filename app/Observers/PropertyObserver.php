@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 final class PropertyObserver
 {
-    public function updating($property)
+    public function updating($property): void
     {
         $originalPhotos = $property->getOriginal('property_photos') ?? [];
         $newPhotos = $property->property_photos ?? [];
@@ -21,7 +21,8 @@ final class PropertyObserver
             if (Storage::disk('public')->exists($photo)) {
                 Storage::disk('public')->delete($photo);
             }
-            Log::info("Deleted property photo: {$photo}");
+
+            Log::info('Deleted property photo: ' . $photo);
         }
     }
 }

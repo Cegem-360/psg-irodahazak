@@ -78,8 +78,6 @@ Route::group(['as' => 'en.'], function (): void {
         }
 
         return redirect()->route('en.kiado-irodak');
-
-        return view('pages.filter', ['queryParams' => $queryParams]);
     })->name('budapest.category');
 
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');

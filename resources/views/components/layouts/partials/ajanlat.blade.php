@@ -32,7 +32,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-v-keruleti-irodak']) }}"
+                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-irodak-v-kerulet']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Offices for rent in District V') }}
                     </a>

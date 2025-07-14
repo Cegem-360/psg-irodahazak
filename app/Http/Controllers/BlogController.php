@@ -13,7 +13,7 @@ final class BlogController extends Controller
 {
     public function index(Request $request): View
     {
-        $categories = BlogCategory::where('is_active', true)
+        BlogCategory::where('is_active', true)
             ->withCount('blogPosts')
             ->orderBy('name')
             ->get();
@@ -39,7 +39,7 @@ final class BlogController extends Controller
             });
         }
 
-        $posts = $query->paginate(12);
+        $query->paginate(12);
 
         return view('index');
     }

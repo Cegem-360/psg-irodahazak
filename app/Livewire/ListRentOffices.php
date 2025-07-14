@@ -145,7 +145,7 @@ final class ListRentOffices extends Component
 
         // If agglomeration is not included, only show Budapest properties
         if ($this->includeAgglomeration) {
-            $query->whereNot(function ($query) {
+            $query->whereNot(function ($query): void {
                 $query->budapestOnly();
             });
         }
@@ -176,6 +176,7 @@ final class ListRentOffices extends Component
                 $query->searchText($this->search);
             }
         }
+
         // Apply area range filter
         if ($this->areaMin || $this->areaMax) {
             $query->whereBetween('jelenleg_kiado', [
@@ -191,10 +192,12 @@ final class ListRentOffices extends Component
                 $this->priceMax ? (int) $this->priceMax : null
             );
         }
+
         // Apply office name filter
         if ($this->officeName) {
             $query->byOfficeName($this->officeName);
         }
+
         // If agglomeration is included, return only agglomeration properties and skip district filters
         if ($this->includeAgglomeration) {
 

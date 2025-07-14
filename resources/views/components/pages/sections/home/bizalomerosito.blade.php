@@ -31,7 +31,7 @@
     <div class="flex flex-col items-center text-center space-y-4">
         <x-svg.handshake class="text-primary brightness-75 w-20 h-20" />
         <div class="text-5xl font-bold text-primary">
-            <span class="counter" data-to="100" data-suffix=" {{ __('ezer') }}+">0</span>
+            <span class="counter" data-to="100" data-suffix="{{ __('ezer') }} +">0</span>
         </div>
         <div class="text-lg font-semibold text-gray-700">m² {{ __('bérbe adott') }} <br>{{ __('A-kategóriás iroda') }}
         </div>
