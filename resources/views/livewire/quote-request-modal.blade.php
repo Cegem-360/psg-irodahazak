@@ -157,12 +157,18 @@
                                     <select id="subject" wire:model="subject"
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('subject') border-red-500 @enderror">
                                         <option value="">{{ __('modal.select_subject') }}</option>
-                                        <option value="iroda keresése">Iroda keresése</option>
-                                        <option value="iroda kiadás">Iroda kiadása</option>
-                                        <option value="ingatlan értékelés">Ingatlan értékelés</option>
-                                        <option value="befektetés">Befektetési lehetőség</option>
-                                        <option value="tanácsadás">Tanácsadás</option>
-                                        <option value="egyéb">Egyéb</option>
+                                        <option value="{{ __('modal.subject_office_search') }}">
+                                            {{ __('modal.subject_office_search') }}</option>
+                                        <option value="{{ __('modal.subject_office_rent') }}">
+                                            {{ __('modal.subject_office_rent') }}</option>
+                                        <option value="{{ __('modal.subject_property_valuation') }}">
+                                            {{ __('modal.subject_property_valuation') }}</option>
+                                        <option value="{{ __('modal.subject_investment') }}">
+                                            {{ __('modal.subject_investment') }}</option>
+                                        <option value="{{ __('modal.subject_consulting') }}">
+                                            {{ __('modal.subject_consulting') }}</option>
+                                        <option value="{{ __('modal.subject_other') }}">
+                                            {{ __('modal.subject_other') }}</option>
                                     </select>
                                     @error('subject')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
