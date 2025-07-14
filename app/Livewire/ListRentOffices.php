@@ -72,8 +72,6 @@ final class ListRentOffices extends Component
 
         $this->updateTotalOffices();
 
-        $this->getOffices();
-
         $this->title = $queryParams['title'] ?? request('title', __('page.title.offices_for_rent'));
 
     }
@@ -85,6 +83,7 @@ final class ListRentOffices extends Component
 
     public function getOffices()
     {
+
         return $this->buildQuery()
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
@@ -145,8 +144,10 @@ final class ListRentOffices extends Component
             ->active();
 
         // If agglomeration is not included, only show Budapest properties
-        if (! $this->includeAgglomeration) {
-            $query->budapestOnly();
+        if ($this->includeAgglomeration) {
+            $query->whereNot(function ($query) {
+                $query->budapestOnly();
+            });
         }
 
         if ($this->category) {
