@@ -1,4 +1,3 @@
 <x-layouts.app>
-    @livewire('list-rent-offices', ['queryParams' => $queryParams])
-
+    <livewire:list-rent-offices :queryParams />
 </x-layouts.app>

@@ -1,10 +1,16 @@
+@use('App\Models\Translate')
 <div wire:key="list-rent-offices" class="list-rent-offices">
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
             <h2 class="mt-4 mb-4 font-bold text-5xl text-center drop-shadow text-logogray/80">
-                {{ $title ?? __('page.rent_offices') }}
+
+                @if (app()->getLocale() === 'en' && $title && Translate::whereName($title)->exists())
+                    {{ Translate::whereName($title)->first()->translated }}
+                @else
+                    {{ $title ? __($title) : __('page.rent_offices') }}
+                @endif
             </h2>
             <h4 class="text-xl text-center mb-8">({{ $totalOffices }} {{ __('page.results') }})</h4>
             <div

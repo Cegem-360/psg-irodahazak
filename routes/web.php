@@ -70,14 +70,13 @@ Route::group(['as' => 'en.'], function (): void {
     // English Budapest category routes
     Route::get('/budapest-en/{category}', function ($category) {
         $queryParams = [];
-
-        /*   $queryParams['category'] = $category; */
+        $queryParams['category'] = $category;
 
         if ($category === 'elado-irodak') {
             return redirect()->route('en.elado-irodahazak');
         }
 
-        return redirect()->route('en.kiado-irodak');
+        return view('pages.filter', ['queryParams' => $queryParams]);
     })->name('budapest.category');
 
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
