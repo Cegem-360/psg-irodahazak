@@ -59,8 +59,8 @@ final class FetchBloghuFeed extends Command
                 'slug' => Str::slug($title),
             ]);
             $blog->update([
-                'title' => $title,
-                'featured_image' => $featuredImage,
+                'title' => $title ?? '',
+                'featured_image' => $featuredImage ?? '',
                 'excerpt' => Str::limit(strip_tags($description), 160),
                 'content' => $description,
                 'is_published' => true,
