@@ -15,17 +15,17 @@ return new class extends Migration
     {
         Schema::create('blog_posts', function (Blueprint $table): void {
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('slug')->unique();
             $table->text('excerpt')->nullable();
-            $table->longText('content');
+            $table->longText('content')->nullable();
             $table->string('featured_image')->nullable();
-            $table->foreignId('blog_category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->boolean('is_published')->default(false);
+            $table->foreignId('blog_category_id')->constrained()->onDelete('cascade')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->nullable();
+            $table->boolean('is_published')->default(false)->nullable();
             $table->timestamp('published_at')->nullable();
             $table->json('meta_data')->nullable(); // SEO meta data
-            $table->integer('views_count')->default(0);
+            $table->integer('views_count')->default(0)->nullable();
             $table->timestamps();
 
             $table->index(['is_published', 'published_at']);
