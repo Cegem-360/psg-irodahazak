@@ -47,7 +47,7 @@ final class FetchBloghuFeed extends Command
         }
 
         $count = 0;
-        dump($rss->channel);
+
         foreach ($rss->channel->item as $item) {
 
             $title = (string) $item->title;
