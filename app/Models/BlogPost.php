@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
 
 final class BlogPost extends Model
 {
@@ -106,30 +105,5 @@ final class BlogPost extends Model
             'is_published' => false,
             'published_at' => null,
         ]);
-    }
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        self::creating(function (BlogPost $post): void {
-            if (empty($post->slug)) {
-                $post->slug = Str::slug($post->title);
-            }
-
-            if (empty($post->excerpt)) {
-                $post->excerpt = Str::limit(strip_tags($post->content), 160);
-            }
-        });
-
-        self::updating(function (BlogPost $post): void {
-            if ($post->isDirty('title') && empty($post->slug)) {
-                $post->slug = Str::slug($post->title);
-            }
-
-            if ($post->isDirty('content') && empty($post->excerpt)) {
-                $post->excerpt = Str::limit(strip_tags($post->content), 160);
-            }
-        });
     }
 }

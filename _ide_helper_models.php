@@ -77,16 +77,16 @@ namespace App\Models{
  * @property string|null $excerpt
  * @property string $content
  * @property string|null $featured_image
- * @property int $blog_category_id
- * @property int $user_id
+ * @property int|null $blog_category_id
+ * @property int|null $user_id
  * @property bool $is_published
  * @property \Carbon\CarbonImmutable|null $published_at
  * @property array<array-key, mixed>|null $meta_data
  * @property int $views_count
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read \App\Models\User $author
- * @property-read \App\Models\BlogCategory $category
+ * @property-read \App\Models\User|null $author
+ * @property-read \App\Models\BlogCategory|null $category
  * @property-read string $reading_time
  * @property-read string $status
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost byCategory(int $categoryId)
