@@ -50,6 +50,9 @@ final class FetchBloghuFeed extends Command
 
         foreach ($rss->channel->item as $item) {
 
+            if (! property_exists($item, 'title') || ! property_exists($item, 'link') || ! property_exists($item, 'description') || ! property_exists($item, 'pubDate')) {
+                continue; // Skip items that do not have the required properties
+            }
             $title = (string) $item->title;
             $link = (string) $item->link;
             $description = (string) $item->description;
