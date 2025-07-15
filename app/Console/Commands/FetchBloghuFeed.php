@@ -53,6 +53,9 @@ final class FetchBloghuFeed extends Command
             if (! property_exists($item, 'title') || ! property_exists($item, 'link') || ! property_exists($item, 'description') || ! property_exists($item, 'pubDate')) {
                 continue; // Skip items that do not have the required properties
             }
+            if (empty($item->title) || empty($item->link) || empty($item->description) || empty($item->pubDate)) {
+                continue; // Skip items with empty required properties
+            }
             $title = (string) $item->title;
             $link = (string) $item->link;
             $description = (string) $item->description;
