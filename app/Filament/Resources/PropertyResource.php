@@ -278,7 +278,7 @@ final class PropertyResource extends Resource
                 ]),
 
                 Select::make('tags')
-                    ->label('Címkék')
+                    ->label('Műszaki paraméterek')
                     ->options(Tag::orderBy('name')->get()->pluck('name', 'name'))
                     ->preload()
                     ->multiple()
@@ -346,7 +346,7 @@ final class PropertyResource extends Resource
                     ->multiple()
                     ->panelLayout('grid')
                     ->visibility('public')
-                    ->directory(fn ($record): string => 'property/'.$record->id.'/gallery_images')
+                    ->directory(fn($record): string => 'property/' . $record->id . '/gallery_images')
                     ->openable()
                     ->downloadable()
                     ->columnSpanFull()
@@ -361,7 +361,7 @@ final class PropertyResource extends Resource
                 TextColumn::make('status')
                     ->label('Státusz')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'danger',
                         default => 'gray',
@@ -392,7 +392,7 @@ final class PropertyResource extends Resource
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')
-                    ->url(fn (Property $record) => route('property.pdf', $record))
+                    ->url(fn(Property $record) => route('property.pdf', $record))
                     ->openUrlInNewTab()
                     ->requiresConfirmation()
                     ->modalHeading('PDF Generálás')

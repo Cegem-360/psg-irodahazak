@@ -69,7 +69,6 @@ final class Property extends Model
         'min_berleti_idoszak',
         'min_berleti_idoszak_addons',
         'cim_utca_addons',
-        'lang',
         'cimke',
         'service',
         'categories',
@@ -100,11 +99,29 @@ final class Property extends Model
     {
         // Kerületek római számmal
         $romanNumerals = [
-            1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V',
-            6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
-            11 => 'XI', 12 => 'XII', 13 => 'XIII', 14 => 'XIV', 15 => 'XV',
-            16 => 'XVI', 17 => 'XVII', 18 => 'XVIII', 19 => 'XIX', 20 => 'XX',
-            21 => 'XXI', 22 => 'XXII', 23 => 'XXIII',
+            1 => 'I',
+            2 => 'II',
+            3 => 'III',
+            4 => 'IV',
+            5 => 'V',
+            6 => 'VI',
+            7 => 'VII',
+            8 => 'VIII',
+            9 => 'IX',
+            10 => 'X',
+            11 => 'XI',
+            12 => 'XII',
+            13 => 'XIII',
+            14 => 'XIV',
+            15 => 'XV',
+            16 => 'XVI',
+            17 => 'XVII',
+            18 => 'XVIII',
+            19 => 'XIX',
+            20 => 'XX',
+            21 => 'XXI',
+            22 => 'XXII',
+            23 => 'XXIII',
         ];
 
         $result = [];
@@ -141,14 +158,14 @@ final class Property extends Model
     {
         $address = mb_trim(sprintf('%s %s, %s %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, $this->cim_utca_addons, $this->cim_hazszam));
         $rent = __('Rental fee');
-        $address .= '<br><strong>'.$rent.':</strong> '.$this->min_berleti_dij.' - '.$this->max_berleti_dij.' '.$this->max_berleti_dij_addons.'<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' HUF/m2/hó';
+        $address .= '<br><strong>' . $rent . ':</strong> ' . $this->min_berleti_dij . ' - ' . $this->max_berleti_dij . ' ' . $this->max_berleti_dij_addons . '<br><strong>' . __('Operating Fee') . ': </strong>' . $this->uzemeletetesi_dij . ' HUF/m2/hó';
 
         return $address ?: null;
     }
 
     public function getAddressFormatedForSale(): string
     {
-        return sprintf('%s %s,<br><strong>', $this->cim_irsz, $this->cim_varos).__('Total Area').sprintf(':</strong> %s m²<br><strong>', $this->total_area).__('Price').sprintf(':</strong> %s %s', $this->min_berleti_dij, $this->min_berleti_dij_addons);
+        return sprintf('%s %s,<br><strong>', $this->cim_irsz, $this->cim_varos) . __('Total Area') . sprintf(':</strong> %s m²<br><strong>', $this->total_area) . __('Price') . sprintf(':</strong> %s %s', $this->min_berleti_dij, $this->min_berleti_dij_addons);
     }
 
     /**
@@ -213,7 +230,6 @@ final class Property extends Model
     protected function byCategory(Builder $query, string $category): void
     {
         $query->whereJsonContains('categories', $category);
-
     }
 
     #[Scope]
@@ -270,11 +286,29 @@ final class Property extends Model
 
         // Roman numerals mapping
         $romanNumerals = [
-            1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V',
-            6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
-            11 => 'XI', 12 => 'XII', 13 => 'XIII', 14 => 'XIV', 15 => 'XV',
-            16 => 'XVI', 17 => 'XVII', 18 => 'XVIII', 19 => 'XIX', 20 => 'XX',
-            21 => 'XXI', 22 => 'XXII', 23 => 'XXIII',
+            1 => 'I',
+            2 => 'II',
+            3 => 'III',
+            4 => 'IV',
+            5 => 'V',
+            6 => 'VI',
+            7 => 'VII',
+            8 => 'VIII',
+            9 => 'IX',
+            10 => 'X',
+            11 => 'XI',
+            12 => 'XII',
+            13 => 'XIII',
+            14 => 'XIV',
+            15 => 'XV',
+            16 => 'XVI',
+            17 => 'XVII',
+            18 => 'XVIII',
+            19 => 'XIX',
+            20 => 'XX',
+            21 => 'XXI',
+            22 => 'XXII',
+            23 => 'XXIII',
         ];
 
         $romanDistrict = $romanNumerals[$districtNum] ?? $district;
@@ -308,11 +342,29 @@ final class Property extends Model
 
                     // Roman numerals mapping
                     $romanNumerals = [
-                        1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V',
-                        6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X',
-                        11 => 'XI', 12 => 'XII', 13 => 'XIII', 14 => 'XIV', 15 => 'XV',
-                        16 => 'XVI', 17 => 'XVII', 18 => 'XVIII', 19 => 'XIX', 20 => 'XX',
-                        21 => 'XXI', 22 => 'XXII', 23 => 'XXIII',
+                        1 => 'I',
+                        2 => 'II',
+                        3 => 'III',
+                        4 => 'IV',
+                        5 => 'V',
+                        6 => 'VI',
+                        7 => 'VII',
+                        8 => 'VIII',
+                        9 => 'IX',
+                        10 => 'X',
+                        11 => 'XI',
+                        12 => 'XII',
+                        13 => 'XIII',
+                        14 => 'XIV',
+                        15 => 'XV',
+                        16 => 'XVI',
+                        17 => 'XVII',
+                        18 => 'XVIII',
+                        19 => 'XIX',
+                        20 => 'XX',
+                        21 => 'XXI',
+                        22 => 'XXII',
+                        23 => 'XXIII',
                     ];
 
                     $romanDistrict = $romanNumerals[$districtNum] ?? $district;
@@ -346,12 +398,12 @@ final class Property extends Model
         $query->where(function (Builder $q) use ($searchTerms): void {
             foreach ($searchTerms as $term) {
                 $q->where(function (Builder $subQ) use ($term): void {
-                    $subQ->where('title', 'like', '%'.$term.'%')
-                        ->orWhere('content', 'like', '%'.$term.'%')
+                    $subQ->where('title', 'like', '%' . $term . '%')
+                        ->orWhere('content', 'like', '%' . $term . '%')
                         // Tags tömb mezőben keresés - case-insensitive JSON keresés
-                        ->orWhereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%'.$term.'%'])
+                        ->orWhereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%' . $term . '%'])
                         // Services tömb mezőben keresés - case-insensitive JSON keresés
-                        ->orWhereRaw('JSON_SEARCH(LOWER(services), "one", LOWER(?)) IS NOT NULL', ['%'.$term.'%']);
+                        ->orWhereRaw('JSON_SEARCH(LOWER(services), "one", LOWER(?)) IS NOT NULL', ['%' . $term . '%']);
                 });
             }
         });
@@ -360,7 +412,7 @@ final class Property extends Model
     #[Scope]
     protected function byOfficeName(Builder $query, string $officeName): void
     {
-        $query->where('title', 'like', '%'.$officeName.'%');
+        $query->where('title', 'like', '%' . $officeName . '%');
     }
 
     #[Scope]
@@ -390,8 +442,8 @@ final class Property extends Model
     protected function slug(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value ?: Str::slug($this->title),
-            set: fn ($value) => $value ?: Str::slug($this->title)
+            get: fn($value) => $value ?: Str::slug($this->title),
+            set: fn($value) => $value ?: Str::slug($this->title)
         );
     }
 }

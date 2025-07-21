@@ -46,7 +46,14 @@ final class TestimonialResource extends Resource
                     ->label('Név')
                     ->required()
                     ->maxLength(255),
-
+                TextInput::make('client_position')
+                    ->label('Pozíció')
+                    ->maxLength(255)
+                    ->placeholder('Pl. Ügyvezető igazgató'),
+                TextInput::make('client_company')
+                    ->label('Cég')
+                    ->maxLength(255)
+                    ->placeholder('Pl. PSG Irodaházak Kft.'),
                 RichEditor::make('testimonial')
                     ->label('Vélemény')
                     ->required()
@@ -90,7 +97,7 @@ final class TestimonialResource extends Resource
                 TextColumn::make('lang')
                     ->label('Nyelv')
                     ->sortable()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'hu' => 'Magyar',
                         'en' => 'Angol',
                         default => $state,

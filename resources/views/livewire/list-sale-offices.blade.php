@@ -24,7 +24,7 @@
             </div>
 
             <div
-                class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+                class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div class="relative">
                     <!-- Google Maps Container -->
                     <div wire:ignore id="map"
@@ -57,13 +57,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    @foreach ($offices ?? [] as $office)
-                        <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title" :title="$office->title"
-                            :description="$office->getAddressFormatedForSale()" :link="localized_route('properties.show-for-sale', [
-                                'property' => $office->slug,
-                            ])" :key="$office->id" :small="true" />
-                    @endforeach
+                <div class="col-span-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        @foreach ($offices ?? [] as $office)
+                            <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title"
+                                :title="$office->title" :description="$office->getAddressFormatedForSale()" :link="localized_route('properties.show-for-sale', [
+                                    'property' => $office->slug,
+                                ])" :key="$office->id"
+                                :small="true" />
+                        @endforeach
+                    </div>
                 </div>
             </div>
 
