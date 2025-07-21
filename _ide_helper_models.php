@@ -666,6 +666,7 @@ namespace App\Models{
  * @property int $id
  * @property string $client_name
  * @property string|null $client_company
+ * @property string|null $client_position
  * @property string $testimonial
  * @property string|null $client_image
  * @property string|null $project_type
@@ -681,6 +682,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereClientCompany($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereClientImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereClientName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereClientPosition($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereIsActive($value)

@@ -395,21 +395,15 @@ final class Property extends Model
     #[Scope]
     protected function searchText(Builder $query, string $search): void
     {
-        $searchTerms = explode(' ', mb_trim($search));
-        $searchTerms = array_filter($searchTerms);
 
-        $query->where(function (Builder $q) use ($searchTerms): void {
-            foreach ($searchTerms as $term) {
-                $q->where(function (Builder $subQ) use ($term): void {
-                    $subQ->where('title', 'like', '%'.$term.'%')
-                        ->orWhere('content', 'like', '%'.$term.'%')
-                        // Tags tömb mezőben keresés - case-insensitive JSON keresés
-                        ->orWhereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%'.$term.'%'])
-                        // Services tömb mezőben keresés - case-insensitive JSON keresés
-                        ->orWhereRaw('JSON_SEARCH(LOWER(services), "one", LOWER(?)) IS NOT NULL', ['%'.$term.'%']);
-                });
-            }
+        $query->where(function (Builder $subQ) use ($search): void {
+            $subQ->where('title', 'like', '%'.$search.'%')
+                ->orWhere('content', 'like', '%'.$search.'%')
+                ->orWhere('kodszam', 'like', '%'.$search.'%')
+                ->orWhereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%'.$search.'%'])
+                ->orWhereRaw('JSON_SEARCH(LOWER(services), "one", LOWER(?)) IS NOT NULL', ['%'.$search.'%']);
         });
+
     }
 
     #[Scope]

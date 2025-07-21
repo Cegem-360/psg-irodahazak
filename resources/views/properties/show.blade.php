@@ -105,7 +105,7 @@
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Parking Fee') }}:</td>
-                                    <td>{{ $property->min_parkolas_dija }}
+                                    <td>{{ $property->min_parkolas_dija }}{{ $property->max_parkolas_dija ? ' - ' . $property->max_parkolas_dija : '' }}
                                         {{ $property->min_parkolas_dija_addons ?? '' }}
                                     </td>
                                 </tr>
