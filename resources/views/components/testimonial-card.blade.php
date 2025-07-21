@@ -38,33 +38,35 @@
                 <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
                     <span class="text-gray-600 font-medium text-sm">
                         {{ substr($testimonial->client_name, 0, 1) }}
-                    </span>
-                </div>
             @endif
-
-            <div>
-                <p class="text-sm font-medium text-gray-900">{{ $testimonial->client_name }}</p>
-                @if ($testimonial->client_position)
-                    <p class="text-xs text-gray-500">{{ $testimonial->client_position }}</p>
-                @endif
-                @if ($testimonial->client_company)
-                    <p class="text-xs text-gray-600 font-medium">{{ $testimonial->client_company }}</p>
-                @endif
-            </div>
+            </span>
         </div>
 
-        <!-- Company Logo -->
-        @if ($testimonial->company_logo)
-            <img class="h-8 object-contain" src="{{ Storage::url($testimonial->company_logo) }}"
-                alt="{{ $testimonial->client_company }}">
-        @endif
+        <div>
+            <p class="text-sm font-medium text-gray-900">
+                {{ $testimonial->client_name }}
+            </p>
+            @if ($testimonial->client_position)
+                <p class="text-xs text-gray-500">{{ $testimonial->client_position }}</p>
+            @endif
+            @if ($testimonial->client_company)
+                <p class="text-xs text-gray-600 font-medium">{{ $testimonial->client_company }}</p>
+            @endif
+        </div>
     </div>
 
-    <!-- Read More Link -->
-    <div class="mt-4 text-right">
-        <a href="{{ route('testimonials.show', $testimonial) }}"
-            class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-            Részletek →
-        </a>
-    </div>
+    <!-- Company Logo -->
+    @if ($testimonial->company_logo)
+        <img class="h-8 object-contain" src="{{ Storage::url($testimonial->company_logo) }}"
+            alt="{{ $testimonial->client_company }}">
+    @endif
+</div>
+
+<!-- Read More Link -->
+<div class="mt-4 text-right">
+    <a href="{{ route('testimonials.show', $testimonial) }}"
+        class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+        Részletek →
+    </a>
+</div>
 </div>

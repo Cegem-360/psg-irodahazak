@@ -11,6 +11,7 @@ use App\Filament\Resources\TestimonialResource\Pages\ViewTestimonial;
 use App\Models\Testimonial;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -42,18 +43,22 @@ final class TestimonialResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('client_name')
-                    ->label('Név')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('client_position')
-                    ->label('Pozíció')
-                    ->maxLength(255)
-                    ->placeholder('Pl. Ügyvezető igazgató'),
-                TextInput::make('client_company')
-                    ->label('Cég')
-                    ->maxLength(255)
-                    ->placeholder('Pl. PSG Irodaházak Kft.'),
+                Section::make('Ügyfél adatai')
+                    ->columns(3)
+                    ->schema([
+                        TextInput::make('client_name')
+                            ->label('Név')
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('client_company')
+                            ->label('Cég')
+                            ->maxLength(255)
+                            ->placeholder('Pl. PSG Irodaházak Kft.'),
+                        TextInput::make('client_position')
+                            ->label('Pozíció')
+                            ->maxLength(255)
+                            ->placeholder('Pl. Ügyvezető igazgató'),
+                    ]),
                 RichEditor::make('testimonial')
                     ->label('Vélemény')
                     ->required()
@@ -64,8 +69,10 @@ final class TestimonialResource extends Resource
                     ->image(),
 
                 Toggle::make('is_featured')
-                    ->required(),
+                    ->label('Kiemelt')
+                    ->default(false),
                 Toggle::make('is_active')
+                    ->label('Aktív')
                     ->required(),
 
                 Select::make('lang')
@@ -97,7 +104,7 @@ final class TestimonialResource extends Resource
                 TextColumn::make('lang')
                     ->label('Nyelv')
                     ->sortable()
-                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
                         'hu' => 'Magyar',
                         'en' => 'Angol',
                         default => $state,

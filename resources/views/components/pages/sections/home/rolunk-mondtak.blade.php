@@ -36,6 +36,13 @@
                                 <br>
                                 <strong>
                                     {{ $testimonial->client_name }}
+
+                                    @if ($testimonial->client_position)
+                                        {{ ', ' . $testimonial->client_position }}
+                                    @endif
+                                    @if ($testimonial->client_company)
+                                        {{ ', ' . $testimonial->client_company }}
+                                    @endif
                                 </strong>
                             </div>
                         </div>
