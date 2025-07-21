@@ -10,7 +10,7 @@ return [
     'about-us' => 'rolunk',
     'contact' => 'kapcsolat',
     'privacy-policy' => 'adatvedelmi-nyilatkozat',
-    'impressum' => 'impresszum',
+    'impressum' => 'impressum',
     'properties' => 'ingatlanok',
     'blog' => 'blog',
     'news' => 'hirek',

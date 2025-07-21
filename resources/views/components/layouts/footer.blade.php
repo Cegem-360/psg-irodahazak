@@ -81,7 +81,7 @@
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Privacy Policy') }}</a>
                          </li>
                          <li>
-                             <a href="{{ localized_route('impresszum') }}"
+                             <a href="{{ localized_route('impressum') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Imprint') }}</a>
                          </li>
                      </ul>

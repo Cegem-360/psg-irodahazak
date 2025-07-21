@@ -29,8 +29,7 @@ Route::post('/kapcsolat', [ContactController::class, 'store'])->name('contact.st
 
 Route::view('/adatvedelmi-nyilatkozat', 'pages.privacy-policy')->name('privacy-policy');
 
-Route::get('/impresszum', [ImpresszumController::class, 'show'])->name('impresszum');
-
+Route::get('/impresszum', [ImpresszumController::class, 'show'])->name('impressum');
 
 Route::middleware(['auth'])->group(function (): void {
     Route::view('/kedvencek', 'pages.favorites')->name('favorites');
@@ -66,7 +65,7 @@ Route::group(['as' => 'en.'], function (): void {
     Route::view('/about-us', 'index')->name('rolunk');
     Route::view('/contact-us', 'index')->name('kapcsolat');
     Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
-    Route::view('/impressum', 'index')->name('impresszum');
+    Route::view('/impressum', [ImpresszumController::class, 'show'])->name('impressum');
     Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
     // English Budapest category routes
