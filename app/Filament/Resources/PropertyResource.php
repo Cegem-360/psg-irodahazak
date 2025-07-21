@@ -63,7 +63,7 @@ final class PropertyResource extends Resource
                     ->maxLength(255)
                     ->afterStateUpdated(fn (string $state, Set $set) => $set('slug', Str::slug($state, language: 'hu')))
                     ->required()
-                    ->live(),
+                    ->live(debounce: 1000),
                 TextInput::make('slug')
                     ->label('Slug')
                     ->maxLength(255)
