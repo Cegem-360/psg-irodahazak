@@ -178,9 +178,9 @@
                     @if ($property->max_berleti_dij)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Rent') }}:</span>
-                            <span
-                                class="font-medium text-gray-900">{{ $property->min_berleti_dij ? number_format($property->min_berleti_dij, 0, ',', ' ') . ' - ' : '' }}{{ number_format($property->max_berleti_dij, 0, ',', ' ') }}
-                                {{ __('EUR/m²/month') }}</span>
+                            <span class="font-medium text-gray-900">
+                                {{ $property->min_berleti_dij ? number_format($property->min_berleti_dij, 0, ',', ' ') . ' - ' : '' }}{{ number_format($property->max_berleti_dij, 0, ',', ' ') }}
+                                {{ $property->min_berleti_dij_addons }}</span>
                         </div>
                     @endif
 
@@ -222,7 +222,7 @@
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Parking Fee') }}:</span>
                             <span
-                                class="font-medium text-gray-900">{{ $property->min_parkolas_dija ? number_format($property->min_parkolas_dija, 0, ',', ' ') . ' - ' : '' }}{{ number_format($property->parkolas_dija, 0, ',', ' ') }}
+                                class="font-medium text-gray-900">{{ $property->min_parkolas_dija ? number_format($property->min_parkolas_dija, 0, ',', ' ') . ' - ' : '' }}{{ number_format($property->max_parkolas_dija, 0, ',', ' ') }}
                                 {{ __('EUR/space/month') }}</span>
                         </div>
                     @endif

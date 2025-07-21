@@ -248,8 +248,7 @@
                         <!-- Keresés gomb -->
                         <div>
                             <button type="submit"
-                                class="w-full bg-primary/70 text-white font-semibold px-8 py-2 rounded hover:bg-accent/80 transition"
-                                onclick="console.log('Form submitted with districts:', document.getElementById('selectedDistricts').value);">
+                                class="w-full bg-primary/70 text-white font-semibold px-8 py-2 rounded hover:bg-accent/80 transition">
                                 {{ __('SEARCH') }}
                             </button>
                         </div>
@@ -372,8 +371,6 @@
                 // Ensure districtName is a string for consistency
                 const districtStr = String(districtName);
 
-                console.log('selectDistrict called with:', districtStr);
-
                 // Toggle district selection
                 const index = selectedDistricts.indexOf(districtStr);
                 if (index > -1) {
@@ -384,12 +381,8 @@
                     selectedDistricts.push(districtStr);
                 }
 
-                console.log('selectedDistricts after toggle:', selectedDistricts);
-
                 // Update hidden input with comma-separated values
                 document.getElementById('selectedDistricts').value = selectedDistricts.join(',');
-
-                console.log('Hidden input value set to:', document.getElementById('selectedDistricts').value);
 
                 // Update dropdown selections
                 updateDropdownSelections();
@@ -416,11 +409,11 @@
             function updateDropdownText() {
                 const dropdownText = document.getElementById('dropdownText');
                 if (selectedDistricts.length === 0) {
-                    dropdownText.textContent = 'Select Districts';
+                    dropdownText.textContent = "{{ __('Select Districts') }}";
                 } else if (selectedDistricts.length === 1) {
                     dropdownText.textContent = selectedDistricts[0];
                 } else {
-                    dropdownText.textContent = `${selectedDistricts.length} districts selected`;
+                    dropdownText.textContent = `${selectedDistricts.length} {{ __('district selected') }}`;
                 }
             }
 
