@@ -27,7 +27,7 @@
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Price') }}:</td>
-                                    <td>{{ $property->ar ?? '12 mEUR' }}</td>
+                                    <td>{{ $property->ar ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Parking') }}:</td>

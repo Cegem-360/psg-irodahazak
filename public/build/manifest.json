@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-rYAcFVaC.css",
+    "file": "assets/app-DXYIsArL.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -141,13 +141,13 @@
     "src": "resources/images/welsec_logo_800x600.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-oMDTPGQq.js",
+    "file": "assets/app-C6GPMtKY.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
       "assets/app-DxkI-1En.css",
-      "assets/app-rYAcFVaC.css"
+      "assets/app-DXYIsArL.css"
     ],
     "assets": [
       "assets/psg-symbol-UIy-SfbG.svg"
