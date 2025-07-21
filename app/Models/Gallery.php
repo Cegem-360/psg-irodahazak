@@ -27,6 +27,7 @@ final class Gallery extends Model
         'video_url',
         'image_file', // Virtual field for file upload
         'images', // JSON array of image filenames
+        'sort',
     ];
 
     protected $casts = [

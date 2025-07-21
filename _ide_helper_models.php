@@ -190,17 +190,6 @@ namespace App\Models{
 /**
  * 
  *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Galery newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Galery newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Galery query()
- */
-	final class Galery extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * 
- *
  * @property int $id
  * @property string|null $path
  * @property int $target_table_id

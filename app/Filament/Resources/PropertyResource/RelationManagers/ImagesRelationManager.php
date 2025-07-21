@@ -69,6 +69,7 @@ final class ImagesRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('path')
+            ->reorderable('ord')
             ->columns([
                 ImageColumn::make('path')
                     ->label('Kép')
