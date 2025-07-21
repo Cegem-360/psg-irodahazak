@@ -57,6 +57,17 @@
                         {!! $news->content !!}
                     </div>
                 </div>
+                <!-- Article Content -->
+                @if ($news->source)
+                    <div class="px-8 pb-8">
+                        <div class="prose prose-lg max-w-none">
+                            <span class="font-semibold text-blue-700 bg-blue-100 px-2 py-1 rounded">
+                                Forrás: {{ $news->source }}
+                            </span>
+                        </div>
+                    </div>
+                @endif
+
             </article>
 
             <!-- Back to News -->
