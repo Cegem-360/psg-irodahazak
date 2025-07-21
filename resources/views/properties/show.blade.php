@@ -27,7 +27,8 @@
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Price') }}:</td>
-                                    <td>{{ $property->ar ?? '' }}</td>
+                                    <td>{{ $property->min_berleti_dij ?? '' }} {{ $property->min_berleti_dij_addons }}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Parking') }}:</td>
