@@ -27,6 +27,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkActionGroup;
@@ -37,6 +38,7 @@ use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 final class PropertyResource extends Resource
 {
@@ -58,7 +60,16 @@ final class PropertyResource extends Resource
             ->schema([
                 TextInput::make('title')
                     ->label('Cím')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->afterStateUpdated(fn (string $state, Set $set) => $set('slug', Str::slug($state, language: 'hu')))
+                    ->required()
+                    ->live(),
+                TextInput::make('slug')
+                    ->label('Slug')
+                    ->maxLength(255)
+                    ->required()
+                    ->unique(Property::class, 'slug', ignoreRecord: true)
+                    ->columnSpanFull(),
                 Select::make('status')
                     ->label('Státusz')
                     ->options([
@@ -346,7 +357,7 @@ final class PropertyResource extends Resource
                     ->multiple()
                     ->panelLayout('grid')
                     ->visibility('public')
-                    ->directory(fn($record): string => 'property/' . $record->id . '/gallery_images')
+                    ->directory(fn ($record): string => 'property/'.$record->id.'/gallery_images')
                     ->openable()
                     ->downloadable()
                     ->columnSpanFull()
@@ -361,7 +372,7 @@ final class PropertyResource extends Resource
                 TextColumn::make('status')
                     ->label('Státusz')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'danger',
                         default => 'gray',
@@ -392,7 +403,7 @@ final class PropertyResource extends Resource
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')
-                    ->url(fn(Property $record) => route('property.pdf', $record))
+                    ->url(fn (Property $record) => route('property.pdf', $record))
                     ->openUrlInNewTab()
                     ->requiresConfirmation()
                     ->modalHeading('PDF Generálás')
