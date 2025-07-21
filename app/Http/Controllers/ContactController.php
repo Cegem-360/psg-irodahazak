@@ -53,7 +53,7 @@ final class ContactController extends Controller
             // Send email notification to admin
             Mail::send('emails.contact', $validated, function ($message) use ($validated): void {
                 $message->to(env('ADMIN_EMAIL', 'info@psg-irodahazak.hu'))
-                    ->subject('Új kapcsolatfelvételi üzenet: '.$validated['property_title'])
+                    ->subject('Új kapcsolatfelvételi üzenet: ' . $validated['property_title'])
                     ->replyTo($validated['email'], $validated['name']);
             });
 
@@ -63,8 +63,7 @@ final class ContactController extends Controller
                     ->subject('Kapcsolatfelvételi üzenet megerősítése - PSG Irodaházak');
             });
 
-            return back()->with('success', 'Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.');
-
+            return back()->with('success', __('Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.'));
         } catch (Exception $exception) {
             Log::error('Contact form email sending failed', [
                 'error' => $exception->getMessage(),
