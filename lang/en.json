@@ -191,5 +191,21 @@
     "Üdvözlettel": "Best regards",
     "Property Solution Group csapata": "Property Solution Group team",
     "Ez egy automatikus válasz. Kérjük, ne válaszoljon erre az emailre.": "This is an automated response. Please do not reply to this email.",
-    "Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.": "Thank you for your message! We will contact you soon."
+    "Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.": "Thank you for your message! We will contact you soon.",
+    "Kérjük, javítsa ki a hibákat és próbálja újra.": "Please correct the errors and try again.",
+    "A név megadása kötelező.": "Name is required.",
+    "Az email cím megadása kötelező.": "Email address is required.",
+    "Kérjük, adjon meg egy érvényes email címet.": "Please provide a valid email address.",
+    "A telefonszám megadása kötelező.": "Phone number is required.",
+    "Ingatlan megadása kötelező.": "Property selection is required.",
+    "Az üzenet megadása kötelező.": "Message is required.",
+    "Az adatvédelmi nyilatkozat elfogadása kötelező.": "Acceptance of the privacy policy is required.",
+    "Kapcsolatfelvételi üzenet megerősítése - PSG Irodaházak": "Contact message confirmation - PSG Office Buildings",
+    "Hiba történt az üzenet küldése során. Kérjük, próbálja újra később vagy hívjon minket telefonon.": "An error occurred while sending the message. Please try again later or call us by phone.",
+    "iroda_keresese": "Office search",
+    "iroda_kiadas": "Office rental",
+    "ingatlan_ertekesites": "Real estate sales",
+    "befektetesi_lehetoseg": "Investment opportunity",
+    "tanacsadas": "Counseling",
+    "egyeb": "Other topic"
 }

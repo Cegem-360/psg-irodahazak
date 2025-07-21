@@ -24,7 +24,7 @@ final class ContactController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'company' => 'nullable|string|max:255',
-            'selected_property_id' => 'required|string|max:255',
+            'contact_subject' => 'required|string|max:255',
             'message' => 'required|string|max:5000',
             'privacy' => 'required|accepted',
         ], [
@@ -32,7 +32,7 @@ final class ContactController extends Controller
             'email.required' => 'Az email cím megadása kötelező.',
             'email.email' => 'Kérjük, adjon meg egy érvényes email címet.',
             'phone.required' => 'A telefonszám megadása kötelező.',
-            'selected_property_id.required' => 'Ingatlan megadása kötelező.',
+            'contact_subject' => 'Ingatlan megadása kötelező.',
             'message.required' => 'Az üzenet megadása kötelező.',
             'privacy.required' => 'Az adatvédelmi nyilatkozat elfogadása kötelező.',
             'privacy.accepted' => 'Az adatvédelmi nyilatkozat elfogadása kötelező.',
@@ -46,14 +46,14 @@ final class ContactController extends Controller
         }
 
         $validated = $validator->validated();
-        $validated['property_title'] = Property::find($validated['selected_property_id'])->title ?? 'Nincs megadva';
+        /*   $validated['selected_subject'] = Property::find($validated['selected_property_id'])->title ?? 'Nincs megadva'; */
         $validated['userMessage'] = $validated['message'];
         unset($validated['message']);
         try {
             // Send email notification to admin
             Mail::send('emails.contact', $validated, function ($message) use ($validated): void {
                 $message->to(env('ADMIN_EMAIL', 'info@psg-irodahazak.hu'))
-                    ->subject('Új kapcsolatfelvételi üzenet: ' . $validated['property_title'])
+                    ->subject('Új kapcsolatfelvételi üzenet: ' . $validated['contact_subject'])
                     ->replyTo($validated['email'], $validated['name']);
             });
 

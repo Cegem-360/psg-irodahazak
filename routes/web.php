@@ -25,10 +25,12 @@ Route::view('/elado-irodahazak', 'index')->name('elado-irodahazak');
 Route::view('/rolunk', 'index')->name('rolunk');
 
 Route::view('/kapcsolat', 'index')->name('kapcsolat');
+Route::post('/kapcsolat', [ContactController::class, 'store'])->name('contact.store');
+
 Route::view('/adatvedelmi-nyilatkozat', 'pages.privacy-policy')->name('privacy-policy');
 
 Route::get('/impresszum', [ImpresszumController::class, 'show'])->name('impresszum');
-Route::post('/kapcsolat', [ContactController::class, 'store'])->name('contact.store');
+
 
 Route::middleware(['auth'])->group(function (): void {
     Route::view('/kedvencek', 'pages.favorites')->name('favorites');

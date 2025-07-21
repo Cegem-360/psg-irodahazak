@@ -71,7 +71,7 @@
             <p><strong>{{ __('Az Ön üzenete') }}:</strong></p>
             <div class="contact-info">
                 <p><strong>{{ __('Tárgy') }}:</strong>
-                    {{ $property_title }}
+                    {{ __($contact_subject) }}
                 </p>
                 <p style="margin-top: 15px;">{{ $userMessage }}</p>
             </div>

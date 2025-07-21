@@ -92,7 +92,7 @@
                 <div class="field-label">Tárgy:</div>
                 <div class="field-value">
 
-                    {{ $property_title }}
+                    {{ $contact_subject }}
 
                 </div>
             </div>

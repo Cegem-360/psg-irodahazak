@@ -49,9 +49,6 @@
     </div>
 
     <div>
-        @php
-
-        @endphp
         <label for="selected_property_id"
             class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.subject') }}
             *</label>
