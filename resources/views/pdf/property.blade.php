@@ -29,16 +29,6 @@
                     print-color-adjust: exact;
                 }
             }
-
-            /*  @font-face {
-                font-family: DejaVu Sans;
-                src: url("{{ Vite::asset('resources/fonts/DejaVuSans.ttf') }}") format("truetype");
-                font-weight: normal;
-                font-style: normal;
-            } */
-            /*   body {
-                font-family: 'DejaVu Sans', Arial, sans-serif;
-            } */
         </style>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
         <style>
