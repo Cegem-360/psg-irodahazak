@@ -103,6 +103,7 @@ final class PropertyPdfService
         $pdf = Browsershot::html($html)
             ->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
             ->setNpmBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/npm')
+            ->setOption('args', ['--disable-web-security'])
             ->setEnvironmentOptions([
                 'LANG' => 'hu-HU',
             ])
