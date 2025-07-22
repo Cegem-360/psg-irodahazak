@@ -112,13 +112,6 @@ final class PropertyPdfService
             ->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
             ->setNpmBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/npm')
             ->setOption('args', ['--disable-web-security'])
-            ->setEnvironmentOptions([
-                'LANG' => 'hu-HU',
-            ])
-            ->addChromiumArguments([
-                '--allow-file-access-from-files',
-                'font-render-hinting' => 'none',
-            ])
             ->format(config('pdf.browsershot.format', 'A4'))
             ->margins(
                 config('pdf.browsershot.margins.top', 15),
@@ -129,7 +122,7 @@ final class PropertyPdfService
             ->showBackground()
             ->waitUntilNetworkIdle(config('pdf.browsershot.wait_until_network_idle', true))
             ->timeout(config('pdf.browsershot.timeout', 90))
-            ->delay(8000) // 2 másodperc várakozás a Tailwind betöltésére
+            ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
             ->footerHtml($footerHtml)
             ->pdf();
 
