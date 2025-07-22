@@ -35,7 +35,7 @@ final class FetchBloghuFeed extends Command
         try {
             $rss = simplexml_load_file($feedUrl);
         } catch (Exception $exception) {
-            $this->error('Nem sikerült lekérni az RSS feedet: ' . $exception->getMessage());
+            $this->error('Nem sikerült lekérni az RSS feedet: '.$exception->getMessage());
 
             return 1;
         }
@@ -72,11 +72,12 @@ final class FetchBloghuFeed extends Command
                 'is_published' => true,
                 'published_at' => $pubDate,
                 'meta_data' => ['source' => $link],
+                'link' => $link,
             ]);
             $count++;
         }
 
-        $this->info($count . ' új bejegyzés mentve.');
+        $this->info($count.' új bejegyzés mentve.');
 
         return 0;
     }

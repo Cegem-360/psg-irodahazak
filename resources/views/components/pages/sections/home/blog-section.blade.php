@@ -17,7 +17,7 @@
                     <p class="text-md italic text-primary my-2">{{ $blogPost->published_at->format('Y.m.d') }}</p>
                     <p class="text-gray-700 min-h-48 text-justify">{{ $blogPost->excerpt }}</p>
 
-                    <a href="#"
+                    <a href="{{ $blogPost->link }}" target="_blank"
                         class="inline-block mb-4 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">
                         Teljes cikk
                     </a>

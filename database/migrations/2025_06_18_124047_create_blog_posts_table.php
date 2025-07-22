@@ -26,6 +26,7 @@ return new class extends Migration
             $table->timestamp('published_at')->nullable();
             $table->json('meta_data')->nullable(); // SEO meta data
             $table->integer('views_count')->default(0)->nullable();
+            $table->string('link')->nullable(); // External link if applicable
             $table->timestamps();
 
             $table->index(['is_published', 'published_at']);

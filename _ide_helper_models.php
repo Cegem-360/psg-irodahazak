@@ -90,7 +90,6 @@ namespace App\Models{
  * @property-read string $reading_time
  * @property-read string $status
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost byCategory(int $categoryId)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost draft()
  * @method static \Database\Factories\BlogPostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost newQuery()
@@ -260,6 +259,7 @@ namespace App\Models{
  * @property int $id
  * @property string $title
  * @property string|null $slug
+ * @property string|null $source
  * @property string|null $excerpt
  * @property string $content
  * @property string|null $featured_image
@@ -296,6 +296,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News wherePriority($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News wherePublishedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|News whereSource($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News whereUserId($value)

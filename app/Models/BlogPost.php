@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +26,7 @@ final class BlogPost extends Model
         'published_at',
         'meta_data',
         'views_count',
+        'link',
     ];
 
     protected $casts = [
@@ -51,11 +53,6 @@ final class BlogPost extends Model
         return $query->where('is_published', true)
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now());
-    }
-
-    public function scopeDraft(Builder $query): Builder
-    {
-        return $query->where('is_published', false);
     }
 
     public function scopeByCategory(Builder $query, int $categoryId): Builder
@@ -85,7 +82,6 @@ final class BlogPost extends Model
         return 'draft';
     }
 
-    // Methods
     public function incrementViews(): void
     {
         $this->increment('views_count');
@@ -105,5 +101,11 @@ final class BlogPost extends Model
             'is_published' => false,
             'published_at' => null,
         ]);
+    }
+
+    #[Scope]
+    protected function draft(Builder $query)
+    {
+        $query->where('is_published', false);
     }
 }
