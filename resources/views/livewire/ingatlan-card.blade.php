@@ -23,8 +23,7 @@
         @endif
         <!-- Fallback image if no swiper -->
         @if (!$minicarousel && $image)
-            <img src="{{ Storage::url($image) }}" alt="{{ $title }}"
-                class="w-full h-auto object-cover aspect-[3/2]" />
+            <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-auto object-cover aspect-[3/2]" />
         @endif
 
         <!-- Favorite button in top-right corner -->
