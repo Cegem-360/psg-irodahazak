@@ -129,7 +129,7 @@ final class PropertyPdfService
             ->showBackground()
             ->waitUntilNetworkIdle(config('pdf.browsershot.wait_until_network_idle', true))
             ->timeout(config('pdf.browsershot.timeout', 90))
-            ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
+            ->delay(8000) // 2 másodperc várakozás a Tailwind betöltésére
             ->footerHtml($footerHtml)
             ->pdf();
 
