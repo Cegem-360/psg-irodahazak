@@ -24,6 +24,9 @@ final class PropertyPdfService
         $footerHtml = view('pdf.footer')->render();
 
         $pdf = Browsershot::html($html)
+            ->addChromiumArguments([
+                '--allow-file-access-from-files',
+            ])
             ->format(config('pdf.browsershot.format', 'A4'))
             ->margins(
                 config('pdf.browsershot.margins.top', 15),
@@ -70,6 +73,10 @@ final class PropertyPdfService
         $footerHtml = view('pdf.footer')->render();
 
         $pdf = Browsershot::html($html)
+            ->addChromiumArguments([
+                '--allow-file-access-from-files',
+                'font-render-hinting' => 'none',
+            ])
             ->format(config('pdf.browsershot.format', 'A4'))
             ->margins(
                 config('pdf.browsershot.margins.top', 15),
@@ -78,9 +85,6 @@ final class PropertyPdfService
                 config('pdf.browsershot.margins.left', 15)
             )
             ->showBackground()
-            ->addChromiumArguments([
-                'font-render-hinting' => 'none',
-            ])
             ->waitUntilNetworkIdle(config('pdf.browsershot.wait_until_network_idle', true))
             ->timeout(config('pdf.browsershot.timeout', 90))
             ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
@@ -112,6 +116,7 @@ final class PropertyPdfService
                 'LANG' => 'hu-HU',
             ])
             ->addChromiumArguments([
+                '--allow-file-access-from-files',
                 'font-render-hinting' => 'none',
             ])
             ->format(config('pdf.browsershot.format', 'A4'))

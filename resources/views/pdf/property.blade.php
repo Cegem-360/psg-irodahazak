@@ -42,7 +42,7 @@
         </style>
     </head>
 
-    <body class="font-sans text-gray-800 bg-white text-sm leading-normal">
+    <body class="text-gray-800 bg-white text-sm leading-normal">
         <div class="max-w-[210mm] mx-auto p-0">
             <!-- Header -->
             <div class="bg-white text-black px-6 py-4 relative min-h-[80px]">
