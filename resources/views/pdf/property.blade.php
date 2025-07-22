@@ -25,6 +25,27 @@
         <h1 style="font-family:Gautami;">This is a Gautami, టెక్స్ట్ టెలోగిలో ఉంది</h1>
         <h1 style="font-family:DilleniaUPC;">This is a DilleniaUPC ข้อความเป็นภาษาไทย</h1>
         <h1 style="font-family:Latha;">This is a Latha தமிழ் மொழியில் உள்ளது</h1>
+        <h1 style="font-family:Arial;">Arial: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:Helvetica;">Helvetica: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:Verdana;">Verdana: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:Tahoma;">Tahoma: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:Trebuchet MS;">Trebuchet MS: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:Times New Roman;">Times New Roman: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:Georgia;">Georgia: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:Segoe UI;">Segoe UI: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:Calibri;">Calibri: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:DejaVu Sans;">DejaVu Sans: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:Liberation Sans;">Liberation Sans: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <!-- Google Fonts példák (beágyazás szükséges) -->
+        <h1 style="font-family:'Open Sans', Arial, sans-serif;">Open Sans: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:'Roboto', Arial, sans-serif;">Roboto: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:'Lato', Arial, sans-serif;">Lato: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:'Montserrat', Arial, sans-serif;">Montserrat: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:'Nunito', Arial, sans-serif;">Nunito: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:'Source Sans Pro', Arial, sans-serif;">Source Sans Pro: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:'PT Sans', Arial, sans-serif;">PT Sans: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:'Ubuntu', Arial, sans-serif;">Ubuntu: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
+        <h1 style="font-family:'Noto Sans', Arial, sans-serif;">Noto Sans: ÁÉÍÓÖŐÚÜŰ áéíóöőúüű</h1>
     </body>
 
 </html>
