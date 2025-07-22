@@ -1,10 +1,4 @@
 @use('Illuminate\Support\Facades\Storage')
-{{-- @use('') --}}
-{{-- 
-    PSG Ingatlan PDF Template
-    Fejlett képkeresési logikával és Storage API használatával
---}}
-
 <!DOCTYPE html>
 <html lang="hu">
 
@@ -36,7 +30,9 @@
 
             @font-face {
                 font-family: 'DejaVu Sans';
-                src: url('https://cdnjs.cloudflare.com/ajax/libs/dejavu/2.37/dejavu-fonts-ttf-2.37/ttf/DejaVuSans.ttf') format('truetype');
+                src: url('{{ Vite::asset('resources/fonts/DejaVuSans.ttf') }}') format('truetype');
+                font-weight: normal;
+                font-style: normal;
             }
 
             body {

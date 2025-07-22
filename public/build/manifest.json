@@ -4,6 +4,42 @@
     "src": "resources/css/app.css",
     "isEntry": true
   },
+  "resources/fonts/DejaVuSans-Bold.ttf": {
+    "file": "assets/DejaVuSans-Bold-D3XZ3B4H.ttf",
+    "src": "resources/fonts/DejaVuSans-Bold.ttf"
+  },
+  "resources/fonts/DejaVuSans-BoldOblique.ttf": {
+    "file": "assets/DejaVuSans-BoldOblique-DbcNr4hY.ttf",
+    "src": "resources/fonts/DejaVuSans-BoldOblique.ttf"
+  },
+  "resources/fonts/DejaVuSans-ExtraLight.ttf": {
+    "file": "assets/DejaVuSans-ExtraLight-D1HobU3F.ttf",
+    "src": "resources/fonts/DejaVuSans-ExtraLight.ttf"
+  },
+  "resources/fonts/DejaVuSans-Oblique.ttf": {
+    "file": "assets/DejaVuSans-Oblique-0Gknk7ff.ttf",
+    "src": "resources/fonts/DejaVuSans-Oblique.ttf"
+  },
+  "resources/fonts/DejaVuSans.ttf": {
+    "file": "assets/DejaVuSans-CHjR2eXl.ttf",
+    "src": "resources/fonts/DejaVuSans.ttf"
+  },
+  "resources/fonts/DejaVuSansCondensed-Bold.ttf": {
+    "file": "assets/DejaVuSansCondensed-Bold-Zt1gdCpq.ttf",
+    "src": "resources/fonts/DejaVuSansCondensed-Bold.ttf"
+  },
+  "resources/fonts/DejaVuSansCondensed-BoldOblique.ttf": {
+    "file": "assets/DejaVuSansCondensed-BoldOblique-DZ-Mge73.ttf",
+    "src": "resources/fonts/DejaVuSansCondensed-BoldOblique.ttf"
+  },
+  "resources/fonts/DejaVuSansCondensed-Oblique.ttf": {
+    "file": "assets/DejaVuSansCondensed-Oblique-BhAbJCYS.ttf",
+    "src": "resources/fonts/DejaVuSansCondensed-Oblique.ttf"
+  },
+  "resources/fonts/DejaVuSansCondensed.ttf": {
+    "file": "assets/DejaVuSansCondensed-PmSUFxgz.ttf",
+    "src": "resources/fonts/DejaVuSansCondensed.ttf"
+  },
   "resources/images/12_pont_0_jpg.jpg": {
     "file": "assets/12_pont_0_jpg-C5TNfYAE.jpg",
     "src": "resources/images/12_pont_0_jpg.jpg"
