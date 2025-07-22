@@ -130,7 +130,7 @@ final class PropertyPdfService
             ->timeout(config('pdf.browsershot.timeout', 90))
             ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
             ->footerHtml($footerHtml)
-            ->pdf();
+            ->base64pdf();
 
         // Fájlnév generálása
         $filename = $this->generateFilename($property);
