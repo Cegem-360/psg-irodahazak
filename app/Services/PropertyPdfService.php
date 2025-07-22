@@ -100,8 +100,8 @@ final class PropertyPdfService
         $footerHtml = view('pdf.footer')->render();
 
         $pdf = Browsershot::html($html)
-            ->setNodeBinary('/usr/local/bin/node')
-            ->setNpmBinary('/usr/local/bin/npm')
+            ->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
+            ->setNpmBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/npm')
             ->format(config('pdf.browsershot.format', 'A4'))
             ->margins(
                 config('pdf.browsershot.margins.top', 15),
