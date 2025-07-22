@@ -99,7 +99,7 @@
                             <span class="font-bold text-gray-600">{{ __('Currently Available') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format((int) $property->jelenleg_kiado, 0, ',', ' ') }}
-                                m²</span>
+                                {{ $property->jelenleg_kiado_addons }}</span>
                         </div>
                     @endif
 
@@ -108,7 +108,7 @@
                             <span class="font-bold text-gray-600">{{ __('Min. Available') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format((int) $property->min_kiado, 0, ',', ' ') }}
-                                m²</span>
+                                {{ $property->min_kiado_addons }}</span>
                         </div>
                     @endif
 
@@ -162,7 +162,7 @@
                             <span
                                 class="font-medium text-gray-900">{{ $property->min_parkolas_dija ? number_format((int) $property->min_parkolas_dija, 0, ',', ' ') . ' - ' : '' }}
                                 {{ number_format((int) $property->max_parkolas_dija, 0, ',', ' ') }}
-                                {{ __('EUR/space/month') }}</span>
+                                {{ $property->min_parkolas_dija_addons }}</span>
                         </div>
                     @endif
 
@@ -177,7 +177,7 @@
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Min. Rental Period') }}:</span>
                             <span class="font-medium text-gray-900">{{ $property->min_berleti_idoszak }}
-                                {{ __('years') }}</span>
+                                {{ $property->min_berleti_idoszak_addons }}</span>
                         </div>
                     @endif
 
