@@ -63,66 +63,13 @@
             <div class="flex min-h-[380px]">
                 <!-- Left Column - Image -->
                 <div class="w-1/2 p-0">
-                    @if ($property->images && $property->images->count() > 0)
+                    @if ($property->property_photos && collect($property->property_photos)->count() > 0)
                         @php
-                            $firstImage = $property->images->first();
+                            $image = $property->getFirstImageUrl();
                             $imageUrl = null;
 
-                            // Próbáljuk meg a Storage::files() metódust használni
-                            $galleryDir = 'property/' . $property->id . '/gallery';
-
-                            if (Storage::disk('public')->exists($galleryDir)) {
-                                $availableFiles = Storage::disk('public')->files($galleryDir);
-
-                                // Keressük meg a base name-hez tartozó képeket
-                                $baseName = basename($firstImage->path_without_size_and_ext);
-                                $matchingFiles = array_filter($availableFiles, function ($file) use ($baseName) {
-                                    return str_contains(basename($file), $baseName . '_');
-                                });
-
-                                // Preferált méretek sorrendje
-                                $preferredSizes = [
-                                    '1920x1080',
-                                    '1600x1200',
-                                    '1200x900',
-                                    '1024x768',
-                                    '800x600',
-                                    '640x480',
-                                ];
-
-                                foreach ($preferredSizes as $size) {
-                                    foreach ($matchingFiles as $file) {
-                                        if (str_contains($file, '_' . $size . '.')) {
-                                            $imageUrl = Storage::url($file);
-                                            break 2; // Kilépés mindkét ciklusból
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Fallback: hagyományos módon keresünk
-                            if (!$imageUrl) {
-                                $preferredSizes = [
-                                    '1920x1080',
-                                    '1600x1200',
-                                    '1200x900',
-                                    '1024x768',
-                                    '800x600',
-                                    '640x480',
-                                ];
-
-                                foreach ($preferredSizes as $size) {
-                                    $sizedPath = $firstImage->path_without_size_and_ext . '_' . $size . '.jpg';
-                                    if (Storage::disk('public')->exists($sizedPath)) {
-                                        $imageUrl = Storage::url($sizedPath);
-                                        break;
-                                    }
-                                }
-                            }
-
-                            // Végső fallback az eredeti képre
-                            if (!$imageUrl && Storage::disk('public')->exists($firstImage->path)) {
-                                $imageUrl = Storage::url($firstImage->path);
+                            if ($image) {
+                                $imageUrl = Storage::url($image);
                             }
                         @endphp
                         @if ($imageUrl)

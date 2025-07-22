@@ -23,7 +23,7 @@
                 <div class="col-span-2">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-fit">
                         @foreach ($offices ?? [] as $office)
-                            <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :images="$office->galleryImages()"
+                            <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl()" :images="collect($office->property_photos)"
                                 :title="$office->title" :description="$office->getAddressFormated()" :link="localized_route('properties.show', ['property' => $office->slug])" :small="true"
                                 :minicarousel="true" wire:key="office-{{ $office->id }}" />
                         @endforeach

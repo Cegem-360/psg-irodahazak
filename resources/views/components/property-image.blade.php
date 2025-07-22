@@ -1,19 +1,13 @@
-@props([
-    'property',
-    'size' => '800x600', // Default to 800x600 instead of original size
-    'class' => 'w-full h-auto object-cover',
-    'alt' => null,
-    'showPlaceholder' => true,
-])
+@props(['property', 'class' => 'w-full h-auto object-cover', 'alt' => null, 'showPlaceholder' => true])
 
 @php
     $imageUrl = null;
 
     if ($property instanceof \App\Models\Property) {
-        $firstImage = $property->images->first();
+        $firstImage = collect($property->property_photos)->first();
         if ($firstImage) {
-            $imageUrl = $firstImage->getImageUrl($size);
-            $alt = $alt ?? ($firstImage->alt ?? $property->title);
+            $imageUrl = Storage::url($firstImage);
+            $alt = 'Ingatlan kép';
         }
     }
 

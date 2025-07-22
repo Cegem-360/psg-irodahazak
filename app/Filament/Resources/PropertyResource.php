@@ -430,7 +430,7 @@ final class PropertyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ImagesRelationManager::class,
+            /*  ImagesRelationManager::class, */
         ];
     }
 

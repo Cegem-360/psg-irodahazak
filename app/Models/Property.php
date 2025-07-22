@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 #[ObservedBy(PropertyObserver::class)]
@@ -179,44 +180,9 @@ final class Property extends Model
         return $this->images()->get();
     }
 
-    /**
-     * Get all image URLs for this property
-     */
-    public function getImageUrlsAttribute(): array
+    public function getFirstImageUrl(): ?string
     {
-        return $this->images->map(function ($image) {
-            return $image->image_url;
-        })->toArray();
-    }
-
-    /**
-     * Get the first image URL
-     */
-    public function getFirstImageUrlAttribute(): ?string
-    {
-        $firstImage = $this->images->first();
-
-        return $firstImage ? $firstImage->getFirstImageUrl() : null;
-    }
-
-    /**
-     * Get the first image URL with specified size (default 800x600)
-     */
-    public function getFirstImageUrl(string $size = '800x600', string $extension = 'jpg'): ?string
-    {
-        $firstImage = $this->images->first();
-
-        return $firstImage ? $firstImage->getImageUrl($size, $extension) : null;
-    }
-
-    /**
-     * Get image URLs in a specific size
-     */
-    public function getImageUrls(?string $size = null): array
-    {
-        return $this->images->map(function ($image) use ($size) {
-            return $image->getImageUrl($size);
-        })->toArray();
+        return Storage::url(collect($this->property_photos)->first());
     }
 
     public function isRent(): bool

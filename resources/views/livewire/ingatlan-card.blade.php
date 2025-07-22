@@ -8,7 +8,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($images as $carouselimage)
                         <div class="swiper-slide">
-                            <img src="{{ $carouselimage->getImageUrl('800x600', 'jpg') }}" alt="{{ $title }}"
+                            <img src="{{ Storage::url($carouselimage) }}" alt="{{ $title }}"
                                 class="w-full h-auto object-cover aspect-[3/2]" />
                         </div>
                     @endforeach
@@ -23,7 +23,8 @@
         @endif
         <!-- Fallback image if no swiper -->
         @if (!$minicarousel && $image)
-            <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-auto object-cover aspect-[3/2]" />
+            <img src="{{ Storage::url($image) }}" alt="{{ $title }}"
+                class="w-full h-auto object-cover aspect-[3/2]" />
         @endif
 
         <!-- Favorite button in top-right corner -->

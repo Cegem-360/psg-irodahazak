@@ -75,22 +75,6 @@ final class Gallery extends Model
     }
 
     /**
-     * Get the first image URL with specified size (default 800x600 for main display)
-     */
-    public function getFirstImageUrl(string $size = '800x600', string $extension = 'jpg'): string
-    {
-        return $this->getImageUrl($size, $extension);
-    }
-
-    /**
-     * Get thumbnail URL (160x160 by default)
-     */
-    public function getThumbnailUrl(string $size = '160x160', string $extension = 'jpg'): string
-    {
-        return $this->getImageUrl($size, $extension);
-    }
-
-    /**
      * Check if the image file exists
      */
     public function imageExists(): bool

@@ -9,7 +9,7 @@
             <div
                 class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div>
-                    <x-cards.ingatlan-gallery-carousel :images="$property->galleryImages()" :title="$property->title" />
+                    <x-cards.ingatlan-gallery-carousel :images="collect($property->property_photos)" :title="$property->title" />
                 </div>
                 <div class="p-4">
 
@@ -256,12 +256,12 @@
                 @foreach ($similarProperties ?? [] as $similarProperty)
                     @if ($similarProperty->isRent())
                         <x-cards.ingatlan-card
-                            image="{{ $similarProperty->getFirstImageUrl('384x246') ?: Vite::asset('resources/images/default-office.jpg') }}"
+                            image="{{ $similarProperty->getFirstImageUrl() ?: Vite::asset('resources/images/default-office.jpg') }}"
                             title="{{ $similarProperty->title }}" :description="$similarProperty->getAddressFormated()"
                             link="{{ route('properties.show', $similarProperty->slug) }}" />
                     @else
                         <x-cards.ingatlan-card
-                            image="{{ $similarProperty->getFirstImageUrl('384x246') ?: Vite::asset('resources/images/default-office.jpg') }}"
+                            image="{{ $similarProperty->getFirstImageUrl() ?: Vite::asset('resources/images/default-office.jpg') }}"
                             title="{{ $similarProperty->title }}" :description="$similarProperty->getAddressFormatedForSale()"
                             link="{{ route('properties.show', $similarProperty->slug) }}" />
                     @endif

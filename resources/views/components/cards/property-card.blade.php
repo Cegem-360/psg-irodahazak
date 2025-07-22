@@ -1,7 +1,7 @@
 @props(['property'])
 
 @php
-    $firstImage = $property->getFirstImageUrl('800x600') ?: $property->getFirstImageUrl();
+    $firstImage = $property->getFirstImageUrl();
 @endphp
 
 <a href="{{ localized_route('properties.show', $property) }}"
@@ -25,8 +25,8 @@
         <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $property->title }}</h3>
 
         <div class="flex justify-between items-center">
-            @if ($property->images->count() > 0)
-                <span class="text-sm text-gray-500">{{ $property->images->count() }} kép</span>
+            @if (collect($property->property_photos)->count() > 0)
+                <span class="text-sm text-gray-500">{{ collect($property->property_photos)->count() }} kép</span>
             @endif
 
             @if ($property->status)

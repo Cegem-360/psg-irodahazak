@@ -74,6 +74,7 @@ namespace App\Models{
  * @property int $id
  * @property string $title
  * @property string $slug
+ * @property string $link
  * @property string|null $excerpt
  * @property string $content
  * @property string|null $featured_image
@@ -102,6 +103,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost whereFeaturedImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost whereIsPublished($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost whereLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost whereMetaData($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost wherePublishedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost whereSlug($value)
@@ -468,8 +470,6 @@ namespace App\Models{
  * @property bool $vat
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read string|null $first_image_url
- * @property-read array $image_urls
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Gallery> $images
  * @property-read int|null $images_count
  * @property-read int|null $services_count

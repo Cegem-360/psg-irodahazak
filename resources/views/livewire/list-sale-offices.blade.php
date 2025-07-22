@@ -60,7 +60,7 @@
                 <div class="col-span-2">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         @foreach ($offices ?? [] as $office)
-                            <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl('800x600')" :title="$office->title"
+                            <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl()" :title="$office->title"
                                 :title="$office->title" :description="$office->getAddressFormatedForSale()" :link="localized_route('properties.show-for-sale', [
                                     'property' => $office->slug,
                                 ])" :key="$office->id"
