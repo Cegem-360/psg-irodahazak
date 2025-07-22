@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 /* @tailwind variants; */
-
+@font-face {
+    font-family: 'DejaVu Sans';
+    src: url('./fonts/DejaVuSans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 :root {
     /* --primary: #0B82C6;
     --secondary: #F7901E;
