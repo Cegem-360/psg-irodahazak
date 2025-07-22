@@ -30,7 +30,8 @@ final class PropertyPdfService
                 config('pdf.browsershot.margins.right', 15),
                 config('pdf.browsershot.margins.bottom', 25), // Alsó margó nagyobb a footer miatt
                 config('pdf.browsershot.margins.left', 15)
-            )->showBackground()
+            )
+            ->showBackground()
             ->waitUntilNetworkIdle(config('pdf.browsershot.wait_until_network_idle', true))
             ->timeout(config('pdf.browsershot.timeout', 90))
             ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
@@ -77,6 +78,9 @@ final class PropertyPdfService
                 config('pdf.browsershot.margins.left', 15)
             )
             ->showBackground()
+            ->addChromiumArguments([
+                'font-render-hinting' => 'none',
+            ])
             ->waitUntilNetworkIdle(config('pdf.browsershot.wait_until_network_idle', true))
             ->timeout(config('pdf.browsershot.timeout', 90))
             ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
@@ -106,6 +110,9 @@ final class PropertyPdfService
             ->setOption('args', ['--disable-web-security'])
             ->setEnvironmentOptions([
                 'LANG' => 'hu-HU',
+            ])
+            ->addChromiumArguments([
+                'font-render-hinting' => 'none',
             ])
             ->format(config('pdf.browsershot.format', 'A4'))
             ->margins(
