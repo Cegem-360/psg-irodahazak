@@ -40,6 +40,14 @@
                 font-family: 'DejaVu Sans', Arial, sans-serif;
             } */
         </style>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+        <style>
+            body,
+            h1,
+            p {
+                font-family: 'Open Sans', Arial, sans-serif;
+            }
+        </style>
     </head>
 
     <body class="text-gray-800 bg-white text-sm leading-normal">
@@ -70,22 +78,8 @@
                 <!-- Left Column - Image -->
                 <div class="w-1/2 p-0">
                     @if ($property->property_photos && collect($property->property_photos)->count() > 0)
-                        @php
-                            $image = $property->getFirstImageUrl();
-                            $imageUrl = null;
-
-                            if ($image) {
-                                $imageUrl = Storage::url($image);
-                            }
-                        @endphp
-                        @if ($imageUrl)
-                            <img src="{{ $imageUrl }}" alt="{{ $property->title }}"
-                                class="w-full h-[380px] object-cover block">
-                        @else
-                            <div class="w-full h-[380px] bg-gray-100 flex items-center justify-center text-gray-500">
-                                {{ __('Image not available') }}
-                            </div>
-                        @endif
+                        <img src="{{ $property->getFirstImageUrl() }}" alt="{{ $property->title }}"
+                            class="w-full h-[380px] object-cover block">
                     @else
                         <div class="w-full h-[380px] bg-gray-100 flex items-center justify-center text-gray-500">
                             {{ __('Image not available') }}
