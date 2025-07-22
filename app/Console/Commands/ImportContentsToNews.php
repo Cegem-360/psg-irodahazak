@@ -35,7 +35,7 @@ final class ImportContentsToNews extends Command
 
         $contents = DB::table('contents')
             ->whereIn('id', $ids)
-            ->select('id', 'lead', 'content', 'title')
+            ->select('id', 'lead', 'content', 'title', 'link')
             ->get();
 
         foreach ($contents as $content) {
@@ -45,6 +45,7 @@ final class ImportContentsToNews extends Command
                     'title' => str_replace(['\"'], ['"', ''], $content->title),
                     'excerpt' => str_replace(['\"', '\n'], ['"', "\n\r"], $content->lead),
                     'content' => str_replace(['\"', '\n'], ['"', "\n\r"], $content->content),
+                    'source' => $content->link,
 
                 ]
             );
