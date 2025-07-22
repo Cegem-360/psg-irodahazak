@@ -3,9 +3,8 @@
 <html lang="hu">
 
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
         <title>{{ $property->title }} - {{ __('Property Data Sheet') }}</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
@@ -22,12 +21,6 @@
             }
         </script>
         <style>
-            body {
-                font-family: DejaVu Sans;
-                margin: 20px;
-            }
-        </style>
-        <style>
             @media print {
                 body {
                     -webkit-print-color-adjust: exact;
@@ -35,7 +28,14 @@
                 }
             }
 
-            /*  body {
+            @font-face {
+                font-family: 'DejaVu Sans';
+                src: url('{{ public_path('/fonts/DejaVuSans.ttf') }}') format('truetype');
+                font-weight: normal;
+                font-style: normal;
+            }
+
+            /*   body {
                 font-family: 'DejaVu Sans', Arial, sans-serif;
             } */
         </style>
