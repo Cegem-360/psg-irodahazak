@@ -30,8 +30,8 @@
             }
 
             @font-face {
-                font-family: 'DejaVu Sans';
-                src: url('{{ public_path('/fonts/DejaVuSans.ttf') }}') format('truetype');
+                font-family: DejaVu Sans;
+                src: url("{{ public_path('/fonts/DejaVuSans.ttf') }}") format('truetype');
                 font-weight: normal;
                 font-style: normal;
             }
