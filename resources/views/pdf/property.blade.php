@@ -33,6 +33,15 @@
                     print-color-adjust: exact;
                 }
             }
+
+            @font-face {
+                font-family: 'DejaVu Sans';
+                src: url('https://cdnjs.cloudflare.com/ajax/libs/dejavu/2.37/dejavu-fonts-ttf-2.37/ttf/DejaVuSans.ttf') format('truetype');
+            }
+
+            body {
+                font-family: 'DejaVu Sans', Arial, sans-serif;
+            }
         </style>
     </head>
 
