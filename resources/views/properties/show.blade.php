@@ -157,24 +157,12 @@
                     </table>
                 </div>
             </div>
-
-            <div class="max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
-                <div class="text-center">
-                    <h3 class="text-2xl font-bold mb-4">{{ __('Property Details') }}</h3>
-                    <p class="mb-6 text-gray-600">{{ __('Download detailed information about this property') }}</p>
-
-                    @auth
-                        <a href="{{ URL::signedRoute('property.pdf', ['property' => $property->id]) }}"
-                            class="inline-flex items-center px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent/90 transition-colors">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                </path>
-                            </svg>
-                            {{ __('Download PDF') }}
-                        </a>
-                    @else
-                        @if (request()->hasValidSignature())
+            @auth
+                <div class="max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-4">{{ __('Property Details') }}</h3>
+                        <p class="mb-6 text-gray-600">{{ __('Download detailed information about this property') }}</p>
+                        @auth
                             <a href="{{ URL::signedRoute('property.pdf', ['property' => $property->id]) }}"
                                 class="inline-flex items-center px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent/90 transition-colors">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,12 +170,25 @@
                                         d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                                     </path>
                                 </svg>
-                                {{ __('Download PDF') }}
+                                {{ __('Printable Version') }}
                             </a>
-                        @endif
-                    @endauth
+                        @else
+                            @if (request()->hasValidSignature())
+                                <a href="{{ URL::signedRoute('property.pdf', ['property' => $property->id]) }}"
+                                    class="inline-flex items-center px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent/90 transition-colors">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                        </path>
+                                    </svg>
+                                    {{ __('Printable Version') }}
+                                </a>
+                            @endif
+                        @endauth
+                    </div>
+
                 </div>
-            </div>
+            @endauth
             <div
                 class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div>

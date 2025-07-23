@@ -239,5 +239,9 @@
     "Select": "Válasszon",
     "year": "év",
     "month": "hónap",
-    "day": "nap"
+    "day": "nap",
+    "Download PDF": "PDF letöltése",
+    "Download detailed information about this property": "Töltse le az ingatlan részletes információit PDF formátumban",
+    "Property Details": "Ingatlan részletek",
+    "Printable Version": "Nyomtatható verzió"
 }
