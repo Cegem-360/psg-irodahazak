@@ -16,4 +16,4 @@ Schedule::call(function () {
 
 Schedule::call(function () {
     Artisan::call('bloghu:fetch-feed');
-})->dailyAt('11:04');
+})->everyMinute();
