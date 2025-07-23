@@ -243,5 +243,7 @@
     "Download PDF": "PDF letöltése",
     "Download detailed information about this property": "Töltse le az ingatlan részletes információit PDF formátumban",
     "Property Details": "Ingatlan részletek",
-    "Printable Version": "Nyomtatható verzió"
+    "Printable Version": "Nyomtatható verzió",
+    "Min Rent": "Minimális bérleti ideje",
+    "Min Rent Addons": "Idő mértéke"
 }
