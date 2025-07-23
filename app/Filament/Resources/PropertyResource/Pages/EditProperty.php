@@ -8,6 +8,7 @@ use App\Filament\Resources\PropertyResource;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Facades\URL;
 
 final class EditProperty extends EditRecord
 {
@@ -20,7 +21,11 @@ final class EditProperty extends EditRecord
                 ->label('PDF Generálás')
                 ->icon('heroicon-o-document-arrow-down')
                 ->color('success')
-                ->url(fn () => route('property.pdf', $this->record))
+                ->url(fn () => URL::temporarySignedRoute(
+                    'property.pdf',
+                    now()->addDays(12),
+                    ['property' => $this->record->id]
+                ))
                 ->openUrlInNewTab()
                 ->requiresConfirmation()
                 ->modalHeading('PDF Generálás')

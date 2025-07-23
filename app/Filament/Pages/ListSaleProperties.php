@@ -14,6 +14,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\URL;
 
 final class ListSaleProperties extends Page implements HasTable
 {
@@ -79,7 +80,11 @@ final class ListSaleProperties extends Page implements HasTable
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')
-                    ->url(fn (Property $record) => route('property.pdf', $record))
+                    ->url(fn (Property $record) => URL::temporarySignedRoute(
+                        'property.pdf',
+                        now()->addDays(12),
+                        ['property' => $record->id]
+                    ))
                     ->openUrlInNewTab()
                     ->requiresConfirmation()
                     ->modalHeading('PDF Generálás')

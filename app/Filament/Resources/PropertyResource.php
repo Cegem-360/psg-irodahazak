@@ -9,7 +9,6 @@ use App\Filament\Imports\PropertyImporter;
 use App\Filament\Resources\PropertyResource\Pages\CreateProperty;
 use App\Filament\Resources\PropertyResource\Pages\EditProperty;
 use App\Filament\Resources\PropertyResource\Pages\ListProperties;
-use App\Filament\Resources\PropertyResource\Pages\ViewProperty;
 use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
 use App\Models\Category;
 use App\Models\Property;
@@ -403,7 +402,11 @@ final class PropertyResource extends Resource
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')
-                    ->url(fn (Property $record) => route('property.pdf', $record))
+                    ->url(fn (Property $record) => \Illuminate\Support\Facades\URL::temporarySignedRoute(
+                        'property.pdf',
+                        now()->addDays(12),
+                        ['property' => $record->id]
+                    ))
                     ->openUrlInNewTab()
                     ->requiresConfirmation()
                     ->modalHeading('PDF Generálás')
@@ -439,9 +442,7 @@ final class PropertyResource extends Resource
         return [
             'index' => ListProperties::route('/'),
             'create' => CreateProperty::route('/create'),
-            'view' => ViewProperty::route('/{record}'),
             'edit' => EditProperty::route('/{record}/edit'),
-
         ];
     }
 }

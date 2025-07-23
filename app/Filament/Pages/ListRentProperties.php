@@ -79,7 +79,11 @@ final class ListRentProperties extends Page implements HasTable
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')
-                    ->url(fn (Property $record) => route('property.pdf', $record))
+                    ->url(fn (Property $record) => \Illuminate\Support\Facades\URL::temporarySignedRoute(
+                        'property.pdf',
+                        now()->addDays(12),
+                        ['property' => $record->id]
+                    ))
                     ->openUrlInNewTab()
                     ->requiresConfirmation()
                     ->modalHeading('PDF Generálás')

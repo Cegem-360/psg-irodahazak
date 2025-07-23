@@ -98,12 +98,12 @@ Route::get('/test-pdf/{property}', function (Property $property): StreamedRespon
     return $pdfService->generatePdf($property);
 })->name('test.pdf');
 
-// PDF generation route for properties
+// PDF generation route for properties (protected by auth and signed URL)
 Route::get('/property-pdf/{property}', function (Property $property): Response {
     $pdfService = new PropertyPdfService();
 
     return $pdfService->generatePdfForView($property);
-})->name('property.pdf');
+})->name('property.pdf')->middleware(['auth', 'signed']);
 
 // PDF preview route (HTML only, no PDF generation)
 Route::get('/property-preview/{property}', function (Property $property) {

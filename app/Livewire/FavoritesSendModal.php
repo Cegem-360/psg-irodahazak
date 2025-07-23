@@ -8,6 +8,7 @@ use App\Mail\FavoritesSendMail;
 use App\Models\Property;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Livewire\Component;
 
 final class FavoritesSendModal extends Component
@@ -44,7 +45,11 @@ final class FavoritesSendModal extends Component
         $this->properties = Property::whereIn('id', $favorites)->get()->map(function ($property): array {
             return [
                 'title' => $property->title,
-                'url' => route('properties.show', ['property' => $property->slug]),
+                'url' => URL::temporarySignedRoute(
+                    $property->isRent() ? 'properties.show' : 'properties.show-for-sale',
+                    now()->addDays(12),
+                    ['property' => $property->slug]),
+
             ];
         })->toArray();
     }

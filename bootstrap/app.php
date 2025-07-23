@@ -17,6 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             SetLocale::class,
         ]);
+
+        // Register middleware aliases
+        $middleware->alias([
+            'signed' => Illuminate\Routing\Middleware\ValidateSignature::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
