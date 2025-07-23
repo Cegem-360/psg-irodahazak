@@ -35,14 +35,9 @@
                                 <br>
                                 <br>
                                 <strong>
-                                    {{ $testimonial->client_name }}
-                                    @if ($testimonial->client_position)
-                                        {{ ', ' . $testimonial->client_position }}
-                                    @endif
-                                    @if ($testimonial->client_company)
-                                        {{ ', ' . $testimonial->client_company }}
-                                    @endif
+                                    {{ collect([$testimonial->client_name, $testimonial->client_position, $testimonial->client_company])->filter()->implode(', ') }}
                                 </strong>
+
                             </div>
                         </div>
                     @endforeach
