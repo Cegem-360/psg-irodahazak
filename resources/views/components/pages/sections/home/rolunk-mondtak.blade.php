@@ -36,7 +36,6 @@
                                 <br>
                                 <strong>
                                     {{ $testimonial->client_name }}
-
                                     @if ($testimonial->client_position)
                                         {{ ', ' . $testimonial->client_position }}
                                     @endif

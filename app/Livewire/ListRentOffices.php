@@ -7,12 +7,10 @@ namespace App\Livewire;
 use App\Models\Category;
 use App\Models\Property as Offices;
 use Livewire\Component;
-use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
 final class ListRentOffices extends Component
 {
-    use WithoutUrlPagination;
     use WithPagination;
 
     public $search = '';

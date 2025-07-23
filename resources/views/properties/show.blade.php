@@ -203,7 +203,7 @@
                                     {{ __('Contact Us!') }}</h2>
                                 <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 sm:text-xl">
                                     {{ __('Request a personalized offer online!') }}</p>
-                                <x-forms.contact :selected_property_id="$property->id" />
+                                <x-forms.contact :selected_property_id="$property->id" :selected_property_type_is_rent="$property->isRent()" />
                             </div>
                         </section>
 

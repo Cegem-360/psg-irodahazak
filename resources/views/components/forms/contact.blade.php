@@ -1,4 +1,4 @@
-@props(['selected_property_id' => null])
+@props(['selected_property_id' => null, 'selected_property_type_is_rent' => null])
 @use('App\Models\Property')
 <form action="{{ route('contact.store') }}" method="POST" class="space-y-6">
     @csrf
@@ -55,12 +55,22 @@
             class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('contact_subject') border-red-500 @enderror"
             required>
             <option value="">{{ __('contact.subject_placeholder') }}</option>
+            @if ($selected_property_type_is_rent)
+                @foreach (Property::rent()->active()->get() as $property)
+                    <option value="{{ $property->title }}"
+                        {{ $selected_property_id == $property->id ? 'selected' : '' }}>
+                        {{ $property->title }}
+                    </option>
+                @endforeach
+            @else
+                @foreach (Property::active()->get() as $property)
+                    <option value="{{ $property->title }}"
+                        {{ $selected_property_id == $property->id ? 'selected' : '' }}>
+                        {{ $property->title }}
+                    </option>
+                @endforeach
+            @endif
 
-            @foreach (Property::all() as $property)
-                <option value="{{ $property->title }}" {{ $selected_property_id == $property->id ? 'selected' : '' }}>
-                    {{ $property->title }}
-                </option>
-            @endforeach
         </select>
         @error('contact_subject')
             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

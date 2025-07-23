@@ -61,7 +61,7 @@
                 <li>
                     <a href="{{ localized_route('budapest.category', ['category' => 'kiado-irodak-xi-kerulet']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
-                        {{ __('Offices for rent in District XI') }}
+                        {{ __('Offices for rent in District XI.') }}
                     </a>
                 </li>
             </ul>
