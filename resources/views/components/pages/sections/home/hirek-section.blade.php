@@ -11,7 +11,7 @@
             <!-- News post -->
             @foreach (News::published()->orderByDesc('published_at')->limit(3)->get() as $news)
                 <div class="grid md:grid-cols-2 gap-4 bg-white rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl">
-                    <img src="{{ Storage::url($news->featured_image) }}" alt=""
+                    <img src="{{ Storage::url($news->featured_image) }}" alt="" loading="lazy"
                         class="md:order-2 w-full h-auto object-cover aspect-[16/9]" />
 
                     <div class="p-8 pt-10">

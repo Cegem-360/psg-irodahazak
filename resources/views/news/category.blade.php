@@ -104,7 +104,8 @@
                                     class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition duration-150">
                                     @if ($article->featured_image)
                                         <img src="{{ Storage::url($article->featured_image) }}"
-                                            alt="{{ $article->title }}" class="w-full h-48 object-cover">
+                                            alt="{{ $article->title }}" class="w-full h-48 object-cover"
+                                            loading="lazy">
                                     @endif
                                     <div class="p-6">
                                         <div class="flex items-center justify-between text-sm text-gray-500 mb-3">

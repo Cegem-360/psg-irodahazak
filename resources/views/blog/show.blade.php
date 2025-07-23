@@ -105,7 +105,7 @@
             @if ($post->featured_image)
                 <div class="mb-8">
                     <img src="{{ Storage::url($post->featured_image) }}" alt="{{ $post->title }}"
-                        class="w-full h-auto rounded-lg shadow-lg">
+                        class="w-full h-auto rounded-lg shadow-lg" loading="lazy">
                 </div>
             @endif
 
@@ -178,7 +178,8 @@
                                 @if ($relatedPost->featured_image)
                                     <div class="aspect-w-16 aspect-h-9">
                                         <img src="{{ Storage::url($relatedPost->featured_image) }}"
-                                            alt="{{ $relatedPost->title }}" class="w-full h-48 object-cover">
+                                            alt="{{ $relatedPost->title }}" class="w-full h-48 object-cover"
+                                            loading="lazy">
                                     </div>
                                 @else
                                     <div

@@ -235,5 +235,9 @@
     "Closed": "Zárva",
     "Monday-Friday": "Hétfő-Péntek",
     "Saturday": "Szombat",
-    "Thank you for your quote request!": "Köszönjük árajánlat kérését!"
+    "Thank you for your quote request!": "Köszönjük árajánlat kérését!",
+    "Select": "Válasszon",
+    "year": "év",
+    "month": "hónap",
+    "day": "nap"
 }

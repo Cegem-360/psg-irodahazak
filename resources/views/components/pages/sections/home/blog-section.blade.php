@@ -9,7 +9,7 @@
         <!-- Blog post -->
         @foreach (BlogPost::orderBy('published_at', 'desc')->take(3)->get() as $blogPost)
             <div class="bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl">
-                <img src="{{ $blogPost->featured_image }}" alt=""
+                <img src="{{ $blogPost->featured_image }}" alt="" loading="lazy"
                     class="w-full h-auto object-cover aspect-[16/9]" />
 
                 <div class="p-8">

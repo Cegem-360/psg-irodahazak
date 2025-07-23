@@ -15,7 +15,7 @@
 @endphp
 
 @if ($imageUrl)
-    <img src="{{ $imageUrl }}" alt="{{ $alt }}" {{ $attributes->merge(['class' => $class]) }}>
+    <img src="{{ $imageUrl }}" alt="{{ $alt }}" {{ $attributes->merge(['class' => $class]) }} loading="lazy">
 @elseif($showPlaceholder)
     <div {{ $attributes->merge(['class' => $class . ' bg-gray-100 flex items-center justify-center']) }}>
         <svg class="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20">

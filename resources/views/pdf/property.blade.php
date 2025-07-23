@@ -49,7 +49,7 @@
                 <!-- Logo bal felső sarokban -->
                 <div class="absolute top-3 left-6">
                     <img src="{{ Vite::asset('resources/images/psg-irodahazak-logo.png') }}" alt="PSG Logo"
-                        class="h-16 w-auto">
+                        class="h-16 w-auto" loading="lazy">
                 </div>
 
                 <!-- Cím középen, több távolsággal a logótól -->
@@ -71,7 +71,7 @@
                 <div class="w-1/2 p-0">
                     @if ($property->property_photos && collect($property->property_photos)->count() > 0)
                         <img src="{{ $property->getFirstImageUrl() }}" alt="{{ $property->title }}"
-                            class="w-full h-[380px] object-cover block">
+                            class="w-full h-[380px] object-cover block" loading="lazy">
                     @else
                         <div class="w-full h-[380px] bg-gray-100 flex items-center justify-center text-gray-500">
                             {{ __('Image not available') }}
@@ -217,7 +217,7 @@
                         @foreach (collect($property->property_photos)->skip(1) as $image)
                             <div class="image-item">
                                 <img src="{{ Storage::url($image) }}" alt="{{ __('Property image') }}"
-                                    class="w-full h-24 object-cover rounded border border-gray-200">
+                                    class="w-full h-24 object-cover rounded border border-gray-200" loading="lazy">
                             </div>
                         @endforeach
                     </div>

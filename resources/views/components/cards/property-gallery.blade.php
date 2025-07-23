@@ -6,7 +6,7 @@
             @foreach ($images ?? [] as $image)
                 <div class="swiper-slide">
                     <img src="{{ $image->getImageUrl('800x600', 'jpg') }}" alt="{{ $title }}"
-                        class="w-full h-auto object-cover aspect-[4/3]">
+                        class="w-full h-auto object-cover aspect-[4/3]" loading="lazy">
                 </div>
             @endforeach
         </div>
@@ -22,7 +22,7 @@
         <div class="swiper-wrapper">
             @foreach ($images ?? [] as $image)
                 <div class="swiper-slide p-1 cursor-pointer">
-                    <img src="{{ $image->getImageUrl('160x160', 'jpg') }}" alt="{{ $title }}"
+                    <img src="{{ $image->getImageUrl('160x160', 'jpg') }}" alt="{{ $title }}" loading="lazy"
                         class="w-full h-auto object-cover aspect-[16/9] rounded-xl">
                 </div>
             @endforeach

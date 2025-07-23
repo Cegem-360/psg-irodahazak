@@ -6,7 +6,7 @@
             @foreach ($images ?? [] as $image)
                 <div class="swiper-slide">
                     <img src="{{ Storage::url($image) }}" alt="{{ $title }}"
-                        class="w-full h-auto object-cover aspect-[4/3]">
+                        class="w-full h-auto object-cover aspect-[4/3]" loading="lazy">
                 </div>
             @endforeach
         </div>
@@ -23,7 +23,7 @@
             @foreach ($images ?? [] as $image)
                 <div class="swiper-slide p-1 cursor-pointer">
                     <img src="{{ Storage::url($image) }}" alt="{{ $title }}"
-                        class="w-full h-auto object-cover aspect-[16/9] rounded-xl">
+                        class="w-full h-auto object-cover aspect-[16/9] rounded-xl" loading="lazy">
                 </div>
             @endforeach
         </div>

@@ -5,7 +5,7 @@
              <div class="mb-6 md:mb-0">
                  <a href="/" class="flex items-center">
                      <img src="{{ Vite::asset('resources/images/psg-irodahazak-logo.png') }}" class="mr-3 h-8 sm:h-16"
-                         alt="PSG Irodaházak logo" />
+                         alt="PSG Irodaházak logo" loading="lazy">
                  </a>
              </div>
              <div class="flex gap-8 lg:gap-20 flex-wrap">

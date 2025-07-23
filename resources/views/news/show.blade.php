@@ -40,7 +40,7 @@
                 @if ($news->featured_image)
                     <div class="px-8 mb-8">
                         <img src="{{ Storage::url($news->featured_image) }}" alt="{{ $news->title }}"
-                            class="w-full h-64 lg:h-96 object-cover rounded-lg">
+                            class="w-full h-64 lg:h-96 object-cover rounded-lg" loading="lazy">
                     </div>
                 @endif
 

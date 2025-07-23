@@ -8,7 +8,7 @@
         <div class="logo pt-8 sm:pt-0">
             <a href="{{ localized_route('home') }}" class="flex items-center">
                 <img src="{{ Vite::asset('resources/images/psg-irodahazak-logo.png') }}" class="mr-3 h-12 sm:h-24"
-                    alt="PSG Irodaházak logo" />
+                    alt="PSG Irodaházak logo" loading="lazy">
             </a>
         </div>
         <div class="slogan flex items-end text-center text-2xl sm:text-3xl">

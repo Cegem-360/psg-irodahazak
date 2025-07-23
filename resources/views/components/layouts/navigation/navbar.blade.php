@@ -27,41 +27,41 @@
             <ul
                 class="flex flex-col mt-4 font-bold lg:flex-row lg:mt-0 text-white text-xl text-nowrap bg-gray-400 lg:bg-transparent lg:bg-gradient-to-b lg:from-black/30 lg:to-black/5 border border-black/15 backdrop-blur-3xl shadow-lg rounded-md overflow-hidden">
                 <li>
-                    <a href="{{ localized_route('home') }}"
+                    <a wire:navigate href="{{ localized_route('home') }}"
                         class="{{ request()->routeIs(['home', 'en.home']) ? 'active' : '' }} block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)]"
                         aria-current="page">{{ __('navigation.home') }}</a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('kiado-irodak') }}"
+                    <a wire:navigate href="{{ localized_route('kiado-irodak') }}"
                         class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['kiado-irodak', 'en.kiado-irodak']) ? 'active' : '' }}">
                         {{ __('navigation.offices_for_rent') }}</a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('elado-irodahazak') }}"
+                    <a wire:navigate href="{{ localized_route('elado-irodahazak') }}"
                         class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['elado-irodahazak', 'en.elado-irodahazak']) ? 'active' : '' }}">
                         {{ __('navigation.office_buildings_for_sale') }}</a>
                 </li>
                 @if (app()->getLocale() === 'hu')
                     <li>
-                        <a href="{{ localized_route('news.index') }}"
+                        <a wire:navigate href="{{ localized_route('news.index') }}"
                             class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['news.*', 'en.news.*']) ? 'active' : '' }}">
                             {{ __('navigation.news') }}</a>
                     </li>
                 @endif
                 <li>
-                    <a href="{{ localized_route('rolunk') }}"
+                    <a wire:navigate href="{{ localized_route('rolunk') }}"
                         class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['rolunk', 'en.rolunk']) ? 'active' : '' }}">
                         {{ __('navigation.about_us') }}</a>
                 </li>
                 @if (app()->getLocale() === 'hu')
                     <li>
-                        <a href="https://psgirodahazak.blog.hu/"
+                        <a wire:navigate href="https://psgirodahazak.blog.hu/"
                             class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['blog.*', 'en.blog.*']) ? 'active' : '' }}">
                             {{ __('navigation.blog') }}</a>
                     </li>
                 @endif
                 <li>
-                    <a href="{{ localized_route('kapcsolat') }}"
+                    <a wire:navigate href="{{ localized_route('kapcsolat') }}"
                         class="block py-4 px-8 hover:bg-primary/80 drop-shadow duration-1000 transition-color ease-[cubic-bezier(0.19,1,0.22,1)] {{ request()->routeIs(['kapcsolat', 'en.kapcsolat']) ? 'active' : '' }}">
                         {{ __('navigation.contact') }}</a>
                 </li>

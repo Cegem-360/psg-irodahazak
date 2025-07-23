@@ -229,6 +229,35 @@
                         <input type="text" name="search" placeholder="{{ __('Search term') }}"
                             class="w-full border border-gray-300 rounded-xl px-4 py-2"
                             value="{{ request('search') }}">
+                        @auth
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-semibold">{{ __('Min Rent') }}</label>
+                                    <select name="min_rent"
+                                        class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-white focus:ring-2 focus:ring-accent focus:border-accent">
+                                        <option value="">{{ __('Select') }}</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label class="text-sm font-semibold">{{ __('Min Rent Addons') }}</label>
+                                    <select name="min_rent_addons"
+                                        class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-white focus:ring-2 focus:ring-accent focus:border-accent">
+                                        <option value="">{{ __('Select') }}</option>
+                                        <option value="év">{{ __('year') }}</option>
+                                        <option value="hónap">{{ __('month') }}</option>
+                                        <option value="nap">{{ __('day') }}</option>
+                                        <option value="simán">{{ __('simply') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endauth
                     </div>
 
                     <div
@@ -298,7 +327,8 @@
             }
         </style>
         <script>
-            document.addEventListener('livewire:initialized', function() {
+            document.addEventListener('livewire:navigated', function() {
+                let selectedDistricts = [];
                 // Initialize the range sliders
                 $('.terulet-slider').ionRangeSlider({
                     type: "double",
@@ -331,11 +361,18 @@
                 });
 
                 // Initialize selected districts from URL parameters
+
+            }, {
+                onec: true
+            });
+            document.addEventListener('livewire:navigated', function() {
                 initializeSelectedDistricts();
+            }, {
+                onec: true
             });
 
             // Global array to store selected districts
-            let selectedDistricts = [];
+
 
             // Make selectDistrict function globally accessible
             window.selectDistrict = selectDistrict;
@@ -673,14 +710,6 @@
                         // form.submit();
                     });
                 });
-            });
-
-            // Additional initialization when DOM is fully loaded
-            document.addEventListener('DOMContentLoaded', function() {
-                // Make sure the map is properly initialized
-                setTimeout(() => {
-                    initializeSelectedDistricts();
-                }, 100);
             });
         </script>
     </div>

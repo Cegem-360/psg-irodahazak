@@ -9,7 +9,7 @@
                     @foreach ($images as $carouselimage)
                         <div class="swiper-slide">
                             <img src="{{ Storage::url($carouselimage) }}" alt="{{ $title }}"
-                                class="w-full h-auto object-cover aspect-[3/2]" />
+                                class="w-full h-auto object-cover aspect-[3/2]" loading="lazy" />
                         </div>
                     @endforeach
                 </div>
@@ -23,7 +23,8 @@
         @endif
         <!-- Fallback image if no swiper -->
         @if (!$minicarousel && $image)
-            <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-auto object-cover aspect-[3/2]" />
+            <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-auto object-cover aspect-[3/2]"
+                loading="lazy" />
         @endif
 
         <!-- Favorite button in top-right corner -->
@@ -66,31 +67,12 @@
 
     <div class="{{ $small ? 'p-3 pl-4' : 'p-6 pl-8' }}">
         <h3 class="{{ $small ? 'text-lg' : 'text-xl' }} font-bold mb-2">{{ $title }}</h3>
-        <p class="{{ $small ? 'text-gray-700 text-xs min-h-16' : 'text-gray-700 min-h-24' }}">
+        <p class="{{ $small ? 'text-gray-700 text-base min-h-16' : 'text-gray-700 min-h-24' }}">
             {!! $description ?? 'Nincs' !!}
         </p>
-        <a href="{{ $link ?? '#' }}"
+        <a wire:navigate href="{{ $link ?? '#' }}"
             class="inline-block {{ $small ? 'mb-2 px-3 py-1 text-sm' : 'mb-4 px-6 py-2' }} bg-primary/70 text-white rounded group-hover:bg-primary/90 transition-colors duration-300 ease-in-out">
             {{ __('More details') }}
         </a>
     </div>
 </div>
-
-{{-- @script
-    <script>
-        // Listen for favorites-changed event and dispatch browser event
-        $wire.on('favorites-changed', (data) => {
-            window.dispatchEvent(new CustomEvent('favorites-updated', {
-                detail: data
-            }));
-        });
-
-        // Listen for set-cookie event and set the cookie
-        $wire.on('set-cookie', (data) => {
-            const cookieData = data[0];
-            const expires = new Date();
-            expires.setTime(expires.getTime() + (cookieData.days * 24 * 60 * 60 * 1000));
-            document.cookie = `${cookieData.name}=${cookieData.value}; expires=${expires.toUTCString()}; path=/`;
-        });
-    </script>
-@endscript --}}

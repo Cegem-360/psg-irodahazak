@@ -22,7 +22,7 @@
                 </div>
                 <img src="{{ Vite::asset('resources/images/psg_montazs.webp') }}"
                     class="w-full h-auto mt-6 rounded-lg shadow-lg"
-                    alt="{{ $aboutUses->first()?->title ?? __('About Us') }}" />
+                    alt="{{ $aboutUses->first()?->title ?? __('About Us') }}" loading="lazy">
             </div>
 
         </div>

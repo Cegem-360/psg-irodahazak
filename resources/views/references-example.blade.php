@@ -24,6 +24,7 @@
                                 @if ($reference->image)
                                     <div class="mb-4">
                                         <img src="{{ Storage::url($reference->image) }}" alt="{{ $reference->name }}"
+                                            loading="lazy"
                                             class="w-full h-20 object-contain mx-auto grayscale hover:grayscale-0 transition-all duration-300">
                                     </div>
                                 @else

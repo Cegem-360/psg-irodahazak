@@ -45,6 +45,10 @@ final class ListRentOffices extends Component
 
     public $officeDetails = [];
 
+    public null|int|string $min_rent = '';
+
+    public ?string $min_rent_addons = '';
+
     public ?string $title;
 
     public ?string $category = null;
@@ -62,6 +66,9 @@ final class ListRentOffices extends Component
         $this->priceMax = $queryParams['price_max'] ?? request('price_max', '');
         $this->includeAgglomeration = $queryParams['include_agglomeration'] ?? request('include_agglomeration', false);
         $this->category = $queryParams['category'] ?? request('category', null);
+        $this->min_rent = $queryParams['min_rent'] ?? request('min_rent', null);
+        $this->min_rent_addons = $queryParams['min_rent_addons'] ?? request('min_rent_addons', null);
+
         if ($this->officeName) {
             $office = Offices::where('title', $this->officeName)->first();
 
@@ -141,6 +148,14 @@ final class ListRentOffices extends Component
             ->rent()
             ->active();
 
+        if ($this->min_rent) {
+            $query->where('min_berleti_idoszak', $this->min_rent);
+        }
+
+        if ($this->min_rent_addons) {
+            $query->where('min_berleti_idoszak_addons', $this->min_rent_addons);
+        }
+
         // If agglomeration is not included, only show Budapest properties
         if ($this->includeAgglomeration) {
             $query->whereNot(function ($query): void {
@@ -149,7 +164,7 @@ final class ListRentOffices extends Component
         }
 
         if ($this->category) {
-            $category_model = Category::where('slug', $this->category)->first();
+            $category_model = Category::where('slug', 'like', $this->category)->first();
             $this->title = $category_model->name ?? __('page.title.offices_for_rent');
             $query->byCategory($category_model->name);
         }
