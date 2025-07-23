@@ -24,11 +24,11 @@ final class TagResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Címkék';
+    protected static ?string $navigationLabel = 'Müszaki paraméterek';
 
-    protected static ?string $modelLabel = 'Címke';
+    protected static ?string $modelLabel = 'Müszaki paraméter';
 
-    protected static ?string $pluralModelLabel = 'Címkék';
+    protected static ?string $pluralModelLabel = 'Müszaki paraméterek';
 
     protected static ?string $navigationGroup = 'Tartalomkezelés';
 

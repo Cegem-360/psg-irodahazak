@@ -1,4 +1,6 @@
 @use('Illuminate\Support\Facades\Storage')
+@use('App\Models\Tag')
+@use('App\Models\Service')
 <!DOCTYPE html>
 <html lang="hu">
 
@@ -47,7 +49,7 @@
                 <!-- Logo bal felső sarokban -->
                 <div class="absolute top-3 left-6">
                     <img src="{{ Vite::asset('resources/images/psg-irodahazak-logo.png') }}" alt="PSG Logo"
-                        class="h-10 w-auto">
+                        class="h-16 w-auto">
                 </div>
 
                 <!-- Cím középen, több távolsággal a logótól -->
@@ -90,7 +92,8 @@
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Total Area') }}:</span>
                             <span class="font-medium text-gray-900">{{ $property->total_area }}
-                                m²</span>
+                                m²
+                            </span>
                         </div>
                     @endif
 
@@ -109,6 +112,16 @@
                             <span
                                 class="font-medium text-gray-900">{{ number_format((int) $property->min_kiado, 0, ',', ' ') }}
                                 {{ $property->min_kiado_addons }}</span>
+                        </div>
+                    @endif
+
+                    @if ($property->isSale())
+                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
+                            <span class="font-bold text-gray-600"> {{ __('Price') }}:</span>
+                            <span class="font-medium text-gray-900">
+                                {{ number_format((int) $property->min_berleti_dij, 0, ',', ' ') }}
+                                {{ $property->min_berleti_dij_addons }}
+                            </span>
                         </div>
                     @endif
 
@@ -198,39 +211,13 @@
             </div>
 
             <!-- Images Gallery -->
-            @if ($property->images && $property->images->count() > 1)
+            @if ($property->property_photos && collect($property->property_photos)->count() > 1)
                 <div class="mt-6 px-6">
                     <div class="grid grid-cols-3 gap-3">
-                        @foreach ($property->images->skip(1)->take(6) as $image)
+                        @foreach (collect($property->property_photos)->skip(1) as $image)
                             <div class="image-item">
-                                @php
-                                    $galleryImageUrl = null;
-                                    $gallerySizes = ['640x480', '480x360', '320x240'];
-
-                                    foreach ($gallerySizes as $size) {
-                                        $sizedPath = $image->path_without_size_and_ext . '_' . $size . '.jpg';
-
-                                        if (Storage::disk('public')->exists($sizedPath)) {
-                                            $galleryImageUrl = Storage::url($sizedPath);
-                                            break;
-                                        }
-                                    }
-
-                                    // Ha egyik méret sem létezik, használjuk az eredeti elérési utat
-                                    if (!$galleryImageUrl && Storage::disk('public')->exists($image->path)) {
-                                        $galleryImageUrl = Storage::url($image->path);
-                                    }
-                                @endphp
-
-                                @if ($galleryImageUrl)
-                                    <img src="{{ $galleryImageUrl }}" alt="{{ $image->alt ?? __('Property image') }}"
-                                        class="w-full h-24 object-cover rounded border border-gray-200">
-                                @else
-                                    <div
-                                        class="w-full h-24 bg-gray-100 flex items-center justify-center rounded border border-gray-200 text-gray-500 text-xs">
-                                        {{ __('Image not available') }}
-                                    </div>
-                                @endif
+                                <img src="{{ Storage::url($image) }}" alt="{{ __('Property image') }}"
+                                    class="w-full h-24 object-cover rounded border border-gray-200">
                             </div>
                         @endforeach
                     </div>
@@ -252,13 +239,35 @@
             <!-- Description -->
             @if ($property->content)
                 <div class="mt-6 px-6 py-4 bg-gray-50">
-                    <div class="text-sm text-gray-700 leading-relaxed">
+                    <div class="text-sm text-gray-700 leading-relaxed text-justify">
                         {!! $property->content !!}
+                    </div>
+                </div>
+            @endif
+            @if (!empty($property->tags) || !empty($property->services))
+                <div class="mt-6 px-6 py-4 bg-gray-50">
+                    <h3 class="text-base font-bold text-gray-800 mb-3">Műszaki paraméterek és szolgáltatások</h3>
+                    <div class="text-sm text-gray-700 leading-relaxed text-justify">
+                        @foreach (Tag::whereIn('name', $property->tags)->get() as $item)
+                            <span
+                                class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded">
+                                {{ $item->name }}
+                            </span>
+                            <br />
+                        @endforeach
+                        @foreach (Service::whereIn('name', $property->services)->get() as $item)
+                            <span
+                                class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded">
+                                {{ $item->name }}
+                            </span>
+                            <br />
+                        @endforeach
                     </div>
                 </div>
             @endif
 
         </div>
+        {{--  @include('pdf.footer') --}}
     </body>
 
 </html>

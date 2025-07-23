@@ -78,7 +78,7 @@ final class NewsResource extends Resource
                             ->maxLength(255)
                             ->placeholder('Pl. https://example.com'),
                         RichEditor::make('excerpt')
-                            ->label('Kivonat')
+                            ->label('Alcím')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
