@@ -12,4 +12,4 @@ Artisan::command('inspire', function (): void {
 
 Schedule::call(function () {
     Artisan::call('bloghu:fetch-feed');
-})->dailyAt('00:00');
+})->dailyAt('12:50');
