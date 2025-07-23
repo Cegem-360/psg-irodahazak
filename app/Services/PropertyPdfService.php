@@ -126,7 +126,7 @@ final class PropertyPdfService
             ->showBrowserHeaderAndFooter()
             ->hideHeader()
             ->footerHtml($footerHtml)
-            ->noSandbox()
+
             ->pdf();
 
         // Fájlnév generálása
