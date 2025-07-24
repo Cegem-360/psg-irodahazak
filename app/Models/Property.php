@@ -21,9 +21,7 @@ final class Property extends Model
     protected $guarded = [];
 
     protected $fillable = [
-        'tags',
-        'services',
-        'categories',
+
         'title',
         'status',
         'content',
@@ -92,9 +90,6 @@ final class Property extends Model
         'featured' => 'boolean',
         'vat' => 'boolean',
         'property_photos' => 'array',
-        'tags' => 'array',
-        'services' => 'array',
-        'categories' => 'array',
     ];
 
     public static function countByDistrict(): array
