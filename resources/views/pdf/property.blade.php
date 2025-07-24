@@ -244,7 +244,7 @@
                     </div>
                 </div>
             @endif
-            @if ($property->tags)
+            @if ($property->tags || $property->services)
                 <div class="mt-6 px-6 py-4 bg-gray-50">
                     <h3 class="text-base font-bold text-gray-800 mb-3">Műszaki paraméterek és szolgáltatások</h3>
                     <div class="text-sm text-gray-700 leading-relaxed text-justify">
