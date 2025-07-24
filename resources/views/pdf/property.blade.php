@@ -267,9 +267,7 @@
             @endif
 
         </div>
-        <footer>
-            @include('pdf.footer')
-        </footer>
+
     </body>
 
 </html>
