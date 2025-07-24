@@ -24,6 +24,14 @@
         color: #1f2937;
     }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body,
+    h1,
+    p {
+        font-family: 'Open Sans', Arial, sans-serif;
+    }
+</style>
 <div class="footer text-black" style="width: 100%; text-align: center;">
     <p class="contact-line" style="font-size: 16px; font-weight: bold;">KONTAKT: Fekete Richard, T.: <a
             href="tel:+36203813917">+36 20 381 3917</a></p>
