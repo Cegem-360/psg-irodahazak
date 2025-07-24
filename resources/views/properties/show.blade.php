@@ -244,25 +244,12 @@
                         <div class="space-y-4">
                             <h2 class="text-3xl">{{ __('Features') }}</h2>
                             <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
-                                @if ($property->services && count($property->services) > 0)
-                                    @php
-                                        $allItems = collect($property->services)
-                                            ->merge($property->tags ?? [])
-                                            ->sortBy(function ($item) {
-                                                // Ékezetek eltávolítása és kisbetűsítés a rendezéshez
-                                                $normalized = strtolower($item);
-                                                $normalized = str_replace(
-                                                    ['á', 'é', 'í', 'ó', 'ő', 'ú', 'ű', 'ü', 'ö'],
-                                                    ['a', 'e', 'i', 'o', 'o', 'u', 'u', 'u', 'o'],
-                                                    $normalized,
-                                                );
-                                                return $normalized;
-                                            });
-                                    @endphp
-                                    @foreach ($allItems as $item)
+                                @if ($property->services)
+
+                                    @foreach ($property->services as $item)
                                         <li class="jellemzok pb-1">
                                             @if (app()->getLocale() === 'en')
-                                                {{ Translate::whereName($item)->first()?->translated ?? $item }}
+                                                {{ Translate::whereName($item->name)->first()?->translated ?? $item }}
                                             @else
                                                 {{ $item }}
                                             @endif
