@@ -106,11 +106,11 @@ final class PropertyPdfService
         $html = view('pdf.property', ['property' => $property])->render();
 
         // PDF generálás Browsershot segítségével
-        $footerHtml = (string) view('pdf.footer');
+        $footerHtml = (string) view('pdf.footer')->render();
 
         $pdf = Browsershot::html($html)
-            /* ->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
-            ->setNpmBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/npm') */
+            ->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
+            ->setNpmBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/npm')
             ->setOption('args', ['--disable-web-security'])
             ->format(config('pdf.browsershot.format', 'A4'))
             ->margins(
