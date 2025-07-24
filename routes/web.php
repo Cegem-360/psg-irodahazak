@@ -103,7 +103,7 @@ Route::get('/property-pdf/{property}', function (Property $property): Response {
     $pdfService = new PropertyPdfService();
 
     return $pdfService->generatePdfForView($property);
-})->name('property.pdf')->middleware(['auth', 'signed']);
+})->name('property.pdf')->middleware(['signed']);
 
 // PDF preview route (HTML only, no PDF generation)
 Route::get('/property-preview/{property}', function (Property $property) {
