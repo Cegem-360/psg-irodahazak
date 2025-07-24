@@ -55,6 +55,7 @@ final class ReferenceResource extends Resource
                     ->label('Sorrend')
                     ->numeric()
                     ->default(0)
+                    ->unique(Reference::class, 'order', ignoreRecord: true)
                     ->helperText('0 = első, 1 = második, stb.'),
                 Toggle::make('is_active')
 

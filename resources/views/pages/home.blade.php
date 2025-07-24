@@ -56,6 +56,7 @@
     <x-pages.sections.home.rolunk-mondtak />
 
     <x-pages.sections.home.referenciak />
+
     @if (app()->getLocale() === 'hu')
         <x-pages.sections.home.blog-section />
 

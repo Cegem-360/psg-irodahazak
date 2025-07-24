@@ -5,9 +5,8 @@
     <div class="relative py-8 bg-[#EFEFEF]">
         <div
             class="swiper reference-swiper !grid _grid-cols-2 sm:grid-cols-3 lg:grid-cols-5_ gap-4 max-w-screen-xl mx-auto">
-
             <div class="swiper-wrapper">
-                @foreach (Reference::active()->orderBy('order')->get() ?? [] as $reference)
+                @foreach (Reference::active()->orderBy('order', 'asc')->get() ?? [] as $reference)
                     <div class="swiper-slide !flex items-center justify-center px-12 py-4 bg-white rounded-xl">
                         <img class="max-h-20 object-contain object-center" src="{{ Storage::url($reference->image) }}" />
                     </div>
