@@ -1,8 +1,10 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
     body,
     h1,
     p {
-        font-family: 'Open Sans', Arial, sans-serif;
+        font-family: 'Open Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
     }
 
     .footer {
