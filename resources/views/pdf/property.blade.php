@@ -244,18 +244,18 @@
                     </div>
                 </div>
             @endif
-            @if (!empty($property->tags) || !empty($property->services))
+            @if ($property->tags)
                 <div class="mt-6 px-6 py-4 bg-gray-50">
                     <h3 class="text-base font-bold text-gray-800 mb-3">Műszaki paraméterek és szolgáltatások</h3>
                     <div class="text-sm text-gray-700 leading-relaxed text-justify">
-                        @foreach (Tag::whereIn('name', $property->tags)->get() as $item)
+                        @foreach ($property->tags as $item)
                             <span
                                 class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded">
                                 {{ $item->name }}
                             </span>
                             <br />
                         @endforeach
-                        @foreach (Service::whereIn('name', $property->services)->get() as $item)
+                        @foreach ($property->services as $item)
                             <span
                                 class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded">
                                 {{ $item->name }}
