@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <div
     style="width: 100%; text-align: center; color: #374151; font-size: 12px; padding: 8px 0; border-top: 1px solid #e5e7eb; background-color: #f9fafb; font-family: 'Open Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;">
     <p
