@@ -124,6 +124,7 @@ final class PropertyPdfService
             ->timeout(config('pdf.browsershot.timeout', 90))
             ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
             ->showBrowserHeaderAndFooter()
+            ->footerHtml($footerHtml)
             ->hideHeader()
 
             ->pdf();
