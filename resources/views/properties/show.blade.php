@@ -244,7 +244,7 @@
                         <div class="space-y-4">
                             <h2 class="text-3xl">{{ __('Features') }}</h2>
                             <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
-                                @dump($property->services)
+
                                 @if ($property->services)
 
                                     @foreach ($property->services as $item)
