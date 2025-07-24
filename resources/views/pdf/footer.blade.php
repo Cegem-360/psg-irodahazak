@@ -2,7 +2,7 @@
     body {
         margin: 0;
         padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-family: 'Open Sans', Arial, sans-serif;
     }
 
     .footer {
