@@ -244,6 +244,7 @@
                         <div class="space-y-4">
                             <h2 class="text-3xl">{{ __('Features') }}</h2>
                             <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
+                                @dump($property->services)
                                 @if ($property->services)
 
                                     @foreach ($property->services as $item)
@@ -251,7 +252,16 @@
                                             @if (app()->getLocale() === 'en')
                                                 {{ Translate::whereName($item->name)->first()?->translated ?? $item }}
                                             @else
-                                                {{ $item }}
+                                                {{ $item->name }}
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                    @foreach ($property->tags as $item)
+                                        <li class="jellemzok pb-1">
+                                            @if (app()->getLocale() === 'en')
+                                                {{ Translate::whereName($item->name)->first()?->translated ?? $item }}
+                                            @else
+                                                {{ $item->name }}
                                             @endif
                                         </li>
                                     @endforeach
