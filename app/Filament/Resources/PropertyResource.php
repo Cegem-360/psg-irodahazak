@@ -37,6 +37,7 @@ use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 final class PropertyResource extends Resource
@@ -289,19 +290,22 @@ final class PropertyResource extends Resource
 
                 Select::make('tags')
                     ->label('Műszaki paraméterek')
-                    ->options(Tag::orderBy('name')->get()->pluck('name', 'name'))
+                    ->relationship('tags', 'name')
+                    ->options(Tag::orderBy('name')->get()->pluck('name', 'id'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
                 Select::make('services')
                     ->label('Szolgáltatások')
-                    ->options(Service::orderBy('name')->get()->pluck('name', 'name'))
+                    ->relationship('services', 'name')
+                    ->options(Service::orderBy('name')->get()->pluck('name', 'id'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
                 Select::make('categories')
                     ->label('Kategóriák')
-                    ->options(Category::all()->pluck('name', 'name'))
+                    ->relationship('categories', 'name')
+                    ->options(Category::all()->pluck('name', 'id'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
@@ -402,7 +406,7 @@ final class PropertyResource extends Resource
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')
-                    ->url(fn (Property $record) => \Illuminate\Support\Facades\URL::temporarySignedRoute(
+                    ->url(fn (Property $record) => URL::temporarySignedRoute(
                         'property.pdf',
                         now()->addDays(12),
                         ['property' => $record->id]

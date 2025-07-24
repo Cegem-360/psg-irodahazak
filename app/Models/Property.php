@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -20,6 +21,9 @@ final class Property extends Model
     protected $guarded = [];
 
     protected $fillable = [
+        'tags',
+        'services',
+        'categories',
         'title',
         'status',
         'content',
@@ -42,8 +46,6 @@ final class Property extends Model
         'district',
         'cim_utca',
         'cim_hazszam',
-        'tags',
-        'services',
         'maps_lat',
         'maps_lng',
         'azonosito',
@@ -72,7 +74,6 @@ final class Property extends Model
         'cim_utca_addons',
         'cimke',
         'service',
-        'categories',
         'maps',
         'elado_v_kiado',
         'updated',
@@ -138,14 +139,19 @@ final class Property extends Model
         return $result;
     }
 
-    public function services(): HasMany
+    public function services(): BelongsToMany
     {
-        return $this->hasMany(Service::class);
+        return $this->belongsToMany(Service::class);
     }
 
-    public function tags(): HasMany
+    public function tags(): BelongsToMany
     {
-        return $this->hasMany(Tag::class);
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
     }
 
     public function images(): HasMany
@@ -198,7 +204,9 @@ final class Property extends Model
     #[Scope]
     protected function byCategory(Builder $query, string $category): void
     {
-        $query->whereJsonContains('categories', $category);
+        $query->whereHas('categories', function (Builder $q) use ($category): void {
+            $q->where('name', $category);
+        });
     }
 
     #[Scope]
@@ -361,15 +369,17 @@ final class Property extends Model
     #[Scope]
     protected function searchText(Builder $query, string $search): void
     {
-
         $query->where(function (Builder $subQ) use ($search): void {
             $subQ->where('title', 'like', '%'.$search.'%')
                 ->orWhere('content', 'like', '%'.$search.'%')
                 ->orWhere('kodszam', 'like', '%'.$search.'%')
-                ->orWhereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%'.$search.'%'])
-                ->orWhereRaw('JSON_SEARCH(LOWER(services), "one", LOWER(?)) IS NOT NULL', ['%'.$search.'%']);
+                ->orWhereHas('tags', function (Builder $q) use ($search): void {
+                    $q->where('name', 'like', '%'.$search.'%');
+                })
+                ->orWhereHas('services', function (Builder $q) use ($search): void {
+                    $q->where('name', 'like', '%'.$search.'%');
+                });
         });
-
     }
 
     #[Scope]

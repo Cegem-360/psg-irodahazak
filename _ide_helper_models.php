@@ -13,8 +13,6 @@
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $language
  * @property string $title
@@ -22,6 +20,8 @@ namespace App\Models{
  * @property bool $is_active
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AboutUs active()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AboutUs byLanguage($language)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AboutUs newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AboutUs newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|AboutUs query()
@@ -38,8 +38,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $slug
@@ -69,14 +67,12 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
- * @property string $title
+ * @property string|null $title
  * @property string $slug
- * @property string $link
+ * @property string|null $link
  * @property string|null $excerpt
- * @property string $content
+ * @property string|null $content
  * @property string|null $featured_image
  * @property int|null $blog_category_id
  * @property int|null $user_id
@@ -91,6 +87,7 @@ namespace App\Models{
  * @property-read string $reading_time
  * @property-read string $status
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost byCategory(int $categoryId)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost draft()
  * @method static \Database\Factories\BlogPostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BlogPost newQuery()
@@ -117,13 +114,13 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $slug
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Property> $properties
+ * @property-read int|null $properties_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category query()
@@ -138,8 +135,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string|null $title
  * @property string|null $status
@@ -189,8 +184,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string|null $path
  * @property int $target_table_id
@@ -231,8 +224,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $language
  * @property string $title
@@ -240,6 +231,8 @@ namespace App\Models{
  * @property bool $is_active
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Impresszum active()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Impresszum byLanguage($language)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Impresszum newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Impresszum newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Impresszum query()
@@ -256,8 +249,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $title
  * @property string|null $slug
@@ -281,10 +272,13 @@ namespace App\Models{
  * @property-read string $reading_time
  * @property-read string $status
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News breaking()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|News byCategory(int $categoryId)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|News byPriority()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News draft()
  * @method static \Database\Factories\NewsFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|News published()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|News whereCreatedAt($value)
@@ -309,8 +303,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $slug
@@ -345,8 +337,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $title
  * @property string $url
@@ -380,8 +370,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $iranyitoszam
  * @property string $helyiseg
@@ -403,8 +391,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string|null $title
  * @property string|null $slug
@@ -436,7 +422,7 @@ namespace App\Models{
  * @property string|null $cim_hazszam
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Service> $services
- * @property array<array-key, mixed>|null $categories
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Category> $categories
  * @property string|null $maps_lat
  * @property string|null $maps_lng
  * @property string|null $azonosito
@@ -470,13 +456,28 @@ namespace App\Models{
  * @property bool $vat
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read int|null $categories_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Gallery> $images
  * @property-read int|null $images_count
  * @property-read int|null $services_count
  * @property-read int|null $tags_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property active()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property agglomeration()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property areaRange(?int $minArea = null, ?int $maxArea = null)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property budapestOnly()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property byCategory(string $category)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property byOfficeName(string $officeName)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property featured()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property inDistrict(string $district)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property inDistricts(array $districts)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property inactive()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property priceRange(?int $minPrice = null, ?int $maxPrice = null)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property rent()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property sale()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property searchText(string $search)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereAzonosito($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCategories($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCimHazszam($value)
@@ -548,8 +549,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $phone
@@ -564,6 +563,9 @@ namespace App\Models{
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read string $status_color
  * @property-read string $status_label
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest closed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest contacted()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest new()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|QuoteRequest query()
@@ -585,8 +587,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string|null $image
@@ -594,9 +594,11 @@ namespace App\Models{
  * @property bool $is_active
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reference active()
  * @method static \Database\Factories\ReferenceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reference newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reference newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Reference ordered()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reference query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reference whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Reference whereId($value)
@@ -611,12 +613,12 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Property> $properties
+ * @property-read int|null $properties_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Service newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Service newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Service query()
@@ -630,13 +632,13 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property int|null $ord
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Property> $properties
+ * @property-read int|null $properties_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag query()
@@ -651,8 +653,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $client_name
  * @property string|null $client_company
@@ -666,8 +666,12 @@ namespace App\Models{
  * @property string $lang
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial active()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial featured()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial forLang($lang)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial ordered()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereClientCompany($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Testimonial whereClientImage($value)
@@ -688,8 +692,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $translated
@@ -713,8 +715,6 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $email
