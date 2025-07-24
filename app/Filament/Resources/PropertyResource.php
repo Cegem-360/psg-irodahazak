@@ -10,10 +10,7 @@ use App\Filament\Resources\PropertyResource\Pages\CreateProperty;
 use App\Filament\Resources\PropertyResource\Pages\EditProperty;
 use App\Filament\Resources\PropertyResource\Pages\ListProperties;
 use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
-use App\Models\Category;
 use App\Models\Property;
-use App\Models\Service;
-use App\Models\Tag;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -291,21 +288,18 @@ final class PropertyResource extends Resource
                 Select::make('tags')
                     ->label('Műszaki paraméterek')
                     ->relationship('tags', 'name')
-                    ->options(Tag::orderBy('name')->get()->pluck('name', 'id'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
                 Select::make('services')
                     ->label('Szolgáltatások')
                     ->relationship('services', 'name')
-                    ->options(Service::orderBy('name')->get()->pluck('name', 'id'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
                 Select::make('categories')
                     ->label('Kategóriák')
                     ->relationship('categories', 'name')
-                    ->options(Category::all()->pluck('name', 'id'))
                     ->preload()
                     ->multiple()
                     ->columnSpanFull(),
