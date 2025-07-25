@@ -65,7 +65,6 @@
             @else
                 @dump($selected_property_type_is_rent)
                 @dump($selected_property_id)
-                @dump($property->id)
 
                 @foreach (Property::active()->sale()->get() as $property)
                     <option value="{{ $property->title }}"
