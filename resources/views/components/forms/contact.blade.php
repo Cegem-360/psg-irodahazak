@@ -63,7 +63,7 @@
                     </option>
                 @endforeach
             @else
-                @foreach (Property::active()->get() as $property)
+                @foreach (Property::active()->sale()->get() as $property)
                     <option value="{{ $property->title }}"
                         {{ $selected_property_id == $property->id ? 'selected' : '' }}>
                         {{ $property->title }}
