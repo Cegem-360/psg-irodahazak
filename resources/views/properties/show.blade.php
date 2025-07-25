@@ -207,7 +207,7 @@
                                 referrerpolicy="no-referrer-when-downgrade"></iframe>
                         @endif
                     @else
-                        <x-forms.contact />
+                        <x-forms.contact :selected_property_id="$property->id" :selected_property_type_is_rent="$property->isRent()" />
                     @endif
 
                 </div>
