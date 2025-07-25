@@ -136,6 +136,25 @@ namespace App\Models{
 namespace App\Models{
 /**
  * @property int $id
+ * @property string $language
+ * @property string|null $content
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereLanguage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereUpdatedAt($value)
+ */
+	final class ContactPage extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * @property int $id
  * @property string|null $title
  * @property string|null $status
  * @property string|null $lead
@@ -420,9 +439,6 @@ namespace App\Models{
  * @property string|null $district
  * @property string|null $cim_utca
  * @property string|null $cim_hazszam
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Service> $services
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Category> $categories
  * @property string|null $maps_lat
  * @property string|null $maps_lng
  * @property string|null $azonosito
@@ -456,10 +472,13 @@ namespace App\Models{
  * @property bool $vat
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Category> $categories
  * @property-read int|null $categories_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Gallery> $images
  * @property-read int|null $images_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Service> $services
  * @property-read int|null $services_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property active()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property agglomeration()
@@ -479,7 +498,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property sale()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property searchText(string $search)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereAzonosito($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCategories($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCimHazszam($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCimIrsz($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCimUtca($value)
@@ -532,10 +550,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereRaktarTerulet($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereRaktarTeruletAddons($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereService($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereServices($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereTags($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereTotalArea($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereUpdated($value)

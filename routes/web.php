@@ -24,7 +24,7 @@ Route::view('/kiado-irodak', 'index')->name('kiado-irodak');
 Route::view('/elado-irodahazak', 'index')->name('elado-irodahazak');
 Route::view('/rolunk', 'index')->name('rolunk');
 
-Route::view('/kapcsolat', 'index')->name('kapcsolat');
+Route::get('/kapcsolat', [ContactController::class, 'show'])->name('kapcsolat');
 Route::post('/kapcsolat', [ContactController::class, 'store'])->name('contact.store');
 
 Route::view('/adatvedelmi-nyilatkozat', 'pages.privacy-policy')->name('privacy-policy');

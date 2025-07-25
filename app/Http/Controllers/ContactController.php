@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Exception;
+use App\Models\ContactPage;
 use App\Models\Property;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -13,6 +14,16 @@ use Illuminate\Support\Facades\Validator;
 
 final class ContactController extends Controller
 {
+    /**
+     * Display the contact page.
+     */
+    public function show()
+    {
+        $contactPage = ContactPage::getActiveByLanguage(app()->getLocale());
+
+        return view('pages.contact', compact('contactPage'));
+    }
+
     /**
      * Store a newly created contact message.
      */
@@ -53,7 +64,7 @@ final class ContactController extends Controller
             // Send email notification to admin
             Mail::send('emails.contact', $validated, function ($message) use ($validated): void {
                 $message->to(env('ADMIN_EMAIL', 'info@psg-irodahazak.hu'))
-                    ->subject('Új kapcsolatfelvételi üzenet: ' . $validated['contact_subject'])
+                    ->subject('Új kapcsolatfelvételi üzenet: '.$validated['contact_subject'])
                     ->replyTo($validated['email'], $validated['name']);
             });
 
