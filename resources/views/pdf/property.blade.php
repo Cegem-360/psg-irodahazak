@@ -250,14 +250,14 @@
                     <div class="text-sm text-gray-700 leading-relaxed text-justify">
                         @foreach ($property->tags as $item)
                             <span
-                                class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded">
+                                class="inline-block bg-white text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded">
                                 {{ $item->name }}
                             </span>
                             <br />
                         @endforeach
                         @foreach ($property->services as $item)
                             <span
-                                class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded">
+                                class="inline-block bg-white text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded">
                                 {{ $item->name }}
                             </span>
                             <br />
