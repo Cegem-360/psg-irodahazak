@@ -11,7 +11,6 @@ use App\Models\News;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -36,6 +35,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -77,7 +77,7 @@ final class NewsResource extends Resource
                             ->label('Forrás')
                             ->maxLength(255)
                             ->placeholder('Pl. https://example.com'),
-                        RichEditor::make('excerpt')
+                        TiptapEditor::make('excerpt')
                             ->label('Alcím')
                             ->columnSpanFull(),
                     ])
@@ -85,7 +85,7 @@ final class NewsResource extends Resource
 
                 Section::make('Tartalom')
                     ->schema([
-                        RichEditor::make('content')
+                        TiptapEditor::make('content')
                             ->label('Tartalom')
                             ->required()
                             ->columnSpanFull(),

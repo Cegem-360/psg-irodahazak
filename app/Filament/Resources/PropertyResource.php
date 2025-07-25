@@ -15,7 +15,6 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -34,6 +33,7 @@ use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
+use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -336,11 +336,12 @@ final class PropertyResource extends Resource
                     ->required(),
                 DatePicker::make('updated')
                     ->label('Frissítve'),
-                MarkdownEditor::make('egyeb')
+                TiptapEditor::make('egyeb')
                     ->label('Egyéb')
                     ->columnSpanFull(),
                 Select::make('vat')
                     ->label('ÁFA')
+
                     ->options([
                         '1' => 'Igen',
                         '0' => 'Nem',

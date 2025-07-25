@@ -13,6 +13,7 @@ export default {
         "./resources/views/**/*.blade.php",
         "./vendor/filament/**/*.blade.php",
         "./node_modules/swiper/**/*.{js,css}",
+        "./vendor/awcodes/filament-tiptap-editor/resources/views/**/*.blade.php",
     ],
 
     theme: {
