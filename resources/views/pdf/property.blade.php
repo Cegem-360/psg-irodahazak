@@ -227,11 +227,7 @@
             @if ($property->egyeb)
                 <div class="mt-6 px-6 py-4 bg-gray-50">
                     <div class="text-sm text-gray-700 leading-relaxed">
-                        @php
-                            $Parsedown = new Parsedown();
-                            $Parsedown->setMarkupEscaped(true);
-                            echo $Parsedown->text($property->egyeb);
-                        @endphp
+                        {!! $property->egyeb !!}
                     </div>
                 </div>
             @endif
