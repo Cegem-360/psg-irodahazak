@@ -11,6 +11,7 @@ use App\Filament\Resources\PropertyResource\Pages\EditProperty;
 use App\Filament\Resources\PropertyResource\Pages\ListProperties;
 use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
 use App\Models\Property;
+use App\Services\WatermarkService;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -314,7 +315,6 @@ final class PropertyResource extends Resource
                 RichEditor::make('en_content')
                     ->label('Angol tartalom')
                     ->columnSpanFull(),
-
                 TextInput::make('lang')
                     ->label('Nyelv')
                     ->maxLength(2),
@@ -356,6 +356,7 @@ final class PropertyResource extends Resource
                     ->panelLayout('grid')
                     ->visibility('public')
                     ->directory(fn ($record): string => 'property/'.$record->id.'/gallery_images')
+                    ->saveUploadedFileUsing(fn ($file, $record) => app(WatermarkService::class)->addWatermark($file, $record))
                     ->openable()
                     ->downloadable()
                     ->columnSpanFull()

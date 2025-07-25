@@ -31,6 +31,22 @@
                     print-color-adjust: exact;
                 }
             }
+
+            @media print {
+                .pagebreak {
+                    page-break-before: always;
+                }
+
+                /* page-break-after works, as well */
+            }
+
+            @media print {
+                body {
+                    -webkit-print-color-adjust: exact;
+                }
+
+                /* I am using this to make Tailwind colours i.e bg-gray-300 etc.. to also print in the PDF */
+            }
         </style>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
         <style>
@@ -235,29 +251,29 @@
             <!-- Description -->
             @if ($property->content)
                 <div class="mt-6 px-6 py-4 bg-gray-50">
-                    <div class="text-sm text-gray-700 leading-relaxed text-justify">
+                    <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">
                         {!! $property->content !!}
                     </div>
                 </div>
             @endif
             @if ($property->tags || $property->services)
-                <div class="mt-6 px-6 py-4 bg-gray-50">
+                <div class="mt-6 px-6 py-4 bg-gray-50" style="page-break-inside: auto;">
                     <h3 class="text-base font-bold text-gray-800 mb-3">Műszaki paraméterek és szolgáltatások</h3>
-                    <div class="text-sm text-gray-700 leading-relaxed text-justify">
-                        @foreach ($property->tags as $item)
-                            <span
-                                class="inline-block bg-white text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded">
-                                {{ $item->name }}
-                            </span>
-                            <br />
-                        @endforeach
-                        @foreach ($property->services as $item)
-                            <span
-                                class="inline-block bg-white text-blue-800 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded">
-                                {{ $item->name }}
-                            </span>
-                            <br />
-                        @endforeach
+                    <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">
+                        <ul class="list-disc list-inside mb-4 ">
+                            @if ($property->tags->count() > 0)
+                                @foreach ($property->tags as $item)
+                                    <li class="mb-1">{{ $item->name }}</li>
+                                @endforeach
+
+                            @endif
+                            @if ($property->services->count() > 0)
+                                @foreach ($property->services as $item)
+                                    <li class="mb-1">{{ $item->name }}</li>
+                                @endforeach
+
+                            @endif
+                        </ul>
                     </div>
                 </div>
             @endif

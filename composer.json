@@ -22,6 +22,7 @@
         "livewire/livewire": "^3.6.3",
         "nunomaduro/essentials": "@dev",
         "spatie/browsershot": "^5.0",
+        "spatie/image": "^3.8",
         "spatie/laravel-medialibrary": "^11.13"
     },
     "require-dev": {
