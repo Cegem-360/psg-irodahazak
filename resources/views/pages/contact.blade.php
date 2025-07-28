@@ -28,9 +28,15 @@
                                 </p>
                             @endif
                         </div>
-                        <div class="flex justify-center"><img class="mb-3"
-                                src="{{ Vite::asset('resources/images/kapcsolat.jpg') }}" />
-                        </div>
+                        @if ($contactPage && $contactPage->image)
+                            <div class="flex justify-center"><img class="mb-3"
+                                    src="{{ Storage::url($contactPage->image) }}" />
+                            </div>
+                        @else
+                            <div class="flex justify-center"><img class="mb-3"
+                                    src="{{ Vite::asset('resources/images/kapcsolat.jpg') }}" />
+                            </div>
+                        @endif
                     </div>
 
                     <!-- Kapcsolatfelvételi űrlap szekció -->
