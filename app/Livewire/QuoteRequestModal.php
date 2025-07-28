@@ -7,6 +7,7 @@ namespace App\Livewire;
 use App\Models\Property;
 use App\Models\QuoteRequest;
 use Exception;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -120,8 +121,11 @@ final class QuoteRequestModal extends Component
                 $message->to($this->email, $this->name)
                     ->subject($this->subject ?: 'Árajánlat kérés megerősítése - PSG Irodaházak');
             });
-
-            Session::flash('success', 'Köszönjük az érdeklődését! Hamarosan felvesszük Önnel a kapcsolatot.');
+            Notification::make()
+                ->title('Árajánlat kérés sikeres')
+                ->body('Köszönjük az árajánlat kérését! Hamarosan felvesszük Önnel a kapcsolatot.')
+                ->success()
+                ->send();
             $this->closeModal();
 
         } catch (Exception $exception) {
