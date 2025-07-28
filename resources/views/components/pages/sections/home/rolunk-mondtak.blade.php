@@ -44,6 +44,7 @@
                     @endforeach
                 </div>
             </div>
+            <div class="swiper-pagination rolunkmondtak-pagination"></div>
             <div
                 class="swiper-button-prev rolunkmondtak-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
             </div>

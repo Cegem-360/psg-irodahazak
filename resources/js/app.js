@@ -87,6 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
             nextEl: ".rolunkmondtak-button-next",
             prevEl: ".rolunkmondtak-button-prev",
         },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
     });
 
     const kiemeltajanlatokSwiper = new Swiper(".kiemeltajanlatok-swiper", {
