@@ -81,7 +81,7 @@ final class ListRentProperties extends Page implements HasTable
                     ->color('success')
                     ->url(fn (Property $record) => \Illuminate\Support\Facades\URL::temporarySignedRoute(
                         'property.pdf',
-                        now()->addDays(12),
+                        now()->addDays(21),
                         ['property' => $record->id]
                     ))
                     ->openUrlInNewTab()

@@ -230,7 +230,7 @@
             @if ($property->property_photos && collect($property->property_photos)->count() > 1)
                 <div class="mt-6 px-6">
                     <div class="grid grid-cols-3 gap-3">
-                        @foreach (collect($property->property_photos)->skip(1) as $image)
+                        @foreach (collect($property->property_photos)->skip(1)->take($property->isSale() ? 12 : 9) as $image)
                             <div class="image-item">
                                 <img src="{{ Storage::url($image) }}" alt="{{ __('Property image') }}"
                                     class="w-full h-24 object-cover rounded border border-gray-200" loading="lazy">

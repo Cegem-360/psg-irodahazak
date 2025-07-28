@@ -63,9 +63,9 @@ Route::group(['as' => 'en.'], function (): void {
     Route::view('/offices-for-rent', 'index')->name('kiado-irodak');
     Route::view('/office-buildings-for-sale', 'index')->name('elado-irodahazak');
     Route::view('/about-us', 'index')->name('rolunk');
-    Route::view('/contact-us', 'index')->name('kapcsolat');
     Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
     Route::get('/impressum', [ImpresszumController::class, 'show'])->name('impressum');
+    Route::get('/contact-us', [ContactController::class, 'show'])->name('kapcsolat');
     Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
     // English Budapest category routes

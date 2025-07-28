@@ -11,10 +11,6 @@
                     placeholder="Címzett e-mail címe" required />
             </div>
             <div class="mb-4">
-                <input type="text" wire:model.defer="salutation" class="w-full p-2 border rounded"
-                    placeholder="Megszólítás" />
-            </div>
-            <div class="mb-4">
                 <textarea wire:model.defer="bodyText" class="w-full p-2 border rounded" placeholder="Szöveg"></textarea>
             </div>
             <div class="flex justify-end gap-2">

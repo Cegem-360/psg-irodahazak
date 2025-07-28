@@ -15,16 +15,13 @@ final class FavoritesSendMail extends Mailable
 
     public $recipientName;
 
-    public $salutation;
-
     public $bodyText;
 
     public $properties;
 
-    public function __construct($recipientName, $salutation, $bodyText, $properties)
+    public function __construct($recipientName, $bodyText, $properties)
     {
         $this->recipientName = $recipientName;
-        $this->salutation = $salutation;
         $this->bodyText = $bodyText;
         $this->properties = $properties;
     }
