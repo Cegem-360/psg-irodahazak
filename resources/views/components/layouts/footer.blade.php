@@ -25,11 +25,11 @@
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">info@psg-irodahazak.hu</a>
                          </li>
                          <li class="mb-4">
-                             <a href="{{ localized_route('kapcsolat') }}"
+                             <a wire:navigate href="{{ localized_route('kapcsolat') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('online contact') }}</a>
                          </li>
                          <li>
-                             <a href="{{ route('filament.admin.auth.login') }}"
+                             <a wire:navigate href="{{ route('filament.admin.auth.login') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200"
                                  title="Coming soon">{{ __('login') }}</a>
                          </li>
@@ -52,7 +52,7 @@
                          </li>
                          @if (app()->getLocale() === 'hu')
                              <li class="mb-4">
-                                 <a href="{{ localized_route('news.index') }}"
+                                 <a wire:navigate href="{{ localized_route('news.index') }}"
                                      class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('News') }}</a>
                              </li>
                          @endif
@@ -62,13 +62,13 @@
                      <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">&nbsp;</h2>
                      <ul class="text-gray-600">
                          <li class="mb-4">
-                             <a href="{{ localized_route('rolunk') }}"
+                             <a wire:navigate href="{{ localized_route('rolunk') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('About Us') }}</a>
                          </li>
 
                          </li>
                          <li>
-                             <a href="{{ localized_route('kapcsolat') }}"
+                             <a wire:navigate href="{{ localized_route('kapcsolat') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Contact') }}</a>
                          </li>
                      </ul>
@@ -77,11 +77,11 @@
                      <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">{{ __('Legal Statements') }}</h2>
                      <ul class="text-gray-600">
                          <li class="mb-4">
-                             <a href="{{ localized_route('privacy-policy') }}"
+                             <a wire:navigate href="{{ localized_route('privacy-policy') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Privacy Policy') }}</a>
                          </li>
                          <li>
-                             <a href="{{ localized_route('impressum') }}"
+                             <a wire:navigate href="{{ localized_route('impressum') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Imprint') }}</a>
                          </li>
                      </ul>
