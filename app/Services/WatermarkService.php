@@ -16,7 +16,7 @@ final class WatermarkService
         $filename = $file->getClientOriginalName(); // Or generate a unique name
 
         $image = Image::load($filePath);
-        $image = $image->watermark(resource_path('images/psg-irodahazak-logo.png'), AlignPosition::Middle, 10, 10, alpha: 10);
+        $image = $image->watermark(resource_path('images/psg-irodahazak-logo.png'), AlignPosition::Middle, 10, 10, alpha: 20);
 
         // Sanitize filename to remove special characters
         $sanitizedFilename = preg_replace('/[^a-zA-Z0-9._-]/', '_', $filename);

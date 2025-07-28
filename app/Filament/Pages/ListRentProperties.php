@@ -74,7 +74,10 @@ final class ListRentProperties extends Page implements HasTable
             ])
             ->actions([
 
-                EditAction::make()->url(fn (Property $record): string => PropertyResource::getUrl('edit', ['record' => $record])),
+                EditAction::make()->url(fn (Property $record): string => PropertyResource::getUrl('edit', ['record' => $record]), shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-pencil')
+                    ->label('Szerkesztés')
+                    ->color('primary'),
                 Action::make('generate_pdf')
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
