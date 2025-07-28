@@ -8,6 +8,7 @@ use App\Filament\Resources\ContactPageResource\Pages\CreateContactPage;
 use App\Filament\Resources\ContactPageResource\Pages\EditContactPage;
 use App\Filament\Resources\ContactPageResource\Pages\ListContactPages;
 use App\Models\ContactPage;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -48,6 +49,15 @@ final class ContactPageResource extends Resource
                     ->label('Kapcsolati információk')
                     ->profile('default')
                     ->columnSpanFull(),
+                FileUpload::make('image')
+                    ->label('Kapcsolati oldal kép')
+                    ->image()
+                    ->downloadable()
+                    ->imageEditor()
+                    ->disk('public')
+                    ->directory('contact-pages')
+                    ->visibility('public')
+                    ->maxSize(2048), // 2 MB
             ]);
     }
 
