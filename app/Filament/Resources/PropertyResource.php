@@ -11,6 +11,7 @@ use App\Filament\Resources\PropertyResource\Pages\EditProperty;
 use App\Filament\Resources\PropertyResource\Pages\ListProperties;
 use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
 use App\Models\Property;
+use App\Models\Tag;
 use App\Services\WatermarkService;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -21,7 +22,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\View;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
@@ -285,12 +288,20 @@ final class PropertyResource extends Resource
                         ]),
                 ]),
 
-                Select::make('tags')
+                View::make('tags')
+                    ->view('components.native-multi-select')
                     ->label('Műszaki paraméterek')
-                    ->relationship('tags', 'name')
-                    ->preload()
-                    ->multiple()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->viewData(function (Get $get) {
+                        $selected = (array) $get('tags');
+
+                        return [
+                            'name' => 'tags',
+                            'label' => 'Műszaki paraméterek',
+                            'options' => Tag::pluck('name', 'id')->toArray(),
+                            'selected' => $selected,
+                        ];
+                    }),
                 Select::make('services')
                     ->label('Szolgáltatások')
                     ->relationship('services', 'name')
