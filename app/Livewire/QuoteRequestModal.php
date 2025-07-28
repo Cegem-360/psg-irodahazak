@@ -139,7 +139,12 @@ final class QuoteRequestModal extends Component
                 'subject' => $this->subject,
                 'error' => $exception->getMessage(),
             ]);
-            Session::flash('error', 'Hiba történt az árajánlat kérés küldése során. Kérjük, próbálja újra később.');
+            Notification::make()
+                ->title('Hiba történt')
+                ->body('Sajnáljuk, az árajánlat kérés küldése sikertelen volt. Kérjük, próbálja újra később.')
+                ->danger()
+                ->send();
+
         }
     }
 
