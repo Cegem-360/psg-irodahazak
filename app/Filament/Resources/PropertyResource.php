@@ -285,26 +285,30 @@ final class PropertyResource extends Resource
                                 ]),
                         ]),
                 ]),
-
-                CheckboxList::make('tags')
-                    ->label('Műszaki paraméterek')
-                    ->relationship('tags', 'name')
-                    ->columns(4)
-                    ->gridDirection('row')
-                    ->columnSpanFull(),
-                CheckboxList::make('services')
-                    ->label('Szolgáltatások')
-                    ->relationship('services', 'name')
-                    ->columns(4)
-                    ->gridDirection('row')
-                    ->columnSpanFull(),
-                CheckboxList::make('categories')
-                    ->label('Kategóriák')
-                    ->relationship('categories', 'name')
-                    ->columns(4)
-                    ->gridDirection('row')
-                    ->columnSpanFull(),
-
+                Section::make('Műszaki paraméterek')->schema([
+                    CheckboxList::make('tags')
+                        ->label('Műszaki paraméterek')
+                        ->relationship('tags', 'name')
+                        ->columns(4)
+                        ->gridDirection('row')
+                        ->columnSpanFull(),
+                ]),
+                Section::make('Szolgáltatások')->schema([
+                    CheckboxList::make('services')
+                        ->label('Szolgáltatások')
+                        ->relationship('services', 'name')
+                        ->columns(4)
+                        ->gridDirection('row')
+                        ->columnSpanFull(),
+                ]),
+                Section::make('Kategóriák')->schema([
+                    CheckboxList::make('categories')
+                        ->label('Kategóriák')
+                        ->relationship('categories', 'name')
+                        ->columns(4)
+                        ->gridDirection('row')
+                        ->columnSpanFull(),
+                ]),
                 TextInput::make('azonosito')
                     ->label('Azonosító')
                     ->maxLength(255),
