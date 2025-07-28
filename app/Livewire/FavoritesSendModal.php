@@ -20,8 +20,6 @@ final class FavoritesSendModal extends Component
 
     public $recipientEmail;
 
-    public $salutation;
-
     public $bodyText;
 
     public $properties = [];
@@ -36,7 +34,6 @@ final class FavoritesSendModal extends Component
     public function mount(): void
     {
         $this->bodyText = 'proba';
-        $this->salutation = 'Cegem360';
         $this->loadProperties();
     }
 
@@ -60,7 +57,6 @@ final class FavoritesSendModal extends Component
         $this->validate();
         Mail::to($this->recipientEmail)->send(new FavoritesSendMail(
             $this->recipientName,
-            $this->salutation,
             $this->bodyText,
             $this->properties
         ));

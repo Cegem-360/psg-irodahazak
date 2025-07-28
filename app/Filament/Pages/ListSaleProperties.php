@@ -82,7 +82,7 @@ final class ListSaleProperties extends Page implements HasTable
                     ->color('success')
                     ->url(fn (Property $record) => URL::temporarySignedRoute(
                         'property.pdf',
-                        now()->addDays(12),
+                        now()->addDays(21),
                         ['property' => $record->id]
                     ))
                     ->openUrlInNewTab()

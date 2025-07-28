@@ -12,11 +12,11 @@ use App\Filament\Resources\PropertyResource\Pages\ListProperties;
 use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
 use App\Models\Property;
 use App\Services\WatermarkService;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -80,7 +80,7 @@ final class PropertyResource extends Resource
                     ->helperText('Kijelölés esetén az ingatlan megjelenik a kiemelt ajánlatok között a főoldalon.')
                     ->default(false),
 
-                RichEditor::make('content')
+                TiptapEditor::make('content')
                     ->label('Tartalom')
                     ->columnSpanFull(),
                 DateTimePicker::make('date')
@@ -285,26 +285,30 @@ final class PropertyResource extends Resource
                                 ]),
                         ]),
                 ]),
-
-                Select::make('tags')
-                    ->label('Műszaki paraméterek')
-                    ->relationship('tags', 'name')
-                    ->preload()
-                    ->multiple()
-                    ->columnSpanFull(),
-                Select::make('services')
-                    ->label('Szolgáltatások')
-                    ->relationship('services', 'name')
-                    ->preload()
-                    ->multiple()
-                    ->columnSpanFull(),
-                Select::make('categories')
-                    ->label('Kategóriák')
-                    ->relationship('categories', 'name')
-                    ->preload()
-                    ->multiple()
-                    ->columnSpanFull(),
-
+                Section::make('Műszaki paraméterek')->schema([
+                    CheckboxList::make('tags')
+                        ->label('Műszaki paraméterek')
+                        ->relationship('tags', 'name')
+                        ->columns(4)
+                        ->gridDirection('row')
+                        ->columnSpanFull(),
+                ]),
+                Section::make('Szolgáltatások')->schema([
+                    CheckboxList::make('services')
+                        ->label('Szolgáltatások')
+                        ->relationship('services', 'name')
+                        ->columns(4)
+                        ->gridDirection('row')
+                        ->columnSpanFull(),
+                ]),
+                Section::make('Kategóriák')->schema([
+                    CheckboxList::make('categories')
+                        ->label('Kategóriák')
+                        ->relationship('categories', 'name')
+                        ->columns(4)
+                        ->gridDirection('row')
+                        ->columnSpanFull(),
+                ]),
                 TextInput::make('azonosito')
                     ->label('Azonosító')
                     ->maxLength(255),
@@ -312,7 +316,7 @@ final class PropertyResource extends Resource
                 TextInput::make('kodszam')
                     ->label('Kódszám')
                     ->maxLength(255),
-                RichEditor::make('en_content')
+                TiptapEditor::make('en_content')
                     ->label('Angol tartalom')
                     ->columnSpanFull(),
                 TextInput::make('lang')
@@ -404,7 +408,7 @@ final class PropertyResource extends Resource
                     ->color('success')
                     ->url(fn (Property $record) => URL::temporarySignedRoute(
                         'property.pdf',
-                        now()->addDays(12),
+                        now()->addDays(21),
                         ['property' => $record->id]
                     ))
                     ->openUrlInNewTab()

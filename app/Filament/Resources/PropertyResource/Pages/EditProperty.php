@@ -23,7 +23,7 @@ final class EditProperty extends EditRecord
                 ->color('success')
                 ->url(fn () => URL::temporarySignedRoute(
                     'property.pdf',
-                    now()->addDays(12),
+                    now()->addDays(21),
                     ['property' => $this->record->id]
                 ))
                 ->openUrlInNewTab()
