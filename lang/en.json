@@ -217,5 +217,7 @@
     "Amennyiben sürgős kérdése van, kérjük, hívjon minket telefonon a": " If you have an urgent question, please call us at",
     "számon.": "number.",
     "Zárva": "Closed",
-    "Opening hours": "Opening hours"
+    "Opening hours": "Opening hours",
+    "Contact message failed to send!": "Contact message failed to send!",
+    "Contact message sent successfully!": "Contact message sent successfully!"
 }

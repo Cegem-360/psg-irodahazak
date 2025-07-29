@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\ContactPage;
 use App\Models\Property;
 use Exception;
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -73,6 +74,11 @@ final class ContactController extends Controller
                 $message->to($validated['email'], $validated['name'])
                     ->subject('Kapcsolatfelvételi üzenet megerősítése - PSG Irodaházak');
             });
+            Notification::make()
+                ->title(__('Contact message sent successfully!'))
+                ->body(__('Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.'))
+                ->success()
+                ->send();
 
             return back()->with('success', __('Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.'));
         } catch (Exception $exception) {
@@ -81,6 +87,12 @@ final class ContactController extends Controller
                 'trace' => $exception->getTraceAsString(),
                 'data' => $validated,
             ]);
+
+            Notification::make()
+                ->title(__('Contact message failed to send!'))
+                ->body(__('Hiba történt az üzenet küldése során. Kérjük, próbálja újra később vagy hívjon minket telefonon.'))
+                ->danger()
+                ->send();
 
             return back()
                 ->withInput()

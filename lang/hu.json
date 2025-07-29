@@ -245,5 +245,7 @@
     "Property Details": "Ingatlan részletek",
     "Printable Version": "Nyomtatható verzió",
     "Min Rent": "Minimális bérleti ideje",
-    "Min Rent Addons": "Idő mértéke"
+    "Min Rent Addons": "Idő mértéke",
+    "Contact message failed to send!": "Kapcsolatfelvételi üzenet küldése sikertelen!",
+    "Contact message sent successfully!": "Kapcsolatfelvételi üzenet sikeresen elküldve!"
 }
