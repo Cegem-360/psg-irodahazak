@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use Illuminate\Http\File;
 use Spatie\Image\Enums\AlignPosition;
 use Spatie\Image\Image;
 
@@ -16,7 +17,7 @@ final class WatermarkService
         $filename = $file->getClientOriginalName(); // Or generate a unique name
 
         $image = Image::load($filePath);
-        $image = $image->watermark(resource_path('images/psg-irodahazak-logo.png'), AlignPosition::Middle, 10, 10, alpha: 20);
+        $image = $image->watermark(resource_path('images/psg-irodahazak-logo.png'), AlignPosition::Middle, 10, 10, alpha: 30);
 
         // Sanitize filename to remove special characters
         $sanitizedFilename = preg_replace('/[^a-zA-Z0-9._-]/', '_', $filename);
@@ -32,5 +33,17 @@ final class WatermarkService
         $image->save($fullStoragePath);
 
         return $storagePath; // Return the relative path
+    }
+
+    public function addWatermarkFromFile(File $file)
+    {
+        // 1. Get the file path
+        $filePath = $file->getRealPath();
+
+        $image = Image::load($filePath);
+        $image = $image->watermark(resource_path('images/psg-irodahazak-logo.png'), AlignPosition::Middle, 30, 10, alpha: 30);
+
+        $image->save($filePath);
+
     }
 }
