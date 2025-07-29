@@ -247,3 +247,13 @@ li.jellemzok {
     font-weight: bold !important;
     color: #333 !important; */
 }
+
+/* root {
+    --swiper-pagination-bullet-size: 12px;
+} */
+
+.swiper-pagination-bullet {
+	width: var(--swiper-pagination-bullet-width, var(--swiper-pagination-bullet-size, 12px))!important;
+	height: var(--swiper-pagination-bullet-height, var(--swiper-pagination-bullet-size, 12px))!important;
+}
+
