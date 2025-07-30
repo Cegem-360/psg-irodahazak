@@ -10,7 +10,7 @@
             <div class="swiper-wrapper">
                 @foreach (Property::active()->featured()->get() ?? [] as $property)
                     <livewire:ingatlan-card :property="$property" :image="$property->getFirstImageUrl()" :title="$property->title" :description="$property->getAddressFormated()"
-                        :link="localized_route('properties.show', ['property' => $property->slug])" :key="$property->id" :smal="true" :swiper="true" />
+                        :link="localized_route('properties.show', ['property' => $property->slug])" :key="$property->id" :small="true" :swiper="true" />
                 @endforeach
             </div>
         </div>

@@ -8,7 +8,6 @@ use App\Filament\Resources\TagResource\Pages\CreateTag;
 use App\Filament\Resources\TagResource\Pages\EditTag;
 use App\Filament\Resources\TagResource\Pages\ListTags;
 use App\Models\Tag;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -36,16 +35,10 @@ final class TagResource extends Resource
     {
         return $form
             ->schema([
-                DateTimePicker::make('date')
-                    ->label('Dátum'),
                 TextInput::make('name')
                     ->label('Név')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('ord')
-                    ->label('Sorrend')
-                    ->numeric()
-                    ->default(0),
             ]);
     }
 
@@ -53,10 +46,6 @@ final class TagResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('date')
-                    ->label('Dátum')
-                    ->dateTime()
-                    ->sortable(),
                 TextColumn::make('name')
                     ->label('Név')
                     ->searchable(),

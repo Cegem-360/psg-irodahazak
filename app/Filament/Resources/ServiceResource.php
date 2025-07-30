@@ -8,7 +8,6 @@ use App\Filament\Resources\ServiceResource\Pages\CreateService;
 use App\Filament\Resources\ServiceResource\Pages\EditService;
 use App\Filament\Resources\ServiceResource\Pages\ListServices;
 use App\Models\Service;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -36,8 +35,6 @@ final class ServiceResource extends Resource
     {
         return $form
             ->schema([
-                DateTimePicker::make('date')
-                    ->label('Dátum'),
                 TextInput::make('name')
                     ->label('Név')
                     ->required()
