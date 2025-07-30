@@ -42,7 +42,7 @@ final class WatermarkService
         $filePath = $file->getRealPath();
 
         $image = Image::load($filePath);
-        $image = $image->watermark(resource_path('images/psg-irodahazak-logo.png'), AlignPosition::Middle, 50, 70, paddingUnit: Unit::Percent, alpha: 30);
+        $image = $image->watermark(resource_path('images/psg-irodahazak-logo.png'), AlignPosition::MiddleMiddle, 0, 0, Unit::Percent, alpha: 30);
 
         $image->save($filePath);
 

@@ -41,11 +41,14 @@ final class AddWatermarkToPropertyPhotos extends Command
             foreach ($properties as $property) {
                 $photos = $property->property_photos;
                 if (! is_array($photos)) {
+                    $this->warn("Property {$property->id} has no photos or photos are not an array.");
+
                     continue;
                 }
                 foreach ($photos as $photo) {
                     if (! Storage::exists($photo)) {
                         // A progress bar-t akkor is léptetjük, ha nincs meg a file
+                        $this->warn("File not found: {$photo}");
                         $bar->advance();
 
                         continue;
