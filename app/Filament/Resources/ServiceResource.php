@@ -64,7 +64,8 @@ final class ServiceResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])->defaultSort('name', 'asc');
+
     }
 
     public static function getRelations(): array

@@ -138,6 +138,7 @@ namespace App\Models{
  * @property int $id
  * @property string $language
  * @property string|null $content
+ * @property string|null $image
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage newModelQuery()
@@ -146,6 +147,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereLanguage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactPage whereUpdatedAt($value)
  */

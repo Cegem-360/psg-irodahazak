@@ -55,6 +55,20 @@ final class AddWatermarkToPropertyPhotos extends Command
                     }
 
                     $file = new File(Storage::path($photo));
+                    $dimensions = @getimagesize($file->getPathname());
+                    if (! $dimensions) {
+                        $this->warn("Could not get image size: {$photo}");
+                        $bar->advance();
+
+                        continue;
+                    }
+                    if ($dimensions[0] < 600) {
+                        $this->warn("Image too narrow ({$dimensions[0]}px): {$photo}");
+                        $bar->advance();
+
+                        continue;
+                    }
+
                     $watermarkService->addWatermarkFromFile($file);
                     $count++;
                     $bar->advance();

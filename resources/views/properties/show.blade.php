@@ -73,7 +73,7 @@
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Rent') }}:</td>
-                                    <td>{{ $property->min_berleti_dij }}{{ $property->max_berleti_dij ? ' - ' . $property->max_berleti_dij : '' }}
+                                    <td>{{ $property->min_berleti_dij }}{{ $property->max_berleti_dij && $property->max_berleti_dij !== $property->min_berleti_dij ? ' - ' . $property->max_berleti_dij : '' }}
                                         {{ $property->min_berleti_dij_addons ?? '' }}
                                     </td>
                                 </tr>
@@ -216,7 +216,7 @@
             @if (!$property->isSale())
                 <div
                     class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
-                    <div class="">
+                    <div class="order-2 md:order-none">
                         <section class="bg-white rounded-xl">
                             <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
                                 <h2 class="mb-4 text-4xl tracking-tight font-extrafont-bold text-center text-accent">
@@ -228,7 +228,7 @@
                         </section>
 
                     </div>
-                    <div class="space-y-4 p-4">
+                    <div class="order-1 md:order-none space-y-4 p-4">
                         <div class="space-y-4">
                             <h2 class="text-3xl">{{ __('Features') }}</h2>
                             <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">

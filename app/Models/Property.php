@@ -162,7 +162,8 @@ final class Property extends Model
         $rent = __('Rental fee');
         $address .=
          '<br><strong>'.$rent.':</strong> '.
-          $this->min_berleti_dij.' - '.$this->max_berleti_dij.' '.$this->max_berleti_dij_addons
+          $this->min_berleti_dij
+          .($this->max_berleti_dij && $this->max_berleti_dij !== $this->min_berleti_dij ? ' - '.$this->max_berleti_dij.' '.$this->min_berleti_dij_addons : ' '.$this->min_berleti_dij_addons)
           .'<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' '.$this->uzemeletetesi_dij_addons;
 
         return $address ?: null;

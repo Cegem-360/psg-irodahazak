@@ -16,7 +16,7 @@
             <h4 class="text-xl text-center mb-8">({{ $totalOffices }} {{ __('page.results') }})</h4>
             <div
                 class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
-                <div class="relative">
+                <div class="hidden md:block relative">
                     <div wire:ignore id="map" class="sticky top-0 h-[120vh] rounded-lg border border-gray-300"
                         style="width: 100%;"></div>
                 </div>

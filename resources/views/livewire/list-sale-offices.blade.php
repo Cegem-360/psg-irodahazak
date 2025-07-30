@@ -25,7 +25,7 @@
 
             <div
                 class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
-                <div class="relative">
+                <div class="relative hidden md:block">
                     <!-- Google Maps Container -->
                     <div wire:ignore id="map"
                         class="sticky top-8 h-[120vh] rounded-lg shadow-lg bg-gray-100 flex items-center justify-center">
