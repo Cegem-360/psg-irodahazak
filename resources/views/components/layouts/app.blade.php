@@ -22,7 +22,7 @@
             <meta name="keywords" content="">
             <link rel="canonical" href="{{ Request::url() }}">
         @endisset
-
+        @include('googletagmanager::head')
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
         <style>
@@ -31,12 +31,14 @@
             }
         </style>
 
+        @cookieconsentscripts
         @filamentStyles
         @vite(['resources/js/app.js'])
 
     </head>
 
     <body class="antialiased" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+        @include('googletagmanager::body')
         <header>
             <x-layouts.navigation.top-bar />
             <x-layouts.navigation.hero />

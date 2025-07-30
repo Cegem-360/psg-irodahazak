@@ -23895,6 +23895,368 @@ namespace Livewire {
             }
     }
 
+namespace Spatie\GoogleTagManager {
+    /**
+     * @see \Spatie\GoogleTagManager\GoogleTagManager
+     */
+    class GoogleTagManagerFacade {
+        /**
+         * Return the Google Tag Manager id.
+         *
+         * @return string
+         * @static
+         */
+        public static function id()
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->id();
+        }
+
+        /**
+         * @static
+         */
+        public static function setId($id)
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->setId($id);
+        }
+
+        /**
+         * Return the Google Tag Manager script domain.
+         *
+         * @return string
+         * @static
+         */
+        public static function gtmScriptDomain()
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->gtmScriptDomain();
+        }
+
+        /**
+         * Check whether script rendering is enabled.
+         *
+         * @return bool
+         * @static
+         */
+        public static function isEnabled()
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->isEnabled();
+        }
+
+        /**
+         * Enable Google Tag Manager scripts rendering.
+         *
+         * @static
+         */
+        public static function enable()
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->enable();
+        }
+
+        /**
+         * Disable Google Tag Manager scripts rendering.
+         *
+         * @static
+         */
+        public static function disable()
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->disable();
+        }
+
+        /**
+         * Add data to the data layer.
+         *
+         * @param array|string $key
+         * @param mixed $value
+         * @static
+         */
+        public static function set($key, $value = null)
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->set($key, $value);
+        }
+
+        /**
+         * Retrieve the data layer.
+         *
+         * @return \Spatie\GoogleTagManager\DataLayer
+         * @static
+         */
+        public static function getDataLayer()
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->getDataLayer();
+        }
+
+        /**
+         * Add data to the data layer for the next request.
+         *
+         * @param array|string $key
+         * @param mixed $value
+         * @static
+         */
+        public static function flash($key, $value = null)
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->flash($key, $value);
+        }
+
+        /**
+         * Retrieve the data layer's data for the next request.
+         *
+         * @return array
+         * @static
+         */
+        public static function getFlashData()
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->getFlashData();
+        }
+
+        /**
+         * Add data to be pushed to the data layer.
+         *
+         * @param array|string $key
+         * @param mixed $value
+         * @static
+         */
+        public static function push($key, $value = null)
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->push($key, $value);
+        }
+
+        /**
+         * Retrieve the data layer's data for the next request.
+         *
+         * @return \Illuminate\Support\Collection
+         * @static
+         */
+        public static function getPushData()
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->getPushData();
+        }
+
+        /**
+         * Add data to be pushed to the data layer for the next request.
+         *
+         * @param array|string $key
+         * @param mixed $value
+         * @static
+         */
+        public static function flashPush($key, $value = null)
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->flashPush($key, $value);
+        }
+
+        /**
+         * Retrieve the push data for the next request.
+         *
+         * @return \Illuminate\Support\Collection
+         * @static
+         */
+        public static function getFlashPushData()
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->getFlashPushData();
+        }
+
+        /**
+         * Clear the data layer.
+         *
+         * @static
+         */
+        public static function clear()
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->clear();
+        }
+
+        /**
+         * Utility function to dump an array as json.
+         *
+         * @param array $data
+         * @return string
+         * @static
+         */
+        public static function dump($data)
+        {
+            /** @var \Spatie\GoogleTagManager\GoogleTagManager $instance */
+            return $instance->dump($data);
+        }
+
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param object|callable $macro
+         * @param-closure-this static  $macro
+         * @return void
+         * @static
+         */
+        public static function macro($name, $macro)
+        {
+            \Spatie\GoogleTagManager\GoogleTagManager::macro($name, $macro);
+        }
+
+        /**
+         * Mix another object into the class.
+         *
+         * @param object $mixin
+         * @param bool $replace
+         * @return void
+         * @throws \ReflectionException
+         * @static
+         */
+        public static function mixin($mixin, $replace = true)
+        {
+            \Spatie\GoogleTagManager\GoogleTagManager::mixin($mixin, $replace);
+        }
+
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool
+         * @static
+         */
+        public static function hasMacro($name)
+        {
+            return \Spatie\GoogleTagManager\GoogleTagManager::hasMacro($name);
+        }
+
+        /**
+         * Flush the existing macros.
+         *
+         * @return void
+         * @static
+         */
+        public static function flushMacros()
+        {
+            \Spatie\GoogleTagManager\GoogleTagManager::flushMacros();
+        }
+
+            }
+    }
+
+namespace Whitecube\LaravelCookieConsent\Facades {
+    /**
+     */
+    class Cookies {
+        /**
+         * Check if the current preference settings are sufficient. If not,
+         * the cookie preferences notice should be displayed again.
+         *
+         * @static
+         */
+        public static function shouldDisplayNotice()
+        {
+            /** @var \Whitecube\LaravelCookieConsent\CookiesManager $instance */
+            return $instance->shouldDisplayNotice();
+        }
+
+        /**
+         * Check if the user has given explicit consent for a specific cookie.
+         *
+         * @static
+         */
+        public static function hasConsentFor($key)
+        {
+            /** @var \Whitecube\LaravelCookieConsent\CookiesManager $instance */
+            return $instance->hasConsentFor($key);
+        }
+
+        /**
+         * Handle the incoming consent preferences accordingly.
+         *
+         * @static
+         */
+        public static function accept($categories = '*')
+        {
+            /** @var \Whitecube\LaravelCookieConsent\CookiesManager $instance */
+            return $instance->accept($categories);
+        }
+
+        /**
+         * Output all the scripts for current consent state.
+         *
+         * @static
+         */
+        public static function renderScripts($withDefault = true)
+        {
+            /** @var \Whitecube\LaravelCookieConsent\CookiesManager $instance */
+            return $instance->renderScripts($withDefault);
+        }
+
+        /**
+         * @static
+         */
+        public static function getNoticeScripts($withDefault)
+        {
+            /** @var \Whitecube\LaravelCookieConsent\CookiesManager $instance */
+            return $instance->getNoticeScripts($withDefault);
+        }
+
+        /**
+         * Output the consent alert/modal for current consent state.
+         *
+         * @static
+         */
+        public static function renderView()
+        {
+            /** @var \Whitecube\LaravelCookieConsent\CookiesManager $instance */
+            return $instance->renderView();
+        }
+
+        /**
+         * @static
+         */
+        public static function getNoticeMarkup()
+        {
+            /** @var \Whitecube\LaravelCookieConsent\CookiesManager $instance */
+            return $instance->getNoticeMarkup();
+        }
+
+        /**
+         * Output a single cookie consent action button.
+         *
+         * @static
+         */
+        public static function renderButton($action, $label = null, $attributes = [])
+        {
+            /** @var \Whitecube\LaravelCookieConsent\CookiesManager $instance */
+            return $instance->renderButton($action, $label, $attributes);
+        }
+
+        /**
+         * Output a table with all the cookies infos.
+         *
+         * @static
+         */
+        public static function renderInfo()
+        {
+            /** @var \Whitecube\LaravelCookieConsent\CookiesManager $instance */
+            return $instance->renderInfo();
+        }
+
+        /**
+         * @static
+         */
+        public static function replaceInfoTag($wysiwyg)
+        {
+            /** @var \Whitecube\LaravelCookieConsent\CookiesManager $instance */
+            return $instance->replaceInfoTag($wysiwyg);
+        }
+
+            }
+    }
+
 namespace Illuminate\Support {
     /**
      * @template TKey of array-key
@@ -32126,6 +32488,8 @@ namespace  {
     class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
     class ReorderableColumns extends \Bostos\ReorderableColumns\Facades\ReorderableColumns {}
     class Livewire extends \Livewire\Livewire {}
+    class GoogleTagManager extends \Spatie\GoogleTagManager\GoogleTagManagerFacade {}
+    class Cookies extends \Whitecube\LaravelCookieConsent\Facades\Cookies {}
 }
 
 
