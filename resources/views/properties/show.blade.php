@@ -233,21 +233,25 @@
                             <h2 class="text-3xl">{{ __('Features') }}</h2>
                             <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
 
-                                @if ($property->services)
-
-                                    @foreach ($property->services as $item)
+                                @if ($property->services || $property->tags)
+                                    @php
+                                        $allItems = collect($property->services)
+                                            ->merge($property->tags ?? [])
+                                            ->sortBy(function ($item) {
+                                                // Ékezetek eltávolítása és kisbetűsítés a rendezéshez
+                                                $normalized = strtolower($item->name);
+                                                $normalized = str_replace(
+                                                    ['á', 'é', 'í', 'ó', 'ő', 'ú', 'ű', 'ü', 'ö'],
+                                                    ['a', 'e', 'i', 'o', 'o', 'u', 'u', 'u', 'o'],
+                                                    $normalized,
+                                                );
+                                                return $normalized;
+                                            });
+                                    @endphp
+                                    @foreach ($allItems as $item)
                                         <li class="jellemzok pb-1">
                                             @if (app()->getLocale() === 'en')
-                                                {{ Translate::whereName($item->name)->first()?->translated ?? $item }}
-                                            @else
-                                                {{ $item->name }}
-                                            @endif
-                                        </li>
-                                    @endforeach
-                                    @foreach ($property->tags as $item)
-                                        <li class="jellemzok pb-1">
-                                            @if (app()->getLocale() === 'en')
-                                                {{ Translate::whereName($item->name)->first()?->translated ?? $item }}
+                                                {{ Translate::whereName($item->name)->first()?->translated ?? $item->name }}
                                             @else
                                                 {{ $item->name }}
                                             @endif
