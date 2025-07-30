@@ -13,18 +13,34 @@
         @else
             <title>{{ __('page.title.default') }}</title>
         @endisset
-        @isset($meta)
-            {{ $meta }}
-        @else
-            <meta name="robots" content="index, follow">
-            <meta name="googlebot" content="index, follow">
-            <meta name="description" content="">
-            <meta name="keywords" content="">
-            <link rel="canonical" href="{{ Request::url() }}">
-        @endisset
+        <meta name="author" content="{{ $metaAuthor ?? 'Cegem360 Kft.' }}">
+        <meta name="description"
+            content="{{ $metaDescription ?? 'Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ' }}">
+
+        <meta name="keywords"
+            content="{{ $metaKeywords ?? 'kiadó irodaházak,bérbeadó irodák,azonnali irodák,kiadó iroda,eladó irodaházak,belvárosi irodák,loft iroda,kiadó iroda Budán,kiadó iroda Pesten,A-kategóriás irodaházak,zöld irodák,irodaházak listája,serviced offices,Bérlő képviselet,' }}">
+        <meta property="og:title"
+            content="{{ $metaOgTitle ?? 'PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet! | ' }}">
+        <meta property="og:type" content="{{ $metaOgType ?? 'website' }}">
+        <meta property="og:url" content="{{ $metaOgUrl ?? Request::url() }}">
+        <meta property="og:description" content="{{ $metaOgDescription ?? '' }}">
+        <meta name="twitter:card" content="{{ $metaTwitterCard ?? 'summary' }}">
+        <meta name="twitter:url" content="{{ $metaTwitterUrl ?? Request::url() }}">
+        <meta name="twitter:title"
+            content="{{ $metaTwitterTitle ?? 'PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet! | ' }}">
+        <meta name="twitter:description"
+            content="{{ $metaTwitterDescription ?? 'Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ' }}">
+        <meta itemprop="name"
+            content="{{ $metaItempropName ?? 'PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet! | ' }}">
+        <meta itemprop="description"
+            content="{{ $metaItempropDescription ?? 'Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ' }}">
+        <link rel="canonical" href="{{ $metaCanonical ?? Request::url() }}">
+        <meta name="robots" content="{{ $metaRobots ?? 'index, follow' }}">
+        <meta name="googlebot" content="{{ $metaGooglebot ?? 'index, follow' }}">
+
         @include('googletagmanager::head')
 
-        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png" sizes="48x48" />
 
         <style>
             [x-cloak] {
