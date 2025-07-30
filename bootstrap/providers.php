@@ -6,4 +6,5 @@ return [
     App\Providers\AppServiceProvider::class,
     App\Providers\Filament\AdminPanelServiceProvider::class,
     Spatie\GoogleTagManager\GoogleTagManagerServiceProvider::class,
+    App\Providers\CookiesServiceProvider::class,
 ];

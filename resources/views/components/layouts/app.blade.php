@@ -59,7 +59,7 @@
         @livewire('property-phone-modal')
 
         <x-layouts.footer />
-
+        @cookieconsentview
         @filamentScripts
         @stack('scripts')
 
