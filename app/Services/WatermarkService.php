@@ -6,6 +6,7 @@ namespace App\Services;
 
 use Illuminate\Http\File;
 use Spatie\Image\Enums\AlignPosition;
+use Spatie\Image\Enums\Unit;
 use Spatie\Image\Image;
 
 final class WatermarkService
@@ -41,7 +42,7 @@ final class WatermarkService
         $filePath = $file->getRealPath();
 
         $image = Image::load($filePath);
-        $image = $image->watermark(resource_path('images/psg-irodahazak-logo.png'), AlignPosition::Middle, 30, 10, alpha: 30);
+        $image = $image->watermark(resource_path('images/psg-irodahazak-logo.png'), AlignPosition::Middle, 50, 70, paddingUnit: Unit::Percent, alpha: 30);
 
         $image->save($filePath);
 
