@@ -109,8 +109,6 @@ final class PropertyPdfService
         $footerHtml = (string) view('pdf.footer')->render();
 
         $pdf = Browsershot::html($html)
-            ->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
-            ->setNpmBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/npm')
             ->setOption('args', ['--disable-web-security'])
             ->format(config('pdf.browsershot.format', 'A4'))
             ->margins(
@@ -125,9 +123,12 @@ final class PropertyPdfService
             ->delay(2000) // 2 másodperc várakozás a Tailwind betöltésére
             ->showBrowserHeaderAndFooter()
             ->footerHtml($footerHtml)
-            ->hideHeader()
-
-            ->pdf();
+            ->hideHeader();
+        if (! env('NOTISOLATED', false)) {
+            $pdf = $pdf->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
+                ->setNpmBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/npm');
+        }
+        $pdf = $pdf->pdf();
 
         // Fájlnév generálása
         $filename = $this->generateFilename($property);
