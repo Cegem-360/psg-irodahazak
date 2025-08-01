@@ -327,9 +327,9 @@
             }
         </style>
         <script>
-            document.addEventListener('livewire:navigated', function() {
-                let selectedDistricts = [];
-                // Initialize the range sliders
+            let selectedDistricts = [];
+            // Initialize the range sliders
+            document.addEventListener("livewire:navigated", () => {
                 $('.terulet-slider').ionRangeSlider({
                     type: "double",
                     min: 0,
@@ -359,16 +359,12 @@
                         document.getElementById('priceMax').value = data.to;
                     }
                 });
-
-                // Initialize selected districts from URL parameters
-
-            }, {
-                onec: true
             });
-            document.addEventListener('livewire:navigated', function() {
+            // Initialize selected districts from URL parameters
+
+
+            document.addEventListener('livewire:livewire:navigated', function() {
                 initializeSelectedDistricts();
-            }, {
-                onec: true
             });
 
             // Global array to store selected districts

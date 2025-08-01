@@ -17,10 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
         ".gallery-carousel-swiper-thumbs",
         {
             slidesPerView: 4,
-            /* grid: {
-            fill: 'row',
-            rows: 2,
-        }, */
             slideThumbActiveClass: "swiper-slide-thumb-active",
             spaceBetween: 12,
         }
