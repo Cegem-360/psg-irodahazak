@@ -187,7 +187,7 @@
 
                             <!-- Dropdown Menu -->
                             <div id="officeDropdownMenu"
-                                class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-64 overflow-hidden hidden">
+                                class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-64 overflow-hidden hidden">
                                 <!-- Search input inside dropdown -->
                                 <div class="p-3 border-b border-gray-200">
                                     <input type="text" id="officeSearchInput"
