@@ -83,7 +83,7 @@ final class PropertyController extends Controller
 
         // Apply the appropriate scope based on property type
         $similarPropertiesQuery = Property::where('id', '!=', $property->id)
-            ->where('cim_irsz', $postalCode)
+            ->where('district', $postalCode)
             ->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
             ->active();
 
