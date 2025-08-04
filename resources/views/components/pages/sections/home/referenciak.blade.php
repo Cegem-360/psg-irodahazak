@@ -14,10 +14,10 @@
             </div>
         </div>
         <div
-            class="swiper-button-prev reference-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+            class="swiper-button-prev reference-button-prev !hidden lg:!flex !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
         </div>
         <div
-            class="swiper-button-next reference-button-next !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+            class="swiper-button-next reference-button-next !hidden lg:!flex !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
         </div>
     </div>
 </div>

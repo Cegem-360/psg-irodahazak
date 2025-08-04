@@ -29,7 +29,7 @@
                             <img loading="lazy"
                                 src="{{ $testimonial?->client_image ? Storage::url($testimonial->client_image) : Vite::asset('resources/images/psg-irodahazak-logo.png') }}"
                                 alt="{{ $testimonial->client_company }}"
-                                class="w-1/2 lg:w-1/3 h-fit object-contain rounded-lg mb-4 p-2 bg-white" />
+                                class="w-1/2 lg:w-1/3 h-fit max-h-20 lg:max-h-60 object-contain rounded-lg mb-4 p-2 bg-white" />
 
                             <div class="lg:w-2/3 text-md italic text-justify">
                                 {!! preg_replace(['/^<p>/', '/<\/p>$/'], ['<p>”', '„</p>'], $testimonial->testimonial) !!}
@@ -44,12 +44,12 @@
                     @endforeach
                 </div>
             </div>
-            <div class="swiper-pagination rolunkmondtak-pagination z-50"></div>
+            <div class="swiper-pagination rolunkmondtak-pagination hidden lg:block z-50"></div>
             <div
-                class="swiper-button-prev rolunkmondtak-button-prev !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+                class="swiper-button-prev rolunkmondtak-button-prev !hidden lg:!flex !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
             </div>
             <div
-                class="swiper-button-next rolunkmondtak-button-next !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+                class="swiper-button-next rolunkmondtak-button-next !hidden lg:!flex !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
             </div>
         </div>
     @endif

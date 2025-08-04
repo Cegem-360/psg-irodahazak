@@ -10,15 +10,15 @@
             <div class="swiper-wrapper">
                 @foreach (Property::active()->featured()->get() ?? [] as $property)
                     <livewire:ingatlan-card :property="$property" :image="$property->getFirstImageUrl()" :title="$property->title" :description="$property->getAddressFormated()"
-                        :link="localized_route('properties.show', ['property' => $property->slug])" :key="$property->id" :small="true" :swiper="true" />
+                        :link="localized_route('properties.show', ['property' => $property->slug])" :key="$property->id" :small="false" :swiper="true" />
                 @endforeach
             </div>
         </div>
     </div>
     <div
-        class="swiper-button-prev kiemelt-button-prev !text-accent bg-white/40 hover:bg-white/60 shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+        class="swiper-button-prev kiemelt-button-prev !hidden lg:!flex !text-accent bg-white/40 hover:bg-white/60 shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
     </div>
     <div
-        class="swiper-button-next kiemelt-button-next !text-accent bg-white/40 hover:bg-white/60 shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+        class="swiper-button-next kiemelt-button-next !hidden lg:!flex !text-accent bg-white/40 hover:bg-white/60 shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
     </div>
 </div>
