@@ -31,7 +31,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-screen-xl mx-auto">
                     <div
-                        class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/10">
+                        class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/15">
                         <!-- Térkép -->
                         <h3 class="text-lg mb-4">{{ __('Map Search') }}</h3>
                         <div class="map-container">
@@ -54,7 +54,7 @@
                     </div>
 
                     <div
-                        class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/10">
+                        class="relative z-10 p-8 space-y-8 bg-black/5 rounded-xl _overflow-hidden_ shadow-xl backdrop-blur-3xl border border-white/15">
                         <!-- Keresőmezők -->
                         <h3 class="text-lg mb-4">{{ __('Search Criteria') }}</h3>
                         <!-- Custom Multi-Select Dropdown -->
@@ -261,7 +261,7 @@
                     </div>
 
                     <div
-                        class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/10">
+                        class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/15">
                         <!-- Range szűrők -->
                         <h3 class="text-lg mb-4">{{ __('Filter by Parameters') }}</h3>
                         <div class="space-y-2">
