@@ -78,13 +78,9 @@ final class PropertyController extends Controller
     public function show(Property $property)
     {
 
-        // Get similar properties from the same district (exact 4-digit postal code match)
-        $postalCode = $property->cim_irsz;
-
         // Apply the appropriate scope based on property type
         $similarPropertiesQuery = Property::where('id', '!=', $property->id)
-            ->where('district', $postalCode)
-            ->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
+            ->whereDistrict($property->district)
             ->active();
 
         // If property is for sale, apply sale scope, otherwise apply rent scope

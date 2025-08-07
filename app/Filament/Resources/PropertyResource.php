@@ -251,6 +251,9 @@ final class PropertyResource extends Resource
                             TextInput::make('cim_irsz')
                                 ->label('Irányítószám')
                                 ->maxLength(255),
+                            TextInput::make('district')
+                                ->label('Kerület')
+                                ->maxLength(255),
                             TextInput::make('cim_varos')
                                 ->label('Város')
                                 ->maxLength(255),
