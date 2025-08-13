@@ -17,7 +17,7 @@ return [
         'margins' => [
             'top' => 15,
             'right' => 15,
-            'bottom' => 20,
+            'bottom' => 25,
             'left' => 15,
         ],
         'timeout' => 60,
