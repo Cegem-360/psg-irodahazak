@@ -207,7 +207,7 @@
                 @endif
                 @if ($property->min_berleti_dij)
                     <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                        <span class="font-bold text-gray-600">{{ __('Min. Rental Period') }}:</span>
+                        <span class="font-bold text-gray-600">{{ __('Min. Rental fee') }}:</span>
                         <span class="font-medium text-gray-900">
                             @if ($property->min_berleti_dij && $property->max_berleti_dij)
                                 {{ number_format((int) $property->min_berleti_dij, 0, ',', ' ') . ' - ' . number_format((int) $property->max_berleti_dij, 0, ',', ' ') }}
