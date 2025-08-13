@@ -114,7 +114,7 @@ final class PropertyPdfService
             ->margins(
                 config('pdf.browsershot.margins.top', 15),
                 config('pdf.browsershot.margins.right', 15),
-                config('pdf.browsershot.margins.bottom', 30), // Alsó margó nagyobb a footer miatt
+                config('pdf.browsershot.margins.bottom', 25), // Alsó margó nagyobb a footer miatt
                 config('pdf.browsershot.margins.left', 15)
             )
             ->showBackground()
