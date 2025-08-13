@@ -198,7 +198,6 @@
                     {{ $property->min_parkolas_dija_addons }}
                     </span>
                 </div>
-                @endif
 
                 @if ($property->kozos_teruleti_arany)
                     <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
