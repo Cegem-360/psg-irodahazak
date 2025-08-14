@@ -36,16 +36,12 @@
                 .pagebreak {
                     page-break-before: always;
                 }
-
-                /* page-break-after works, as well */
             }
 
             @media print {
                 body {
                     -webkit-print-color-adjust: exact;
                 }
-
-                /* I am using this to make Tailwind colours i.e bg-gray-300 etc.. to also print in the PDF */
             }
         </style>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
@@ -121,7 +117,6 @@
                                 {{ $property->jelenleg_kiado_addons }}</span>
                         </div>
                     @endif
-
                     @if ($property->min_kiado)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Min. Available') }}:</span>
@@ -130,7 +125,6 @@
                                 {{ $property->min_kiado_addons }}</span>
                         </div>
                     @endif
-
                     @if ($property->isSale())
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600"> {{ __('Price') }}:</span>
@@ -153,7 +147,6 @@
                             </span>
                         </div>
                     @endif
-
                     @if ($property->uzemeletetesi_dij)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Operating Fee') }}:</span>
@@ -162,7 +155,6 @@
                                 {{ $property->uzemeletetesi_dij_addons }}</span>
                         </div>
                     @endif
-
                     @if ($property->raktar_terulet)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Storage Area') }}:</span>
@@ -171,7 +163,6 @@
                                 {{ $property->raktar_terulet_addons }}</span>
                         </div>
                     @endif
-
                     @if ($property->raktar_berleti_dij)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Storage Rent') }}:</span>
@@ -180,14 +171,12 @@
                                 {{ $property->raktar_berleti_dij_addons }}</span>
                         </div>
                     @endif
-
                     @if ($property->parkolas)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Parking') }}:</span>
                             <span class="font-medium text-gray-900">{{ $property->parkolas }}</span>
                         </div>
                     @endif
-
                     @if ($property->min_parkolas_dija)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Parking Fee') }}:</span>
@@ -197,6 +186,7 @@
                                 @else
                                     {{ (int) $property->min_parkolas_dija }}
                                 @endif
+                            </span>
                     @endif
                     {{ $property->min_parkolas_dija_addons }}
                     </span>
@@ -272,13 +262,11 @@
                             @foreach ($property->tags as $item)
                                 <li class="mb-1">{{ $item->name }}</li>
                             @endforeach
-
                         @endif
                         @if ($property->services->count() > 0)
                             @foreach ($property->services as $item)
                                 <li class="mb-1">{{ $item->name }}</li>
                             @endforeach
-
                         @endif
                     </ul>
                 </div>
