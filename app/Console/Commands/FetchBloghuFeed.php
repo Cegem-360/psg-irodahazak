@@ -60,7 +60,7 @@ final class FetchBloghuFeed extends Command
             $link = (string) $item->link;
             $description = (string) $item->description;
             $pubDate = date('Y-m-d H:i:s', strtotime((string) $item->pubDate));
-            $featuredImage = (string) $item->enclosure['url'] ?? null;
+            $featuredImage = isset($item->{'blh:image'}) ? (string) $item->{'blh:image'} : null;
             $blog = BlogPost::firstOrCreate([
                 'slug' => Str::slug($title),
             ]);
