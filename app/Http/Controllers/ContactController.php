@@ -69,7 +69,7 @@ final class ContactController extends Controller
                     ->replyTo($validated['email'], $validated['name']);
             });
             Mail::send('emails.contact', $validated, function ($message) use ($validated): void {
-                $message->to('cegem360@gmail.com')
+                $message->to('richard.fekete@psg-irodahazak.hu')
                     ->subject('Új kapcsolatfelvételi üzenet: '.$validated['contact_subject'])
                     ->replyTo($validated['email'], $validated['name']);
             });
