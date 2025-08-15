@@ -60,7 +60,14 @@ final class FetchBloghuFeed extends Command
             $link = (string) $item->link;
             $description = (string) $item->description;
             $pubDate = date('Y-m-d H:i:s', strtotime((string) $item->pubDate));
-            $featuredImage = isset($item->{'blh:image'}) ? (string) $item->{'blh:image'} : null;
+            $featuredImage = null;
+            $namespaces = $item->getNameSpaces(true);
+            $all = [];
+            foreach ($namespaces as $prefix => $ns) {
+                $all[$prefix] = $item->children($ns);
+            }
+
+            $featuredImage = $all['blh']->image ?? null;
             $blog = BlogPost::firstOrCreate([
                 'slug' => Str::slug($title),
             ]);
