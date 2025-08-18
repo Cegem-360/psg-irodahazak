@@ -152,7 +152,7 @@
                             <span class="font-bold text-gray-600">{{ __('Operating Fee') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format((int) $property->uzemeletetesi_dij, 0, ',', ' ') }}
-                                {{ $property->uzemeletetesi_dij_addons }}</span>
+                                {{ __($property->uzemeletetesi_dij_addons) }}</span>
                         </div>
                     @endif
                     @if ($property->raktar_terulet)
@@ -160,7 +160,7 @@
                             <span class="font-bold text-gray-600">{{ __('Storage Area') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format((int) $property->raktar_terulet, 0, ',', ' ') }}
-                                {{ $property->raktar_terulet_addons }}</span>
+                                {{ __($property->raktar_terulet_addons) }}</span>
                         </div>
                     @endif
                     @if ($property->raktar_berleti_dij)
@@ -168,7 +168,7 @@
                             <span class="font-bold text-gray-600">{{ __('Storage Rent') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format((int) $property->raktar_berleti_dij, 0, ',', ' ') }}
-                                {{ $property->raktar_berleti_dij_addons }}</span>
+                                {{ __($property->raktar_berleti_dij_addons) }}</span>
                         </div>
                     @endif
                     @if ($property->parkolas)
@@ -188,7 +188,7 @@
                                 @endif
                             </span>
                     @endif
-                    {{ $property->min_parkolas_dija_addons }}
+                    {{ __($property->min_parkolas_dija_addons) }}
                     </span>
                 </div>
 
@@ -203,7 +203,7 @@
                     <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                         <span class="font-bold text-gray-600">{{ __('Min. Rental Period') }}:</span>
                         <span class="font-medium text-gray-900">{{ $property->min_berleti_idoszak }}
-                            {{ $property->min_berleti_idoszak_addons }}</span>
+                            {{ __($property->min_berleti_idoszak_addons) }}</span>
                     </div>
                 @endif
 
