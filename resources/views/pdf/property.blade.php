@@ -114,7 +114,7 @@
                             <span class="font-bold text-gray-600">{{ __('Currently Available') }}:</span>
                             <span
                                 class="font-medium text-gray-900">{{ number_format((int) $property->jelenleg_kiado, 0, ',', ' ') }}
-                                {{ $property->jelenleg_kiado_addons }}</span>
+                                {{ __($property->jelenleg_kiado_addons) }}</span>
                         </div>
                     @endif
                     @if ($property->min_kiado)
