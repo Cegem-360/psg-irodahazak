@@ -224,5 +224,7 @@
     "EUR/m2/hó": "EUR/m2/month",
     "HUF/m2/hó": "HUF/m2/month",
     "EUR/hely/hó": "EUR/place/month",
-    "HUF/hely/hó": "HUF/place/month"
+    "HUF/hely/hó": "HUF/place/month",
+    "EUR/fő/hó": "EUR/person/month",
+    "HUF/fő/hó": "HUF/person/month"
 }
