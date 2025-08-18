@@ -94,46 +94,29 @@
                 <!-- Right Column - Details -->
                 <div class="w-1/2 p-6 bg-gray-50 text-sm leading-snug">
                     @if ($property->construction_year)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Construction Year') }}:</span>
-                            <span class="font-medium text-gray-900">{{ $property->construction_year }}</span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Construction Year') . ':'" :second_span="$property->construction_year" />
                     @endif
 
                     @if ($property->total_area)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Total Area') }}:</span>
-                            <span class="font-medium text-gray-900">{{ $property->total_area }}
-                                m²
-                            </span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Total Area') . ':'" :second_span="$property->total_area . ' m²'" />
                     @endif
 
                     @if ($property->jelenleg_kiado)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Currently Available') }}:</span>
-                            <span
-                                class="font-medium text-gray-900">{{ number_format((int) $property->jelenleg_kiado, 0, ',', ' ') }}
-                                {{ __($property->jelenleg_kiado_addons ?? '') }}</span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Currently Available') . ':'" :second_span="$property->jelenleg_kiado . __($property->jelenleg_kiado_addons ?? '')" />
                     @endif
+
                     @if ($property->min_kiado)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Min. Available') }}:</span>
-                            <span
-                                class="font-medium text-gray-900">{{ number_format((int) $property->min_kiado, 0, ',', ' ') }}
-                                {{ __($property->min_kiado_addons ?? '') }}</span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Min. Available') . ':'" :second_span="number_format((int) $property->min_kiado, 0, ',', ' ') .
+                            ' ' .
+                            __($property->min_kiado_addons ?? '')" />
                     @endif
+
                     @if ($property->isSale())
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600"> {{ __('Price') }}:</span>
-                            <span class="font-medium text-gray-900">
-                                {{ number_format((int) $property->min_berleti_dij, 0, ',', ' ') }}
-                                {{ __($property->min_berleti_dij_addons ?? '') }}
-                            </span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Sale Price') . ':'" :second_span="number_format((int) $property->min_berleti_dij, 0, ',', ' ') .
+                            ' ' .
+                            __($property->min_berleti_dij_addons ?? '')" />
                     @endif
+
                     @if ($property->isRent())
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Rent') }}:</span>
@@ -148,34 +131,23 @@
                         </div>
                     @endif
                     @if ($property->uzemeletetesi_dij)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Operating Fee') }}:</span>
-                            <span
-                                class="font-medium text-gray-900">{{ number_format((int) $property->uzemeletetesi_dij, 0, ',', ' ') }}
-                                {{ __($property->uzemeletetesi_dij_addons ?? '') }}</span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Operating Fee') . ':'" :second_span="number_format((int) $property->uzemeletetesi_dij, 0, ',', ' ') .
+                            ' ' .
+                            __($property->uzemeletetesi_dij_addons ?? '')" />
                     @endif
+
                     @if ($property->raktar_terulet)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Storage Area') }}:</span>
-                            <span
-                                class="font-medium text-gray-900">{{ number_format((int) $property->raktar_terulet, 0, ',', ' ') }}
-                                {{ __($property->raktar_terulet_addons ?? '') }}</span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Storage Area') . ':'" :second_span="number_format((int) $property->raktar_terulet, 0, ',', ' ') .
+                            ' ' .
+                            __($property->raktar_terulet_addons ?? '')" />
                     @endif
                     @if ($property->raktar_berleti_dij)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Storage Rent') }}:</span>
-                            <span
-                                class="font-medium text-gray-900">{{ number_format((int) $property->raktar_berleti_dij, 0, ',', ' ') }}
-                                {{ __($property->raktar_berleti_dij_addons ?? '') }}</span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Storage Rent') . ':'" :second_span="number_format((int) $property->raktar_berleti_dij, 0, ',', ' ') .
+                            ' ' .
+                            __($property->raktar_berleti_dij_addons ?? '')" />
                     @endif
                     @if ($property->parkolas)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Parking') }}:</span>
-                            <span class="font-medium text-gray-900">{{ $property->parkolas }}</span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Parking') . ':'" :second_span="__($property->parkolas)" />
                     @endif
                     @if ($property->min_parkolas_dija)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
@@ -186,37 +158,30 @@
                                 @else
                                     {{ $property->min_parkolas_dija }}
                                 @endif
+                                {{ __($property->min_parkolas_dija_addons ?? '') }}
                             </span>
-                            {{ __($property->min_parkolas_dija_addons ?? '') }}
                         </div>
                     @endif
 
                     @if ($property->kozos_teruleti_arany)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Common Area Ratio') }}:</span>
-                            <span class="font-medium text-gray-900">{{ $property->kozos_teruleti_arany }}%</span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Common Area Ratio') . ':'" :second_span="$property->kozos_teruleti_arany . '%'" />
                     @endif
 
                     @if ($property->min_berleti_idoszak)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Min. Rental Period') }}:</span>
-                            <span class="font-medium text-gray-900">{{ $property->min_berleti_idoszak }}
-                                {{ __($property->min_berleti_idoszak_addons ?? '') }}</span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Min. Rental Period') . ':'" :second_span="$property->min_berleti_idoszak .
+                            ' ' .
+                            __($property->min_berleti_idoszak_addons ?? '')" />
                     @endif
 
                     @if ($property->kodszam)
-                        <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
-                            <span class="font-bold text-gray-600">{{ __('Code') }}:</span>
-                            <span class="font-medium text-gray-900">{{ $property->kodszam }}</span>
-                        </div>
+                        <x-pdf.property-column :first_span="__('Code') . ':'" :second_span="$property->kodszam" />
                     @endif
 
                     @if ($property->vat)
                         <div class="mt-3 p-3 text-sm">
                             <span
-                                class="font-bold text-red-600">{{ __('The above fees are subject to an additional 27% VAT!') }}</span>
+                                class="font-bold text-red-600">{{ __('The above fees are subject to an additional 27% VAT!') }}
+                            </span>
                         </div>
                     @endif
                 </div>
