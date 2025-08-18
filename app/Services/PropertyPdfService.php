@@ -144,6 +144,6 @@ final class PropertyPdfService
         $title = $property->title ? str_replace([' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|'], '_', $property->title) : 'ingatlan';
         $date = now()->format('Y_m_d_H_i');
 
-        return sprintf('ingatlan_%s_%s.pdf', $title, $date);
+        return sprintf('%s_%s.pdf', $title, $date);
     }
 }
