@@ -27,7 +27,8 @@
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Price') }}:</td>
-                                    <td>{{ $property->min_berleti_dij ?? '' }} {{ $property->min_berleti_dij_addons }}
+                                    <td>{{ $property->min_berleti_dij ?? '' }}
+                                        {{ __($property->min_berleti_dij_addons ?? '') }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -46,7 +47,7 @@
                                     <td class="font-bold">{{ __('Address') }}:</td>
                                     <td>{{ $property->cim_irsz }} {{ $property->cim_varos }},
                                         {{ $property->cim_utca }}
-                                        {{ $property->cim_utca_addons ?? '' }} {{ $property->cim_hazszam }}
+                                        {{ __($property->cim_utca_addons ?? '') }} {{ $property->cim_hazszam }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -56,38 +57,37 @@
                                 <tr>
                                     <td class="font-bold">{{ __('Total Area') }}:</td>
                                     <td>{{ $property->total_area }}
-                                        {{ $property->osszterulet_addons ?? '' }}
+                                        {{ __($property->osszterulet_addons ?? '') }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Currently Available') }}:</td>
                                     <td>{{ $property->jelenleg_kiado }}
-                                        {{ $property->jelenleg_kiado_addons ?? '' }}
+                                        {{ __($property->jelenleg_kiado_addons ?? '') }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Min. Available') }}:</td>
                                     <td>{{ $property->min_kiado }}
-                                        {{ $property->min_kiado_addons ?? '' }}
+                                        {{ __($property->min_kiado_addons ?? '') }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Rent') }}:</td>
                                     <td>{{ $property->min_berleti_dij }}{{ $property->max_berleti_dij && $property->max_berleti_dij !== $property->min_berleti_dij ? ' - ' . $property->max_berleti_dij : '' }}
-                                        {{ $property->min_berleti_dij_addons ?? '' }}
+                                        {{ __($property->min_berleti_dij_addons ?? '') }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Operating Fee') }}:</td>
                                     <td>{{ $property->uzemeletetesi_dij }}
-                                        {{ $property->uzemeletetesi_dij_addons ?? '' }}</td>
-                                    </td>
+                                        {{ __($property->uzemeletetesi_dij_addons ?? '') }}</td>
                                 </tr>
                                 @if ($property->raktar_terulet)
                                     <tr>
                                         <td class="font-bold">{{ __('Storage Area') }}:</td>
                                         <td>{{ number_format((int) $property->raktar_terulet) }}
-                                            {{ $property->raktar_terulet_addons ?? '' }}
+                                            {{ __($property->raktar_terulet_addons ?? '') }}
                                         </td>
                                     </tr>
                                 @endif
@@ -95,7 +95,7 @@
                                     <tr>
                                         <td class="font-bold">{{ __('Storage Rent') }}:</td>
                                         <td>{{ $property->raktar_berleti_dij }}
-                                            {{ $property->raktar_berleti_dij_addons ?? '' }}
+                                            {{ __($property->raktar_berleti_dij_addons ?? '') }}
                                         </td>
                                     </tr>
                                 @endif
@@ -106,14 +106,14 @@
                                 <tr>
                                     <td class="font-bold">{{ __('Parking Fee') }}:</td>
                                     <td>{{ $property->min_parkolas_dija }}{{ $property->max_parkolas_dija ? ' - ' . $property->max_parkolas_dija : '' }}
-                                        {{ $property->min_parkolas_dija_addons ?? '' }}
+                                        {{ __($property->min_parkolas_dija_addons ?? '') }}
                                     </td>
                                 </tr>
                                 @if ($property->kozos_teruleti_arany)
                                     <tr>
                                         <td class="font-bold">{{ __('Common Area Ratio') }}:</td>
                                         <td>{{ $property->kozos_teruleti_arany }}
-                                            {{ $property->kozos_teruleti_arany_addons ?? '' }}
+                                            {{ __($property->kozos_teruleti_arany_addons ?? '') }}
                                         </td>
                                     </tr>
                                 @endif
@@ -122,7 +122,7 @@
                                         <td class="font-bold">{{ __('Min. Rental Period') }}:</td>
                                         <td>
                                             {{ $property->min_berleti_idoszak }}
-                                            {{ $property->min_berleti_idoszak_addons ?? '' }}
+                                            {{ __($property->min_berleti_idoszak_addons ?? '') }}
                                         </td>
                                     </tr>
                                 @endif
