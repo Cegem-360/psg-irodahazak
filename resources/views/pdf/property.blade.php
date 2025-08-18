@@ -94,25 +94,25 @@
                 <!-- Right Column - Details -->
                 <div class="w-1/2 p-6 bg-gray-50 text-sm leading-snug">
                     @if ($property->construction_year)
-                        <x-pdf.property-column :first_span="__('Construction Year') . ':'" :second_span="$property->construction_year" />
+                        <x-pdf.property-column :first_span="__('Construction Year')" :second_span="$property->construction_year" />
                     @endif
 
                     @if ($property->total_area)
-                        <x-pdf.property-column :first_span="__('Total Area') . ':'" :second_span="$property->total_area . ' m²'" />
+                        <x-pdf.property-column :first_span="__('Total Area')" :second_span="$property->total_area . ' m²'" />
                     @endif
 
                     @if ($property->jelenleg_kiado)
-                        <x-pdf.property-column :first_span="__('Currently Available') . ':'" :second_span="$property->jelenleg_kiado . __($property->jelenleg_kiado_addons ?? '')" />
+                        <x-pdf.property-column :first_span="__('Currently Available')" :second_span="$property->jelenleg_kiado . __($property->jelenleg_kiado_addons ?? '')" />
                     @endif
 
                     @if ($property->min_kiado)
-                        <x-pdf.property-column :first_span="__('Min. Available') . ':'" :second_span="number_format((int) $property->min_kiado, 0, ',', ' ') .
+                        <x-pdf.property-column :first_span="__('Min. Available')" :second_span="number_format((int) $property->min_kiado, 0, ',', ' ') .
                             ' ' .
                             __($property->min_kiado_addons ?? '')" />
                     @endif
 
                     @if ($property->isSale())
-                        <x-pdf.property-column :first_span="__('Sale Price') . ':'" :second_span="number_format((int) $property->min_berleti_dij, 0, ',', ' ') .
+                        <x-pdf.property-column :first_span="__('Sale Price')" :second_span="number_format((int) $property->min_berleti_dij, 0, ',', ' ') .
                             ' ' .
                             __($property->min_berleti_dij_addons ?? '')" />
                     @endif
@@ -131,23 +131,23 @@
                         </div>
                     @endif
                     @if ($property->uzemeletetesi_dij)
-                        <x-pdf.property-column :first_span="__('Operating Fee') . ':'" :second_span="number_format((int) $property->uzemeletetesi_dij, 0, ',', ' ') .
+                        <x-pdf.property-column :first_span="__('Operating Fee')" :second_span="number_format((int) $property->uzemeletetesi_dij, 0, ',', ' ') .
                             ' ' .
                             __($property->uzemeletetesi_dij_addons ?? '')" />
                     @endif
 
                     @if ($property->raktar_terulet)
-                        <x-pdf.property-column :first_span="__('Storage Area') . ':'" :second_span="number_format((int) $property->raktar_terulet, 0, ',', ' ') .
+                        <x-pdf.property-column :first_span="__('Storage Area')" :second_span="number_format((int) $property->raktar_terulet, 0, ',', ' ') .
                             ' ' .
                             __($property->raktar_terulet_addons ?? '')" />
                     @endif
                     @if ($property->raktar_berleti_dij)
-                        <x-pdf.property-column :first_span="__('Storage Rent') . ':'" :second_span="number_format((int) $property->raktar_berleti_dij, 0, ',', ' ') .
+                        <x-pdf.property-column :first_span="__('Storage Rent')" :second_span="number_format((int) $property->raktar_berleti_dij, 0, ',', ' ') .
                             ' ' .
                             __($property->raktar_berleti_dij_addons ?? '')" />
                     @endif
                     @if ($property->parkolas)
-                        <x-pdf.property-column :first_span="__('Parking') . ':'" :second_span="__($property->parkolas)" />
+                        <x-pdf.property-column :first_span="__('Parking')" :second_span="__($property->parkolas)" />
                     @endif
                     @if ($property->min_parkolas_dija)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
@@ -164,17 +164,17 @@
                     @endif
 
                     @if ($property->kozos_teruleti_arany)
-                        <x-pdf.property-column :first_span="__('Common Area Ratio') . ':'" :second_span="$property->kozos_teruleti_arany . '%'" />
+                        <x-pdf.property-column :first_span="__('Common Area Ratio')" :second_span="$property->kozos_teruleti_arany . '%'" />
                     @endif
 
                     @if ($property->min_berleti_idoszak)
-                        <x-pdf.property-column :first_span="__('Min. Rental Period') . ':'" :second_span="$property->min_berleti_idoszak .
+                        <x-pdf.property-column :first_span="__('Min. Rental Period')" :second_span="$property->min_berleti_idoszak .
                             ' ' .
                             __($property->min_berleti_idoszak_addons ?? '')" />
                     @endif
 
                     @if ($property->kodszam)
-                        <x-pdf.property-column :first_span="__('Code') . ':'" :second_span="$property->kodszam" />
+                        <x-pdf.property-column :first_span="__('Code')" :second_span="$property->kodszam" />
                     @endif
 
                     @if ($property->vat)
