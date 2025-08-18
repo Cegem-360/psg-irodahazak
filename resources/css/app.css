@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 @import '../../vendor/awcodes/filament-tiptap-editor/resources/css/plugin.css';
-
+@import "flowbite/src/themes/default";
+@source "../../node_modules/flowbite";
 
 /* @tailwind variants; */
 @font-face {

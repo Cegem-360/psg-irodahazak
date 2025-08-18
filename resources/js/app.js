@@ -11,6 +11,11 @@ import Swiper from "swiper/bundle";
 import "swiper/css";
 import "swiper/css/bundle";
 import "swiper/css/navigation";
+import "flowbite";
+import { initFlowbite } from "flowbite";
+document.addEventListener("livewire:navigated", () => {
+    initFlowbite();
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     const galleryCarouselSwiperThumbs = new Swiper(
