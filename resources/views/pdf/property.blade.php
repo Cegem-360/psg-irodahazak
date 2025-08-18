@@ -102,7 +102,7 @@
                     @endif
 
                     @if ($property->jelenleg_kiado)
-                        <x-pdf.property-column :first_span="__('Currently Available')" :second_span="$property->jelenleg_kiado . __($property->jelenleg_kiado_addons ?? '')" />
+                        <x-pdf.property-column :first_span="__('Currently Available')" :second_span="$property->jelenleg_kiado . ' m²'" />
                     @endif
 
                     @if ($property->min_kiado)
