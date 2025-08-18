@@ -190,12 +190,13 @@ final class ListRentOffices extends Component
             }
         }
 
-        // Apply area range filter
-        if ($this->areaMin || $this->areaMax) {
-            $query->whereBetween('jelenleg_kiado', [
-                $this->areaMin ? (int) $this->areaMin : 0,
-                $this->areaMax ? (int) $this->areaMax : 3000,
-            ]);
+        if ($this->areaMin >= 0 || $this->areaMax) {
+            // Requested interval
+            $amin = $this->areaMin ? (int) $this->areaMin : 1;
+            $amax = $this->areaMax ? (int) $this->areaMax : 3000;
+
+            $query->where('min_kiado', '<=', $amax)
+                ->where('jelenleg_kiado', '>=', $amin);
         }
 
         // Apply price range filter
