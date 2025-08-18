@@ -158,20 +158,20 @@ final class Property extends Model
 
     public function getAddressFormated(): string
     {
-        $address = mb_trim(sprintf('%s %s, %s %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, $this->cim_utca_addons, $this->cim_hazszam));
+        $address = mb_trim(sprintf('%s %s, %s %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, __($this->cim_utca_addons), $this->cim_hazszam));
         $rent = __('Rental fee');
         $address .=
          '<br><strong>'.$rent.':</strong> '.
           $this->min_berleti_dij
-          .($this->max_berleti_dij && $this->max_berleti_dij !== $this->min_berleti_dij ? ' - '.$this->max_berleti_dij.' '.$this->min_berleti_dij_addons : ' '.$this->min_berleti_dij_addons)
-          .'<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' '.$this->uzemeletetesi_dij_addons;
+          .($this->max_berleti_dij && $this->max_berleti_dij !== $this->min_berleti_dij ? ' - '.$this->max_berleti_dij.' '.__($this->min_berleti_dij_addons) : ' '.__($this->min_berleti_dij_addons))
+          .'<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' '.__($this->uzemeletetesi_dij_addons);
 
         return $address ?: null;
     }
 
     public function getAddressFormatedForSale(): string
     {
-        return sprintf('%s %s,<br><strong>', $this->cim_irsz, $this->cim_varos).__('Total Area').sprintf(':</strong> %s m²<br><strong>', $this->total_area).__('Price').sprintf(':</strong> %s %s', $this->min_berleti_dij, $this->min_berleti_dij_addons);
+        return sprintf('%s %s,<br><strong>', $this->cim_irsz, $this->cim_varos).__('Total Area').sprintf(':</strong> %s m²<br><strong>', $this->total_area).__('Price').sprintf(':</strong> %s %s', $this->min_berleti_dij, __($this->min_berleti_dij_addons));
     }
 
     /**
