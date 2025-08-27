@@ -161,8 +161,13 @@ final class PropertyResource extends Resource
                                     'HUF/m2/hó' => 'HUF/m2/hó',
                                     'HUF/fő/hó' => 'HUF/fő/hó',
                                     'EUR/fő/hó' => 'EUR/fő/hó',
-                                    'mEUR' => 'mEUR',
+                                    'EUR/m2' => 'EUR/m2',
+                                    'HUF/m2' => 'HUF/m2',
+                                    'EUR' => 'EUR',
+                                    'HUF' => 'HUF',
+                                    'm.EUR' => 'm.EUR',
                                     'm. EUR' => 'm. EUR',
+                                    'mrd HUF' => 'mrd HUF',
                                 ]),
                             TextInput::make('max_berleti_dij')
                                 ->label('Max. bérleti díj')
