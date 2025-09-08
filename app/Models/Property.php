@@ -171,7 +171,7 @@ final class Property extends Model
 
     public function getAddressFormatedForSale(): string
     {
-        return sprintf('%s %s, %s <br><strong>', $this->cim_irsz, $this->cim_varos, $this->cim_utca ?? '').__('Total Area').sprintf(':</strong> %s m²<br><strong>', $this->total_area).__('Price').sprintf(':</strong> %s %s', $this->min_berleti_dij, __($this->min_berleti_dij_addons));
+        return sprintf('%s %s, %s %s <br><strong>', $this->cim_irsz, $this->cim_varos, $this->cim_utca ?? '', $this->cim_utca_addons ?? '').__('Total Area').sprintf(':</strong> %s m²<br><strong>', $this->total_area).__('Price').sprintf(':</strong> %s %s', $this->min_berleti_dij, __($this->min_berleti_dij_addons));
     }
 
     /**
