@@ -224,31 +224,37 @@
                         @php
                             $collator = class_exists(\Collator::class) ? new \Collator('hu_HU') : null;
                             if ($collator) {
-                                $collator->setStrength(\Collator::SECONDARY); // consider accents, ignore case
+                                $collator->setStrength(\Collator::SECONDARY); // accents sensitive, case-insensitive
                             }
+
                             $huCompare = function ($a, $b) use ($collator) {
+                                $an = (string) ($a->name ?? '');
+                                $bn = (string) ($b->name ?? '');
                                 if ($collator) {
-                                    return $collator->compare($a->name, $b->name);
+                                    return $collator->compare($an, $bn);
                                 }
-                                // Fallback: strip accents then compare case-insensitively
                                 return strcasecmp(
-                                    \Illuminate\Support\Str::ascii($a->name),
-                                    \Illuminate\Support\Str::ascii($b->name),
+                                    \Illuminate\Support\Str::ascii($an),
+                                    \Illuminate\Support\Str::ascii($bn),
                                 );
                             };
+
+                            $tags = $property->tags ?? collect();
+                            $services = $property->services ?? collect();
+
+                            $items = $tags
+                                ->concat($services)
+                                ->filter(fn($i) => filled($i->name ?? null))
+                                ->unique(
+                                    fn($i) => \Illuminate\Support\Str::ascii(\Illuminate\Support\Str::lower($i->name)),
+                                )
+                                ->sort($huCompare)
+                                ->values();
                         @endphp
 
-                        @if ($property->tags->count() > 0)
-                            @foreach ($property->tags->sort($huCompare) as $item)
-                                <li class="mb-1">{{ $item->name }}</li>
-                            @endforeach
-                        @endif
-
-                        @if ($property->services->count() > 0)
-                            @foreach ($property->services->sort($huCompare) as $item)
-                                <li class="mb-1">{{ $item->name }}</li>
-                            @endforeach
-                        @endif
+                        @foreach ($items as $item)
+                            <li class="mb-1">{{ $item->name }}</li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
