@@ -112,9 +112,7 @@
                     @endif
 
                     @if ($property->isSale())
-                        <x-pdf.property-column :first_span="__('Sale Price')" :second_span="number_format((int) $property->min_berleti_dij, 0, ',', ' ') .
-                            ' ' .
-                            __($property->min_berleti_dij_addons ?? '')" />
+                        <x-pdf.property-column :first_span="__('Sale Price')" :second_span="$property->min_berleti_dij . ' ' . __($property->min_berleti_dij_addons ?? '')" />
                     @endif
 
                     @if ($property->isRent())
@@ -122,9 +120,9 @@
                             <span class="font-bold text-gray-600">{{ __('Rent') }}:</span>
                             <span class="font-medium text-gray-900">
                                 @if ($property->min_berleti_dij && $property->max_berleti_dij)
-                                    {{ number_format((int) $property->min_berleti_dij, 0, ',', ' ') . ' - ' . number_format((int) $property->max_berleti_dij, 0, ',', ' ') }}
+                                    {{ $property->min_berleti_dij . ' - ' . $property->max_berleti_dij }}
                                 @else
-                                    {{ number_format((int) $property->min_berleti_dij, 0, ',', ' ') }}
+                                    {{ $property->min_berleti_dij }}
                                 @endif
                                 {{ __($property->min_berleti_dij_addons ?? '') }}
                             </span>
@@ -224,12 +222,12 @@
                 <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">
                     <ul class="list-disc list-inside mb-4 ">
                         @if ($property->tags->count() > 0)
-                            @foreach ($property->tags as $item)
+                            @foreach ($property->tags->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE) as $item)
                                 <li class="mb-1">{{ $item->name }}</li>
                             @endforeach
                         @endif
                         @if ($property->services->count() > 0)
-                            @foreach ($property->services as $item)
+                            @foreach ($property->services->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE) as $item)
                                 <li class="mb-1">{{ $item->name }}</li>
                             @endforeach
                         @endif
