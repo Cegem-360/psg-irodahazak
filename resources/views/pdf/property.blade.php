@@ -221,13 +221,31 @@
                 <h3 class="text-base font-bold text-gray-800 mb-3">Műszaki paraméterek és szolgáltatások</h3>
                 <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">
                     <ul class="list-disc list-inside mb-4 ">
+                        @php
+                            $collator = class_exists(\Collator::class) ? new \Collator('hu_HU') : null;
+                            if ($collator) {
+                                $collator->setStrength(\Collator::SECONDARY); // consider accents, ignore case
+                            }
+                            $huCompare = function ($a, $b) use ($collator) {
+                                if ($collator) {
+                                    return $collator->compare($a->name, $b->name);
+                                }
+                                // Fallback: strip accents then compare case-insensitively
+                                return strcasecmp(
+                                    \Illuminate\Support\Str::ascii($a->name),
+                                    \Illuminate\Support\Str::ascii($b->name),
+                                );
+                            };
+                        @endphp
+
                         @if ($property->tags->count() > 0)
-                            @foreach ($property->tags->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE) as $item)
+                            @foreach ($property->tags->sort($huCompare) as $item)
                                 <li class="mb-1">{{ $item->name }}</li>
                             @endforeach
                         @endif
+
                         @if ($property->services->count() > 0)
-                            @foreach ($property->services->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE) as $item)
+                            @foreach ($property->services->sort($huCompare) as $item)
                                 <li class="mb-1">{{ $item->name }}</li>
                             @endforeach
                         @endif
