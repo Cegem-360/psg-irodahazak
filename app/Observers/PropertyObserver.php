@@ -22,7 +22,7 @@ final class PropertyObserver
                 Storage::disk('public')->delete($photo);
             }
 
-            Log::info('Deleted property photo: ' . $photo);
+            Log::info('Deleted property photo: '.$photo);
         }
     }
 }

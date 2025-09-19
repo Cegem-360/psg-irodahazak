@@ -216,42 +216,45 @@
                 </div>
             </div>
         @endif
-        @if ($property->tags || $property->services)
+        @php
+            $collator = class_exists(\Collator::class) ? new \Collator('hu_HU') : null;
+            if ($collator) {
+                $collator->setStrength(\Collator::SECONDARY);
+            }
+
+            $huCompare = function ($a, $b) use ($collator) {
+                $an = (string) ($a->name ?? '');
+                $bn = (string) ($b->name ?? '');
+                if ($collator) {
+                    return $collator->compare($an, $bn);
+                }
+                return strcasecmp(\Illuminate\Support\Str::ascii($an), \Illuminate\Support\Str::ascii($bn));
+            };
+
+            $normalize = function ($i) {
+                if (is_string($i)) {
+                    return (object) ['name' => $i];
+                }
+                if (is_array($i)) {
+                    return isset($i['name']) ? (object) ['name' => $i['name']] : null;
+                }
+                return $i; // assume object with ->name
+            };
+
+            $items = collect($property->tags ?? [])
+                ->merge(collect($property->services ?? []))
+                ->map($normalize)
+                ->filter(fn($i) => is_object($i) && filled($i->name ?? null))
+                ->unique(fn($i) => \Illuminate\Support\Str::ascii(\Illuminate\Support\Str::lower($i->name)))
+                ->sort($huCompare)
+                ->values();
+        @endphp
+
+        @if ($items->isNotEmpty())
             <div class="mt-6 px-6 py-4 bg-gray-50" style="page-break-inside: auto;">
                 <h3 class="text-base font-bold text-gray-800 mb-3">Műszaki paraméterek és szolgáltatások</h3>
                 <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">
-                    <ul class="list-disc list-inside mb-4 ">
-                        @php
-                            $collator = class_exists(\Collator::class) ? new \Collator('hu_HU') : null;
-                            if ($collator) {
-                                $collator->setStrength(\Collator::SECONDARY); // accents sensitive, case-insensitive
-                            }
-
-                            $huCompare = function ($a, $b) use ($collator) {
-                                $an = (string) ($a->name ?? '');
-                                $bn = (string) ($b->name ?? '');
-                                if ($collator) {
-                                    return $collator->compare($an, $bn);
-                                }
-                                return strcasecmp(
-                                    \Illuminate\Support\Str::ascii($an),
-                                    \Illuminate\Support\Str::ascii($bn),
-                                );
-                            };
-
-                            $tags = $property->tags ?? collect();
-                            $services = $property->services ?? collect();
-
-                            $items = $tags
-                                ->concat($services)
-                                ->filter(fn($i) => filled($i->name ?? null))
-                                ->unique(
-                                    fn($i) => \Illuminate\Support\Str::ascii(\Illuminate\Support\Str::lower($i->name)),
-                                )
-                                ->sort($huCompare)
-                                ->values();
-                        @endphp
-
+                    <ul class="list-disc list-inside mb-4">
                         @foreach ($items as $item)
                             <li class="mb-1">{{ $item->name }}</li>
                         @endforeach
@@ -259,8 +262,6 @@
                 </div>
             </div>
         @endif
-
-        </div>
 
     </body>
 

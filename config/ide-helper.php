@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use Filament\Support\Concerns\Macroable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Session\Store;
-use Filament\Support\Concerns\Macroable;
 
 return [
 
@@ -187,7 +187,7 @@ return [
     */
 
     'extra' => [
-        'Eloquent' => [Builder::class, \Illuminate\Database\Query\Builder::class],
+        'Eloquent' => [Builder::class, Illuminate\Database\Query\Builder::class],
         'Session' => [Store::class],
     ],
 

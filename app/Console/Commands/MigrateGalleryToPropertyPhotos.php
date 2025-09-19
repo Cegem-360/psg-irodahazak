@@ -62,17 +62,17 @@ final class MigrateGalleryToPropertyPhotos extends Command
             foreach ($galleryImages as $galleryImage) {
                 // Get the base path without size and extension
                 $pathWithoutSizeAndExt = $galleryImage->path_without_size_and_ext;
-                
+
                 if ($pathWithoutSizeAndExt) {
                     // Find the best available image variant for this base path in the gallery directory
                     $galleryDirectoryPath = "property/{$galleryImage->target_table_id}/gallery/";
                     $baseName = basename($pathWithoutSizeAndExt);
-                    
+
                     // Look for the best image variant (largest available size)
                     $bestImage = $this->findBestImageVariant($galleryDirectoryPath, $baseName);
-                    
-                    if ($bestImage && $this->fileExists($galleryDirectoryPath . $bestImage)) {
-                        $photoPaths[] = $galleryDirectoryPath . $bestImage;
+
+                    if ($bestImage && $this->fileExists($galleryDirectoryPath.$bestImage)) {
+                        $photoPaths[] = $galleryDirectoryPath.$bestImage;
                         $totalPhotos++;
                     }
                 } else {
@@ -155,12 +155,12 @@ final class MigrateGalleryToPropertyPhotos extends Command
      */
     private function findBestImageVariant(string $directoryPath, string $baseName): ?string
     {
-        if (!Storage::disk('public')->exists($directoryPath)) {
+        if (! Storage::disk('public')->exists($directoryPath)) {
             return null;
         }
 
         $files = Storage::disk('public')->files($directoryPath);
-        
+
         // Filter only image files that match the base name
         $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'tiff'];
         $sizePreferences = ['1280x800', '800x600']; // Ordered by preference (largest first)
@@ -169,25 +169,25 @@ final class MigrateGalleryToPropertyPhotos extends Command
 
         foreach ($files as $file) {
             $fileName = basename($file);
-            $extension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-            
+            $extension = mb_strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
             if (in_array($extension, $imageExtensions)) {
                 // Check if this file starts with our base name
                 $fileBaseName = pathinfo($fileName, PATHINFO_FILENAME);
-                
+
                 // Remove size patterns like _800x600 from filename for comparison
                 $cleanFileBaseName = preg_replace('/_\d+x\d+$/', '', $fileBaseName);
                 $cleanBaseName = preg_replace('/_\d+x\d+$/', '', pathinfo($baseName, PATHINFO_FILENAME));
-                
+
                 if ($cleanFileBaseName === $cleanBaseName) {
                     // Check if it's the original file (no size in name)
-                    if (!preg_match('/_\d+x\d+\./', $fileName)) {
+                    if (! preg_match('/_\d+x\d+\./', $fileName)) {
                         $originalFile = $fileName;
                     }
-                    
+
                     // Check for specific sizes
                     foreach ($sizePreferences as $size) {
-                        if (strpos($fileName, "_$size.") !== false) {
+                        if (mb_strpos($fileName, "_$size.") !== false) {
                             $matchingFiles[$size] = $fileName;
                         }
                     }

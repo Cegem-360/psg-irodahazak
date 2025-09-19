@@ -44,7 +44,7 @@ final class UpdatePropertyCategories extends Command
                             $tmpCategories[] = $page->title;
                         }
                     } else {
-                        $this->warn('Kategória nem található: ' . $page->title);
+                        $this->warn('Kategória nem található: '.$page->title);
                     }
 
                     $property->update(['categories' => $tmpCategories]);
