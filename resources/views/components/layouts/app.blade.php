@@ -14,11 +14,21 @@
             <title>{{ __('page.title.default') }}</title>
         @endisset
         <meta name="author" content="{{ $metaAuthor ?? 'Cegem360 Kft.' }}">
-        <meta name="description"
-            content="{{ $metaDescription ?? 'Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ' }}">
 
-        <meta name="keywords"
-            content="{{ $metaKeywords ?? 'kiadó irodaházak,bérbeadó irodák,azonnali irodák,kiadó iroda,eladó irodaházak,belvárosi irodák,loft iroda,kiadó iroda Budán,kiadó iroda Pesten,A-kategóriás irodaházak,zöld irodák,irodaházak listája,serviced offices,Bérlő képviselet,' }}">
+        @isset($metaDescription)
+            <meta name="description" content="{{ $metaDescription }}">
+        @else
+            <meta name="description"
+                content="Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ">
+        @endisset
+
+        @isset($metaKeywords)
+            <meta name="keywords" content="{{ $metaKeywords }}">
+        @else
+            <meta name="keywords"
+                content="kiadó irodaházak,bérbeadó irodák,azonnali irodák,kiadó iroda,eladó irodaházak,belvárosi irodák,loft iroda,kiadó iroda Budán,kiadó iroda Pesten,A-kategóriás irodaházak,zöld irodák,irodaházak listája,Bérlő képviselet,">
+        @endisset
+
         <meta property="og:title"
             content="{{ $metaOgTitle ?? 'PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet! | ' }}">
         <meta property="og:type" content="{{ $metaOgType ?? 'website' }}">

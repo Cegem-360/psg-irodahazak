@@ -1,5 +1,28 @@
 @use('App\Models\Translate')
 <x-layouts.app>
+    <x-slot name="title">
+        @if (app()->getLocale() === 'en' && $property->meta_title_en)
+            {{ $property->meta_title_en }}
+        @elseif ($property->meta_title)
+            {{ $property->meta_title }}
+        @endif
+    </x-slot>
+
+    <x-slot name="metaDescription">
+        @if (app()->getLocale() === 'en' && $property->meta_description_en)
+            {{ $property->meta_description_en }}
+        @elseif ($property->meta_description)
+            {{ $property->meta_description }}
+        @endif
+    </x-slot>
+
+    <x-slot name="metaKeywords">
+        @if (app()->getLocale() === 'en' && $property->meta_keywords_en)
+            {{ $property->meta_keywords_en }}
+        @elseif ($property->meta_keywords)
+            {{ $property->meta_keywords }}
+        @endif
+    </x-slot>
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
