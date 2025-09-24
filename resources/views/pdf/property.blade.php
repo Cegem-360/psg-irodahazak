@@ -209,10 +209,10 @@
         @endif
 
         <!-- Description -->
-        @if ($property->content)
+        @if (app()->getLocale() === 'en' ? $property->content_en : $property->content)
             <div class="mt-6 px-6 py-4 bg-gray-50">
                 <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">
-                    {!! $property->content !!}
+                    {!! app()->getLocale() === 'en' ? $property->content_en : $property->content !!}
                 </div>
             </div>
         @endif
