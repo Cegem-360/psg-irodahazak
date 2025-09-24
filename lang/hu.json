@@ -251,5 +251,9 @@
     "Previous": "Előző",
     "Next": "Következő",
     "Min. Rental fee": "Minimum bérleti díj",
-    "underground garage": "teremgarázs"
+    "underground garage": "teremgarázs",
+    "felszíni parkoló": "felszíni parkoló",
+    "teremgarázs": "teremgarázs",
+    "felszíni parkoló és teremgarázs": "felszíni parkoló és teremgarázs",
+    "Technical specifications and services": "Műszaki paraméterek és szolgáltatások"
 }

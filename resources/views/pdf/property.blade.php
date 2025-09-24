@@ -252,7 +252,8 @@
 
         @if ($items->isNotEmpty())
             <div class="mt-6 px-6 py-4 bg-gray-50" style="page-break-inside: auto;">
-                <h3 class="text-base font-bold text-gray-800 mb-3">Műszaki paraméterek és szolgáltatások</h3>
+                <h3 class="text-base font-bold text-gray-800 mb-3">{{ __('Technical specifications and services') }}
+                </h3>
                 <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">
                     <ul class="list-disc list-inside mb-4">
                         @foreach ($items as $item)
