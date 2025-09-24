@@ -44,7 +44,9 @@ final class FavoritesSendModal extends Component
             return [
                 'title' => $property->title,
                 'url' => URL::temporarySignedRoute(
-                    $property->isRent() ? 'properties.show' : 'properties.show-for-sale',
+                    app()->getLocale() === 'en'
+                        ? ($property->isRent() ? 'en.properties.show' : 'en.properties.show-for-sale')
+                        : ($property->isRent() ? 'properties.show' : 'properties.show-for-sale'),
                     now()->addDays(12),
                     ['property' => $property->slug]),
 
