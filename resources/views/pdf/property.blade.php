@@ -258,7 +258,6 @@
                 <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">
                     <ul class="list-disc list-inside mb-4">
                         @foreach ($items as $item)
-                            {{ $item->name }}</li>
                             @if (app()->getLocale() === 'en')
                                 <li class="mb-1">
                                     {{ Translate::whereName($item->name)->first()?->translated ?? $item->name }}</li>
