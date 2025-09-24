@@ -58,7 +58,7 @@ Route::get('/hirek', [NewsController::class, 'index'])->name('news.index');
 Route::get('/hirek/{slug}', [NewsController::class, 'show'])->name('news.show');
 
 // English routes (different URLs, same functionality)
-Route::group(['as' => 'en.'], function (): void {
+Route::group(['middleware' => ['SetLocale'], 'as' => 'en.'], function (): void {
     Route::view('/home', 'index')->name('home');
     Route::view('/data-sheet', 'index')->name('adatlap-oldal');
     Route::view('/offices-for-rent', 'index')->name('kiado-irodak');
