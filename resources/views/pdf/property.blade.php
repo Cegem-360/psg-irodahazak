@@ -1,6 +1,7 @@
 @use('Illuminate\Support\Facades\Storage')
 @use('App\Models\Tag')
 @use('App\Models\Service')
+@use('App\Models\Translate')
 <!DOCTYPE html>
 <html lang="hu">
 
@@ -257,7 +258,13 @@
                 <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">
                     <ul class="list-disc list-inside mb-4">
                         @foreach ($items as $item)
-                            <li class="mb-1">{{ $item->name }}</li>
+                            {{ $item->name }}</li>
+                            @if (app()->getLocale() === 'en')
+                                <li class="mb-1">
+                                    {{ Translate::whereName($item->name)->first()?->translated ?? $item->name }}</li>
+                            @else
+                                <li class="mb-1">{{ $item->name }}</li>
+                            @endif
                         @endforeach
                     </ul>
                 </div>
