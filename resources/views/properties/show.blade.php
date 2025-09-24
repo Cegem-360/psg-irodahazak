@@ -56,7 +56,7 @@
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Parking') }}:</td>
-                                    <td>{{ $property->parkolas }}</td>
+                                    <td>{{ __($property->parkolas) }}</td>
                                 </tr>
                                 @if ($property->kodszam)
                                     <tr>
@@ -253,7 +253,6 @@
                         <div class="space-y-4">
                             <h2 class="text-3xl">{{ __('Features') }}</h2>
                             <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
-
                                 @if ($property->services || $property->tags)
                                     @php
                                         $allItems = collect($property->services)
@@ -281,7 +280,6 @@
                                 @endif
                             </ul>
                         </div>
-
                     </div>
                 </div>
             @endif
