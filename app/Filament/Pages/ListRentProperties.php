@@ -14,6 +14,8 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\URL;
+use Session;
 
 final class ListRentProperties extends Page implements HasTable
 {
@@ -82,8 +84,8 @@ final class ListRentProperties extends Page implements HasTable
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')
-                    ->url(fn (Property $record) => \Illuminate\Support\Facades\URL::temporarySignedRoute(
-                        'property.pdf',
+                    ->url(fn (Property $record) => URL::temporarySignedRoute(
+                        Session::get('locale') === 'en' ? 'en.property.pdf' : 'property.pdf',
                         now()->addDays(21),
                         ['property' => $record->id]
                     ))

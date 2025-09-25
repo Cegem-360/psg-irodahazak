@@ -8,7 +8,7 @@ use App\Filament\Resources\PropertyResource;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 
 final class EditProperty extends EditRecord
@@ -23,7 +23,7 @@ final class EditProperty extends EditRecord
                 ->icon('heroicon-o-document-arrow-down')
                 ->color('success')
                 ->url(fn () => URL::temporarySignedRoute(
-                    App::getLocale() === 'en' ? 'en.property.pdf' : 'property.pdf',
+                    Session::get('locale') === 'en' ? 'en.property.pdf' : 'property.pdf',
                     now()->addDays(21),
                     ['property' => $this->record->id]
                 ))

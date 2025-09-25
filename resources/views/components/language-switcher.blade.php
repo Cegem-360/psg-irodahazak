@@ -25,10 +25,10 @@
             @php
                 $currentLocale = app()->getLocale();
             @endphp
-            <a href="{{ route('language.switch', 'hu') }}" title="HUN"
+            <a href="{{ route('language.switch', ['locale' => 'hu']) }}" title="HUN"
                 class="{{ $currentLocale === 'hu' ? 'active' : '' }} hover:underline">HUN</a>
             <span> | </span>
-            <a href="{{ route('language.switch', 'en') }}" title="ENG"
+            <a href="{{ route('language.switch', ['locale' => 'en']) }}" title="ENG"
                 class="{{ $currentLocale === 'en' ? 'active' : '' }} hover:underline">ENG</a>
         </div>
     </div>

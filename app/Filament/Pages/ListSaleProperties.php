@@ -14,6 +14,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 
 final class ListSaleProperties extends Page implements HasTable
@@ -80,7 +81,7 @@ final class ListSaleProperties extends Page implements HasTable
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')
                     ->url(fn (Property $record) => URL::temporarySignedRoute(
-                        'property.pdf',
+                        Session::get('locale') === 'en' ? 'en.property.pdf' : 'property.pdf',
                         now()->addDays(21),
                         ['property' => $record->id]
                     ))
