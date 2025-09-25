@@ -105,6 +105,11 @@ Route::get('/property-pdf/{property}', function (Property $property): Response {
 
     return $pdfService->generatePdfForView($property);
 })->name('property.pdf')->middleware(['signed']);
+Route::get('en/property-pdf/{property}', function (Property $property): Response {
+    $pdfService = new PropertyPdfService();
+
+    return $pdfService->generatePdfForView($property);
+})->name('en.property.pdf')->middleware(['signed']);
 
 // PDF preview route (HTML only, no PDF generation)
 Route::get('/property-preview/{property}', function (Property $property) {

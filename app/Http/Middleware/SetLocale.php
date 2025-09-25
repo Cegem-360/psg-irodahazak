@@ -19,7 +19,11 @@ final class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Session::has('locale')) {
+        // Force English locale for specific routes
+        if ($request->routeIs('en.properties.show', 'en.properties.show-for-sale', 'en.property.pdf')) {
+            App::setLocale('en');
+            Session::put('locale', 'en');
+        } elseif (Session::has('locale')) {
             App::setLocale(Session::get('locale'));
         }
 

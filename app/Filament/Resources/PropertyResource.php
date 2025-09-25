@@ -35,6 +35,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use FilamentTiptapEditor\TiptapEditor;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -417,7 +418,7 @@ final class PropertyResource extends Resource
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')
                     ->url(fn (Property $record) => URL::temporarySignedRoute(
-                        'property.pdf',
+                        App::getLocale() === 'en' ? 'en.property.pdf' : 'property.pdf',
                         now()->addDays(21),
                         ['property' => $record->id]
                     ))
