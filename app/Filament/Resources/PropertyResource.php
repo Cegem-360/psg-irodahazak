@@ -23,6 +23,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
@@ -154,10 +155,10 @@ final class PropertyResource extends Resource
                     Grid::make()
                         ->schema([
                             TextInput::make('min_berleti_dij')
-                                ->label(fn (Property $record): string => $record->elado_v_kiado === 'elado-iroda' ? 'Eladási ár ' : 'Min. bérleti díj')
+                                ->label(fn (Get $get): string => $get('elado_v_kiado') === 'elado-iroda' ? 'Eladási ár ' : 'Min. bérleti díj')
                                 ->maxLength(255),
                             Select::make('min_berleti_dij_addons')
-                                ->label(fn (Property $record): string => $record->elado_v_kiado === 'elado-iroda' ? 'Eladási ár addons' : 'Min. bérleti díj addons')
+                                ->label(fn (Get $get): string => $get('elado_v_kiado') === 'elado-iroda' ? 'Eladási ár addons' : 'Min. bérleti díj addons')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
                                     'HUF/m2/hó' => 'HUF/m2/hó',
