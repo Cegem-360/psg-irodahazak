@@ -373,6 +373,7 @@ final class PropertyResource extends Resource
                     ->multiple()
                     ->panelLayout('grid')
                     ->visibility('public')
+                    ->disabled(fn (string $operation): bool => $operation === 'create')
                     ->directory(fn ($record): string => 'property/'.$record->id.'/gallery_images')
                     ->saveUploadedFileUsing(fn ($file, $record) => app(WatermarkService::class)->addWatermark($file, $record))
                     ->openable()
