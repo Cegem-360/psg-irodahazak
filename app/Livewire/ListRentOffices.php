@@ -165,8 +165,10 @@ final class ListRentOffices extends Component
 
         if ($this->category) {
             $category_model = Category::where('slug', 'like', $this->category)->first();
-            $this->title = $category_model->name ?? __('page.title.offices_for_rent');
-            $query->byCategory(stripslashes($category_model->name));
+            $this->title = $category_model?->name ?? __('page.title.offices_for_rent');
+            if ($category_model) {
+                $query->byCategory(stripslashes($category_model->name));
+            }
         }
 
         // Apply search filter
