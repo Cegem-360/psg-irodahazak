@@ -154,9 +154,10 @@ final class PropertyResource extends Resource
                     Grid::make()
                         ->schema([
                             TextInput::make('min_berleti_dij')
-                                ->label('Min. bérleti díj')
+                                ->label(fn (Property $record): string => $record->elado_v_kiado === 'elado-iroda' ? 'Eladási ár ' : 'Min. bérleti díj')
                                 ->maxLength(255),
                             Select::make('min_berleti_dij_addons')
+                                ->label(fn (Property $record): string => $record->elado_v_kiado === 'elado-iroda' ? 'Eladási ár addons' : 'Min. bérleti díj addons')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
                                     'HUF/m2/hó' => 'HUF/m2/hó',
@@ -166,6 +167,7 @@ final class PropertyResource extends Resource
                                     'HUF/m2' => 'HUF/m2',
                                     'EUR' => 'EUR',
                                     'HUF' => 'HUF',
+                                    'mHUF' => 'mHUF',
                                     'm.EUR' => 'm.EUR',
                                     'm. EUR' => 'm. EUR',
                                     'mrd HUF' => 'mrd HUF',
