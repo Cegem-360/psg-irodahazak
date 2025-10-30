@@ -43,7 +43,7 @@
                                 <tr>
                                     <td class="font-bold">{{ __('Address') }}:</td>
                                     <td>{{ $property->cim_irsz ?? '' }}
-                                        {{ $property->cim_varos ?? '' }},{{ $property->cim_utca ?? '' }}
+                                        {{ $property->cim_varos ?? '' }}, {{ $property->cim_utca ?? '' }}
                                         {{ __($property->cim_utca_addons ?? '') }} </td>
                                 </tr>
                                 <tr>
