@@ -107,7 +107,7 @@
                     @endif
 
                     @if ($property->min_kiado)
-                        <x-pdf.property-column :first_span="__('Min. Available')" :second_span="number_format((int) $property->min_kiado, 0, ',', ' ') .
+                        <x-pdf.property-column :first_span="__('Min. Available')" :second_span="number_format((int) $property->min_kiado, 2, ',', ' ') .
                             ' ' .
                             __($property->min_kiado_addons ?? '')" />
                     @endif
