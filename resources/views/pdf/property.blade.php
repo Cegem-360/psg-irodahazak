@@ -130,8 +130,9 @@
                         </div>
                     @endif
                     @if ($property->uzemeletetesi_dij)
-                        <x-pdf.property-column :first_span="__('Operating Fee')" :second_span="$property->uzemeletetesi_dij ??
-                            0 . ' ' . __($property->uzemeletetesi_dij_addons ?? '')" />
+                        <x-pdf.property-column :first_span="__('Operating Fee')" :second_span="number_format((float) $property->uzemeletetesi_dij, 2, ',', ' ') .
+                            ' ' .
+                            __($property->uzemeletetesi_dij_addons ?? '')" />
                     @endif
 
                     @if ($property->raktar_terulet)
