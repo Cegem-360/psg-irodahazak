@@ -174,9 +174,11 @@ final class PropertyResource extends Resource
                                     'mrd HUF' => 'mrd HUF',
                                 ]),
                             TextInput::make('max_berleti_dij')
+                                ->hidden(fn (Get $get): bool => $get('elado_v_kiado') === 'elado-iroda')
                                 ->label('Max. bérleti díj')
                                 ->maxLength(255),
                             Select::make('max_berleti_dij_addons')
+                                ->hidden(fn (Get $get): bool => $get('elado_v_kiado') === 'elado-iroda')
                                 ->label('Max. bérleti díj kiegészítések')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
