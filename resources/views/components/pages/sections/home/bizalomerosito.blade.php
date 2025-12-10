@@ -6,7 +6,7 @@
         <div class="text-5xl font-bold text-primary">
             <span class="counter" data-to="4" data-suffix=" {{ __('millió') }}">0</span>
         </div>
-        <div class="text-lg font-semibold text-gray-700">m² {{ __('iroda') }} <br>{{ __('Budapesten') }}</div>
+        <div class="text-lg font-semibold text-gray-700">m2 {{ __('iroda') }} <br>{{ __('Budapesten') }}</div>
         <div class="w-12 border-b-2 border-primary/30 mt-2"></div>
     </div>
     {{-- 2. oszlop --}}
@@ -33,7 +33,7 @@
         <div class="text-5xl font-bold text-primary">
             <span class="counter" data-to="100" data-suffix="{{ __('ezer') }} +">0</span>
         </div>
-        <div class="text-lg font-semibold text-gray-700">m² {{ __('bérbe adott') }} <br>{{ __('A-kategóriás iroda') }}
+        <div class="text-lg font-semibold text-gray-700">m2 {{ __('bérbe adott') }} <br>{{ __('A-kategóriás iroda') }}
         </div>
         <div class="w-12 border-b-2 border-primary/30 mt-2"></div>
     </div>

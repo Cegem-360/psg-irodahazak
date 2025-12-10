@@ -99,11 +99,11 @@
                     @endif
 
                     @if ($property->total_area)
-                        <x-pdf.property-column :first_span="__('Total Area')" :second_span="$property->total_area . ' m²'" />
+                        <x-pdf.property-column :first_span="__('Total Area')" :second_span="$property->total_area . ' m2'" />
                     @endif
 
                     @if ($property->jelenleg_kiado)
-                        <x-pdf.property-column :first_span="__('Currently Available')" :second_span="$property->jelenleg_kiado . ' m²'" />
+                        <x-pdf.property-column :first_span="__('Currently Available')" :second_span="$property->jelenleg_kiado . ' m2'" />
                     @endif
 
                     @if ($property->min_kiado)

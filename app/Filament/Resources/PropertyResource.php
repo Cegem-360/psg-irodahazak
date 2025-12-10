@@ -124,8 +124,8 @@ final class PropertyResource extends Resource
                         Select::make('osszterulet_addons')
                             ->label('Összterület kiegészítések')
                             ->options([
-                                'm2' => 'm²',
-                                'ft2' => 'ft²',
+                                'm2' => 'm2',
+                                'ft2' => 'ft2',
                             ])
                             ->default('m2'),
                         TextInput::make('min_berleti_idoszak')
@@ -144,8 +144,8 @@ final class PropertyResource extends Resource
                         Select::make('min_kiado_addons')
                             ->label('Min. kiadó kiegészítések')
                             ->options([
-                                'm2' => 'm²',
-                                'ft2' => 'ft²',
+                                'm2' => 'm2',
+                                'ft2' => 'ft2',
                             ])
                             ->default('m2'),
                     ]),
@@ -206,8 +206,8 @@ final class PropertyResource extends Resource
                             Select::make('raktar_terulet_addons')
                                 ->label('Raktár terület kiegészítések')
                                 ->options([
-                                    'm2' => 'm²',
-                                    'ft2' => 'ft²',
+                                    'm2' => 'm2',
+                                    'ft2' => 'ft2',
                                 ])
                                 ->default('m2'),
                             TextInput::make('raktar_berleti_dij')
@@ -252,8 +252,8 @@ final class PropertyResource extends Resource
                                 ->label('Közös területi arány kiegészítések')
                                 ->options([
                                     '%' => '%',
-                                    'm2' => 'm²',
-                                    'ft2' => 'ft²',
+                                    'm2' => 'm2',
+                                    'ft2' => 'ft2',
                                 ])->default('%'),
                         ]),
                 ]),

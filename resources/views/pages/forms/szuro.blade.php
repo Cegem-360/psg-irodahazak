@@ -265,12 +265,12 @@
                         <!-- Range szűrők -->
                         <h3 class="text-lg mb-4">{{ __('Filter by Parameters') }}</h3>
                         <div class="space-y-2">
-                            <label class="text-sm font-semibold">{{ __('Floor Area') }} (m²)</label>
+                            <label class="text-sm font-semibold">{{ __('Floor Area') }} (m2)</label>
                             <input type="text" class="terulet-slider" name="terulet_range" value="" />
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-sm font-semibold">{{ __('Rental Fee') }} (€/m²)</label>
+                            <label class="text-sm font-semibold">{{ __('Rental Fee') }} (€/m2)</label>
                             <input type="text" class="ar-slider" name="ar_range" value="" />
                         </div>
 
@@ -338,7 +338,7 @@
                     to: 3000,
                     grid: true,
                     skin: "round",
-                    postfix: "&nbsp;m²",
+                    postfix: "&nbsp;m2",
                     onFinish: function(data) {
                         document.getElementById('areaMin').value = data.from;
                         document.getElementById('areaMax').value = data.to;
@@ -353,7 +353,7 @@
                     to: 30,
                     grid: true,
                     skin: "round",
-                    postfix: "&nbsp;€/m²",
+                    postfix: "&nbsp;€/m2",
                     onFinish: function(data) {
                         document.getElementById('priceMin').value = data.from;
                         document.getElementById('priceMax').value = data.to;

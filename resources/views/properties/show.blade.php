@@ -87,7 +87,7 @@
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Currently Available') }}:</td>
-                                    <td>{{ $property->jelenleg_kiado }} m²</td>
+                                    <td>{{ $property->jelenleg_kiado }} m2</td>
                                 </tr>
                                 <tr>
                                     <td class="font-bold">{{ __('Min. Available') }}:</td>
