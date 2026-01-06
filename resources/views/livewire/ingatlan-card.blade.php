@@ -69,7 +69,7 @@
     <div class="{{ $small ? 'p-3 pl-4' : 'p-6 pl-8' }}">
         <h3 class="{{ $small ? 'text-lg' : 'text-xl' }} font-bold mb-2">
             @if (app()->getLocale() === 'en')
-                {{ Translate::whereName($title)->first()?->translated ?? $title }}
+                {{ Translate::whereName($title)->first()?->translated ?: $title }}
             @else
                 {{ $title }}
             @endif
