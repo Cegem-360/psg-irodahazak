@@ -1,3 +1,4 @@
+@use('App\Models\Translate')
 <div
     class="{{ $swiper ? 'swiper-slide' : '' }} group relative bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl hover:brightness-95 transition-all duration-300 ease-in-out border border-white/15">
     <div class="relative">
@@ -66,7 +67,13 @@
     </div>
 
     <div class="{{ $small ? 'p-3 pl-4' : 'p-6 pl-8' }}">
-        <h3 class="{{ $small ? 'text-lg' : 'text-xl' }} font-bold mb-2">{{ $title }}</h3>
+        <h3 class="{{ $small ? 'text-lg' : 'text-xl' }} font-bold mb-2">
+            @if (app()->getLocale() === 'en')
+                {{ Translate::whereName($title)->first()?->translated ?? $title }}
+            @else
+                {{ $title }}
+            @endif
+        </h3>
         <p class="{{ $small ? 'text-gray-700 text-base min-h-16' : 'text-gray-700 min-h-24' }}">
             {!! $description ?? 'Nincs' !!}
         </p>
