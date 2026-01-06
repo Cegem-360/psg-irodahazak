@@ -197,7 +197,7 @@
                         <h3 class="text-2xl font-bold mb-4">{{ __('Property Details') }}</h3>
                         <p class="mb-6 text-gray-600">{{ __('Download detailed information about this property') }}</p>
 
-                        <a href="{{ URL::signedRoute('property.pdf', ['property' => $property->id]) }}"
+                        <a href="{{ URL::signedRoute('property.pdf', ['property' => $property->id]) }}" target="_blank"
                             class="inline-flex items-center px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent/90 transition-colors">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -234,7 +234,9 @@
 
                 </div>
                 <div class="p-4">
-                    <h2 class="text-3xl">{{ __(':title Presentation', ['title' => app()->getLocale() === 'en' ? (Translate::whereName($property->title)->first()?->translated ?? $property->title) : $property->title]) }}</h2>
+                    <h2 class="text-3xl">
+                        {{ __(':title Presentation', ['title' => app()->getLocale() === 'en' ? Translate::whereName($property->title)->first()?->translated ?? $property->title : $property->title]) }}
+                    </h2>
                     <div class="space-y-4 mt-4">
                         <div class="text-justify leading-relaxed">
                             @if (app()->getLocale() === 'en' && $property->en_content)
