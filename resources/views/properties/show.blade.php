@@ -23,6 +23,12 @@
             {{ $property->meta_keywords }}
         @endif
     </x-slot>
+
+    @if ($property->status !== 'active')
+        <x-slot name="metaRobots">noindex, nofollow</x-slot>
+        <x-slot name="metaGooglebot">noindex, nofollow</x-slot>
+    @endif
+
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
