@@ -66,7 +66,7 @@
                 </div>
 
                 <!-- Cím középen, több távolsággal a logótól -->
-                <div class="text-center pt-8 px-36">
+                <div class="text-center pt-8 px-40">
                     <h1 class="text-xl font-bold mb-1 break-words">
                         @if (app()->getLocale() === 'en')
                             {{ Translate::whereName($property->title)->first()?->translated ?: $property->title }}
