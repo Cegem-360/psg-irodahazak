@@ -234,7 +234,7 @@
 
                 </div>
                 <div class="p-4">
-                    <h2 class="text-3xl">{{ __(':title Presentation', ['title' => $property->title]) }}</h2>
+                    <h2 class="text-3xl">{{ __(':title Presentation', ['title' => app()->getLocale() === 'en' ? (Translate::whereName($property->title)->first()?->translated ?? $property->title) : $property->title]) }}</h2>
                     <div class="space-y-4 mt-4">
                         <div class="text-justify leading-relaxed">
                             @if (app()->getLocale() === 'en' && $property->en_content)
