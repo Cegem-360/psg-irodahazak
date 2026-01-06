@@ -226,6 +226,7 @@ final class PropertyResource extends Resource
                                     'felszíni parkoló' => 'Felszíni parkoló',
                                     'teremgarázs' => 'Teremgarázs',
                                     'felszíni parkoló és teremgarázs' => 'Felszíni parkoló és teremgarázs',
+                                    'utcán, közterületen' => 'Utcán, közterületen',
                                 ]),
                             TextInput::make('min_parkolas_dija')
                                 ->label('Min. parkolás díja')

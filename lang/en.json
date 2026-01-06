@@ -228,5 +228,6 @@
     "HUF/hely/hó": "HUF/place/month",
     "EUR/fő/hó": "EUR/person/month",
     "HUF/fő/hó": "HUF/person/month",
-    "felszíni parkoló": "surface parking"
+    "felszíni parkoló": "surface parking",
+    "utcán, közterületen": "on street, public area"
 }
