@@ -61,7 +61,7 @@
                     <option value="{{ $property->title }}"
                         {{ $selected_property_id == $property->id ? 'selected' : '' }}>
                         @if (app()->getLocale() === 'en')
-                            {{ Translate::whereName($property->title)->first()?->translated ?? $property->title }}
+                            {{ Translate::whereName($property->title)->first()?->translated ?: $property->title }}
                         @else
                             {{ $property->title }}
                         @endif
@@ -72,7 +72,7 @@
                     <option value="{{ $property->title }}"
                         {{ $selected_property_id == $property->id ? 'selected' : '' }}>
                         @if (app()->getLocale() === 'en')
-                            {{ Translate::whereName($property->title)->first()?->translated ?? $property->title }}
+                            {{ Translate::whereName($property->title)->first()?->translated ?: $property->title }}
                         @else
                             {{ $property->title }}
                         @endif

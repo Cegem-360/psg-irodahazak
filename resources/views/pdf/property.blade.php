@@ -67,7 +67,13 @@
 
                 <!-- Cím középen, több távolsággal a logótól -->
                 <div class="text-center pt-8 px-36">
-                    <h1 class="text-xl font-bold mb-1 break-words">{{ $property->title }}</h1>
+                    <h1 class="text-xl font-bold mb-1 break-words">
+                        @if (app()->getLocale() === 'en')
+                            {{ Translate::whereName($property->title)->first()?->translated ?: $property->title }}
+                        @else
+                            {{ $property->title }}
+                        @endif
+                    </h1>
                     <div class="text-sm font-medium opacity-90">
 
                         {{ $property->cim_irsz ?? '' }} {{ $property->cim_varos ?? '' }},

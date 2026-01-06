@@ -35,7 +35,7 @@
         <div class="relative z-10 container mx-auto space-y-8 pt-24 pb-20">
             <h2 class="mt-4 mb-16 font-font-bold text-5xl text-center drop-shadow text-logogray/80">
                 @if (app()->getLocale() === 'en')
-                    {{ Translate::whereName($property->title)->first()?->translated ?? $property->title }}
+                    {{ Translate::whereName($property->title)->first()?->translated ?: $property->title }}
                 @else
                     {{ $property->title }}
                 @endif
@@ -235,7 +235,7 @@
                 </div>
                 <div class="p-4">
                     <h2 class="text-3xl">
-                        {{ __(':title Presentation', ['title' => app()->getLocale() === 'en' ? Translate::whereName($property->title)->first()?->translated ?? $property->title : $property->title]) }}
+                        {{ __(':title Presentation', ['title' => app()->getLocale() === 'en' ? (Translate::whereName($property->title)->first()?->translated ?: $property->title) : $property->title]) }}
                     </h2>
                     <div class="space-y-4 mt-4">
                         <div class="text-justify leading-relaxed">
