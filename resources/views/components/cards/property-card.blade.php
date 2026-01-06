@@ -1,3 +1,4 @@
+@use('App\Models\Translate')
 @props(['property'])
 
 @php
@@ -22,7 +23,13 @@
     @endif
 
     <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $property->title }}</h3>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            @if (app()->getLocale() === 'en')
+                {{ Translate::whereName($property->title)->first()?->translated ?? $property->title }}
+            @else
+                {{ $property->title }}
+            @endif
+        </h3>
 
         <div class="flex justify-between items-center">
             @if (collect($property->property_photos)->count() > 0)

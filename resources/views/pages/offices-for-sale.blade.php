@@ -1,6 +1,6 @@
 <div>
 
-    @livewire('list-sale-offices')
+    <livewire:list-sale-offices />
 
     @include('pages.forms.szuro')
 

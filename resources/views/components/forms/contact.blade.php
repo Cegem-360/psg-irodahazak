@@ -1,5 +1,6 @@
 @props(['selected_property_id' => null, 'selected_property_type_is_rent' => null])
 @use('App\Models\Property')
+@use('App\Models\Translate')
 <form action="{{ route('contact.store') }}" method="POST" class="space-y-6">
     @csrf
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -59,14 +60,22 @@
                 @foreach (Property::rent()->active()->get() as $property)
                     <option value="{{ $property->title }}"
                         {{ $selected_property_id == $property->id ? 'selected' : '' }}>
-                        {{ $property->title }}
+                        @if (app()->getLocale() === 'en')
+                            {{ Translate::whereName($property->title)->first()?->translated ?? $property->title }}
+                        @else
+                            {{ $property->title }}
+                        @endif
                     </option>
                 @endforeach
             @else
                 @foreach (Property::active()->sale()->get() as $property)
                     <option value="{{ $property->title }}"
                         {{ $selected_property_id == $property->id ? 'selected' : '' }}>
-                        {{ $property->title }}
+                        @if (app()->getLocale() === 'en')
+                            {{ Translate::whereName($property->title)->first()?->translated ?? $property->title }}
+                        @else
+                            {{ $property->title }}
+                        @endif
                     </option>
                 @endforeach
             @endif
