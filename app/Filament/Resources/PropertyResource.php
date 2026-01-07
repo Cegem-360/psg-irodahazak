@@ -223,10 +223,10 @@ final class PropertyResource extends Resource
                                 ->label('Parkolás')
                                 ->columnSpanFull()
                                 ->options([
-                                    'felszíni parkoló' => 'Felszíni parkoló',
-                                    'teremgarázs' => 'Teremgarázs',
-                                    'felszíni parkoló és teremgarázs' => 'Felszíni parkoló és teremgarázs',
-                                    'utcán, közterületen' => 'Utcán, közterületen',
+                                    'felszíni parkoló' => 'felszíni parkoló',
+                                    'teremgarázs' => 'teremgarázs',
+                                    'felszíni parkoló és teremgarázs' => 'felszíni parkoló és teremgarázs',
+                                    'utcán, közterületen' => 'utcán, közterületen',
                                 ]),
                             TextInput::make('min_parkolas_dija')
                                 ->label('Min. parkolás díja')
