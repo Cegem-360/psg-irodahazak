@@ -57,20 +57,29 @@
                                         {{ $property->cim_varos ?? '' }}, {{ $property->cim_utca ?? '' }}
                                         {{ __($property->cim_utca_addons ?? '') }} </td>
                                 </tr>
-                                <tr>
-                                    <td class="font-bold">{{ __('Total Area') }}:</td>
-                                    <td>{{ $property->total_area ?? '' }} m2</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold">{{ __('Price') }}:</td>
-                                    <td>{{ $property->min_berleti_dij ?? '' }}
-                                        {{ __($property->min_berleti_dij_addons ?? '') }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold">{{ __('Parking') }}:</td>
-                                    <td>{{ __($property->parkolas) }}</td>
-                                </tr>
+
+                                @if ($property->total_area)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Total Area') }}:</td>
+                                        <td>{{ $property->total_area }}
+                                            {{ __($property->osszterulet_addons ?? '') }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($property->min_berleti_dij)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Price') }}:</td>
+                                        <td>{{ $property->min_berleti_dij ?? '' }}
+                                            {{ __($property->min_berleti_dij_addons ?? '') }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($property->parkolas)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Parking') }}:</td>
+                                        <td>{{ __($property->parkolas) }}</td>
+                                    </tr>
+                                @endif
                                 @if ($property->kodszam)
                                     <tr>
                                         <td class="font-bold">{{ __('Code') }}:</td>
@@ -86,37 +95,51 @@
                                         {{ __($property->cim_utca_addons ?? '') }} {{ $property->cim_hazszam }}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="font-bold">{{ __('Construction Year') }}:</td>
-                                    <td>{{ $property->construction_year }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold">{{ __('Total Area') }}:</td>
-                                    <td>{{ $property->total_area }}
-                                        {{ __($property->osszterulet_addons ?? '') }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold">{{ __('Currently Available') }}:</td>
-                                    <td>{{ $property->jelenleg_kiado }} m2</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold">{{ __('Min. Available') }}:</td>
-                                    <td>{{ $property->min_kiado }}
-                                        {{ __($property->min_kiado_addons ?? '') }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold">{{ __('Rent') }}:</td>
-                                    <td>{{ $property->min_berleti_dij }}{{ $property->max_berleti_dij && $property->max_berleti_dij !== $property->min_berleti_dij ? ' - ' . $property->max_berleti_dij : '' }}
-                                        {{ __($property->min_berleti_dij_addons ?? '') }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold">{{ __('Operating Fee') }}:</td>
-                                    <td>{{ $property->uzemeletetesi_dij }}
-                                        {{ __($property->uzemeletetesi_dij_addons ?? '') }}</td>
-                                </tr>
+                                @if ($property->construction_year)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Construction Year') }}:</td>
+                                        <td>{{ $property->construction_year }}</td>
+                                    </tr>
+                                @endif
+                                @if ($property->total_area)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Total Area') }}:</td>
+                                        <td>{{ $property->total_area }}
+                                            {{ __($property->osszterulet_addons ?? '') }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($property->jelenleg_kiado)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Currently Available') }}:</td>
+                                        <td>{{ $property->jelenleg_kiado }} m2</td>
+                                    </tr>
+                                @endif
+                                @if ($property->min_kiado)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Min. Available') }}:</td>
+                                        <td>{{ $property->min_kiado }}
+                                            {{ __($property->min_kiado_addons ?? '') }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($property->min_berleti_dij)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Rent') }}:</td>
+                                        <td>{{ $property->min_berleti_dij }}{{ $property->max_berleti_dij && $property->max_berleti_dij !== $property->min_berleti_dij ? ' - ' . $property->max_berleti_dij : '' }}
+                                            {{ __($property->min_berleti_dij_addons ?? '') }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($property->uzemeletetesi_dij)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Operating Fee') }}:</td>
+                                        <td>{{ $property->uzemeletetesi_dij }}
+                                            {{ __($property->uzemeletetesi_dij_addons ?? '') }}
+                                        </td>
+                                    </tr>
+                                @endif
+
                                 @if ($property->raktar_terulet)
                                     <tr>
                                         <td class="font-bold">{{ __('Storage Area') }}:</td>
@@ -133,16 +156,20 @@
                                         </td>
                                     </tr>
                                 @endif
-                                <tr>
-                                    <td class="font-bold">{{ __('Parking') }}:</td>
-                                    <td>{{ __($property->parkolas) }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="font-bold">{{ __('Parking Fee') }}:</td>
-                                    <td>{{ $property->min_parkolas_dija }}{{ $property->max_parkolas_dija ? ' - ' . $property->max_parkolas_dija : '' }}
-                                        {{ __($property->min_parkolas_dija_addons ?? '') }}
-                                    </td>
-                                </tr>
+                                @if ($property->parkolas)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Parking') }}:</td>
+                                        <td>{{ __($property->parkolas) }}</td>
+                                    </tr>
+                                @endif
+                                @if ($property->min_parkolas_dija)
+                                    <tr>
+                                        <td class="font-bold">{{ __('Parking Fee') }}:</td>
+                                        <td>{{ $property->min_parkolas_dija }}{{ $property->max_parkolas_dija ? ' - ' . $property->max_parkolas_dija : '' }}
+                                            {{ __($property->min_parkolas_dija_addons ?? '') }}
+                                        </td>
+                                    </tr>
+                                @endif
                                 @if ($property->kozos_teruleti_arany)
                                     <tr>
                                         <td class="font-bold">{{ __('Common Area Ratio') }}:</td>
