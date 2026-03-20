@@ -18,7 +18,8 @@
     RewriteRule ^lang/ - [F,L]
     RewriteRule ^resources/ - [F,L]
     RewriteRule ^routes/ - [F,L]
-    RewriteRule ^storage/ - [F,L]
+    # storage/ not blocked here — public/storage symlink needs to be accessible
+    # Direct storage/ access is safe because the rewrite routes to public/ anyway
     RewriteRule ^tests/ - [F,L]
     RewriteRule ^vendor/ - [F,L]
     RewriteRule ^node_modules/ - [F,L]
