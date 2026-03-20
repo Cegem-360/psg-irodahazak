@@ -15,6 +15,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (! Schema::hasTable('categories') || ! Schema::hasTable('properties')) {
+            return;
+        }
+
         Schema::create('category_property', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Category::class)->constrained()->onDelete('cascade');

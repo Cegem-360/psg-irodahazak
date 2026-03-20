@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('properties', function (Blueprint $table): void {
-            $table->boolean('featured')->default(false)->after('slug');
-        });
+        if (Schema::hasTable('properties')) {
+            Schema::table('properties', function (Blueprint $table): void {
+                $table->boolean('featured')->default(false)->after('slug');
+            });
+        }
     }
 
     /**

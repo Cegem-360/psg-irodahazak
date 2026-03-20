@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('properties', function (Blueprint $table): void {
-            $table->string('district')->nullable()->after('cim_varos');
-        });
+        if (Schema::hasTable('properties')) {
+            Schema::table('properties', function (Blueprint $table): void {
+                $table->string('district')->nullable()->after('cim_varos');
+            });
+        }
     }
 
     /**

@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('properties', function (Blueprint $table): void {
-            $table->json('property_photos')->nullable()->after('featured');
-        });
+        if (Schema::hasTable('properties')) {
+            Schema::table('properties', function (Blueprint $table): void {
+                $table->json('property_photos')->nullable()->after('featured');
+            });
+        }
     }
 
     /**

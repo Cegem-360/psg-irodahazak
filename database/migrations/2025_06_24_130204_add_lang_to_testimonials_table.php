@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('testimonials', function (Blueprint $table): void {
-            $table->string('lang', 2)->default('hu')->after('order');
-        });
+        if (Schema::hasTable('testimonials')) {
+            Schema::table('testimonials', function (Blueprint $table): void {
+                $table->string('lang', 2)->default('hu')->after('order');
+            });
+        }
     }
 
     /**

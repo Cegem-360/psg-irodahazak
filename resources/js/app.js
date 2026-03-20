@@ -11,6 +11,9 @@ import Swiper from "swiper/bundle";
 import "swiper/css";
 import "swiper/css/bundle";
 import "swiper/css/navigation";
+
+// Expose Swiper globally so Alpine.js components can access it
+window.Swiper = Swiper;
 import "flowbite";
 import { initFlowbite } from "flowbite";
 document.addEventListener("livewire:navigated", () => {
@@ -118,16 +121,10 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     });
 
-    const minicarouselSwiper = new Swiper(".minicarousel-swiper", {
-        direction: "horizontal",
-        loop: true,
-        slidesPerView: 1,
-        spaceBetween: 0,
-        navigation: {
-            nextEl: ".minicarousel-button-next",
-            prevEl: ".minicarousel-button-prev",
-        },
-    });
+    // NOTE: minicarousel-swiper initialization has been moved to Alpine.js
+    // in the ingatlan-card Blade component. Each card now initializes its own
+    // Swiper instance via x-data/x-init, which ensures Swiper works correctly
+    // after Livewire pagination re-renders the DOM.
 });
 
 // Cookie management for favorites

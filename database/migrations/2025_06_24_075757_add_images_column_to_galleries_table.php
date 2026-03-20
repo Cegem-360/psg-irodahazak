@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('galleries', function (Blueprint $table): void {
-            $table->json('images')->nullable()->after('video_url');
-        });
+        if (Schema::hasTable('galleries')) {
+            Schema::table('galleries', function (Blueprint $table): void {
+                $table->json('images')->nullable()->after('video_url');
+            });
+        }
     }
 
     /**

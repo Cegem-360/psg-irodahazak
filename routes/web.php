@@ -9,8 +9,12 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PropertyController;
 use App\Models\Property;
+use App\Services\FavoritesExcelExportService;
 use App\Services\PropertyPdfService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -36,19 +40,28 @@ Route::middleware(['auth'])->group(function (): void {
     Route::view('/kedvencek', 'pages.favorites')->name('favorites');
 });
 
+// Favorites Excel export route (Hungarian)
+Route::get('/kedvencek/export-excel', function (): StreamedResponse {
+    $cookieValue = Cookie::get('property_favorites') ?? '[]';
+    $favorites = json_decode((string) $cookieValue, true) ?? [];
+    $properties = Property::whereIn('id', $favorites)->active()->get();
+
+    return (new FavoritesExcelExportService)->generate($properties);
+})->name('favorites.export-excel');
+
 // Budapest irodaház kategória route-ok
 Route::get('/budapest/{category}', function ($category) {
     $queryParams = [];
     $queryParams['category'] = $category;
 
     if ($category === 'elado-irodak') {
-        return redirect()->route('elado-irodahazak');
+        return to_route('elado-irodahazak');
     }
 
     return view('pages.filter', ['queryParams' => $queryParams]);
 })->name('budapest.category');
 Route::get('/login', function () {
-    return redirect()->route('filament.admin.auth.login'); // Redirect to the login page
+    return to_route('filament.admin.auth.login'); // Redirect to the login page
 })->name('login');
 Route::get('/ingatlanok', [PropertyController::class, 'index'])->name('properties.index');
 Route::get('/kiado-iroda/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
@@ -75,7 +88,7 @@ Route::group(['as' => 'en.'], function (): void {
         $queryParams['category'] = $category;
 
         if ($category === 'elado-irodak') {
-            return redirect()->route('en.elado-irodahazak');
+            return to_route('en.elado-irodahazak');
         }
 
         return view('pages.filter', ['queryParams' => $queryParams]);
@@ -85,6 +98,13 @@ Route::group(['as' => 'en.'], function (): void {
     Route::get('/office-to-let/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
     Route::get('/office-to-sale/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
     Route::view('/favorites', 'pages.favorites')->name('favorites');
+    Route::get('/favorites/export-excel', function (): StreamedResponse {
+        $cookieValue = Cookie::get('property_favorites') ?? '[]';
+        $favorites = json_decode((string) $cookieValue, true) ?? [];
+        $properties = Property::whereIn('id', $favorites)->active()->get();
+
+        return (new FavoritesExcelExportService)->generate($properties);
+    })->name('favorites.export-excel');
     Route::get('/news-blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/news-blog/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
     Route::get('/news-blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
@@ -112,11 +132,11 @@ Route::get('/en/property-pdf/{property}', function (Property $property): Respons
 })->name('en.property.pdf')->middleware(['signed']);
 
 // PDF preview route (HTML only, no PDF generation)
-Route::get('/property-preview/{property}', function (Property $property) {
+Route::get('/property-preview/{property}', function (Property $property): Factory|View {
     return view('pdf.property', ['property' => $property]);
 })->name('property.preview');
 
-Route::get('/clearCache', function () {
+Route::get('/clearCache', function (): string {
     Artisan::call('cache:clear');
     Artisan::call('config:clear');
     Artisan::call('route:clear');

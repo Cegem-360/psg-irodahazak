@@ -15,6 +15,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (! Schema::hasTable('properties') || ! Schema::hasTable('tags')) {
+            return;
+        }
+
         Schema::create('property_tag', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->onDelete('cascade');

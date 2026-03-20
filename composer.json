@@ -21,6 +21,7 @@
         "league/flysystem-ftp": "^3.31",
         "livewire/livewire": "^3.7.6",
         "nunomaduro/essentials": "@dev",
+        "phpoffice/phpspreadsheet": "^5.5",
         "spatie/browsershot": "^5.2.0",
         "spatie/image": "^3.9.1",
         "spatie/laravel-googletagmanager": "^2.8.1",

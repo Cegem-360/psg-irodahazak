@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('post_codes', function (Blueprint $table): void {
-            $table->id();
-            /*  $table->timestamps(); */
-        });
+        if (Schema::hasTable('post_codes')) {
+            Schema::table('post_codes', function (Blueprint $table): void {
+                $table->id();
+                /*  $table->timestamps(); */
+            });
+        }
     }
 
     /**

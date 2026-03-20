@@ -5,7 +5,29 @@
 
         <!-- Swiper slides for images -->
         @if ($minicarousel && count($images) > 0)
-            <div class="swiper minicarousel-swiper !grid">
+            <div
+                x-data="{
+                    swiperInstance: null,
+                    initSwiper() {
+                        if (this.swiperInstance) {
+                            this.swiperInstance.destroy(true, true);
+                        }
+                        this.swiperInstance = new window.Swiper(this.$refs.swiperContainer, {
+                            direction: 'horizontal',
+                            loop: true,
+                            slidesPerView: 1,
+                            spaceBetween: 0,
+                            navigation: {
+                                nextEl: this.$refs.btnNext,
+                                prevEl: this.$refs.btnPrev,
+                            },
+                        });
+                    }
+                }"
+                x-init="initSwiper()"
+                x-ref="swiperContainer"
+                class="swiper minicarousel-swiper !grid"
+            >
                 <div class="swiper-wrapper">
                     @foreach ($images as $carouselimage)
                         <div class="swiper-slide">
@@ -14,10 +36,10 @@
                         </div>
                     @endforeach
                 </div>
-                <div
+                <div x-ref="btnPrev"
                     class="swiper-button-prev minicarousel-button-prev !text-accent shadow bg-white/40 hover:bg-white/60 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
                 </div>
-                <div
+                <div x-ref="btnNext"
                     class="swiper-button-next minicarousel-button-next !text-accent shadow bg-white/40 hover:bg-white/60 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
                 </div>
             </div>

@@ -229,5 +229,7 @@
     "EUR/fő/hó": "EUR/person/month",
     "HUF/fő/hó": "HUF/person/month",
     "felszíni parkoló": "surface parking",
-    "utcán, közterületen": "on street, public area"
+    "utcán, közterületen": "on street, public area",
+    "Export to Excel": "Export to Excel",
+    "Send favorites via email": "Send favorites via email"
 }

@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('references')) {
+            return;
+        }
+
         Schema::create('references', function (Blueprint $table): void {
             $table->id();
             $table->string('name');

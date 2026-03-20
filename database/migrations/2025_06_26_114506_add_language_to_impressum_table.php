@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('impressum', function (Blueprint $table): void {
-            $table->string('language', 2)->default('hu')->after('id');
-            $table->index(['language', 'is_active']);
-        });
+        if (Schema::hasTable('impressum')) {
+            Schema::table('impressum', function (Blueprint $table): void {
+                $table->string('language', 2)->default('hu')->after('id');
+                $table->index(['language', 'is_active']);
+            });
+        }
     }
 
     /**
