@@ -37,15 +37,15 @@ final class FavoritesExcelExportService
 
         // Row 3: Header row
         $headers = [
-            'A3' => 'Irodahaz neve',
-            'B3' => 'Irodahaz cime',
-            'C3' => 'Epites eve',
-            'D3' => 'Berleti dij',
-            'E3' => 'Uzemeltetesi dij',
-            'F3' => 'Kozos teruleti arany',
-            'G3' => 'Parkolohely dija',
-            'H3' => 'Min. berleti idoszak',
-            'I3' => 'Ajanlott terulet',
+            'A3' => 'Irodaház neve',
+            'B3' => 'Irodaház címe',
+            'C3' => 'Építés éve',
+            'D3' => 'Bérleti díj',
+            'E3' => 'Üzemeltetési díj',
+            'F3' => 'Közös területi arány',
+            'G3' => 'Parkolóhely díja',
+            'H3' => 'Min. bérleti időszak',
+            'I3' => 'Ajánlott terület',
         ];
 
         foreach ($headers as $cell => $value) {

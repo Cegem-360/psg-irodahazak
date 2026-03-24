@@ -33,7 +33,7 @@ final class FavoritesSendModal extends Component
 
     public function mount(): void
     {
-        $this->bodyText = 'proba';
+        $this->bodyText = '';
         $this->loadProperties();
     }
 
