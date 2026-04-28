@@ -252,8 +252,6 @@
                                         <option value="">{{ __('Select') }}</option>
                                         <option value="év">{{ __('year') }}</option>
                                         <option value="hónap">{{ __('month') }}</option>
-                                        <option value="nap">{{ __('day') }}</option>
-                                        <option value="simán">{{ __('simply') }}</option>
                                     </select>
                                 </div>
                             </div>
