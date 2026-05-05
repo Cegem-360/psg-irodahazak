@@ -16,10 +16,10 @@
 
                     <div class="p-8 pt-10">
                         <div>
-                            <div class="p-8 pt-10 flex items-center justify-between">
-                                <h3 class="text-xl font-semibold mb-4">{{ $news->title }}</h3>
+                            <div class="md:p-8 md:pt-10 flex flex-col md:flex-row md:items-center md:justify-between">
+                                <h3 class="text-xl font-semibold mb-2 md:mb-4">{{ $news->title }}</h3>
                                 <span
-                                    class="text-orange-500 font-medium mb-4">{{ $news->published_at->format('Y.m.d') }}</span>
+                                    class="text-orange-500 font-medium mb-4 italic md:not-italic">{{ $news->published_at->format('Y.m.d') }}</span>
                             </div>
 
                         </div>
