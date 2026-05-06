@@ -1,72 +1,70 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@import '../../vendor/awcodes/filament-tiptap-editor/resources/css/plugin.css';
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
 @import "flowbite/src/themes/default";
-@source "../../node_modules/flowbite";
 
-/* @tailwind variants; */
+@source "../views/**/*.blade.php";
+@source "../../node_modules/flowbite";
+@source "../../node_modules/swiper";
+
+@theme {
+    --color-primary: rgb(var(--primary-rgb));
+    --color-secondary: rgb(var(--secondary-rgb));
+    --color-accent: hsl(var(--accent-hsl));
+    --color-accentdark: hsl(var(--accentdark-hsl));
+    --color-logogray: rgb(var(--logogray-rgb));
+    --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+}
+
 @font-face {
     font-family: 'DejaVu Sans';
     src: url('./fonts/DejaVuSans.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
+
 :root {
-    /* --primary: #0B82C6;
-    --secondary: #F7901E;
-    --accent-lilas: rgb(111, 114, 185);
-    --accent-kekes1: rgb(73, 98, 140);
-    --accent-kekes2: hsl(218, 42%, 32%);
-    --accent-dark-lilas: hsl(238, 35%, 15%);
-    --accent-dark-kekes: hsl(216, 35%, 15%); */
-    --color-primary: 11 130 198;
-    --color-secondary: 247 144 30;
-    --color-accent: 218 42 32;
-    --color-accentdark: 216 35% 15%;
-    --color-logogray: 48 48 50;
+    --primary-rgb: 255 115 179;
+    --secondary-rgb: 111 114 185;
+    --accent-hsl: 218 42% 32%;
+    --accentdark-hsl: 216 35% 15%;
+    --logogray-rgb: 48 48 50;
 }
+
 body {
-  background-color: hsl(238, 35%, 10%);
+    background-color: hsl(238, 35%, 10%);
 }
 
 .hero-image {
     position: relative;
     overflow: hidden;
 }
+
 .hero-image::before {
     content: '';
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    background: theme('colors.accentdark'); /* Tailwind color, fallback below */
-    /* background: #1a1a1a; */ /* fallback if accentdark is not defined */
+    background: var(--color-accentdark);
     opacity: 0.95;
-    /* mix-blend-mode: multiply; */
     z-index: 2;
     height: 100%;
     width: 100%;
     pointer-events: none;
-    animation: heroReveal 2.2s cubic-bezier(0.19,1,0.22,1) forwards;
+    animation: heroReveal 2.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
     animation-delay: 10s;
 }
+
 .hero-image:nth-child(1)::before { animation-delay: 0s; }
-.hero-image:nth-child(3)::before { animation-delay: 0.2s; }
 .hero-image:nth-child(2)::before { animation-delay: 0.3s; }
+.hero-image:nth-child(3)::before { animation-delay: 0.2s; }
 .hero-image:nth-child(4)::before { animation-delay: 0.4s; }
 
 @keyframes heroReveal {
     0% { height: 100%; }
     80% { height: 0%; }
     100% { height: 0%; }
-}
-
-@layer base {
-  :root {
-    --color-primary: 255 115 179;
-    --color-secondary: 111 114 185;
-  }
 }
 
 nav {
@@ -78,100 +76,57 @@ nav {
 table {
     td {
         padding: 0.5rem 1rem;
-        border-bottom: 1px solid hsl(var(--color-accent));
+        border-bottom: 1px solid var(--color-accent);
     }
     tr:last-child td {
         border-bottom: none;
     }
     tr:first-child td {
         font-weight: bold;
-        color: hsl(var(--color-accent));
+        color: var(--color-accent);
     }
 }
 
+.swiper-slide-thumb-active {
+    border: var(--color-secondary) 2px solid;
+    border-radius: 16px;
+    box-sizing: border-box;
+}
 
-/* Swiper styles */
-    /* .swiper-container {
-        width: 100%;
-        height: 400px;
-    } */
+.swiper-button-next,
+.swiper-button-prev {
+    margin: 0 !important;
+    top: 50%;
+    transform: translateY(-50%);
+    --swiper-navigation-sides-offset: 10px;
+}
 
-    /* .swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    } */
+.kiemelt-button-next,
+.kiemelt-button-prev {
+    --swiper-navigation-size: 56px;
+    --swiper-navigation-top-offset: 58%;
+    --swiper-navigation-sides-offset: 30px;
+}
 
-    /* .swiper-slide img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: cover;
-    } */
+.rolunkmondtak-button-next,
+.rolunkmondtak-button-prev,
+.reference-button-next,
+.reference-button-prev {
+    --swiper-navigation-size: 56px;
+    --swiper-navigation-top-offset: 50%;
+    --swiper-navigation-sides-offset: 30px;
+}
 
-    .swiper-slide-thumb-active {
-        border: rgb(var(--color-secondary)) 2px solid;
-        border-radius: 16px;
-        box-sizing: border-box;
-    }
-
-    /* .swiper-button-next,
-    .swiper-button-prev {
-        color: hsl(var(--color-accent))!important;
-        background-color: rgba(255, 255, 255, 0.45);
-        border-radius: 4px;
-        &::after {
-            font-size: 24px!important;
-            font-weight: bold!important;
-        }
-    } */
-
-    /* .swiper-pagination-bullet {
-        background: #000;
-    } */
-
-    /* .swiper-pagination-bullet-active {
-        background: #007aff;
-    } */
-
-    /* .swiper-pagination {
-        bottom: 10px;
-    } */
-
-    .swiper-button-next,
-    .swiper-button-prev {
-        margin: 0!important;
-        top: 50%;
-        transform: translateY(-50%);
-        --swiper-navigation-sides-offset: 10px;
-    }
-
-    .kiemelt-button-next,
-    .kiemelt-button-prev {
-        --swiper-navigation-size: 56px;
-        --swiper-navigation-top-offset: 58%;
-        --swiper-navigation-sides-offset: 30px;
-    }
-
-    .rolunkmondtak-button-next,
-    .rolunkmondtak-button-prev {
-        --swiper-navigation-size: 56px;
-        --swiper-navigation-top-offset: 50%;
-        --swiper-navigation-sides-offset: 30px;
-    }
-
-    .reference-button-next,
-    .reference-button-prev {
-        --swiper-navigation-size: 56px;
-        --swiper-navigation-top-offset: 50%;
-        --swiper-navigation-sides-offset: 30px;
-    }
-
-.irs-from, .irs-to, .irs-single {
+.irs-from,
+.irs-to,
+.irs-single {
     @apply !bg-primary/80 !font-bold;
 }
+
 .irs-handle {
     @apply !border-primary/80;
 }
+
 .irs-bar {
     @apply !bg-primary/80;
 }
@@ -186,24 +141,9 @@ li.jellemzok {
     list-style-image: url(../images/psg-symbol.svg);
 }
 
-/* Swiper Navigation Buttons - Ensure visibility in production */
-.swiper-button-next,
-.swiper-button-prev {
-    /* width: 27px !important;
-    height: 44px !important;
-    margin-top: calc(0px - (44px / 2)) !important;
-    background-size: 27px 44px !important;
-    background-color: rgba(255, 255, 255, 0.8) !important;
-    border-radius: 4px !important;
-    color: #007aff !important; */
-}
-
 .swiper-button-next:after,
 .swiper-button-prev:after {
     font-family: swiper-icons !important;
-    /* font-size: 20px !important;
-    font-weight: 900 !important;
-    color: #333 !important; */
 }
 
 .swiper-button-next:after {
@@ -218,7 +158,6 @@ li.jellemzok {
     opacity: 0.35 !important;
 }
 
-/* Custom navigation button styles for your specific swipers */
 .reference-button-next,
 .reference-button-prev,
 .rolunkmondtak-button-next,
@@ -227,34 +166,10 @@ li.jellemzok {
 .kiemelt-button-prev,
 .minicarousel-button-next,
 .minicarousel-button-prev {
-    @apply  !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow;
-    /* width: 44px !important; */
-    /* height: 44px !important; */
-    /* background-color: rgba(255, 255, 255, 0.9) !important; */
-    /* border-radius: 50% !important; */
-    /* color: #333 !important; */
-    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important; */
+    @apply !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow;
 }
-
-.reference-button-next:after,
-.reference-button-prev:after,
-.rolunkmondtak-button-next:after,
-.rolunkmondtak-button-prev:after,
-.kiemelt-button-next:after,
-.kiemelt-button-prev:after,
-.minicarousel-button-next:after,
-.minicarousel-button-prev:after {
-    /* font-size: 16px !important;
-    font-weight: bold !important;
-    color: #333 !important; */
-}
-
-/* root {
-    --swiper-pagination-bullet-size: 12px;
-} */
 
 .swiper-pagination-bullet {
-	width: var(--swiper-pagination-bullet-width, var(--swiper-pagination-bullet-size, 12px))!important;
-	height: var(--swiper-pagination-bullet-height, var(--swiper-pagination-bullet-size, 12px))!important;
+    width: var(--swiper-pagination-bullet-width, var(--swiper-pagination-bullet-size, 12px)) !important;
+    height: var(--swiper-pagination-bullet-height, var(--swiper-pagination-bullet-size, 12px)) !important;
 }
-
