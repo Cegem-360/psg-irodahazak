@@ -51,6 +51,7 @@ final class NewsResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 \Filament\Schemas\Components\Section::make('Alapadatok')
                     ->schema([

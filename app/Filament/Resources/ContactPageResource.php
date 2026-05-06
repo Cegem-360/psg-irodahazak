@@ -35,6 +35,7 @@ final class ContactPageResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Select::make('language')
                     ->label('Nyelv')

@@ -41,6 +41,7 @@ final class GalleryResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 FileUpload::make('path')
                     ->image()

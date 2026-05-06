@@ -37,6 +37,7 @@ final class PageResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 TextInput::make('title')
                     ->label('Cím')

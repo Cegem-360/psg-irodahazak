@@ -50,6 +50,7 @@ final class BlogPostResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 \Filament\Schemas\Components\Group::make()
                     ->schema([

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -41,7 +43,7 @@ return [
     |
     */
 
-    'default_filesystem_disk' => env('FILESYSTEM_DISK', 'local'),
+    'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DISK', 'public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -120,10 +122,11 @@ return [
 
     'file_generation' => [
         'flags' => [
-            \Filament\Support\Commands\FileGenerators\FileGenerationFlag::PANEL_RESOURCE_CLASSES_OUTSIDE_DIRECTORIES,
-            \Filament\Support\Commands\FileGenerators\FileGenerationFlag::PANEL_CLUSTER_CLASSES_OUTSIDE_DIRECTORIES,
-            \Filament\Support\Commands\FileGenerators\FileGenerationFlag::EMBEDDED_PANEL_RESOURCE_SCHEMAS,
-            \Filament\Support\Commands\FileGenerators\FileGenerationFlag::EMBEDDED_PANEL_RESOURCE_TABLES,
+            Filament\Support\Commands\FileGenerators\FileGenerationFlag::PANEL_RESOURCE_CLASSES_OUTSIDE_DIRECTORIES,
+            Filament\Support\Commands\FileGenerators\FileGenerationFlag::PANEL_CLUSTER_CLASSES_OUTSIDE_DIRECTORIES,
+            Filament\Support\Commands\FileGenerators\FileGenerationFlag::EMBEDDED_PANEL_RESOURCE_SCHEMAS,
+            Filament\Support\Commands\FileGenerators\FileGenerationFlag::EMBEDDED_PANEL_RESOURCE_TABLES,
+            Filament\Support\Commands\FileGenerators\FileGenerationFlag::PARTIAL_IMPORTS,
         ],
     ],
 
