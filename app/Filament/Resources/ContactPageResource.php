@@ -62,6 +62,7 @@ final class ContactPageResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderableColumns()
             ->columns([
                 TextColumn::make('language')
                     ->label('Nyelv')

@@ -54,6 +54,7 @@ final class PostCodeResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderableColumns()
             ->columns([
                 TextColumn::make('iranyitoszam')
                     ->label('Irányítószám')

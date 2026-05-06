@@ -85,6 +85,7 @@ final class TestimonialResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderableColumns()
             ->columns([
                 TextColumn::make('client_name')
                     ->label('Cím')

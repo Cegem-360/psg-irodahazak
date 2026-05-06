@@ -381,6 +381,7 @@ final class PropertyResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderableColumns()
             ->columns([
                 TextColumn::make('status')
                     ->label('Státusz')

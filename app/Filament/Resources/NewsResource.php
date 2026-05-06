@@ -165,6 +165,7 @@ final class NewsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderableColumns()
             ->columns([
                 ImageColumn::make('featured_image')
                     ->label('Kép')

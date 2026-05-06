@@ -91,6 +91,7 @@ final class ContentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderableColumns()
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')

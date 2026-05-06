@@ -54,6 +54,7 @@ final class CategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderableColumns()
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),

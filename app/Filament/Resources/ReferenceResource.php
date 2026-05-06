@@ -64,6 +64,7 @@ final class ReferenceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->reorderableColumns()
             ->columns([
                 ImageColumn::make('image')
                     ->label('Kép')
