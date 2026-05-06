@@ -8,28 +8,18 @@ use App\Filament\Resources\BlogPostResource\Pages\CreateBlogPost;
 use App\Filament\Resources\BlogPostResource\Pages\EditBlogPost;
 use App\Filament\Resources\BlogPostResource\Pages\ListBlogPosts;
 use App\Models\BlogPost;
+use BackedEnum;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -39,12 +29,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use UnitEnum;
 
 final class BlogPostResource extends Resource
 {
     protected static ?string $model = BlogPost::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationLabel = 'Blog Bejegyzések';
 
@@ -52,24 +43,24 @@ final class BlogPostResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Blog Bejegyzések';
 
-    protected static ?string $navigationGroup = 'Blog';
+    protected static string|UnitEnum|null $navigationGroup = 'Blog';
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Group::make()
+        return $schema
+            ->components([
+                \Filament\Schemas\Components\Group::make()
                     ->schema([
-                        Section::make('Alapadatok')
+                        \Filament\Schemas\Components\Section::make('Alapadatok')
                             ->schema([
                                 TextInput::make('title')
                                     ->label('Cím')
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                    ->afterStateUpdated(fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                                 TextInput::make('slug')
                                     ->label('URL slug')
@@ -85,7 +76,7 @@ final class BlogPostResource extends Resource
                                     ->helperText('Rövid összefoglaló a bejegyzésről. Automatikusan generálódik a tartalomból, ha üresen hagyod.'),
                             ]),
 
-                        Section::make('Tartalom')
+                        \Filament\Schemas\Components\Section::make('Tartalom')
                             ->schema([
                                 RichEditor::make('content')
                                     ->label('Tartalom')
@@ -110,9 +101,9 @@ final class BlogPostResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                Group::make()
+                \Filament\Schemas\Components\Group::make()
                     ->schema([
-                        Section::make('Beállítások')
+                        \Filament\Schemas\Components\Section::make('Beállítások')
                             ->schema([
                                 Select::make('blog_category_id')
                                     ->label('Kategória')
@@ -145,11 +136,11 @@ final class BlogPostResource extends Resource
                                 DateTimePicker::make('published_at')
                                     ->label('Publikálás dátuma')
                                     ->default(now())
-                                    ->visible(fn (Get $get): bool => $get('is_published'))
-                                    ->required(fn (Get $get): bool => $get('is_published')),
+                                    ->visible(fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('is_published'))
+                                    ->required(fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('is_published')),
                             ]),
 
-                        Section::make('Kép')
+                        \Filament\Schemas\Components\Section::make('Kép')
                             ->schema([
                                 FileUpload::make('featured_image')
                                     ->label('Kiemelt kép')
@@ -164,7 +155,7 @@ final class BlogPostResource extends Resource
                                     ]),
                             ]),
 
-                        Section::make('SEO')
+                        \Filament\Schemas\Components\Section::make('SEO')
                             ->schema([
                                 KeyValue::make('meta_data')
                                     ->label('Meta adatok')
@@ -260,7 +251,7 @@ final class BlogPostResource extends Resource
 
                 Filter::make('status')
                     ->label('Státusz')
-                    ->form([
+                    ->schema([
                         Select::make('status')
                             ->options([
                                 'published' => 'Publikált',
@@ -284,10 +275,10 @@ final class BlogPostResource extends Resource
                         });
                     }),
             ])
-            ->actions([
-                ViewAction::make(),
-                EditAction::make(),
-                Action::make('toggle_publish')
+            ->recordActions([
+                \Filament\Actions\ViewAction::make(),
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\Action::make('toggle_publish')
                     ->label(fn (BlogPost $record): string => $record->is_published ? 'Visszavonás' : 'Publikálás')
                     ->icon(fn (BlogPost $record): string => $record->is_published ? 'heroicon-o-eye-slash' : 'heroicon-o-eye')
                     ->color(fn (BlogPost $record): string => $record->is_published ? 'warning' : 'success')
@@ -299,12 +290,12 @@ final class BlogPostResource extends Resource
                         }
                     })
                     ->requiresConfirmation(),
-                DeleteAction::make(),
+                \Filament\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    BulkAction::make('publish')
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
+                    \Filament\Actions\BulkAction::make('publish')
                         ->label('Publikálás')
                         ->icon('heroicon-o-eye')
                         ->color('success')
@@ -312,7 +303,7 @@ final class BlogPostResource extends Resource
                             $records->each->publish();
                         })
                         ->requiresConfirmation(),
-                    BulkAction::make('unpublish')
+                    \Filament\Actions\BulkAction::make('unpublish')
                         ->label('Visszavonás')
                         ->icon('heroicon-o-eye-slash')
                         ->color('warning')

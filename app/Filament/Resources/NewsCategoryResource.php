@@ -8,23 +8,20 @@ use App\Filament\Resources\NewsCategoryResource\Pages\CreateNewsCategory;
 use App\Filament\Resources\NewsCategoryResource\Pages\EditNewsCategory;
 use App\Filament\Resources\NewsCategoryResource\Pages\ListNewsCategories;
 use App\Models\NewsCategory;
+use BackedEnum;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use UnitEnum;
 
 final class NewsCategoryResource extends Resource
 {
@@ -32,7 +29,7 @@ final class NewsCategoryResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static ?string $navigationIcon = 'heroicon-o-folder';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
 
     protected static ?string $navigationLabel = 'Hírkategóriák';
 
@@ -40,18 +37,18 @@ final class NewsCategoryResource extends Resource
 
     protected static ?string $pluralModelLabel = 'hírkategóriák';
 
-    protected static ?string $navigationGroup = 'Hírek';
+    protected static string|UnitEnum|null $navigationGroup = 'Hírek';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('name')
                     ->label('Név')
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                    ->afterStateUpdated(fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                 TextInput::make('slug')
                     ->label('Slug')
@@ -131,13 +128,13 @@ final class NewsCategoryResource extends Resource
                 TernaryFilter::make('is_active')
                     ->label('Aktív'),
             ])
-            ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
+            ->recordActions([
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('sort_order');

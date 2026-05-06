@@ -8,14 +8,13 @@ use App\Filament\Resources\PostCodeResource\Pages\CreatePostCode;
 use App\Filament\Resources\PostCodeResource\Pages\EditPostCode;
 use App\Filament\Resources\PostCodeResource\Pages\ListPostCodes;
 use App\Models\PostCode;
+use BackedEnum;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class PostCodeResource extends Resource
 {
@@ -23,7 +22,7 @@ final class PostCodeResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Irányítószámok';
 
@@ -31,12 +30,12 @@ final class PostCodeResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Irányítószámok';
 
-    protected static ?string $navigationGroup = 'Rendszer';
+    protected static string|UnitEnum|null $navigationGroup = 'Rendszer';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('iranyitoszam')
                     ->label('Irányítószám')
                     ->required()
@@ -79,12 +78,12 @@ final class PostCodeResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                EditAction::make(),
+            ->recordActions([
+                \Filament\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

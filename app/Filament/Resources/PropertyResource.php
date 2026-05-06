@@ -12,39 +12,31 @@ use App\Filament\Resources\PropertyResource\Pages\ListProperties;
 use App\Filament\Resources\PropertyResource\RelationManagers\ImagesRelationManager;
 use App\Models\Property;
 use App\Services\WatermarkService;
+use BackedEnum;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ExportAction;
-use Filament\Tables\Actions\ImportAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Enums\ActionsPosition;
+use Filament\Tables\Enums\RecordActionsPosition;
 use Filament\Tables\Table;
-use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use UnitEnum;
 
 final class PropertyResource extends Resource
 {
     protected static ?string $model = Property::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $navigationLabel = 'Ingatlanok';
 
@@ -52,16 +44,16 @@ final class PropertyResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Ingatlanok';
 
-    protected static ?string $navigationGroup = 'Ingatlanok';
+    protected static string|UnitEnum|null $navigationGroup = 'Ingatlanok';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('title')
                     ->label('Cím')
                     ->maxLength(255)
-                    ->afterStateUpdated(fn (string $state, Set $set) => $set('slug', Str::slug($state, language: 'hu')))
+                    ->afterStateUpdated(fn (string $state, \Filament\Schemas\Components\Utilities\Set $set) => $set('slug', Str::slug($state, language: 'hu')))
                     ->required()
                     ->live(debounce: 1000),
                 TextInput::make('slug')
@@ -82,7 +74,7 @@ final class PropertyResource extends Resource
                     ->helperText('Kijelölés esetén az ingatlan megjelenik a kiemelt ajánlatok között a főoldalon.')
                     ->default(false),
 
-                TiptapEditor::make('content')
+                RichEditor::make('content')
                     ->label('Tartalom')
                     ->columnSpanFull(),
                 DateTimePicker::make('date')
@@ -110,8 +102,8 @@ final class PropertyResource extends Resource
                 Textarea::make('meta_description_en')
                     ->label('Meta leírás (angol)')
                     ->columnSpanFull(),
-                Section::make('Ingatlan adatok')->schema([
-                    Grid::make()->schema([
+                \Filament\Schemas\Components\Section::make('Ingatlan adatok')->schema([
+                    \Filament\Schemas\Components\Grid::make()->schema([
                         TextInput::make('construction_year')
                             ->label('Építés éve')
                             ->maxLength(255),
@@ -151,14 +143,14 @@ final class PropertyResource extends Resource
                     ]),
                 ]),
 
-                Section::make('bérleti díj')->schema([
-                    Grid::make()
+                \Filament\Schemas\Components\Section::make('bérleti díj')->schema([
+                    \Filament\Schemas\Components\Grid::make()
                         ->schema([
                             TextInput::make('min_berleti_dij')
-                                ->label(fn (Get $get): string => $get('elado_v_kiado') === 'elado-iroda' ? 'Eladási ár ' : 'Min. bérleti díj')
+                                ->label(fn (\Filament\Schemas\Components\Utilities\Get $get): string => $get('elado_v_kiado') === 'elado-iroda' ? 'Eladási ár ' : 'Min. bérleti díj')
                                 ->maxLength(255),
                             Select::make('min_berleti_dij_addons')
-                                ->label(fn (Get $get): string => $get('elado_v_kiado') === 'elado-iroda' ? 'Eladási ár addons' : 'Min. bérleti díj addons')
+                                ->label(fn (\Filament\Schemas\Components\Utilities\Get $get): string => $get('elado_v_kiado') === 'elado-iroda' ? 'Eladási ár addons' : 'Min. bérleti díj addons')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
                                     'HUF/m2/hó' => 'HUF/m2/hó',
@@ -174,11 +166,11 @@ final class PropertyResource extends Resource
                                     'mrd HUF' => 'mrd HUF',
                                 ]),
                             TextInput::make('max_berleti_dij')
-                                ->hidden(fn (Get $get): bool => $get('elado_v_kiado') === 'elado-iroda')
+                                ->hidden(fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('elado_v_kiado') === 'elado-iroda')
                                 ->label('Max. bérleti díj')
                                 ->maxLength(255),
                             Select::make('max_berleti_dij_addons')
-                                ->hidden(fn (Get $get): bool => $get('elado_v_kiado') === 'elado-iroda')
+                                ->hidden(fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('elado_v_kiado') === 'elado-iroda')
                                 ->label('Max. bérleti díj kiegészítések')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
@@ -188,8 +180,8 @@ final class PropertyResource extends Resource
                                 ]),
                         ]),
                 ]),
-                Section::make('egyéb díj')->schema([
-                    Grid::make()
+                \Filament\Schemas\Components\Section::make('egyéb díj')->schema([
+                    \Filament\Schemas\Components\Grid::make()
                         ->schema([
                             TextInput::make('uzemeletetesi_dij')
                                 ->label('Üzemeltetési díj')
@@ -259,8 +251,8 @@ final class PropertyResource extends Resource
                         ]),
                 ]),
 
-                Section::make('Ingatlan hely adatok')->schema([
-                    Grid::make()
+                \Filament\Schemas\Components\Section::make('Ingatlan hely adatok')->schema([
+                    \Filament\Schemas\Components\Grid::make()
                         ->schema([
                             TextInput::make('cim_irsz')
                                 ->label('Irányítószám')
@@ -291,7 +283,7 @@ final class PropertyResource extends Resource
                             TextInput::make('cim_hazszam')
                                 ->label('Házszám')
                                 ->maxLength(255),
-                            Grid::make()
+                            \Filament\Schemas\Components\Grid::make()
                                 ->schema([
                                     TextInput::make('maps_lat')
                                         ->label('Térkép szélesség')
@@ -302,7 +294,7 @@ final class PropertyResource extends Resource
                                 ]),
                         ]),
                 ]),
-                Section::make('Műszaki paraméterek')->schema([
+                \Filament\Schemas\Components\Section::make('Műszaki paraméterek')->schema([
                     CheckboxList::make('tags')
                         ->label('Műszaki paraméterek')
                         ->relationship('tags', 'name')
@@ -310,7 +302,7 @@ final class PropertyResource extends Resource
                         ->gridDirection('row')
                         ->columnSpanFull(),
                 ]),
-                Section::make('Szolgáltatások')->schema([
+                \Filament\Schemas\Components\Section::make('Szolgáltatások')->schema([
                     CheckboxList::make('services')
                         ->label('Szolgáltatások')
                         ->relationship('services', 'name')
@@ -318,7 +310,7 @@ final class PropertyResource extends Resource
                         ->gridDirection('row')
                         ->columnSpanFull(),
                 ]),
-                Section::make('Kategóriák')->schema([
+                \Filament\Schemas\Components\Section::make('Kategóriák')->schema([
                     CheckboxList::make('categories')
                         ->label('Kategóriák')
                         ->relationship('categories', 'name')
@@ -333,7 +325,7 @@ final class PropertyResource extends Resource
                 TextInput::make('kodszam')
                     ->label('Kódszám')
                     ->maxLength(255),
-                TiptapEditor::make('en_content')
+                RichEditor::make('en_content')
                     ->label('Angol tartalom')
                     ->columnSpanFull(),
                 TextInput::make('lang')
@@ -357,7 +349,7 @@ final class PropertyResource extends Resource
                     ->required(),
                 DatePicker::make('updated')
                     ->label('Frissítve'),
-                TiptapEditor::make('egyeb')
+                RichEditor::make('egyeb')
                     ->label('Egyéb')
                     ->columnSpanFull(),
                 Select::make('vat')
@@ -417,10 +409,10 @@ final class PropertyResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
 
-                EditAction::make(),
-                Action::make('generate_pdf')
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\Action::make('generate_pdf')
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')
@@ -434,18 +426,18 @@ final class PropertyResource extends Resource
                     ->modalHeading('PDF Generálás')
                     ->modalDescription('Biztosan szeretnéd generálni az ingatlan PDF adatlapját?')
                     ->modalSubmitActionLabel('PDF Megnyitás'),
-            ], position: ActionsPosition::BeforeCells)
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+            ], position: RecordActionsPosition::BeforeCells)
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->headerActions([
-                ExportAction::make('export')
+                \Filament\Actions\ExportAction::make('export')
                     ->label('Export Properties')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->exporter(PropertyExporter::class),
-                ImportAction::make('import')
+                \Filament\Actions\ImportAction::make('import')
                     ->label('Import Properties')
                     ->icon('heroicon-o-arrow-up-tray')
                     ->importer(PropertyImporter::class),

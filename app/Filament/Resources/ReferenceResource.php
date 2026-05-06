@@ -8,26 +8,24 @@ use App\Filament\Resources\ReferenceResource\Pages\CreateReference;
 use App\Filament\Resources\ReferenceResource\Pages\EditReference;
 use App\Filament\Resources\ReferenceResource\Pages\ListReferences;
 use App\Models\Reference;
+use BackedEnum;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class ReferenceResource extends Resource
 {
     protected static ?string $model = Reference::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-star';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-star';
 
     protected static ?string $navigationLabel = 'Referenciák';
 
@@ -35,14 +33,14 @@ final class ReferenceResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Referenciák';
 
-    protected static ?string $navigationGroup = 'Referenciák';
+    protected static string|UnitEnum|null $navigationGroup = 'Referenciák';
 
     protected static ?int $navigationSort = 4;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -106,15 +104,15 @@ final class ReferenceResource extends Resource
                     ->trueLabel('Csak aktív')
                     ->falseLabel('Csak inaktív'),
             ])
-            ->actions([
-                EditAction::make()
+            ->recordActions([
+                \Filament\Actions\EditAction::make()
                     ->label('Szerkesztés'),
-                DeleteAction::make()
+                \Filament\Actions\DeleteAction::make()
                     ->label('Törlés'),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make()
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make()
                         ->label('Törlés'),
                 ]),
             ])

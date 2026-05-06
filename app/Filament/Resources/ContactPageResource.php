@@ -8,22 +8,21 @@ use App\Filament\Resources\ContactPageResource\Pages\CreateContactPage;
 use App\Filament\Resources\ContactPageResource\Pages\EditContactPage;
 use App\Filament\Resources\ContactPageResource\Pages\ListContactPages;
 use App\Models\ContactPage;
+use BackedEnum;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use FilamentTiptapEditor\TiptapEditor;
+use UnitEnum;
 
 final class ContactPageResource extends Resource
 {
     protected static ?string $model = ContactPage::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-phone';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-phone';
 
     protected static ?string $navigationLabel = 'Kapcsolati oldal';
 
@@ -31,12 +30,12 @@ final class ContactPageResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Kapcsolati oldalak';
 
-    protected static ?string $navigationGroup = 'Tartalom';
+    protected static string|UnitEnum|null $navigationGroup = 'Tartalom';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Select::make('language')
                     ->label('Nyelv')
                     ->options([
@@ -45,9 +44,8 @@ final class ContactPageResource extends Resource
                     ])
                     ->required()
                     ->default('hu'),
-                TiptapEditor::make('content')
+                RichEditor::make('content')
                     ->label('Kapcsolati információk')
-                    ->profile('default')
                     ->columnSpanFull(),
                 FileUpload::make('image')
                     ->label('Kapcsolati oldal kép')
@@ -81,12 +79,12 @@ final class ContactPageResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                EditAction::make(),
+            ->recordActions([
+                \Filament\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

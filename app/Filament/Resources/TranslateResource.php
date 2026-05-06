@@ -9,22 +9,20 @@ use App\Filament\Resources\TranslateResource\Pages\EditTranslate;
 use App\Filament\Resources\TranslateResource\Pages\ListTranslates;
 use App\Filament\Resources\TranslateResource\Pages\ViewTranslate;
 use App\Models\Translate;
+use BackedEnum;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class TranslateResource extends Resource
 {
     protected static ?string $model = Translate::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Fordítások';
 
@@ -32,12 +30,12 @@ final class TranslateResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Fordítások';
 
-    protected static ?string $navigationGroup = 'Fordítások';
+    protected static string|UnitEnum|null $navigationGroup = 'Fordítások';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -68,13 +66,13 @@ final class TranslateResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                ViewAction::make(),
-                EditAction::make(),
+            ->recordActions([
+                \Filament\Actions\ViewAction::make(),
+                \Filament\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

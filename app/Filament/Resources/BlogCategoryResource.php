@@ -9,30 +9,26 @@ use App\Filament\Resources\BlogCategoryResource\Pages\EditBlogCategory;
 use App\Filament\Resources\BlogCategoryResource\Pages\ListBlogCategories;
 use App\Filament\Resources\BlogCategoryResource\RelationManagers\BlogPostsRelationManager;
 use App\Models\BlogCategory;
+use BackedEnum;
 use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use UnitEnum;
 
 final class BlogCategoryResource extends Resource
 {
     protected static ?string $model = BlogCategory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
 
     protected static ?string $navigationLabel = 'Blog Kategóriák';
 
@@ -40,22 +36,22 @@ final class BlogCategoryResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Blog Kategóriák';
 
-    protected static ?string $navigationGroup = 'Blog';
+    protected static string|UnitEnum|null $navigationGroup = 'Blog';
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Section::make('Alapadatok')
+        return $schema
+            ->components([
+                \Filament\Schemas\Components\Section::make('Alapadatok')
                     ->schema([
                         TextInput::make('name')
                             ->label('Név')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                            ->afterStateUpdated(fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                         TextInput::make('slug')
                             ->label('URL slug')
@@ -70,7 +66,7 @@ final class BlogCategoryResource extends Resource
                             ->rows(3),
                     ])->columns(2),
 
-                Section::make('Megjelenés')
+                \Filament\Schemas\Components\Section::make('Megjelenés')
                     ->schema([
                         ColorPicker::make('color')
                             ->label('Szín')
@@ -130,13 +126,13 @@ final class BlogCategoryResource extends Resource
                     ->trueLabel('Aktív')
                     ->falseLabel('Inaktív'),
             ])
-            ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
+            ->recordActions([
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('name');

@@ -8,26 +8,24 @@ use App\Filament\Resources\ImpresszumResource\Pages\CreateImpresszum;
 use App\Filament\Resources\ImpresszumResource\Pages\EditImpresszum;
 use App\Filament\Resources\ImpresszumResource\Pages\ListImpresszums;
 use App\Models\Impresszum;
+use BackedEnum;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class ImpresszumResource extends Resource
 {
     protected static ?string $model = Impresszum::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationLabel = 'Impresszum';
 
@@ -35,15 +33,15 @@ final class ImpresszumResource extends Resource
 
     protected static ?string $pluralModelLabel = 'impresszumok';
 
-    protected static ?string $navigationGroup = 'Tartalom';
+    protected static string|UnitEnum|null $navigationGroup = 'Tartalom';
 
     protected static ?int $navigationSort = 6;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Section::make('Impresszum tartalma')
+        return $schema
+            ->components([
+                \Filament\Schemas\Components\Section::make('Impresszum tartalma')
                     ->schema([
                         Select::make('language')
                             ->label('Nyelv')
@@ -126,10 +124,10 @@ final class ImpresszumResource extends Resource
                         'en' => 'English',
                     ]),
             ])
-            ->actions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+            ->recordActions([
+                \Filament\Actions\ViewAction::make(),
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
             ])
             ->defaultSort('language', 'asc');
     }

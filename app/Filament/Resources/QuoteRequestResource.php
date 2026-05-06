@@ -9,29 +9,24 @@ use App\Filament\Resources\QuoteRequestResource\Pages\EditQuoteRequest;
 use App\Filament\Resources\QuoteRequestResource\Pages\ListQuoteRequests;
 use App\Filament\Resources\QuoteRequestResource\Pages\ViewQuoteRequest;
 use App\Models\QuoteRequest;
+use BackedEnum;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class QuoteRequestResource extends Resource
 {
     protected static ?string $model = QuoteRequest::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
     protected static ?string $navigationLabel = 'Árajánlat kérések';
 
@@ -39,15 +34,15 @@ final class QuoteRequestResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Árajánlat kérések';
 
-    protected static ?string $navigationGroup = 'Ügyfélszolgálat';
+    protected static string|UnitEnum|null $navigationGroup = 'Ügyfélszolgálat';
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Section::make('Kapcsolattartó adatok')
+        return $schema
+            ->components([
+                \Filament\Schemas\Components\Section::make('Kapcsolattartó adatok')
                     ->schema([
                         TextInput::make('name')
                             ->label('Név')
@@ -69,7 +64,7 @@ final class QuoteRequestResource extends Resource
                     ])
                     ->columns(3),
 
-                Section::make('Kérés részletei')
+                \Filament\Schemas\Components\Section::make('Kérés részletei')
                     ->schema([
                         TextInput::make('subject')
                             ->label('Tárgy')
@@ -83,7 +78,7 @@ final class QuoteRequestResource extends Resource
                     ])
                     ->columns(2),
 
-                Section::make('Kezelés')
+                \Filament\Schemas\Components\Section::make('Kezelés')
                     ->schema([
                         Select::make('status')
                             ->label('Állapot')
@@ -169,8 +164,8 @@ final class QuoteRequestResource extends Resource
                         'closed' => 'Lezárva',
                     ]),
             ])
-            ->actions([
-                Action::make('contact')
+            ->recordActions([
+                \Filament\Actions\Action::make('contact')
                     ->label('Kapcsolatfelvéve')
                     ->icon('heroicon-o-phone')
                     ->color('warning')
@@ -188,7 +183,7 @@ final class QuoteRequestResource extends Resource
                             ->send();
                     }),
 
-                Action::make('close')
+                \Filament\Actions\Action::make('close')
                     ->label('Lezárás')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
@@ -205,13 +200,13 @@ final class QuoteRequestResource extends Resource
                             ->send();
                     }),
 
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                \Filament\Actions\ViewAction::make(),
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

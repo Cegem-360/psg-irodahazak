@@ -9,14 +9,8 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\CreateAction;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -28,10 +22,10 @@ final class ImagesRelationManager extends RelationManager
 
     protected static ?string $title = 'Galéria képek';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
 
                 FileUpload::make('path')
                     ->image()
@@ -94,25 +88,25 @@ final class ImagesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                CreateAction::make()
-                    ->mutateFormDataUsing(function (array $data): array {
+                \Filament\Actions\CreateAction::make()
+                    ->mutateDataUsing(function (array $data): array {
                         $data['target_table'] = 'property';
 
                         return $data;
                     }),
             ])
-            ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
-                Action::make('view_image')
+            ->recordActions([
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
+                \Filament\Actions\Action::make('view_image')
                     ->label('Megtekintés')
                     ->icon('heroicon-o-eye')
                     ->url(fn (Gallery $record): string => $record->image_url)
                     ->openUrlInNewTab(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('ord');

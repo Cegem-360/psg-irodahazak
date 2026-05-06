@@ -9,26 +9,24 @@ use App\Filament\Resources\GalleryResource\Pages\EditGallery;
 use App\Filament\Resources\GalleryResource\Pages\ListGalleries;
 use App\Models\Gallery;
 use App\Models\Property;
+use BackedEnum;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class GalleryResource extends Resource
 {
     protected static ?string $model = Gallery::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Galéria';
 
@@ -36,27 +34,27 @@ final class GalleryResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Képek';
 
-    protected static ?string $navigationGroup = 'Média';
+    protected static string|UnitEnum|null $navigationGroup = 'Média';
 
     protected static bool $shouldRegisterNavigation = false;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 FileUpload::make('path')
                     ->image()
                     ->imageEditor()
                     ->label('Kép feltöltése')
                     ->required()
                     ->disk('public')
-                    ->directory(function (Get $get): string {
+                    ->directory(function (\Filament\Schemas\Components\Utilities\Get $get): string {
                         return 'property/'.$get('target_table_id').'/gallery';
                     })
                     ->preserveFilenames()
                     ->helperText('Max. 10 MB, csak képek')
                     ->visible(
-                        fn (Get $get): bool => $get('target_table_id') !== null
+                        fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('target_table_id') !== null
                     ),
                 Select::make('target_table_id')
                     ->label('Property')
@@ -92,12 +90,12 @@ final class GalleryResource extends Resource
                     ->image()
                     ->multiple()
                     ->disk('public')
-                    ->directory(function (Get $get): string {
+                    ->directory(function (\Filament\Schemas\Components\Utilities\Get $get): string {
                         return 'property/'.$get('target_table_id').'/gallery';
                     })
                     ->helperText('Több kép egyszerre feltöltéséhez')
                     ->visible(
-                        fn (Get $get): bool => $get('target_table_id') !== null
+                        fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('target_table_id') !== null
                     ),
             ]);
     }
@@ -151,12 +149,12 @@ final class GalleryResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                EditAction::make(),
+            ->recordActions([
+                \Filament\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

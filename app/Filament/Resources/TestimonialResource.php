@@ -9,27 +9,24 @@ use App\Filament\Resources\TestimonialResource\Pages\EditTestimonial;
 use App\Filament\Resources\TestimonialResource\Pages\ListTestimonials;
 use App\Filament\Resources\TestimonialResource\Pages\ViewTestimonial;
 use App\Models\Testimonial;
+use BackedEnum;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Rolunk mondták';
 
@@ -37,13 +34,13 @@ final class TestimonialResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Rolunk';
 
-    protected static ?string $navigationGroup = 'Rolunk mondták';
+    protected static string|UnitEnum|null $navigationGroup = 'Rolunk mondták';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Section::make('Ügyfél adatai')
+        return $schema
+            ->components([
+                \Filament\Schemas\Components\Section::make('Ügyfél adatai')
                     ->columns(3)
                     ->schema([
                         TextInput::make('client_name')
@@ -121,13 +118,13 @@ final class TestimonialResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                ViewAction::make(),
-                EditAction::make(),
+            ->recordActions([
+                \Filament\Actions\ViewAction::make(),
+                \Filament\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+            ->toolbarActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

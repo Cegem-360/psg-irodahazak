@@ -8,26 +8,24 @@ use App\Filament\Resources\AboutUsResource\Pages\CreateAboutUs;
 use App\Filament\Resources\AboutUsResource\Pages\EditAboutUs;
 use App\Filament\Resources\AboutUsResource\Pages\ListAboutUs;
 use App\Models\AboutUs;
+use BackedEnum;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class AboutUsResource extends Resource
 {
     protected static ?string $model = AboutUs::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-information-circle';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-information-circle';
 
     protected static ?string $navigationLabel = 'Rólunk';
 
@@ -35,15 +33,15 @@ final class AboutUsResource extends Resource
 
     protected static ?string $pluralModelLabel = 'rólunk oldalak';
 
-    protected static ?string $navigationGroup = 'Tartalom';
+    protected static string|UnitEnum|null $navigationGroup = 'Tartalom';
 
     protected static ?int $navigationSort = 5;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Section::make('Rólunk oldal tartalma')
+        return $schema
+            ->components([
+                \Filament\Schemas\Components\Section::make('Rólunk oldal tartalma')
                     ->schema([
                         Select::make('language')
                             ->label('Nyelv')
@@ -125,10 +123,10 @@ final class AboutUsResource extends Resource
                         'en' => 'English',
                     ]),
             ])
-            ->actions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+            ->recordActions([
+                \Filament\Actions\ViewAction::make(),
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
             ])
             ->defaultSort('language', 'asc');
     }
