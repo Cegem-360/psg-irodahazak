@@ -7,7 +7,7 @@
 
                 <!-- Modal panel -->
                 <div
-                    class="inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+                    class="relative inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
                     <!-- Modal Header -->
                     <div class="bg-orange-500 px-8 py-5">
                         <h3 class="text-2xl font-semibold text-white text-center">Kapcsolatfelvétel</h3>
