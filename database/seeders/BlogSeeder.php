@@ -76,13 +76,13 @@ final class BlogSeeder extends Seeder
 
         foreach ($categories as $category) {
             // 3-5 bejegyzés kategóriánként
-            $postCount = rand(3, 5);
+            $postCount = random_int(3, 5);
 
             for ($i = 0; $i < $postCount; $i++) {
                 BlogPost::factory()->create([
                     'blog_category_id' => $category->id,
                     'user_id' => $user->id,
-                    'is_published' => (bool) rand(0, 1),
+                    'is_published' => (bool) random_int(0, 1),
                 ]);
             }
         }

@@ -238,15 +238,15 @@ it('generates a valid Excel spreadsheet with correct structure', function (): vo
     expect($sheet->getCell('B1')->getValue())->toBe('PSG-IRODAHAZAK.HU');
 
     // Verify header row
-    expect($sheet->getCell('A3')->getValue())->toBe('Irodahaz neve');
-    expect($sheet->getCell('B3')->getValue())->toBe('Irodahaz cime');
-    expect($sheet->getCell('C3')->getValue())->toBe('Epites eve');
-    expect($sheet->getCell('D3')->getValue())->toBe('Berleti dij');
-    expect($sheet->getCell('E3')->getValue())->toBe('Uzemeltetesi dij');
-    expect($sheet->getCell('F3')->getValue())->toBe('Kozos teruleti arany');
-    expect($sheet->getCell('G3')->getValue())->toBe('Parkolohely dija');
-    expect($sheet->getCell('H3')->getValue())->toBe('Min. berleti idoszak');
-    expect($sheet->getCell('I3')->getValue())->toBe('Ajanlott terulet');
+    expect($sheet->getCell('A3')->getValue())->toBe('Irodaház neve');
+    expect($sheet->getCell('B3')->getValue())->toBe('Irodaház címe');
+    expect($sheet->getCell('C3')->getValue())->toBe('Építés éve');
+    expect($sheet->getCell('D3')->getValue())->toBe('Bérleti díj');
+    expect($sheet->getCell('E3')->getValue())->toBe('Üzemeltetési díj');
+    expect($sheet->getCell('F3')->getValue())->toBe('Közös területi arány');
+    expect($sheet->getCell('G3')->getValue())->toBe('Parkolóhely díja');
+    expect($sheet->getCell('H3')->getValue())->toBe('Min. bérleti időszak');
+    expect($sheet->getCell('I3')->getValue())->toBe('Ajánlott terület');
 
     // Verify data row
     expect($sheet->getCell('A4')->getValue())->toBe('Test Building');
@@ -339,7 +339,7 @@ it('generates an empty Excel file with only headers when no properties provided'
     $sheet = $spreadsheet->getActiveSheet();
 
     // Headers should still be present
-    expect($sheet->getCell('A3')->getValue())->toBe('Irodahaz neve');
+    expect($sheet->getCell('A3')->getValue())->toBe('Irodaház neve');
     expect($sheet->getCell('B1')->getValue())->toBe('PSG-IRODAHAZAK.HU');
 
     // No data rows

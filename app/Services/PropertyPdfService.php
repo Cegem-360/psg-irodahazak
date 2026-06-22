@@ -124,7 +124,7 @@ final class PropertyPdfService
             ->showBrowserHeaderAndFooter()
             ->footerHtml($footerHtml)
             ->hideHeader();
-        if (! env('NOTISOLATED', false)) {
+        if (! config('services.browsershot.not_isolated')) {
             $pdf = $pdf->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
                 ->setNpmBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/npm');
         }

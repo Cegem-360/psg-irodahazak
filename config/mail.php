@@ -117,4 +117,16 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Notification Address
+    |--------------------------------------------------------------------------
+    |
+    | Address that receives admin notifications such as contact form and quote
+    | request submissions.
+    |
+    */
+
+    'admin_address' => env('ADMIN_EMAIL', 'info@psg-irodahazak.hu'),
+
 ];

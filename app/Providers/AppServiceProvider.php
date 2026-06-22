@@ -42,7 +42,7 @@ final class AppServiceProvider extends ServiceProvider
             app()->setLocale(session('locale'));
         }
 
-        GoogleTagManager::set('config', env('GOOGLE_TAG_ID', ''));
+        GoogleTagManager::set('config', config('services.google_tag_manager.id', ''));
         if (Cookies::hasConsentFor('ad_storage')) {
             GoogleTagManager::set('ad_storage', 'granted');
         }
