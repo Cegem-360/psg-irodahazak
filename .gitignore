@@ -21,3 +21,7 @@ yarn-error.log
 /.vscode
 /.zed
 .DS_Store
+
+# Stray SQLite DB accidentally created at repo root
+/psg-irodahazak
+*.sqlite
