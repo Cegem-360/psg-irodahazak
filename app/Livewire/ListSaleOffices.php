@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Property as Offices;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -125,7 +127,7 @@ final class ListSaleOffices extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.list-sale-offices', [
             'offices' => $this->getOffices(),

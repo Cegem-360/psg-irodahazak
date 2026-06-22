@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 final class PropertyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Factory|View
     {
         $query = Property::with('images')->active();
 
@@ -75,7 +77,7 @@ final class PropertyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Property $property)
+    public function show(Property $property): Factory|View
     {
 
         // Apply the appropriate scope based on property type

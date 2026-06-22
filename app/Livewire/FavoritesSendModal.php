@@ -7,6 +7,8 @@ namespace App\Livewire;
 use App\Mail\FavoritesSendMail;
 use App\Models\Property;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
@@ -78,7 +80,7 @@ final class FavoritesSendModal extends Component
         $this->showSendModal = true;
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.favorites-send-modal');
     }

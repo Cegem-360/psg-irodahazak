@@ -7,11 +7,13 @@ namespace App\Filament\Resources\ServiceResource\Pages;
 use App\Filament\Resources\ServiceResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Override;
 
 final class EditService extends EditRecord
 {
     protected static string $resource = ServiceResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

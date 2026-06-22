@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Property;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 final class PropertyMapModal extends Component
@@ -35,7 +37,7 @@ final class PropertyMapModal extends Component
         $this->reset(['property', 'title']);
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.property-map-modal');
     }

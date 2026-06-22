@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\ContactPage;
-use App\Models\Property;
 use Exception;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -18,11 +19,11 @@ final class ContactController extends Controller
     /**
      * Display the contact page.
      */
-    public function show()
+    public function show(): Factory|View
     {
         $contactPage = ContactPage::getActiveByLanguage(app()->getLocale());
 
-        return view('pages.contact', compact('contactPage'));
+        return view('pages.contact', ['contactPage' => $contactPage]);
     }
 
     /**

@@ -6,15 +6,15 @@ namespace App\Console\Commands;
 
 use App\Models\Category;
 use App\Models\Property;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
+#[Description('Update Property categories from pages table and backup affected records (alapértelmezetten dry-run)')]
+#[Signature('property:update-categories {--dry-run : Csak kiírja, mit módosítana, nem ír az adatbázisba}')]
 final class UpdatePropertyCategories extends Command
 {
-    protected $signature = 'property:update-categories {--dry-run : Csak kiírja, mit módosítana, nem ír az adatbázisba}';
-
-    protected $description = 'Update Property categories from pages table and backup affected records (alapértelmezetten dry-run)';
-
     public function handle(): void
     {
         $pages = DB::table('pages')

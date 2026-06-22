@@ -10,11 +10,17 @@ use App\Filament\Resources\BlogCategoryResource\Pages\ListBlogCategories;
 use App\Filament\Resources\BlogCategoryResource\RelationManagers\BlogPostsRelationManager;
 use App\Models\BlogCategory;
 use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\IconColumn;
@@ -22,6 +28,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Override;
 use UnitEnum;
 
 final class BlogCategoryResource extends Resource
@@ -40,19 +47,20 @@ final class BlogCategoryResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->columns(1)
             ->components([
-                \Filament\Schemas\Components\Section::make('Alapadatok')
+                Section::make('Alapadatok')
                     ->schema([
                         TextInput::make('name')
                             ->label('Név')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                            ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                         TextInput::make('slug')
                             ->label('URL slug')
@@ -67,7 +75,7 @@ final class BlogCategoryResource extends Resource
                             ->rows(3),
                     ])->columns(2),
 
-                \Filament\Schemas\Components\Section::make('Megjelenés')
+                Section::make('Megjelenés')
                     ->schema([
                         ColorPicker::make('color')
                             ->label('Szín')
@@ -82,6 +90,7 @@ final class BlogCategoryResource extends Resource
             ]);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -129,17 +138,18 @@ final class BlogCategoryResource extends Resource
                     ->falseLabel('Inaktív'),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
-                \Filament\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
-                \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('name');
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -147,6 +157,7 @@ final class BlogCategoryResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

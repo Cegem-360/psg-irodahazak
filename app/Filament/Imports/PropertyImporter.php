@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\Filament\Imports;
 
 use App\Models\Property;
-use App\Models\Service;
-use App\Models\Tag;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Override;
 
 final class PropertyImporter extends Importer
 {
@@ -37,6 +36,7 @@ final class PropertyImporter extends Importer
         return $body;
     }
 
+    #[Override]
     public function resolveRecord(): ?Property
     {
         /* foreach ($this->data['tags'] as $tag) {

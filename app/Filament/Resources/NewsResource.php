@@ -9,6 +9,13 @@ use App\Filament\Resources\NewsResource\Pages\EditNews;
 use App\Filament\Resources\NewsResource\Pages\ListNews;
 use App\Models\News;
 use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -17,6 +24,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\IconColumn;
@@ -30,6 +40,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Override;
 use UnitEnum;
 
 final class NewsResource extends Resource
@@ -48,12 +59,13 @@ final class NewsResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->columns(1)
             ->components([
-                \Filament\Schemas\Components\Section::make('Alapadatok')
+                Section::make('Alapadatok')
                     ->schema([
                         TextInput::make('title')
                             ->label('Cím')
@@ -61,7 +73,7 @@ final class NewsResource extends Resource
                             ->maxLength(255)
                             ->live(onBlur: true)
                             ->live()
-                            ->afterStateUpdated(fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                            ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
                         TextInput::make('slug')
                             ->label('Slug')
                             ->maxLength(255)
@@ -76,7 +88,7 @@ final class NewsResource extends Resource
                     ])
                     ->columns(2),
 
-                \Filament\Schemas\Components\Section::make('Tartalom')
+                Section::make('Tartalom')
                     ->schema([
                         RichEditor::make('content')
                             ->label('Tartalom')
@@ -90,7 +102,7 @@ final class NewsResource extends Resource
                             ->maxSize(2048),
                     ]),
 
-                \Filament\Schemas\Components\Section::make('Kategorizálás')
+                Section::make('Kategorizálás')
                     ->schema([
                         Select::make('news_category_id')
                             ->label('Kategória')
@@ -124,7 +136,7 @@ final class NewsResource extends Resource
                     ])
                     ->columns(3),
 
-                \Filament\Schemas\Components\Section::make('Publikálás')
+                Section::make('Publikálás')
                     ->schema([
                         Toggle::make('is_published')
                             ->label('Publikált')
@@ -133,7 +145,7 @@ final class NewsResource extends Resource
 
                         DateTimePicker::make('published_at')
                             ->label('Publikálás időpontja')
-                            ->visible(fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('is_published'))
+                            ->visible(fn (Get $get): bool => $get('is_published'))
                             ->default(now()),
 
                         Select::make('user_id')
@@ -146,7 +158,7 @@ final class NewsResource extends Resource
                     ])
                     ->columns(3),
 
-                \Filament\Schemas\Components\Section::make('Metaadatok')
+                Section::make('Metaadatok')
                     ->schema([
                         DateTimePicker::make('created_at')
                             ->label('Létrehozás időpontja')
@@ -163,6 +175,7 @@ final class NewsResource extends Resource
             ]);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -304,16 +317,16 @@ final class NewsResource extends Resource
                     }),
             ])
             ->recordActions([
-                \Filament\Actions\ViewAction::make(),
-                \Filament\Actions\EditAction::make(),
-                \Filament\Actions\DeleteAction::make(),
-                \Filament\Actions\Action::make('publish')
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
+                Action::make('publish')
                     ->label('Publikálás')
                     ->icon('heroicon-o-eye')
                     ->color('success')
                     ->action(fn (News $record) => $record->publish())
                     ->visible(fn (News $record): bool => ! $record->is_published),
-                \Filament\Actions\Action::make('unpublish')
+                Action::make('unpublish')
                     ->label('Publikálás visszavonása')
                     ->icon('heroicon-o-eye-slash')
                     ->color('gray')
@@ -321,14 +334,14 @@ final class NewsResource extends Resource
                     ->visible(fn (News $record) => $record->is_published),
             ])
             ->toolbarActions([
-                \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
-                    \Filament\Actions\BulkAction::make('publish')
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    BulkAction::make('publish')
                         ->label('Publikálás')
                         ->icon('heroicon-o-eye')
                         ->color('success')
                         ->action(fn ($records) => $records->each->publish()),
-                    \Filament\Actions\BulkAction::make('unpublish')
+                    BulkAction::make('unpublish')
                         ->label('Publikálás visszavonása')
                         ->icon('heroicon-o-eye-slash')
                         ->color('gray')
@@ -338,6 +351,7 @@ final class NewsResource extends Resource
             ->defaultSort('published_at', 'desc');
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -345,6 +359,7 @@ final class NewsResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

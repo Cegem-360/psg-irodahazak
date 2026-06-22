@@ -9,11 +9,15 @@ use App\Filament\Resources\PostCodeResource\Pages\EditPostCode;
 use App\Filament\Resources\PostCodeResource\Pages\ListPostCodes;
 use App\Models\PostCode;
 use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class PostCodeResource extends Resource
@@ -32,6 +36,7 @@ final class PostCodeResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Rendszer';
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -52,6 +57,7 @@ final class PostCodeResource extends Resource
             ]);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -81,15 +87,16 @@ final class PostCodeResource extends Resource
                 //
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->toolbarActions([
-                \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -97,6 +104,7 @@ final class PostCodeResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

@@ -128,6 +128,7 @@ final class PropertyPdfService
             $pdf = $pdf->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
                 ->setNpmBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/npm');
         }
+
         $pdf = $pdf->pdf();
 
         // Fájlnév generálása

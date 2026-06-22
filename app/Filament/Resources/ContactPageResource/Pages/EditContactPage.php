@@ -7,11 +7,13 @@ namespace App\Filament\Resources\ContactPageResource\Pages;
 use App\Filament\Resources\ContactPageResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Override;
 
 final class EditContactPage extends EditRecord
 {
     protected static string $resource = ContactPageResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

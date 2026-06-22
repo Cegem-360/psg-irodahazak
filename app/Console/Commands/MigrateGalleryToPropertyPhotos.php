@@ -5,25 +5,15 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Property;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
+#[Description('Migrate gallery images to property_photos array field with relative paths')]
+#[Signature('property:migrate-gallery-photos {--dry-run : Show what would be done without making changes}')]
 final class MigrateGalleryToPropertyPhotos extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'property:migrate-gallery-photos {--dry-run : Show what would be done without making changes}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Migrate gallery images to property_photos array field with relative paths';
-
     /**
      * Execute the console command.
      */
@@ -65,7 +55,7 @@ final class MigrateGalleryToPropertyPhotos extends Command
 
                 if ($pathWithoutSizeAndExt) {
                     // Find the best available image variant for this base path in the gallery directory
-                    $galleryDirectoryPath = "property/{$galleryImage->target_table_id}/gallery/";
+                    $galleryDirectoryPath = sprintf('property/%s/gallery/', $galleryImage->target_table_id);
                     $baseName = basename($pathWithoutSizeAndExt);
 
                     // Look for the best image variant (largest available size)
@@ -89,7 +79,7 @@ final class MigrateGalleryToPropertyPhotos extends Command
             // Remove duplicates (keep order from gallery images ord field)
             $photoPaths = array_unique($photoPaths);
 
-            if (! empty($photoPaths)) {
+            if ($photoPaths !== []) {
                 if (! $isDryRun) {
                     $property->update([
                         'property_photos' => $photoPaths,
@@ -171,7 +161,7 @@ final class MigrateGalleryToPropertyPhotos extends Command
             $fileName = basename($file);
             $extension = mb_strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
-            if (in_array($extension, $imageExtensions)) {
+            if (in_array($extension, $imageExtensions, true)) {
                 // Check if this file starts with our base name
                 $fileBaseName = pathinfo($fileName, PATHINFO_FILENAME);
 
@@ -187,7 +177,7 @@ final class MigrateGalleryToPropertyPhotos extends Command
 
                     // Check for specific sizes
                     foreach ($sizePreferences as $size) {
-                        if (mb_strpos($fileName, "_$size.") !== false) {
+                        if (mb_strpos($fileName, sprintf('_%s.', $size)) !== false) {
                             $matchingFiles[$size] = $fileName;
                         }
                     }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Property;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 final class PropertyPhoneModal extends Component
@@ -42,7 +44,7 @@ final class PropertyPhoneModal extends Component
 
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.property-phone-modal');
     }

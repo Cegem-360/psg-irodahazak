@@ -6,6 +6,8 @@ namespace App\Livewire;
 
 use App\Models\Property;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cookie;
 use Livewire\Component;
 
@@ -36,7 +38,7 @@ final class FavoritesList extends Component
         $this->dispatch('openSendFavoritesModal')->to('favorites-send-modal');
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.favorites-list', [
             'favoriteProperties' => $this->favoriteProperties,

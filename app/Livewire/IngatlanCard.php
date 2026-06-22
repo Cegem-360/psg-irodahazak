@@ -6,6 +6,8 @@ namespace App\Livewire;
 
 use App\Models\Property;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cookie;
 use Livewire\Component;
 
@@ -95,7 +97,7 @@ final class IngatlanCard extends Component
         }
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         $this->favoritestatus = $this->favoritestatus ?? false;
 

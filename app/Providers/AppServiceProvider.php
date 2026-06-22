@@ -15,6 +15,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use GoogleTagManager;
 use Illuminate\Support\ServiceProvider;
+use Override;
 use Whitecube\LaravelCookieConsent\Facades\Cookies;
 
 final class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,7 @@ final class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[Override]
     public function register(): void
     {
         //
@@ -44,9 +46,11 @@ final class AppServiceProvider extends ServiceProvider
         if (Cookies::hasConsentFor('ad_storage')) {
             GoogleTagManager::set('ad_storage', 'granted');
         }
+
         if (Cookies::hasConsentFor('ad_user_data')) {
             GoogleTagManager::set('ad_user_data', 'granted');
         }
+
         if (Cookies::hasConsentFor('ad_personalization')) {
             GoogleTagManager::set('ad_personalization', 'granted');
         }

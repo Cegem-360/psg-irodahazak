@@ -36,7 +36,7 @@ final class WatermarkService
         return $storagePath; // Return the relative path
     }
 
-    public function addWatermarkFromFile(File $file)
+    public function addWatermarkFromFile(File $file): void
     {
         // 1. Get the file path
         $filePath = $file->getRealPath();
