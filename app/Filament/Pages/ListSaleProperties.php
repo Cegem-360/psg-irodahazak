@@ -7,6 +7,8 @@ namespace App\Filament\Pages;
 use App\Filament\Resources\PropertyResource;
 use App\Models\Property;
 use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\EditAction;
 use Filament\Pages\Page;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -68,15 +70,15 @@ final class ListSaleProperties extends Page implements HasTable
                 //
             ])
             ->headerActions([
-                \Filament\Actions\Action::make('create')
+                Action::make('create')
                     ->label('Új ingatlan hozzáadása')
                     ->icon('heroicon-o-plus')
                     ->color('primary')
                     ->url(PropertyResource::getUrl('create')),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make()->url(fn (Property $record): string => PropertyResource::getUrl('edit', ['record' => $record]), shouldOpenInNewTab: true),
-                \Filament\Actions\Action::make('generate_pdf')
+                EditAction::make()->url(fn (Property $record): string => PropertyResource::getUrl('edit', ['record' => $record]), shouldOpenInNewTab: true),
+                Action::make('generate_pdf')
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('success')

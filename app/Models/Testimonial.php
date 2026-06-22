@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable([
+    'client_name',
+    'client_position',
+    'client_company',
+    'testimonial',
+    'client_image',
+    'company_logo',
+    'rating',
+    'project_type',
+    'is_featured',
+    'is_active',
+    'order',
+    'lang',
+])]
 final class Testimonial extends Model
 {
-    protected $fillable = [
-        'client_name',
-        'client_position',
-        'client_company',
-        'testimonial',
-        'client_image',
-        'company_logo',
-        'rating',
-        'project_type',
-        'is_featured',
-        'is_active',
-        'order',
-        'lang',
-    ];
-
     protected $casts = [
         'is_featured' => 'boolean',
         'is_active' => 'boolean',

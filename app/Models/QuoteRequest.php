@@ -4,30 +4,30 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable([
+    'name',
+    'phone',
+    'email',
+    'company',
+    'message',
+    'subject',
+    'status',
+    'contacted_at',
+    'notes',
+])]
 final class QuoteRequest extends Model
 {
-    protected $fillable = [
-        'name',
-        'phone',
-        'email',
-        'company',
-        'message',
-        'subject',
-        'status',
-        'contacted_at',
-        'notes',
-    ];
-
     protected $casts = [
         'contacted_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
-    public function getStatusColorAttribute(): string
+    protected function getStatusColorAttribute(): string
     {
         return match ($this->status) {
             'new' => 'text-red-600 bg-red-100',
@@ -37,7 +37,7 @@ final class QuoteRequest extends Model
         };
     }
 
-    public function getStatusLabelAttribute(): string
+    protected function getStatusLabelAttribute(): string
     {
         return match ($this->status) {
             'new' => 'Új',

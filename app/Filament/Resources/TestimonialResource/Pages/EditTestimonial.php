@@ -8,11 +8,13 @@ use App\Filament\Resources\TestimonialResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
+use Override;
 
 final class EditTestimonial extends EditRecord
 {
     protected static string $resource = TestimonialResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

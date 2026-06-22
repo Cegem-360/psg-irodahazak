@@ -9,16 +9,21 @@ use App\Filament\Resources\AboutUsResource\Pages\EditAboutUs;
 use App\Filament\Resources\AboutUsResource\Pages\ListAboutUs;
 use App\Models\AboutUs;
 use BackedEnum;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class AboutUsResource extends Resource
@@ -37,12 +42,13 @@ final class AboutUsResource extends Resource
 
     protected static ?int $navigationSort = 5;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->columns(1)
             ->components([
-                \Filament\Schemas\Components\Section::make('Rólunk oldal tartalma')
+                Section::make('Rólunk oldal tartalma')
                     ->schema([
                         Select::make('language')
                             ->label('Nyelv')
@@ -72,6 +78,7 @@ final class AboutUsResource extends Resource
             ]);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -126,13 +133,14 @@ final class AboutUsResource extends Resource
                     ]),
             ])
             ->recordActions([
-                \Filament\Actions\ViewAction::make(),
-                \Filament\Actions\EditAction::make(),
-                \Filament\Actions\DeleteAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->defaultSort('language', 'asc');
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -140,6 +148,7 @@ final class AboutUsResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

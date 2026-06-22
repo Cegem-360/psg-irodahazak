@@ -10,16 +10,24 @@ use App\Filament\Resources\QuoteRequestResource\Pages\ListQuoteRequests;
 use App\Filament\Resources\QuoteRequestResource\Pages\ViewQuoteRequest;
 use App\Models\QuoteRequest;
 use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class QuoteRequestResource extends Resource
@@ -38,12 +46,13 @@ final class QuoteRequestResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->columns(1)
             ->components([
-                \Filament\Schemas\Components\Section::make('Kapcsolattartó adatok')
+                Section::make('Kapcsolattartó adatok')
                     ->schema([
                         TextInput::make('name')
                             ->label('Név')
@@ -65,7 +74,7 @@ final class QuoteRequestResource extends Resource
                     ])
                     ->columns(3),
 
-                \Filament\Schemas\Components\Section::make('Kérés részletei')
+                Section::make('Kérés részletei')
                     ->schema([
                         TextInput::make('subject')
                             ->label('Tárgy')
@@ -79,7 +88,7 @@ final class QuoteRequestResource extends Resource
                     ])
                     ->columns(2),
 
-                \Filament\Schemas\Components\Section::make('Kezelés')
+                Section::make('Kezelés')
                     ->schema([
                         Select::make('status')
                             ->label('Állapot')
@@ -103,6 +112,7 @@ final class QuoteRequestResource extends Resource
             ]);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -167,7 +177,7 @@ final class QuoteRequestResource extends Resource
                     ]),
             ])
             ->recordActions([
-                \Filament\Actions\Action::make('contact')
+                Action::make('contact')
                     ->label('Kapcsolatfelvéve')
                     ->icon('heroicon-o-phone')
                     ->color('warning')
@@ -185,7 +195,7 @@ final class QuoteRequestResource extends Resource
                             ->send();
                     }),
 
-                \Filament\Actions\Action::make('close')
+                Action::make('close')
                     ->label('Lezárás')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
@@ -202,18 +212,19 @@ final class QuoteRequestResource extends Resource
                             ->send();
                     }),
 
-                \Filament\Actions\ViewAction::make(),
-                \Filament\Actions\EditAction::make(),
-                \Filament\Actions\DeleteAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
-                \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

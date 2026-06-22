@@ -6,6 +6,8 @@ namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Property as Offices;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -53,7 +55,7 @@ final class ListRentOffices extends Component
 
     public ?string $category = null;
 
-    public function mount($queryParams = []): void
+    public function mount(array $queryParams = []): void
     {
         // Initialize filters from queryParams if provided, otherwise from request parameters
         $this->search = $queryParams['search'] ?? request('search', '');
@@ -65,9 +67,9 @@ final class ListRentOffices extends Component
         $this->priceMin = $queryParams['price_min'] ?? request('price_min', '');
         $this->priceMax = $queryParams['price_max'] ?? request('price_max', '');
         $this->includeAgglomeration = $queryParams['include_agglomeration'] ?? request('include_agglomeration', false);
-        $this->category = $queryParams['category'] ?? request('category', null);
-        $this->min_rent = $queryParams['min_rent'] ?? request('min_rent', null);
-        $this->min_rent_addons = $queryParams['min_rent_addons'] ?? request('min_rent_addons', null);
+        $this->category = $queryParams['category'] ?? request('category');
+        $this->min_rent = $queryParams['min_rent'] ?? request('min_rent');
+        $this->min_rent_addons = $queryParams['min_rent_addons'] ?? request('min_rent_addons');
 
         if ($this->officeName) {
             $office = Offices::where('title', $this->officeName)->first();
@@ -106,7 +108,7 @@ final class ListRentOffices extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
 
         $offices = $this->getOffices();
@@ -135,7 +137,7 @@ final class ListRentOffices extends Component
                     'lng' => (float) $office->maps_lng,
                     'address' => $office->cim_irsz.' '.$office->cim_varos.($office->district ? ' '.$office->district.'. kerület' : '').', '.$office->cim_utca.' '.$office->cim_hazszam,
                     'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
-                    'operating_fee' => ($office->uzemeletetesi_dij ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
+                    'operating_fee' => (translate_value($office->uzemeletetesi_dij) ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
                     'url' => route('properties.show', ['property' => $office]),
                 ];
             })

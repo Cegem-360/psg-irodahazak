@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Override;
 
+#[Fillable([
+    'name',
+    'slug',
+    'description',
+    'color',
+    'icon',
+    'is_active',
+    'sort_order',
+])]
 final class NewsCategory extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'color',
-        'icon',
-        'is_active',
-        'sort_order',
-    ];
 
     protected $casts = [
         'is_active' => 'boolean',
@@ -38,16 +39,7 @@ final class NewsCategory extends Model
         return $this->hasMany(News::class)->published();
     }
 
-    public function getNewsCountAttribute(): int
-    {
-        return $this->news()->count();
-    }
-
-    public function getPublishedNewsCountAttribute(): int
-    {
-        return $this->publishedNews()->count();
-    }
-
+    #[Override]
     protected static function boot(): void
     {
         parent::boot();
@@ -67,5 +59,15 @@ final class NewsCategory extends Model
                 $category->slug = Str::slug($category->name);
             }
         });
+    }
+
+    protected function getNewsCountAttribute(): int
+    {
+        return $this->news()->count();
+    }
+
+    protected function getPublishedNewsCountAttribute(): int
+    {
+        return $this->publishedNews()->count();
     }
 }

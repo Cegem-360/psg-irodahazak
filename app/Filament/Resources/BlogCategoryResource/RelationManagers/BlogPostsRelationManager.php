@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\BlogCategoryResource\RelationManagers;
 
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
@@ -11,6 +12,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Override;
 
 final class BlogPostsRelationManager extends RelationManager
 {
@@ -18,6 +20,7 @@ final class BlogPostsRelationManager extends RelationManager
 
     protected static ?string $title = 'Blog Bejegyzések';
 
+    #[Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -72,8 +75,8 @@ final class BlogPostsRelationManager extends RelationManager
                 // A bejegyzéseket a BlogPostResource-ban hozzuk létre
             ])
             ->recordActions([
-                \Filament\Actions\ViewAction::make()
-                    ->url(fn ($record) => route('filament.admin.resources.blog-posts.edit', $record))
+                ViewAction::make()
+                    ->url(fn ($record): string => route('filament.admin.resources.blog-posts.edit', $record))
                     ->openUrlInNewTab(),
             ])
             ->toolbarActions([

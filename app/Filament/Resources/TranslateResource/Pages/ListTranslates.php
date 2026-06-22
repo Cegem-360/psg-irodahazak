@@ -7,11 +7,13 @@ namespace App\Filament\Resources\TranslateResource\Pages;
 use App\Filament\Resources\TranslateResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Override;
 
 final class ListTranslates extends ListRecords
 {
     protected static string $resource = TranslateResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

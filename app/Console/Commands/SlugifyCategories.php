@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Category;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
+#[Description('Frissíti a categories tábla slug mezőjét a name alapján, magyar ékezetes karakterek cseréjével.')]
+#[Signature('category:slugify {--dry-run : Csak kiírja, mit módosítana, nem ír az adatbázisba}')]
 final class SlugifyCategories extends Command
 {
-    protected $signature = 'category:slugify {--dry-run : Csak kiírja, mit módosítana, nem ír az adatbázisba}';
-
-    protected $description = 'Frissíti a categories tábla slug mezőjét a name alapján, magyar ékezetes karakterek cseréjével.';
-
     public function handle(): void
     {
         $categories = Category::all();

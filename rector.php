@@ -26,8 +26,11 @@ return RectorConfig::configure()
         SetList::DEAD_CODE,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE,
+        // PHP set stays at 8.3: both Laravel 13 and this app floor at php ^8.3,
+        // so emitting 8.4-only syntax would break the declared compatibility.
         SetList::PHP_83,
         SetList::TYPE_DECLARATION,
+        LaravelSetList::LARAVEL_130,
         LaravelSetList::LARAVEL_CODE_QUALITY,
         LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
         LaravelSetList::LARAVEL_COLLECTION,

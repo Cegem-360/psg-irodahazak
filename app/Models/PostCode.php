@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 
-final class PostCode extends Model
-{
-    public $timestamps = false;
-
-    protected $fillable = [
-        'iranyitoszam',
-        'helyiseg',
-        'megye',
-    ];
-}
+#[Fillable([
+    'iranyitoszam',
+    'helyiseg',
+    'megye',
+])]
+#[WithoutTimestamps]
+final class PostCode extends Model {}

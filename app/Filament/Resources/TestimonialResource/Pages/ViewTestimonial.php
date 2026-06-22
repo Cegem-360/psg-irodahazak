@@ -7,11 +7,13 @@ namespace App\Filament\Resources\TestimonialResource\Pages;
 use App\Filament\Resources\TestimonialResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
+use Override;
 
 final class ViewTestimonial extends ViewRecord
 {
     protected static string $resource = TestimonialResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

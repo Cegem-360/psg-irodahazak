@@ -10,12 +10,17 @@ use App\Filament\Resources\PageResource\Pages\EditPage;
 use App\Filament\Resources\PageResource\Pages\ListPages;
 use App\Models\Page;
 use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ImportAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class PageResource extends Resource
@@ -34,6 +39,7 @@ final class PageResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -85,6 +91,7 @@ final class PageResource extends Resource
             ]);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -132,18 +139,19 @@ final class PageResource extends Resource
                 //
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->headerActions([
-                \Filament\Actions\ImportAction::make()->importer(PageImporter::class),
+                ImportAction::make()->importer(PageImporter::class),
             ])
             ->toolbarActions([
-                \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -151,6 +159,7 @@ final class PageResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

@@ -134,7 +134,8 @@
                                 @if ($property->uzemeletetesi_dij)
                                     <tr>
                                         <td class="font-bold">{{ __('Operating Fee') }}:</td>
-                                        <td>{{ $property->uzemeletetesi_dij }}
+                                        <td>
+                                            {{ translate_value($property->uzemeletetesi_dij) }}
                                             {{ __($property->uzemeletetesi_dij_addons ?? '') }}
                                         </td>
                                     </tr>

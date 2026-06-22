@@ -7,11 +7,13 @@ namespace App\Filament\Resources\NewsCategoryResource\Pages;
 use App\Filament\Resources\NewsCategoryResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Override;
 
 final class ListNewsCategories extends ListRecords
 {
     protected static string $resource = NewsCategoryResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

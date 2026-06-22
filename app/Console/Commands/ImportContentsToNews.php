@@ -5,25 +5,15 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\News;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
+#[Description('Import lead and content from contents table to News model for specific IDs.')]
+#[Signature('news:import-contents')]
 final class ImportContentsToNews extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'news:import-contents';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Import lead and content from contents table to News model for specific IDs.';
-
     /**
      * Execute the console command.
      */

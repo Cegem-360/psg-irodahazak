@@ -8,6 +8,7 @@ use App\Models\Page;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Override;
 
 final class PageImporter extends Importer
 {
@@ -72,7 +73,8 @@ final class PageImporter extends Importer
         return $body;
     }
 
-    public function resolveRecord(): ?Page
+    #[Override]
+    public function resolveRecord(): Page
     {
         // return Page::firstOrNew([
         //     // Update existing records, matching them by `$this->data['column_name']`

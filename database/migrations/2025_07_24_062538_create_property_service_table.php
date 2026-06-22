@@ -19,7 +19,7 @@ return new class extends Migration
             return;
         }
 
-        Schema::create('property_service', function (Blueprint $table) {
+        Schema::create('property_service', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Service::class)->constrained()->onDelete('cascade');

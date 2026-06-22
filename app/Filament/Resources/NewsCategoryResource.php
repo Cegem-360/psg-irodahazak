@@ -9,11 +9,16 @@ use App\Filament\Resources\NewsCategoryResource\Pages\EditNewsCategory;
 use App\Filament\Resources\NewsCategoryResource\Pages\ListNewsCategories;
 use App\Models\NewsCategory;
 use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\IconColumn;
@@ -21,6 +26,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Override;
 use UnitEnum;
 
 final class NewsCategoryResource extends Resource
@@ -39,6 +45,7 @@ final class NewsCategoryResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Hírek';
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -49,7 +56,7 @@ final class NewsCategoryResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                    ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                 TextInput::make('slug')
                     ->label('Slug')
@@ -82,6 +89,7 @@ final class NewsCategoryResource extends Resource
             ]);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -131,17 +139,18 @@ final class NewsCategoryResource extends Resource
                     ->label('Aktív'),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
-                \Filament\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
-                \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('sort_order');
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -149,6 +158,7 @@ final class NewsCategoryResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

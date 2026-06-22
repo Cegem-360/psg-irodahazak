@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Observers\PropertyObserver;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,73 +17,72 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 #[ObservedBy(PropertyObserver::class)]
+#[Fillable([
+
+    'title',
+    'status',
+    'content',
+    'date',
+    'ord',
+    'meta_title',
+    'meta_title_en',
+    'meta_keywords',
+    'meta_keywords_en',
+    'meta_description',
+    'meta_description_en',
+    'construction_year',
+    'total_area',
+    'uzemeletetesi_dij',
+    'raktar_berleti_dij',
+    'parkolas',
+    'kozos_teruleti_arany',
+    'cim_irsz',
+    'cim_varos',
+    'district',
+    'cim_utca',
+    'cim_hazszam',
+    'maps_lat',
+    'maps_lng',
+    'azonosito',
+    'osszterulet_addons',
+    'max_berleti_dij',
+    'max_berleti_dij_addons',
+    'min_berleti_dij',
+    'min_berleti_dij_addons',
+    'raktar_terulet',
+    'raktar_terulet_addons',
+    'raktar_berleti_dij_addons',
+    'uzemeletetesi_dij_addons',
+    'min_parkolas_dija',
+    'min_parkolas_dija_addons',
+    'max_parkolas_dija',
+    'max_parkolas_dija_addons',
+    'kozos_teruleti_arany_addons',
+    'min_kiado',
+    'min_kiado_addons',
+    'jelenleg_kiado',
+    'jelenleg_kiado_addons',
+    'kodszam',
+    'en_content',
+    'min_berleti_idoszak',
+    'min_berleti_idoszak_addons',
+    'cim_utca_addons',
+    'cimke',
+    'service',
+    'maps',
+    'elado_v_kiado',
+    'updated',
+    'egyeb',
+    'vat',
+    'slug',
+    'featured',
+    'property_photos',
+    'created_at',
+    'updated_at',
+])]
 final class Property extends Model
 {
     protected $guarded = [];
-
-    protected $fillable = [
-
-        'title',
-        'status',
-        'content',
-        'date',
-        'ord',
-        'meta_title',
-        'meta_title_en',
-        'meta_keywords',
-        'meta_keywords_en',
-        'meta_description',
-        'meta_description_en',
-        'construction_year',
-        'total_area',
-        'uzemeletetesi_dij',
-        'raktar_berleti_dij',
-        'parkolas',
-        'kozos_teruleti_arany',
-        'cim_irsz',
-        'cim_varos',
-        'district',
-        'cim_utca',
-        'cim_hazszam',
-        'maps_lat',
-        'maps_lng',
-        'azonosito',
-        'osszterulet_addons',
-        'max_berleti_dij',
-        'max_berleti_dij_addons',
-        'min_berleti_dij',
-        'min_berleti_dij_addons',
-        'raktar_terulet',
-        'raktar_terulet_addons',
-        'raktar_berleti_dij_addons',
-        'uzemeletetesi_dij_addons',
-        'min_parkolas_dija',
-        'min_parkolas_dija_addons',
-        'max_parkolas_dija',
-        'max_parkolas_dija_addons',
-        'kozos_teruleti_arany_addons',
-        'min_kiado',
-        'min_kiado_addons',
-        'jelenleg_kiado',
-        'jelenleg_kiado_addons',
-        'kodszam',
-        'en_content',
-        'min_berleti_idoszak',
-        'min_berleti_idoszak_addons',
-        'cim_utca_addons',
-        'cimke',
-        'service',
-        'maps',
-        'elado_v_kiado',
-        'updated',
-        'egyeb',
-        'vat',
-        'slug',
-        'featured',
-        'property_photos',
-        'created_at',
-        'updated_at',
-    ];
 
     protected $casts = [
         'updated_at' => 'datetime',
@@ -164,7 +164,7 @@ final class Property extends Model
          '<br><strong>'.$rent.':</strong> '.
           $this->min_berleti_dij
           .($this->max_berleti_dij && $this->max_berleti_dij !== $this->min_berleti_dij ? ' - '.$this->max_berleti_dij.' '.__($this->min_berleti_dij_addons) : ' '.__($this->min_berleti_dij_addons))
-          .'<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' '.__($this->uzemeletetesi_dij_addons);
+          .'<br><strong>'.__('Operating Fee').': </strong>'.translate_value($this->uzemeletetesi_dij).' '.__($this->uzemeletetesi_dij_addons);
 
         return $address ?: null;
     }

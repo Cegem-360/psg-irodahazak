@@ -5,30 +5,30 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Observers\GalleryObserver;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 #[ObservedBy(GalleryObserver::class)]
+#[Fillable([
+    'path',
+    'target_table_id',
+    'ord',
+    'size',
+    'date',
+    'target_table',
+    'path_without_size_and_ext',
+    'alt',
+    'gallery_category_id',
+    'video_url',
+    'image_file', // Virtual field for file upload
+    'images', // JSON array of image filenames
+    'sort',
+])]
 final class Gallery extends Model
 {
     protected $guarded = [];
-
-    protected $fillable = [
-        'path',
-        'target_table_id',
-        'ord',
-        'size',
-        'date',
-        'target_table',
-        'path_without_size_and_ext',
-        'alt',
-        'gallery_category_id',
-        'video_url',
-        'image_file', // Virtual field for file upload
-        'images', // JSON array of image filenames
-        'sort',
-    ];
 
     protected $casts = [
         'date' => 'datetime',
@@ -42,23 +42,6 @@ final class Gallery extends Model
         'ord' => 0,
         'gallery_category_id' => 0,
     ];
-
-    /**
-     * Get the full URL for the image
-     */
-    public function getImageUrlAttribute(): string
-    {
-
-        return asset($this->path);
-    }
-
-    /**
-     * Get the public URL for the image
-     */
-    public function getPublicUrlAttribute(): string
-    {
-        return Storage::url($this->path);
-    }
 
     /**
      * Get different sizes of the image
@@ -103,7 +86,7 @@ final class Gallery extends Model
             // Extract the base name (without size and extension)
             $baseName = preg_replace('/_\d+x\d+\.(jpg|png|jpeg)$/', '', $image);
 
-            if (! in_array($baseName, $seen)) {
+            if (! in_array($baseName, $seen, true)) {
                 $seen[] = $baseName;
                 $unique[] = $image;
             }
@@ -150,5 +133,22 @@ final class Gallery extends Model
     public function property()
     {
         return $this->belongsTo(Property::class, 'target_table_id');
+    }
+
+    /**
+     * Get the full URL for the image
+     */
+    protected function getImageUrlAttribute(): string
+    {
+
+        return asset($this->path);
+    }
+
+    /**
+     * Get the public URL for the image
+     */
+    protected function getPublicUrlAttribute(): string
+    {
+        return Storage::url($this->path);
     }
 }

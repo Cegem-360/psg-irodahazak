@@ -5,6 +5,12 @@ declare(strict_types=1);
 namespace App\Filament\Resources\PropertyResource\RelationManagers;
 
 use App\Models\Gallery;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
@@ -15,6 +21,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 final class ImagesRelationManager extends RelationManager
 {
@@ -22,6 +29,7 @@ final class ImagesRelationManager extends RelationManager
 
     protected static ?string $title = 'Galéria képek';
 
+    #[Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -88,7 +96,7 @@ final class ImagesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                \Filament\Actions\CreateAction::make()
+                CreateAction::make()
                     ->mutateDataUsing(function (array $data): array {
                         $data['target_table'] = 'property';
 
@@ -96,17 +104,17 @@ final class ImagesRelationManager extends RelationManager
                     }),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
-                \Filament\Actions\DeleteAction::make(),
-                \Filament\Actions\Action::make('view_image')
+                EditAction::make(),
+                DeleteAction::make(),
+                Action::make('view_image')
                     ->label('Megtekintés')
                     ->icon('heroicon-o-eye')
                     ->url(fn (Gallery $record): string => $record->image_url)
                     ->openUrlInNewTab(),
             ])
             ->toolbarActions([
-                \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('ord');

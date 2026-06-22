@@ -9,16 +9,21 @@ use App\Filament\Resources\ImpresszumResource\Pages\EditImpresszum;
 use App\Filament\Resources\ImpresszumResource\Pages\ListImpresszums;
 use App\Models\Impresszum;
 use BackedEnum;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class ImpresszumResource extends Resource
@@ -37,12 +42,13 @@ final class ImpresszumResource extends Resource
 
     protected static ?int $navigationSort = 6;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->columns(1)
             ->components([
-                \Filament\Schemas\Components\Section::make('Impresszum tartalma')
+                Section::make('Impresszum tartalma')
                     ->schema([
                         Select::make('language')
                             ->label('Nyelv')
@@ -73,6 +79,7 @@ final class ImpresszumResource extends Resource
             ]);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -127,13 +134,14 @@ final class ImpresszumResource extends Resource
                     ]),
             ])
             ->recordActions([
-                \Filament\Actions\ViewAction::make(),
-                \Filament\Actions\EditAction::make(),
-                \Filament\Actions\DeleteAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->defaultSort('language', 'asc');
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -141,6 +149,7 @@ final class ImpresszumResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

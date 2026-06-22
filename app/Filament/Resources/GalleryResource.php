@@ -10,16 +10,21 @@ use App\Filament\Resources\GalleryResource\Pages\ListGalleries;
 use App\Models\Gallery;
 use App\Models\Property;
 use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class GalleryResource extends Resource
@@ -38,6 +43,7 @@ final class GalleryResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -49,13 +55,13 @@ final class GalleryResource extends Resource
                     ->label('Kép feltöltése')
                     ->required()
                     ->disk('public')
-                    ->directory(function (\Filament\Schemas\Components\Utilities\Get $get): string {
+                    ->directory(function (Get $get): string {
                         return 'property/'.$get('target_table_id').'/gallery';
                     })
                     ->preserveFilenames()
                     ->helperText('Max. 10 MB, csak képek')
                     ->visible(
-                        fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('target_table_id') !== null
+                        fn (Get $get): bool => $get('target_table_id') !== null
                     ),
                 Select::make('target_table_id')
                     ->label('Property')
@@ -91,16 +97,17 @@ final class GalleryResource extends Resource
                     ->image()
                     ->multiple()
                     ->disk('public')
-                    ->directory(function (\Filament\Schemas\Components\Utilities\Get $get): string {
+                    ->directory(function (Get $get): string {
                         return 'property/'.$get('target_table_id').'/gallery';
                     })
                     ->helperText('Több kép egyszerre feltöltéséhez')
                     ->visible(
-                        fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('target_table_id') !== null
+                        fn (Get $get): bool => $get('target_table_id') !== null
                     ),
             ]);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -152,15 +159,16 @@ final class GalleryResource extends Resource
                 //
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->toolbarActions([
-                \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -168,6 +176,7 @@ final class GalleryResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

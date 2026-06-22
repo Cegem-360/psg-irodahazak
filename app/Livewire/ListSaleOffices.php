@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Property as Offices;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -92,7 +94,7 @@ final class ListSaleOffices extends Component
                     'street' => $office->cim_utca ?? '',
                     'house_number' => $office->cim_hazszam ?? '',
                     'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
-                    'operating_fee' => ($office->uzemeletetesi_dij ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
+                    'operating_fee' => (translate_value($office->uzemeletetesi_dij) ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
                     'url' => route('properties.show', ['property' => $office]),
 
                 ];
@@ -125,7 +127,7 @@ final class ListSaleOffices extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(): Factory|View
     {
         return view('livewire.list-sale-offices', [
             'offices' => $this->getOffices(),

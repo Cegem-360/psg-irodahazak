@@ -9,6 +9,10 @@ use App\Filament\Resources\ReferenceResource\Pages\EditReference;
 use App\Filament\Resources\ReferenceResource\Pages\ListReferences;
 use App\Models\Reference;
 use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -19,6 +23,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class ReferenceResource extends Resource
@@ -37,6 +42,7 @@ final class ReferenceResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -62,6 +68,7 @@ final class ReferenceResource extends Resource
             ]);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -107,14 +114,14 @@ final class ReferenceResource extends Resource
                     ->falseLabel('Csak inaktív'),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make()
+                EditAction::make()
                     ->label('Szerkesztés'),
-                \Filament\Actions\DeleteAction::make()
+                DeleteAction::make()
                     ->label('Törlés'),
             ])
             ->toolbarActions([
-                \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make()
+                BulkActionGroup::make([
+                    DeleteBulkAction::make()
                         ->label('Törlés'),
                 ]),
             ])
@@ -123,6 +130,7 @@ final class ReferenceResource extends Resource
             ->paginationPageOptions([10, 25, 50]);
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -130,6 +138,7 @@ final class ReferenceResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

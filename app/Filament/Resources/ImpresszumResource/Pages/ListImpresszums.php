@@ -7,11 +7,13 @@ namespace App\Filament\Resources\ImpresszumResource\Pages;
 use App\Filament\Resources\ImpresszumResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Override;
 
 final class ListImpresszums extends ListRecords
 {
     protected static string $resource = ImpresszumResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

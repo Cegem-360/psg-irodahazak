@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
 
+#[Fillable([
+    'language',
+    'title',
+    'content',
+    'is_active',
+])]
+#[Table(name: 'about_us')]
 final class AboutUs extends Model
 {
-    protected $table = 'about_us';
-
-    protected $fillable = [
-        'language',
-        'title',
-        'content',
-        'is_active',
-    ];
-
     protected $casts = [
         'is_active' => 'boolean',
     ];
 
     #[Scope]
-    public function byLanguage($query, $language): void
+    protected function byLanguage($query, $language): void
     {
         $query->where('language', $language);
     }

@@ -9,6 +9,13 @@ use App\Filament\Resources\BlogPostResource\Pages\EditBlogPost;
 use App\Filament\Resources\BlogPostResource\Pages\ListBlogPosts;
 use App\Models\BlogPost;
 use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -19,6 +26,10 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -29,6 +40,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Override;
 use UnitEnum;
 
 final class BlogPostResource extends Resource
@@ -47,21 +59,22 @@ final class BlogPostResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->columns(1)
             ->components([
-                \Filament\Schemas\Components\Group::make()
+                Group::make()
                     ->schema([
-                        \Filament\Schemas\Components\Section::make('Alapadatok')
+                        Section::make('Alapadatok')
                             ->schema([
                                 TextInput::make('title')
                                     ->label('Cím')
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                    ->afterStateUpdated(fn (string $operation, $state, Set $set): mixed => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
 
                                 TextInput::make('slug')
                                     ->label('URL slug')
@@ -77,7 +90,7 @@ final class BlogPostResource extends Resource
                                     ->helperText('Rövid összefoglaló a bejegyzésről. Automatikusan generálódik a tartalomból, ha üresen hagyod.'),
                             ]),
 
-                        \Filament\Schemas\Components\Section::make('Tartalom')
+                        Section::make('Tartalom')
                             ->schema([
                                 RichEditor::make('content')
                                     ->label('Tartalom')
@@ -102,9 +115,9 @@ final class BlogPostResource extends Resource
                     ])
                     ->columnSpan(['lg' => 2]),
 
-                \Filament\Schemas\Components\Group::make()
+                Group::make()
                     ->schema([
-                        \Filament\Schemas\Components\Section::make('Beállítások')
+                        Section::make('Beállítások')
                             ->schema([
                                 Select::make('blog_category_id')
                                     ->label('Kategória')
@@ -137,11 +150,11 @@ final class BlogPostResource extends Resource
                                 DateTimePicker::make('published_at')
                                     ->label('Publikálás dátuma')
                                     ->default(now())
-                                    ->visible(fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('is_published'))
-                                    ->required(fn (\Filament\Schemas\Components\Utilities\Get $get): bool => $get('is_published')),
+                                    ->visible(fn (Get $get): bool => $get('is_published'))
+                                    ->required(fn (Get $get): bool => $get('is_published')),
                             ]),
 
-                        \Filament\Schemas\Components\Section::make('Kép')
+                        Section::make('Kép')
                             ->schema([
                                 FileUpload::make('featured_image')
                                     ->label('Kiemelt kép')
@@ -156,7 +169,7 @@ final class BlogPostResource extends Resource
                                     ]),
                             ]),
 
-                        \Filament\Schemas\Components\Section::make('SEO')
+                        Section::make('SEO')
                             ->schema([
                                 KeyValue::make('meta_data')
                                     ->label('Meta adatok')
@@ -176,6 +189,7 @@ final class BlogPostResource extends Resource
             ->columns(3);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -278,9 +292,9 @@ final class BlogPostResource extends Resource
                     }),
             ])
             ->recordActions([
-                \Filament\Actions\ViewAction::make(),
-                \Filament\Actions\EditAction::make(),
-                \Filament\Actions\Action::make('toggle_publish')
+                ViewAction::make(),
+                EditAction::make(),
+                Action::make('toggle_publish')
                     ->label(fn (BlogPost $record): string => $record->is_published ? 'Visszavonás' : 'Publikálás')
                     ->icon(fn (BlogPost $record): string => $record->is_published ? 'heroicon-o-eye-slash' : 'heroicon-o-eye')
                     ->color(fn (BlogPost $record): string => $record->is_published ? 'warning' : 'success')
@@ -292,12 +306,12 @@ final class BlogPostResource extends Resource
                         }
                     })
                     ->requiresConfirmation(),
-                \Filament\Actions\DeleteAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
-                \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
-                    \Filament\Actions\BulkAction::make('publish')
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    BulkAction::make('publish')
                         ->label('Publikálás')
                         ->icon('heroicon-o-eye')
                         ->color('success')
@@ -305,7 +319,7 @@ final class BlogPostResource extends Resource
                             $records->each->publish();
                         })
                         ->requiresConfirmation(),
-                    \Filament\Actions\BulkAction::make('unpublish')
+                    BulkAction::make('unpublish')
                         ->label('Visszavonás')
                         ->icon('heroicon-o-eye-slash')
                         ->color('warning')
@@ -318,6 +332,7 @@ final class BlogPostResource extends Resource
             ->defaultSort('created_at', 'desc');
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -325,6 +340,7 @@ final class BlogPostResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

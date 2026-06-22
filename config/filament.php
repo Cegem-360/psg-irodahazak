@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Filament\Support\Commands\FileGenerators\FileGenerationFlag;
+
 return [
 
     /*
@@ -122,11 +124,11 @@ return [
 
     'file_generation' => [
         'flags' => [
-            Filament\Support\Commands\FileGenerators\FileGenerationFlag::PANEL_RESOURCE_CLASSES_OUTSIDE_DIRECTORIES,
-            Filament\Support\Commands\FileGenerators\FileGenerationFlag::PANEL_CLUSTER_CLASSES_OUTSIDE_DIRECTORIES,
-            Filament\Support\Commands\FileGenerators\FileGenerationFlag::EMBEDDED_PANEL_RESOURCE_SCHEMAS,
-            Filament\Support\Commands\FileGenerators\FileGenerationFlag::EMBEDDED_PANEL_RESOURCE_TABLES,
-            Filament\Support\Commands\FileGenerators\FileGenerationFlag::PARTIAL_IMPORTS,
+            FileGenerationFlag::PANEL_RESOURCE_CLASSES_OUTSIDE_DIRECTORIES,
+            FileGenerationFlag::PANEL_CLUSTER_CLASSES_OUTSIDE_DIRECTORIES,
+            FileGenerationFlag::EMBEDDED_PANEL_RESOURCE_SCHEMAS,
+            FileGenerationFlag::EMBEDDED_PANEL_RESOURCE_TABLES,
+            FileGenerationFlag::PARTIAL_IMPORTS,
         ],
     ],
 

@@ -10,11 +10,13 @@ use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use Override;
 
 final class EditProperty extends EditRecord
 {
     protected static string $resource = PropertyResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

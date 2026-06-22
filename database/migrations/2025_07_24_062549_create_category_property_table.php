@@ -19,7 +19,7 @@ return new class extends Migration
             return;
         }
 
-        Schema::create('category_property', function (Blueprint $table) {
+        Schema::create('category_property', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(Category::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Property::class)->constrained()->onDelete('cascade');

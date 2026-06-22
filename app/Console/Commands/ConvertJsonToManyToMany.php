@@ -9,29 +9,19 @@ use App\Models\Property;
 use App\Models\Service;
 use App\Models\Tag;
 use Exception;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
+#[Description('Convert JSON stored tags, services, and categories to many-to-many relationships')]
+#[Signature('properties:convert-json-relations {--dry-run : Run without making changes}')]
 final class ConvertJsonToManyToMany extends Command
 {
     /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'properties:convert-json-relations {--dry-run : Run without making changes}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Convert JSON stored tags, services, and categories to many-to-many relationships';
-
-    /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $dryRun = $this->option('dry-run');
 
@@ -49,7 +39,7 @@ final class ConvertJsonToManyToMany extends Command
                 ->orWhereNotNull('categories')
                 ->get();
 
-            $this->info("📊 Found {$properties->count()} properties with JSON relations");
+            $this->info(sprintf('📊 Found %s properties with JSON relations', $properties->count()));
 
             $convertedCount = 0;
 
@@ -58,21 +48,21 @@ final class ConvertJsonToManyToMany extends Command
                 $convertedCount++;
 
                 if ($convertedCount % 50 === 0) {
-                    $this->info("✅ Processed {$convertedCount} properties...");
+                    $this->info(sprintf('✅ Processed %d properties...', $convertedCount));
                 }
             }
 
             if (! $dryRun) {
                 DB::commit();
-                $this->info("🎉 Successfully converted {$convertedCount} properties!");
+                $this->info(sprintf('🎉 Successfully converted %d properties!', $convertedCount));
             } else {
                 DB::rollBack();
-                $this->info("🔍 DRY RUN completed - {$convertedCount} properties would be converted");
+                $this->info(sprintf('🔍 DRY RUN completed - %d properties would be converted', $convertedCount));
             }
 
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             DB::rollBack();
-            $this->error('❌ Error during conversion: '.$e->getMessage());
+            $this->error('❌ Error during conversion: '.$exception->getMessage());
 
             return 1;
         }
@@ -82,7 +72,7 @@ final class ConvertJsonToManyToMany extends Command
 
     private function convertPropertyRelations(Property $property, bool $dryRun): void
     {
-        $this->line("Processing Property ID: {$property->id} - {$property->title}");
+        $this->line(sprintf('Processing Property ID: %s - %s', $property->id, $property->title));
 
         // Convert Tags
         if ($property->tags && is_array($property->tags)) {
@@ -113,11 +103,11 @@ final class ConvertJsonToManyToMany extends Command
             $tagIds[] = $tag->id;
 
             if (! $dryRun) {
-                $this->line("  🏷️  Tag: {$tagName} (ID: {$tag->id})");
+                $this->line(sprintf('  🏷️  Tag: %s (ID: %s)', $tagName, $tag->id));
             }
         }
 
-        if (! $dryRun && ! empty($tagIds)) {
+        if (! $dryRun && $tagIds !== []) {
             $property->tags()->sync($tagIds);
         }
 
@@ -137,11 +127,11 @@ final class ConvertJsonToManyToMany extends Command
             $serviceIds[] = $service->id;
 
             if (! $dryRun) {
-                $this->line("  🔧 Service: {$serviceName} (ID: {$service->id})");
+                $this->line(sprintf('  🔧 Service: %s (ID: %s)', $serviceName, $service->id));
             }
         }
 
-        if (! $dryRun && ! empty($serviceIds)) {
+        if (! $dryRun && $serviceIds !== []) {
             $property->services()->sync($serviceIds);
         }
 
@@ -161,11 +151,11 @@ final class ConvertJsonToManyToMany extends Command
             $categoryIds[] = $category->id;
 
             if (! $dryRun) {
-                $this->line("  📂 Category: {$categoryName} (ID: {$category->id})");
+                $this->line(sprintf('  📂 Category: %s (ID: %s)', $categoryName, $category->id));
             }
         }
 
-        if (! $dryRun && ! empty($categoryIds)) {
+        if (! $dryRun && $categoryIds !== []) {
             $property->categories()->sync($categoryIds);
         }
 

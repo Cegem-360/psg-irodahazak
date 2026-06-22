@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+#[Fillable(['name'])]
 final class Service extends Model
 {
     protected $guarded = [];
-
-    protected $fillable = ['name'];
 
     /**
      * Many-to-many relationship with Properties

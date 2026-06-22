@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contact_pages', function (Blueprint $table) {
+        Schema::create('contact_pages', function (Blueprint $table): void {
             $table->id();
             $table->string('language', 2)->default('hu'); // Nyelv kód (hu, en)
             $table->longText('content')->nullable(); // Rich Editor tartalma a kapcsolati információkhoz
