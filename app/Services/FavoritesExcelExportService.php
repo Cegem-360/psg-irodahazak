@@ -131,7 +131,7 @@ final class FavoritesExcelExportService
             return '';
         }
 
-        return mb_trim($value.' '.$addons);
+        return mb_trim(translate_value($value).' '.$addons);
     }
 
     private function formatCommonAreaRatio(Property $property): string

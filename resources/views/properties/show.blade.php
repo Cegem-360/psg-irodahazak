@@ -135,11 +135,7 @@
                                     <tr>
                                         <td class="font-bold">{{ __('Operating Fee') }}:</td>
                                         <td>
-                                            @if (app()->getLocale() === 'en')
-                                                {{ Translate::whereName($property->uzemeletetesi_dij)->first()?->translated ?: $property->uzemeletetesi_dij }}
-                                            @else
-                                                {{ $property->uzemeletetesi_dij }}
-                                            @endif
+                                            {{ translate_value($property->uzemeletetesi_dij) }}
                                             {{ __($property->uzemeletetesi_dij_addons ?? '') }}
                                         </td>
                                     </tr>

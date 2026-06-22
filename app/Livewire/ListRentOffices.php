@@ -137,7 +137,7 @@ final class ListRentOffices extends Component
                     'lng' => (float) $office->maps_lng,
                     'address' => $office->cim_irsz.' '.$office->cim_varos.($office->district ? ' '.$office->district.'. kerület' : '').', '.$office->cim_utca.' '.$office->cim_hazszam,
                     'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
-                    'operating_fee' => ($office->uzemeletetesi_dij ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
+                    'operating_fee' => (translate_value($office->uzemeletetesi_dij) ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
                     'url' => route('properties.show', ['property' => $office]),
                 ];
             })

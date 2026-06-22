@@ -3,7 +3,28 @@
 declare(strict_types=1);
 
 use App\Models\Reference;
+use App\Models\Translate;
 use Illuminate\Database\Eloquent\Collection;
+
+if (! function_exists('translate_value')) {
+    /**
+     * Translate a free-text value via the Translate table when the current
+     * locale is English, falling back to the original value when there is no
+     * matching translation. Non-English locales return the value unchanged.
+     */
+    function translate_value(?string $value): ?string
+    {
+        if (blank($value)) {
+            return $value;
+        }
+
+        if (app()->getLocale() !== 'en') {
+            return $value;
+        }
+
+        return Translate::whereName($value)->first()?->translated ?: $value;
+    }
+}
 
 if (! function_exists('localized_route')) {
     /**

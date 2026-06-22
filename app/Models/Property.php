@@ -164,7 +164,7 @@ final class Property extends Model
          '<br><strong>'.$rent.':</strong> '.
           $this->min_berleti_dij
           .($this->max_berleti_dij && $this->max_berleti_dij !== $this->min_berleti_dij ? ' - '.$this->max_berleti_dij.' '.__($this->min_berleti_dij_addons) : ' '.__($this->min_berleti_dij_addons))
-          .'<br><strong>'.__('Operating Fee').': </strong>'.$this->uzemeletetesi_dij.' '.__($this->uzemeletetesi_dij_addons);
+          .'<br><strong>'.__('Operating Fee').': </strong>'.translate_value($this->uzemeletetesi_dij).' '.__($this->uzemeletetesi_dij_addons);
 
         return $address ?: null;
     }
