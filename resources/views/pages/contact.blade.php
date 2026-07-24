@@ -198,7 +198,7 @@
                                     <div class="flex items-center h-5">
                                         <input id="contact_privacy" name="privacy" type="checkbox" value="1"
                                             {{ old('privacy') ? 'checked' : '' }}
-                                            class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 @error('privacy') border-red-500 @enderror"
+                                            class="w-4 h-4 border border-gray-300 rounded bg-gray-50 checked:bg-primary checked:border-primary focus:ring-3 focus:ring-primary-300 @error('privacy') border-red-500 @enderror"
                                             required>
                                     </div>
                                     <div class="ml-3 text-sm">
