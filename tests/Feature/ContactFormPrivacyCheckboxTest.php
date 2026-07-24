@@ -22,3 +22,18 @@ test('contact form privacy checkbox renders a visible checked state', function (
     expect($html)->toContain('id="contact_privacy"');
     expect($html)->toContain('checked:bg-primary');
 });
+
+/*
+ * After a successful submission the controller redirects back with a flashed
+ * `success` message. The reusable contact form component must render it so the
+ * visitor gets a confirmation ("Köszönjük üzenetét! ...") on property pages,
+ * not only on the standalone contact page.
+ */
+test('contact form component displays the flashed success message', function () {
+    View::share('errors', new ViewErrorBag);
+    session()->flash('success', 'Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.');
+
+    $html = Blade::render('<x-forms.contact />');
+
+    expect($html)->toContain('Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.');
+});
