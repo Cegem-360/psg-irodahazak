@@ -10,13 +10,16 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * Duplicate historical migration for `post_codes`. The table (with its `id`
+     * column) is created by the sibling migration, so this only backfills the `id`
+     * column on legacy databases where it might be missing.
      */
     public function up(): void
     {
-        if (Schema::hasTable('post_codes')) {
+        if (Schema::hasTable('post_codes') && ! Schema::hasColumn('post_codes', 'id')) {
             Schema::table('post_codes', function (Blueprint $table): void {
                 $table->id();
-                /*  $table->timestamps(); */
             });
         }
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_codes');
+        // Intentionally left blank; the table lifecycle is owned by the sibling migration.
     }
 };

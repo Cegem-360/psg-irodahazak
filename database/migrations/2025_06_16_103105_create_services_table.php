@@ -10,14 +10,21 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * The table already exists on production (legacy import); create it only when missing.
      */
     public function up(): void
     {
         if (Schema::hasTable('services')) {
-            Schema::table('services', function (Blueprint $table): void {
-                $table->timestamps();
-            });
+            return;
         }
+
+        Schema::create('services', function (Blueprint $table): void {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+            $table->index('name');
+        });
     }
 
     /**

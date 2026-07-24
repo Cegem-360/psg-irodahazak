@@ -296,10 +296,7 @@ final class Property extends Model
                 $q->orWhere(function ($subQ) use ($districtNum): void {
                     // Irányítószám → szám → osztás 10-zel → kivonás 100
                     // Például: 1051 → 1051/10=105 → 105-100=5 → 5. kerület
-                    $subQ->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
-                        ->whereRaw('CAST(cim_irsz AS UNSIGNED) > 999')
-                        ->whereRaw('CAST(cim_irsz AS UNSIGNED) < 10000')
-                        ->whereRaw('FLOOR(CAST(cim_irsz AS UNSIGNED) / 10) - 100 = ?', [$districtNum]);
+                    $this->applyPostalCodeDistrictFilter($subQ, $districtNum);
                 });
             }
         });
@@ -351,10 +348,7 @@ final class Property extends Model
                         $subQ->orWhere(function ($postalQ) use ($districtNum): void {
                             // Irányítószám → szám → osztás 10-zel → kivonás 100
                             // Például: 1051 → 1051/10=105 → 105-100=5 → 5. kerület
-                            $postalQ->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
-                                ->whereRaw('CAST(cim_irsz AS UNSIGNED) > 999')
-                                ->whereRaw('CAST(cim_irsz AS UNSIGNED) < 10000')
-                                ->whereRaw('FLOOR(CAST(cim_irsz AS UNSIGNED) / 10) - 100 = ?', [$districtNum]);
+                            $this->applyPostalCodeDistrictFilter($postalQ, $districtNum);
                         });
                     }
                 });
@@ -414,5 +408,30 @@ final class Property extends Model
             get: fn ($value) => $value ?: Str::slug($this->title),
             set: fn ($value) => $value ?: Str::slug($this->title)
         );
+    }
+
+    /**
+     * Apply the postal-code based district filter in a database-portable way.
+     *
+     * A `cim_irsz` postal code such as 1051 maps to a Budapest district via
+     * floor(1051 / 10) - 100 = 5. MySQL and SQLite spell the required string and
+     * math functions differently, so we branch on the active driver while keeping
+     * identical semantics.
+     */
+    private function applyPostalCodeDistrictFilter($query, int $districtNum): void
+    {
+        if ($query->getConnection()->getDriverName() === 'sqlite') {
+            $query->whereRaw('LENGTH(cim_irsz) = 4')
+                ->whereRaw('CAST(cim_irsz AS INTEGER) > 999')
+                ->whereRaw('CAST(cim_irsz AS INTEGER) < 10000')
+                ->whereRaw('(CAST(cim_irsz AS INTEGER) / 10) - 100 = ?', [$districtNum]);
+
+            return;
+        }
+
+        $query->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
+            ->whereRaw('CAST(cim_irsz AS UNSIGNED) > 999')
+            ->whereRaw('CAST(cim_irsz AS UNSIGNED) < 10000')
+            ->whereRaw('FLOOR(CAST(cim_irsz AS UNSIGNED) / 10) - 100 = ?', [$districtNum]);
     }
 }

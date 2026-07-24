@@ -10,15 +10,23 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * The table already exists on production (legacy import); create it only when missing.
      */
     public function up(): void
     {
         if (Schema::hasTable('post_codes')) {
-            Schema::table('post_codes', function (Blueprint $table): void {
-                /* $table->id(); */
-                $table->timestamps();
-            });
+            return;
         }
+
+        Schema::create('post_codes', function (Blueprint $table): void {
+            $table->id();
+            $table->string('iranyitoszam', 4)->default('');
+            $table->string('helyiseg', 64)->default('');
+            $table->string('megye', 64)->default('');
+            $table->timestamps();
+            $table->unique('iranyitoszam');
+        });
     }
 
     /**
