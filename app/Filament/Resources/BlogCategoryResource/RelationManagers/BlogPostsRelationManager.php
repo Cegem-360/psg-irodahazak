@@ -8,6 +8,7 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
@@ -32,6 +33,7 @@ final class BlogPostsRelationManager extends RelationManager
             ]);
     }
 
+    #[Override]
     public function table(Table $table): Table
     {
         return $table
@@ -49,8 +51,8 @@ final class BlogPostsRelationManager extends RelationManager
                 IconColumn::make('is_published')
                     ->label('Publikált')
                     ->boolean()
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueIcon(Heroicon::OutlinedCheckCircle)
+                    ->falseIcon(Heroicon::OutlinedXCircle)
                     ->trueColor('success')
                     ->falseColor('warning'),
 

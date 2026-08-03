@@ -19,6 +19,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -30,7 +31,7 @@ final class AboutUsResource extends Resource
 {
     protected static ?string $model = AboutUs::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-information-circle';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInformationCircle;
 
     protected static ?string $navigationLabel = 'Rólunk';
 
@@ -107,8 +108,8 @@ final class AboutUsResource extends Resource
                 IconColumn::make('is_active')
                     ->label('Aktív')
                     ->boolean()
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueIcon(Heroicon::OutlinedCheckCircle)
+                    ->falseIcon(Heroicon::OutlinedXCircle)
                     ->trueColor('success')
                     ->falseColor('gray'),
 

@@ -21,7 +21,7 @@ final class WatermarkService
         $image = $image->watermark(resource_path('images/psg-irodahazak-logo.png'), AlignPosition::MiddleMiddle, 0, 0, Unit::Percent, alpha: 30);
 
         // Sanitize filename to remove special characters
-        $sanitizedFilename = preg_replace('/[^a-zA-Z0-9._-]/', '_', $filename);
+        $sanitizedFilename = preg_replace('/[^a-zA-Z0-9._-]/', '_', (string) $filename);
         $storagePath = 'property/'.$record->id.'/gallery_images/'.$sanitizedFilename;
         $fullStoragePath = storage_path('app/public/'.$storagePath);
 

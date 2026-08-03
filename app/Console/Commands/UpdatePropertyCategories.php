@@ -35,9 +35,7 @@ final class UpdatePropertyCategories extends Command
 
                     $tmpCategories = $property->categories ?? [];
                     // Szűrjük ki a már nem létező kategóriákat
-                    $tmpCategories = array_values(array_filter($tmpCategories, function ($catName) {
-                        return Category::where('name', $catName)->exists();
-                    }));
+                    $tmpCategories = array_values(array_filter($tmpCategories, fn ($catName) => Category::where('name', $catName)->exists()));
                     // Új kategória hozzáadása, ha létezik
                     if (Category::where('name', $page->title)->exists()) {
                         if (! in_array($page->title, $tmpCategories, true)) {

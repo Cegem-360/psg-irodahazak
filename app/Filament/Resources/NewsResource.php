@@ -29,6 +29,7 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -47,7 +48,7 @@ final class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 
     protected static ?string $navigationLabel = 'Hírek';
 
@@ -223,8 +224,8 @@ final class NewsResource extends Resource
                     ->label('Fontos')
                     ->boolean()
                     ->toggleable()
-                    ->trueIcon('heroicon-o-exclamation-triangle')
-                    ->falseIcon('heroicon-o-minus')
+                    ->trueIcon(Heroicon::OutlinedExclamationTriangle)
+                    ->falseIcon(Heroicon::OutlinedMinus)
                     ->trueColor('warning'),
 
                 TextColumn::make('status')
@@ -304,17 +305,15 @@ final class NewsResource extends Resource
                         DatePicker::make('published_until')
                             ->label('Publikálva eddig'),
                     ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['published_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['published_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('published_at', '<=', $date),
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data): Builder => $query
+                        ->when(
+                            $data['published_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['published_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('published_at', '<=', $date),
+                        )),
             ])
             ->recordActions([
                 ViewAction::make(),
@@ -322,13 +321,13 @@ final class NewsResource extends Resource
                 DeleteAction::make(),
                 Action::make('publish')
                     ->label('Publikálás')
-                    ->icon('heroicon-o-eye')
+                    ->icon(Heroicon::OutlinedEye)
                     ->color('success')
                     ->action(fn (News $record) => $record->publish())
                     ->visible(fn (News $record): bool => ! $record->is_published),
                 Action::make('unpublish')
                     ->label('Publikálás visszavonása')
-                    ->icon('heroicon-o-eye-slash')
+                    ->icon(Heroicon::OutlinedEyeSlash)
                     ->color('gray')
                     ->action(fn (News $record) => $record->unpublish())
                     ->visible(fn (News $record) => $record->is_published),
@@ -338,12 +337,12 @@ final class NewsResource extends Resource
                     DeleteBulkAction::make(),
                     BulkAction::make('publish')
                         ->label('Publikálás')
-                        ->icon('heroicon-o-eye')
+                        ->icon(Heroicon::OutlinedEye)
                         ->color('success')
                         ->action(fn ($records) => $records->each->publish()),
                     BulkAction::make('unpublish')
                         ->label('Publikálás visszavonása')
-                        ->icon('heroicon-o-eye-slash')
+                        ->icon(Heroicon::OutlinedEyeSlash)
                         ->color('gray')
                         ->action(fn ($records) => $records->each->unpublish()),
                 ]),

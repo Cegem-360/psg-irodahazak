@@ -13,7 +13,7 @@ use Illuminate\Support\ViewErrorBag;
  * on a light-gray box — invisible, so users think the checkbox "won't tick".
  * A checked-state background utility must keep the checked state visible.
  */
-test('contact form privacy checkbox renders a visible checked state', function () {
+test('contact form privacy checkbox renders a visible checked state', function (): void {
     // The @error directives need a shared error bag, normally provided by web middleware.
     View::share('errors', new ViewErrorBag);
 
@@ -29,7 +29,7 @@ test('contact form privacy checkbox renders a visible checked state', function (
  * visitor gets a confirmation ("Köszönjük üzenetét! ...") on property pages,
  * not only on the standalone contact page.
  */
-test('contact form component displays the flashed success message', function () {
+test('contact form component displays the flashed success message', function (): void {
     View::share('errors', new ViewErrorBag);
     session()->flash('success', 'Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.');
 

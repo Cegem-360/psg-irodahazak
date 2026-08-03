@@ -13,18 +13,7 @@ final class FavoritesSendMail extends Mailable
     use Queueable;
     use SerializesModels;
 
-    public $recipientName;
-
-    public $bodyText;
-
-    public $properties;
-
-    public function __construct($recipientName, $bodyText, $properties)
-    {
-        $this->recipientName = $recipientName;
-        $this->bodyText = $bodyText;
-        $this->properties = $properties;
-    }
+    public function __construct(public $recipientName, public $bodyText, public $properties) {}
 
     public function build()
     {

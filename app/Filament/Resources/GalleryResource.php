@@ -20,6 +20,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -31,7 +32,7 @@ final class GalleryResource extends Resource
 {
     protected static ?string $model = Gallery::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $navigationLabel = 'Galéria';
 
@@ -55,9 +56,7 @@ final class GalleryResource extends Resource
                     ->label('Kép feltöltése')
                     ->required()
                     ->disk('public')
-                    ->directory(function (Get $get): string {
-                        return 'property/'.$get('target_table_id').'/gallery';
-                    })
+                    ->directory(fn (Get $get): string => 'property/'.$get('target_table_id').'/gallery')
                     ->preserveFilenames()
                     ->helperText('Max. 10 MB, csak képek')
                     ->visible(
@@ -97,9 +96,7 @@ final class GalleryResource extends Resource
                     ->image()
                     ->multiple()
                     ->disk('public')
-                    ->directory(function (Get $get): string {
-                        return 'property/'.$get('target_table_id').'/gallery';
-                    })
+                    ->directory(fn (Get $get): string => 'property/'.$get('target_table_id').'/gallery')
                     ->helperText('Több kép egyszerre feltöltéséhez')
                     ->visible(
                         fn (Get $get): bool => $get('target_table_id') !== null

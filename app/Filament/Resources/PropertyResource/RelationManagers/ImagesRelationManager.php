@@ -17,6 +17,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -40,9 +41,7 @@ final class ImagesRelationManager extends RelationManager
                     ->label('Kép feltöltése')
                     ->required()
 
-                    ->directory(function (Gallery $record): string {
-                        return 'property/'.$record->target_table_id.'/gallery';
-                    })
+                    ->directory(fn (Gallery $record): string => 'property/'.$record->target_table_id.'/gallery')
                     ->preserveFilenames()
                     ->helperText('Max. 10 MB, csak képek'),
                 TextInput::make('path_without_size_and_ext')
@@ -67,6 +66,7 @@ final class ImagesRelationManager extends RelationManager
             ]);
     }
 
+    #[Override]
     public function table(Table $table): Table
     {
         return $table
@@ -108,7 +108,7 @@ final class ImagesRelationManager extends RelationManager
                 DeleteAction::make(),
                 Action::make('view_image')
                     ->label('Megtekintés')
-                    ->icon('heroicon-o-eye')
+                    ->icon(Heroicon::OutlinedEye)
                     ->url(fn (Gallery $record): string => $record->image_url)
                     ->openUrlInNewTab(),
             ])

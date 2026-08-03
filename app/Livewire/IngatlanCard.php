@@ -99,7 +99,7 @@ final class IngatlanCard extends Component
 
     public function render(): Factory|View
     {
-        $this->favoritestatus = $this->favoritestatus ?? false;
+        $this->favoritestatus ??= false;
 
         return view('livewire.ingatlan-card', [
             'favoritestatus' => $this->favoritestatus,
@@ -122,7 +122,7 @@ final class IngatlanCard extends Component
             $decoded = json_decode($favorites, true);
 
             return is_array($decoded) ? $decoded : [];
-        } catch (Exception $exception) {
+        } catch (Exception) {
             return [];
         }
     }

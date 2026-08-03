@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
+use Madbox99\RectorFilament\Set\FilamentSetList;
 use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\SetList;
-use RectorLaravel\Rector\MethodCall\ValidationRuleArrayStringValueToArrayRector;
 use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
-    ->withRules([
-        ValidationRuleArrayStringValueToArrayRector::class,
-    ])
+    ->withImportNames()
+    ->withComposerBased(laravel: true)
+    ->withParallel()
+    ->withPhpSets(php83: true)
     ->withPaths([
         __DIR__.'/app',
         __DIR__.'/tests',
@@ -19,20 +19,18 @@ return RectorConfig::configure()
         __DIR__.'/resources',
         __DIR__.'/routes',
     ])
-
-    ->withImportNames(true)
-    // here we can define, what prepared sets of rules will be applied
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
+        typeDeclarations: true
+    )
     ->withSets([
-        SetList::DEAD_CODE,
-        SetList::CODE_QUALITY,
-        SetList::CODING_STYLE,
-        // PHP set stays at 8.3: both Laravel 13 and this app floor at php ^8.3,
-        // so emitting 8.4-only syntax would break the declared compatibility.
-        SetList::PHP_83,
-        SetList::TYPE_DECLARATION,
         LaravelSetList::LARAVEL_130,
         LaravelSetList::LARAVEL_CODE_QUALITY,
         LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
         LaravelSetList::LARAVEL_COLLECTION,
         LaravelSetList::LARAVEL_ARRAYACCESS_TO_METHOD_CALL,
+        FilamentSetList::FILAMENT_CODE_QUALITY,
+        FilamentSetList::FILAMENT_TESTS,
     ]);

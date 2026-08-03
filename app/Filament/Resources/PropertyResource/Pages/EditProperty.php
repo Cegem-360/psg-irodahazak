@@ -8,6 +8,7 @@ use App\Filament\Resources\PropertyResource;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Override;
@@ -22,7 +23,7 @@ final class EditProperty extends EditRecord
         return [
             Action::make('generate_pdf')
                 ->label('PDF Generálás')
-                ->icon('heroicon-o-document-arrow-down')
+                ->icon(Heroicon::OutlinedDocumentArrowDown)
                 ->color('success')
                 ->url(fn () => URL::temporarySignedRoute(
                     Session::get('locale') === 'en' ? 'en.property.pdf' : 'property.pdf',

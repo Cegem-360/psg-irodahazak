@@ -9,6 +9,7 @@ use App\Filament\Resources\TestimonialResource\Pages\CreateTestimonial;
 use App\Filament\Resources\TestimonialResource\Pages\ListTestimonials;
 use App\Models\User;
 use Filament\Facades\Filament;
+use Tests\TestCase;
 
 use function Pest\Livewire\livewire;
 
@@ -20,11 +21,13 @@ use function Pest\Livewire\livewire;
  */
 
 beforeEach(function (): void {
+    /** @var TestCase $this */
     Filament::setCurrentPanel('admin');
     $this->actingAs(User::factory()->create());
 });
 
 it('loads the admin dashboard', function (): void {
+    /** @var TestCase $this */
     $this->get('/admin')->assertSuccessful();
 });
 

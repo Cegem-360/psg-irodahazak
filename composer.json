@@ -38,6 +38,7 @@
         "laravel/pail": "^1.2.4",
         "laravel/pint": "^1.27.0",
         "laravel/sail": "^1.52.0",
+        "madbox-99/rector-filament": "^1.1",
         "mockery/mockery": "^1.6.12",
         "nunomaduro/collision": "^8.8.3",
         "pestphp/pest": "^4.4",

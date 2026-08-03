@@ -56,7 +56,7 @@ final class MigrateGalleryToPropertyPhotos extends Command
                 if ($pathWithoutSizeAndExt) {
                     // Find the best available image variant for this base path in the gallery directory
                     $galleryDirectoryPath = sprintf('property/%s/gallery/', $galleryImage->target_table_id);
-                    $baseName = basename($pathWithoutSizeAndExt);
+                    $baseName = basename((string) $pathWithoutSizeAndExt);
 
                     // Look for the best image variant (largest available size)
                     $bestImage = $this->findBestImageVariant($galleryDirectoryPath, $baseName);
@@ -177,7 +177,7 @@ final class MigrateGalleryToPropertyPhotos extends Command
 
                     // Check for specific sizes
                     foreach ($sizePreferences as $size) {
-                        if (mb_strpos($fileName, sprintf('_%s.', $size)) !== false) {
+                        if (str_contains($fileName, sprintf('_%s.', $size))) {
                             $matchingFiles[$size] = $fileName;
                         }
                     }

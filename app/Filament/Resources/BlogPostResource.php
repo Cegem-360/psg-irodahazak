@@ -31,6 +31,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -47,7 +48,7 @@ final class BlogPostResource extends Resource
 {
     protected static ?string $model = BlogPost::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static ?string $navigationLabel = 'Blog Bejegyzések';
 
@@ -96,6 +97,10 @@ final class BlogPostResource extends Resource
                                     ->label('Tartalom')
                                     ->required()
                                     ->toolbarButtons([
+                                        'alignStart',
+                                        'alignCenter',
+                                        'alignEnd',
+                                        'alignJustify',
                                         'attachFiles',
                                         'blockquote',
                                         'bold',
@@ -276,27 +281,23 @@ final class BlogPostResource extends Resource
                             ])
                             ->placeholder('Válassz státuszt'),
                     ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query->when($data['status'], function (Builder $query, string $status): Builder {
-                            return match ($status) {
-                                'published' => $query->where('is_published', true)
-                                    ->whereNotNull('published_at')
-                                    ->where('published_at', '<=', now()),
-                                'scheduled' => $query->where('is_published', true)
-                                    ->whereNotNull('published_at')
-                                    ->where('published_at', '>', now()),
-                                'draft' => $query->where('is_published', false),
-                                default => $query,
-                            };
-                        });
-                    }),
+                    ->query(fn (Builder $query, array $data): Builder => $query->when($data['status'], fn (Builder $query, string $status): Builder => match ($status) {
+                        'published' => $query->where('is_published', true)
+                            ->whereNotNull('published_at')
+                            ->where('published_at', '<=', now()),
+                        'scheduled' => $query->where('is_published', true)
+                            ->whereNotNull('published_at')
+                            ->where('published_at', '>', now()),
+                        'draft' => $query->where('is_published', false),
+                        default => $query,
+                    })),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
                 Action::make('toggle_publish')
                     ->label(fn (BlogPost $record): string => $record->is_published ? 'Visszavonás' : 'Publikálás')
-                    ->icon(fn (BlogPost $record): string => $record->is_published ? 'heroicon-o-eye-slash' : 'heroicon-o-eye')
+                    ->icon(fn (BlogPost $record): string => $record->is_published ? Heroicon::OutlinedEyeSlash : Heroicon::OutlinedEye)
                     ->color(fn (BlogPost $record): string => $record->is_published ? 'warning' : 'success')
                     ->action(function (BlogPost $record): void {
                         if ($record->is_published) {
@@ -313,7 +314,7 @@ final class BlogPostResource extends Resource
                     DeleteBulkAction::make(),
                     BulkAction::make('publish')
                         ->label('Publikálás')
-                        ->icon('heroicon-o-eye')
+                        ->icon(Heroicon::OutlinedEye)
                         ->color('success')
                         ->action(function (Collection $records): void {
                             $records->each->publish();
@@ -321,7 +322,7 @@ final class BlogPostResource extends Resource
                         ->requiresConfirmation(),
                     BulkAction::make('unpublish')
                         ->label('Visszavonás')
-                        ->icon('heroicon-o-eye-slash')
+                        ->icon(Heroicon::OutlinedEyeSlash)
                         ->color('warning')
                         ->action(function (Collection $records): void {
                             $records->each->unpublish();

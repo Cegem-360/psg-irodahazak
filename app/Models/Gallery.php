@@ -84,7 +84,7 @@ final class Gallery extends Model
 
         foreach ($images as $image) {
             // Extract the base name (without size and extension)
-            $baseName = preg_replace('/_\d+x\d+\.(jpg|png|jpeg)$/', '', $image);
+            $baseName = preg_replace('/_\d+x\d+\.(jpg|png|jpeg)$/', '', (string) $image);
 
             if (! in_array($baseName, $seen, true)) {
                 $seen[] = $baseName;
@@ -102,9 +102,7 @@ final class Gallery extends Model
     {
         $images = $this->getAllImages();
 
-        return array_filter($images, function ($image) use ($size): bool {
-            return mb_strpos($image, sprintf('_%s.', $size)) !== false;
-        });
+        return array_filter($images, fn ($image): bool => str_contains((string) $image, sprintf('_%s.', $size)));
     }
 
     /**

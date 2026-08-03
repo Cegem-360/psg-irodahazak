@@ -132,9 +132,7 @@ Route::get('/en/property-pdf/{property}', function (Property $property): Respons
 })->name('en.property.pdf')->middleware(['signed']);
 
 // PDF preview route (HTML only, no PDF generation)
-Route::get('/property-preview/{property}', function (Property $property): Factory|View {
-    return view('pdf.property', ['property' => $property]);
-})->name('property.preview');
+Route::get('/property-preview/{property}', fn (Property $property): Factory|View => view('pdf.property', ['property' => $property]))->name('property.preview');
 
 Route::get('/clearCache', function (): string {
     Artisan::call('cache:clear');

@@ -19,6 +19,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -30,7 +31,7 @@ final class ImpresszumResource extends Resource
 {
     protected static ?string $model = Impresszum::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static ?string $navigationLabel = 'Impresszum';
 
@@ -108,8 +109,8 @@ final class ImpresszumResource extends Resource
                 IconColumn::make('is_active')
                     ->label('Aktív')
                     ->boolean()
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueIcon(Heroicon::OutlinedCheckCircle)
+                    ->falseIcon(Heroicon::OutlinedXCircle)
                     ->trueColor('success')
                     ->falseColor('gray'),
 

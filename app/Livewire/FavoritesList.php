@@ -67,7 +67,7 @@ final class FavoritesList extends Component
             $decoded = json_decode($favorites, true);
 
             return is_array($decoded) ? $decoded : [];
-        } catch (Exception $exception) {
+        } catch (Exception) {
             return [];
         }
     }

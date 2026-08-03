@@ -17,6 +17,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Override;
@@ -26,7 +27,7 @@ final class ContactPageResource extends Resource
 {
     protected static ?string $model = ContactPage::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-phone';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhone;
 
     protected static ?string $navigationLabel = 'Kapcsolati oldal';
 

@@ -20,6 +20,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -35,7 +36,7 @@ final class NewsCategoryResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFolder;
 
     protected static ?string $navigationLabel = 'Hírkategóriák';
 

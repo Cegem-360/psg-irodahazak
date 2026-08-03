@@ -51,7 +51,7 @@ final class ListRentOffices extends Component
 
     public ?string $min_rent_addons = '';
 
-    public ?string $title;
+    public ?string $title = null;
 
     public ?string $category = null;
 
@@ -129,18 +129,16 @@ final class ListRentOffices extends Component
             ->whereNotNull('maps_lng')
             ->where('maps_lat', '!=', '')
             ->where('maps_lng', '!=', '')
-            ->map(function ($office): array {
-                return [
-                    'id' => $office->id,
-                    'title' => $office->title,
-                    'lat' => (float) $office->maps_lat,
-                    'lng' => (float) $office->maps_lng,
-                    'address' => $office->cim_irsz.' '.$office->cim_varos.($office->district ? ' '.$office->district.'. kerület' : '').', '.$office->cim_utca.' '.$office->cim_hazszam,
-                    'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
-                    'operating_fee' => (translate_value($office->uzemeletetesi_dij) ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
-                    'url' => route('properties.show', ['property' => $office]),
-                ];
-            })
+            ->map(fn ($office): array => [
+                'id' => $office->id,
+                'title' => $office->title,
+                'lat' => (float) $office->maps_lat,
+                'lng' => (float) $office->maps_lng,
+                'address' => $office->cim_irsz.' '.$office->cim_varos.($office->district ? ' '.$office->district.'. kerület' : '').', '.$office->cim_utca.' '.$office->cim_hazszam,
+                'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
+                'operating_fee' => (translate_value($office->uzemeletetesi_dij) ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
+                'url' => route('properties.show', ['property' => $office]),
+            ])
             ->values(); // Reset array keys to ensure clean JSON
     }
 
@@ -169,24 +167,24 @@ final class ListRentOffices extends Component
             $category_model = Category::where('slug', 'like', $this->category)->first();
             $this->title = $category_model?->name ?? __('page.title.offices_for_rent');
             if ($category_model) {
-                $query->byCategory(stripslashes($category_model->name));
+                $query->byCategory(stripslashes((string) $category_model->name));
             }
         }
 
         // Apply search filter
         if ($this->search) {
             if (
-                mb_stripos($this->search, '2 csöves fan-coil') !== false ||
-                mb_stripos($this->search, '2 csoves fan-coil') !== false ||
-                mb_stripos($this->search, '2 csöves') !== false ||
-                mb_stripos($this->search, '2 csoves') !== false
+                mb_stripos((string) $this->search, '2 csöves fan-coil') !== false ||
+                mb_stripos((string) $this->search, '2 csoves fan-coil') !== false ||
+                mb_stripos((string) $this->search, '2 csöves') !== false ||
+                mb_stripos((string) $this->search, '2 csoves') !== false
             ) {
                 $query->whereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%2 csöves fan-coil%']);
             } elseif (
-                mb_stripos($this->search, '4 csöves fan-coil') !== false ||
-                mb_stripos($this->search, '4 csoves fan-coil') !== false ||
-                mb_stripos($this->search, '4 csöves') !== false ||
-                mb_stripos($this->search, '4 csoves') !== false
+                mb_stripos((string) $this->search, '4 csöves fan-coil') !== false ||
+                mb_stripos((string) $this->search, '4 csoves fan-coil') !== false ||
+                mb_stripos((string) $this->search, '4 csöves') !== false ||
+                mb_stripos((string) $this->search, '4 csoves') !== false
             ) {
                 $query->whereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%4 csöves fan-coil%']);
             } else {
@@ -229,8 +227,8 @@ final class ListRentOffices extends Component
 
         // Apply multiple districts filter
         if ($this->districts) {
-            $selectedDistricts = explode(',', $this->districts);
-            $selectedDistricts = array_filter(array_map('trim', $selectedDistricts));
+            $selectedDistricts = explode(',', (string) $this->districts);
+            $selectedDistricts = array_filter(array_map(trim(...), $selectedDistricts));
 
             if ($selectedDistricts !== []) {
                 $query->inDistricts($selectedDistricts);

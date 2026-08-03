@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PropertyController;
 use Illuminate\Database\Eloquent\Model;
 
 arch()->preset()->php();
@@ -11,9 +14,9 @@ arch()->preset()->php();
 // - Console commands are not suffixed with "Command".
 // - Mailables are sent synchronously (no ShouldQueue) on the sync queue.
 arch()->preset()->laravel()->ignoring([
-    'App\Http\Controllers\BlogController',
-    'App\Http\Controllers\LanguageController',
-    'App\Http\Controllers\PropertyController',
+    BlogController::class,
+    LanguageController::class,
+    PropertyController::class,
     'App\Console\Commands',
     'App\Mail',
 ]);

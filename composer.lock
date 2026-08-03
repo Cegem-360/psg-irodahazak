@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "738ce7e09cf915d34a76231e65dcac39",
+    "content-hash": "b18a91ad0e56781d5bd856a77a17fa41",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -11285,6 +11285,45 @@
                 "source": "https://github.com/laravel/sail"
             },
             "time": "2026-05-27T04:02:01+00:00"
+        },
+        {
+            "name": "madbox-99/rector-filament",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MadBox-99/rector-filament.git",
+                "reference": "5023fc9ba96d9004c3b1dca5007a8c0665e42f8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MadBox-99/rector-filament/zipball/5023fc9ba96d9004c3b1dca5007a8c0665e42f8a",
+                "reference": "5023fc9ba96d9004c3b1dca5007a8c0665e42f8a",
+                "shasum": ""
+            },
+            "require": {
+                "filament/support": "^4.0 || ^5.0",
+                "php": "^8.3",
+                "rector/rector": "^2.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^3.0 || ^4.0"
+            },
+            "type": "rector-extension",
+            "autoload": {
+                "psr-4": {
+                    "Madbox99\\RectorFilament\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Rector rules for Filament codebases.",
+            "support": {
+                "issues": "https://github.com/MadBox-99/rector-filament/issues",
+                "source": "https://github.com/MadBox-99/rector-filament/tree/v1.1.0"
+            },
+            "time": "2026-07-10T09:58:33+00:00"
         },
         {
             "name": "mockery/mockery",

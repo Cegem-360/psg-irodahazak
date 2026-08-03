@@ -19,8 +19,8 @@ final class PropertyController extends Controller
 
         // Filter by districts (multiple)
         if (request('districts')) {
-            $districts = explode(',', request('districts'));
-            $districts = array_map('trim', $districts); // Remove any extra whitespace
+            $districts = explode(',', (string) request('districts'));
+            $districts = array_map(trim(...), $districts); // Remove any extra whitespace
             $districts = array_filter($districts); // Remove empty values
 
             if ($districts !== []) {
@@ -132,15 +132,13 @@ final class PropertyController extends Controller
      */
     public function images(Property $property)
     {
-        $images = $property->images()->orderBy('ord')->get()->map(function ($image): array {
-            return [
-                'id' => $image->id,
-                'url' => $image->image_url,
-                'alt' => $image->alt,
-                'size' => $image->size,
-                'order' => $image->ord,
-            ];
-        });
+        $images = $property->images()->orderBy('ord')->get()->map(fn ($image): array => [
+            'id' => $image->id,
+            'url' => $image->image_url,
+            'alt' => $image->alt,
+            'size' => $image->size,
+            'order' => $image->ord,
+        ]);
 
         return response()->json($images);
     }
@@ -150,15 +148,13 @@ final class PropertyController extends Controller
      */
     public function imagesWithSize(Property $property, $size = null)
     {
-        $images = $property->images()->orderBy('ord')->get()->map(function ($image) use ($size): array {
-            return [
-                'id' => $image->id,
-                'url' => $image->getImageUrl($size),
-                'alt' => $image->alt,
-                'size' => $size ?? $image->size,
-                'order' => $image->ord,
-            ];
-        });
+        $images = $property->images()->orderBy('ord')->get()->map(fn ($image): array => [
+            'id' => $image->id,
+            'url' => $image->getImageUrl($size),
+            'alt' => $image->alt,
+            'size' => $size ?? $image->size,
+            'order' => $image->ord,
+        ]);
 
         return response()->json($images);
     }
@@ -170,7 +166,7 @@ final class PropertyController extends Controller
     {
         $searchTerm = request('q', '');
 
-        if (mb_strlen($searchTerm) < 2) {
+        if (mb_strlen((string) $searchTerm) < 2) {
             return response()->json([]);
         }
 

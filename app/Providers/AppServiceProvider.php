@@ -6,13 +6,9 @@ namespace App\Providers;
 
 use App\Models\Gallery;
 use App\Observers\GalleryObserver;
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Field;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\Column;
 use GoogleTagManager;
 use Illuminate\Support\ServiceProvider;
 use Override;
@@ -55,28 +51,20 @@ final class AppServiceProvider extends ServiceProvider
             GoogleTagManager::set('ad_personalization', 'granted');
         }
 
-        TextColumn::configureUsing(function (TextColumn $column): void {
+        Column::configureUsing(function (Column $column): void {
             $column->translateLabel();
+        });
+        Field::configureUsing(function (Field $field): void {
+            $field->translateLabel();
         });
         RichEditor::configureUsing(function (RichEditor $editor): void {
-            $editor->translateLabel();
+            /** Add the "justify" alignment button next to the other alignment buttons. */
+            $editor->toolbarButtons(fn (): array => array_map(
+                fn (array $buttonGroup): array => in_array('alignEnd', $buttonGroup, true)
+                    ? [...$buttonGroup, 'alignJustify']
+                    : $buttonGroup,
+                $editor->getDefaultToolbarButtons(),
+            ));
         });
-        FileUpload::configureUsing(function (FileUpload $upload): void {
-            $upload->translateLabel();
-        });
-
-        TextInput::configureUsing(function (TextInput $input): void {
-            $input->translateLabel();
-        });
-        Toggle::configureUsing(function (Toggle $toggle): void {
-            $toggle->translateLabel();
-        });
-        ImageColumn::configureUsing(function (ImageColumn $column): void {
-            $column->translateLabel();
-        });
-        IconColumn::configureUsing(function (IconColumn $column): void {
-            $column->translateLabel();
-        });
-
     }
 }

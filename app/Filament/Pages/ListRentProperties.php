@@ -10,6 +10,7 @@ use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -25,7 +26,7 @@ final class ListRentProperties extends Page implements HasTable
 
     protected string $view = 'filament.pages.properties.rent';
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice;
 
     protected static ?string $modelLabel = 'Ingatlan';
 
@@ -38,9 +39,7 @@ final class ListRentProperties extends Page implements HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(function () {
-                return Property::query()->rent();
-            })
+            ->query(fn () => Property::query()->rent())
             ->columns([
                 TextColumn::make('status')
                     ->label('Státusz')
@@ -72,19 +71,19 @@ final class ListRentProperties extends Page implements HasTable
             ->headerActions([
                 Action::make('create')
                     ->label('Új ingatlan hozzáadása')
-                    ->icon('heroicon-o-plus')
+                    ->icon(Heroicon::OutlinedPlus)
                     ->color('primary')
                     ->url(PropertyResource::getUrl('create')),
             ])
             ->recordActions([
 
                 EditAction::make()->url(fn (Property $record): string => PropertyResource::getUrl('edit', ['record' => $record]), shouldOpenInNewTab: true)
-                    ->icon('heroicon-o-pencil')
+                    ->icon(Heroicon::OutlinedPencil)
                     ->label('Szerkesztés')
                     ->color('primary'),
                 Action::make('generate_pdf')
                     ->label('PDF')
-                    ->icon('heroicon-o-document-arrow-down')
+                    ->icon(Heroicon::OutlinedDocumentArrowDown)
                     ->color('success')
                     ->url(fn (Property $record) => URL::temporarySignedRoute(
                         Session::get('locale') === 'en' ? 'en.property.pdf' : 'property.pdf',

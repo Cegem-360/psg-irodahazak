@@ -46,22 +46,18 @@ final class BlogPostFactory extends Factory
 
     public function published(): Factory
     {
-        return $this->state(function (array $attributes): array {
-            return [
-                'is_published' => true,
-                'published_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
-            ];
-        });
+        return $this->state(fn (array $attributes): array => [
+            'is_published' => true,
+            'published_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
+        ]);
     }
 
     public function draft(): Factory
     {
-        return $this->state(function (array $attributes): array {
-            return [
-                'is_published' => false,
-                'published_at' => null,
-            ];
-        });
+        return $this->state(fn (array $attributes): array => [
+            'is_published' => false,
+            'published_at' => null,
+        ]);
     }
 
     private function generateRichContent(): string

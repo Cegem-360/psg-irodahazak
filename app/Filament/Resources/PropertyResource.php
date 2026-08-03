@@ -33,6 +33,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\RecordActionsPosition;
 use Filament\Tables\Table;
@@ -46,7 +47,7 @@ final class PropertyResource extends Resource
 {
     protected static ?string $model = Property::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice;
 
     protected static ?string $navigationLabel = 'Ingatlanok';
 
@@ -428,7 +429,7 @@ final class PropertyResource extends Resource
                 EditAction::make(),
                 Action::make('generate_pdf')
                     ->label('PDF')
-                    ->icon('heroicon-o-document-arrow-down')
+                    ->icon(Heroicon::OutlinedDocumentArrowDown)
                     ->color('success')
                     ->url(fn (Property $record) => URL::temporarySignedRoute(
                         Session::get('locale') === 'en' ? 'en.property.pdf' : 'property.pdf',
@@ -449,11 +450,11 @@ final class PropertyResource extends Resource
             ->headerActions([
                 ExportAction::make('export')
                     ->label('Export Properties')
-                    ->icon('heroicon-o-arrow-down-tray')
+                    ->icon(Heroicon::OutlinedArrowDownTray)
                     ->exporter(PropertyExporter::class),
                 ImportAction::make('import')
                     ->label('Import Properties')
-                    ->icon('heroicon-o-arrow-up-tray')
+                    ->icon(Heroicon::OutlinedArrowUpTray)
                     ->importer(PropertyImporter::class),
             ]);
     }

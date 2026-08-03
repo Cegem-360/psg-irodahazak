@@ -18,6 +18,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -30,7 +31,7 @@ final class ReferenceResource extends Resource
 {
     protected static ?string $model = Reference::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-star';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedStar;
 
     protected static ?string $navigationLabel = 'Referenciák';
 
@@ -91,8 +92,8 @@ final class ReferenceResource extends Resource
                 IconColumn::make('is_active')
                     ->label('Aktív')
                     ->boolean()
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueIcon(Heroicon::OutlinedCheckCircle)
+                    ->falseIcon(Heroicon::OutlinedXCircle)
                     ->trueColor('success')
                     ->falseColor('danger'),
                 TextColumn::make('created_at')

@@ -24,6 +24,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -34,7 +35,7 @@ final class QuoteRequestResource extends Resource
 {
     protected static ?string $model = QuoteRequest::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleLeftRight;
 
     protected static ?string $navigationLabel = 'Árajánlat kérések';
 
@@ -179,7 +180,7 @@ final class QuoteRequestResource extends Resource
             ->recordActions([
                 Action::make('contact')
                     ->label('Kapcsolatfelvéve')
-                    ->icon('heroicon-o-phone')
+                    ->icon(Heroicon::OutlinedPhone)
                     ->color('warning')
                     ->visible(fn (QuoteRequest $record): bool => $record->status === 'new')
                     ->action(function (QuoteRequest $record): void {
@@ -197,7 +198,7 @@ final class QuoteRequestResource extends Resource
 
                 Action::make('close')
                     ->label('Lezárás')
-                    ->icon('heroicon-o-check-circle')
+                    ->icon(Heroicon::OutlinedCheckCircle)
                     ->color('success')
                     ->visible(fn (QuoteRequest $record): bool => $record->status !== 'closed')
                     ->action(function (QuoteRequest $record): void {
