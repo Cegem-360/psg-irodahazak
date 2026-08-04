@@ -125,7 +125,7 @@
                                         </div>
 
                                         <h2 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
-                                            <a href="{{ localized_route('news.show', $article->slug) }}"
+                                            <a href="{{ localized_route('news.show', ['slug' => $article->slug]) }}"
                                                 class="hover:text-red-600 transition duration-150">
                                                 {{ $article->title }}
                                             </a>
