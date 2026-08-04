@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('language', 2)->default('hu'); // Nyelv kód (hu, en)
             $table->longText('content')->nullable(); // Rich Editor tartalma a kapcsolati információkhoz
+            $table->text('image')->nullable(); // ContactPageResource FileUpload
             $table->timestamps();
 
             $table->unique('language'); // Egy nyelvenként csak egy rekord lehet
