@@ -13,3 +13,5 @@ Artisan::command('inspire', function (): void {
 Schedule::call(function (): void {
     Artisan::call('bloghu:fetch-feed');
 })->daily();
+
+Schedule::command('sitemap:generate')->dailyAt('04:10');
