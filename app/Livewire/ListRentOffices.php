@@ -165,10 +165,14 @@ final class ListRentOffices extends Component
 
         if ($this->category) {
             $category_model = Category::where('slug', 'like', $this->category)->first();
-            $this->title = $category_model?->name ?? __('page.title.offices_for_rent');
-            if ($category_model) {
-                $query->byCategory(stripslashes((string) $category_model->name));
-            }
+
+            // A slug with no matching category is a page that does not exist. Returning
+            // 404 rather than quietly listing everything keeps it out of search results
+            // as a soft 404, and matches psg-raktarak.
+            abort_if($category_model === null, 404);
+
+            $this->title = $category_model->name ?? __('page.title.offices_for_rent');
+            $query->byCategory(stripslashes((string) $category_model->name));
         }
 
         // Apply search filter
