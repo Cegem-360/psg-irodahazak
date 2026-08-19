@@ -141,6 +141,15 @@ li.jellemzok {
     list-style-image: url(../images/psg-symbol.svg);
 }
 
+/* Swiper >= 12 draws the arrow as an inline SVG that fills the whole button.
+   Scale it back so the chevron sits inside its box instead of touching the
+   edges, matching psg-raktarak. */
+.swiper-button-next .swiper-navigation-icon,
+.swiper-button-prev .swiper-navigation-icon {
+    width: 60%;
+    height: 60%;
+}
+
 .swiper-button-disabled {
     opacity: 0.35 !important;
 }
