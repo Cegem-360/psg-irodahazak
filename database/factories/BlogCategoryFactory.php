@@ -31,14 +31,14 @@ final class BlogCategoryFactory extends Factory
             'Gasztronómia' => '#84CC16',
         ];
 
-        $name = $this->faker->randomElement(array_keys($categories));
+        $name = fake()->randomElement(array_keys($categories));
 
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            'description' => $this->faker->paragraph(3),
+            'description' => fake()->paragraph(3),
             'color' => $categories[$name],
-            'is_active' => $this->faker->boolean(90), // 90% aktív
+            'is_active' => fake()->boolean(90), // 90% aktív
         ];
     }
 }

@@ -29,16 +29,13 @@ final class ImportContentsToNews extends Command
             ->get();
 
         foreach ($contents as $content) {
-            News::updateOrCreate(
-                ['title' => str_replace(['\"'], ['"', ''], $content->title)],
-                [
-                    'title' => str_replace(['\"'], ['"', ''], $content->title),
-                    'excerpt' => str_replace(['\"', '\n'], ['"', "\n\r"], $content->lead),
-                    'content' => str_replace(['\"', '\n'], ['"', "\n\r"], $content->content),
-                    'source' => $content->link,
+            News::query()->updateOrCreate(['title' => str_replace(['\"'], ['"', ''], $content->title)], [
+                'title' => str_replace(['\"'], ['"', ''], $content->title),
+                'excerpt' => str_replace(['\"', '\n'], ['"', "\n\r"], $content->lead),
+                'content' => str_replace(['\"', '\n'], ['"', "\n\r"], $content->content),
+                'source' => $content->link,
 
-                ]
-            );
+            ]);
             // $this->info("ID: {$content->id} | Lead: {$content->lead} | Content: {$content->content}");
         }
 

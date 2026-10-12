@@ -23,20 +23,29 @@ final class Reference extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'is_active' => 'boolean',
-        'order' => 'integer',
-    ];
-
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function active(Builder $query): void
     {
         $query->where('is_active', true);
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function ordered(Builder $query): void
     {
         $query->orderBy('order');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+            'order' => 'integer',
+        ];
     }
 }

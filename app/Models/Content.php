@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Unguarded;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 #[Fillable([
     'title',
@@ -26,16 +28,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
     'mysep',
     'link',
 ])]
+#[Unguarded]
 final class Content extends Model
 {
-    protected $guarded = [];
-
-    protected $casts = [
-        'content_json' => 'array',
-    ];
-
+    /**
+     * @return BelongsToMany<Page, $this, Pivot>
+     */
     public function pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class, 'page_content');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'content_json' => 'array',
+        ];
     }
 }

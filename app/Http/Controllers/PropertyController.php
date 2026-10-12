@@ -81,7 +81,7 @@ final class PropertyController extends Controller
     {
 
         // Apply the appropriate scope based on property type
-        $similarPropertiesQuery = Property::where('id', '!=', $property->id)
+        $similarPropertiesQuery = Property::query()->where('id', '!=', $property->id)
             ->whereDistrict($property->district)
             ->active();
 
@@ -103,7 +103,7 @@ final class PropertyController extends Controller
             $additionalCount = 3 - $similarProperties->count();
             $excludeIds = $similarProperties->pluck('id')->push($property->id)->toArray();
 
-            $additionalQuery = Property::whereNotIn('id', $excludeIds)
+            $additionalQuery = Property::query()->whereNotIn('id', $excludeIds)
                 ->active();
 
             // Apply the same scope for additional properties

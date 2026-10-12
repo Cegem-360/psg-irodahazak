@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
@@ -18,19 +19,28 @@ use Illuminate\Database\Eloquent\Model;
 #[Table(name: 'about_us')]
 final class AboutUs extends Model
 {
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
-
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function byLanguage($query, $language): void
     {
         $query->where('language', $language);
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function active($query): void
     {
         $query->where('is_active', true);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+        ];
     }
 }

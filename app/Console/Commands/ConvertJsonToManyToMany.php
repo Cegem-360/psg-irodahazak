@@ -34,7 +34,7 @@ final class ConvertJsonToManyToMany extends Command
         DB::beginTransaction();
 
         try {
-            $properties = Property::whereNotNull('tags')
+            $properties = Property::query()->whereNotNull('tags')
                 ->orWhereNotNull('services')
                 ->orWhereNotNull('categories')
                 ->get();
@@ -99,7 +99,7 @@ final class ConvertJsonToManyToMany extends Command
                 continue;
             }
 
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $tag = Tag::query()->firstOrCreate(['name' => $tagName]);
             $tagIds[] = $tag->id;
 
             if (! $dryRun) {
@@ -123,7 +123,7 @@ final class ConvertJsonToManyToMany extends Command
                 continue;
             }
 
-            $service = Service::firstOrCreate(['name' => $serviceName]);
+            $service = Service::query()->firstOrCreate(['name' => $serviceName]);
             $serviceIds[] = $service->id;
 
             if (! $dryRun) {
@@ -147,7 +147,7 @@ final class ConvertJsonToManyToMany extends Command
                 continue;
             }
 
-            $category = Category::firstOrCreate(['name' => $categoryName]);
+            $category = Category::query()->firstOrCreate(['name' => $categoryName]);
             $categoryIds[] = $category->id;
 
             if (! $dryRun) {

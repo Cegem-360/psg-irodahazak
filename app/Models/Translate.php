@@ -17,13 +17,16 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 final class Translate extends Model
 {
-    protected $casts = [
-        'date' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
     protected $attributes = [
         'lang' => 'EN',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'date' => 'datetime',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 }

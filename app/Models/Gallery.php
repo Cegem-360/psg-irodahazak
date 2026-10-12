@@ -7,6 +7,8 @@ namespace App\Models;
 use App\Observers\GalleryObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\Unguarded;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,18 +28,9 @@ use Illuminate\Support\Facades\Storage;
     'images', // JSON array of image filenames
     'sort',
 ])]
+#[Unguarded]
 final class Gallery extends Model
 {
-    protected $guarded = [];
-
-    protected $casts = [
-        'date' => 'datetime',
-        'ord' => 'integer',
-        'target_table_id' => 'integer',
-        'gallery_category_id' => 'integer',
-        'images' => 'array',
-    ];
-
     protected $attributes = [
         'ord' => 0,
         'gallery_category_id' => 0,
@@ -136,17 +129,27 @@ final class Gallery extends Model
     /**
      * Get the full URL for the image
      */
-    protected function getImageUrlAttribute(): string
+    protected function imageUrl(): Attribute
     {
-
-        return asset($this->path);
+        return Attribute::make(get: fn (): string => asset($this->path));
     }
 
     /**
      * Get the public URL for the image
      */
-    protected function getPublicUrlAttribute(): string
+    protected function publicUrl(): Attribute
     {
-        return Storage::url($this->path);
+        return Attribute::make(get: fn () => Storage::url($this->path));
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'date' => 'datetime',
+            'ord' => 'integer',
+            'target_table_id' => 'integer',
+            'gallery_category_id' => 'integer',
+            'images' => 'array',
+        ];
     }
 }

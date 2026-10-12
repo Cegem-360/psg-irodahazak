@@ -33,7 +33,7 @@ final class CategorySeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            Category::firstOrCreate([
+            Category::query()->firstOrCreate([
                 'name' => $category,
             ]);
         }

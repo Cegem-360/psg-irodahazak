@@ -66,7 +66,7 @@ final class NewsCategorySeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            NewsCategory::create($category);
+            NewsCategory::query()->create($category);
         }
     }
 }

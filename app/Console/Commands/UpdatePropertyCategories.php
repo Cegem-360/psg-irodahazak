@@ -27,7 +27,7 @@ final class UpdatePropertyCategories extends Command
             $contentIdRaw = str_replace('\\', '', $page->content_id); // eltávolítja a visszaperjeleket
             $contentIds = json_decode($contentIdRaw, true);
             foreach ($contentIds ?? [] as $propertyId) {
-                $property = Property::find($propertyId);
+                $property = Property::query()->find($propertyId);
                 if ($property) {
                     if (! is_array($property->categories)) {
                         $property->update(['categories' => []]);
@@ -35,9 +35,9 @@ final class UpdatePropertyCategories extends Command
 
                     $tmpCategories = $property->categories ?? [];
                     // Szűrjük ki a már nem létező kategóriákat
-                    $tmpCategories = array_values(array_filter($tmpCategories, fn ($catName) => Category::where('name', $catName)->exists()));
+                    $tmpCategories = array_values(array_filter($tmpCategories, fn ($catName) => Category::query()->where('name', $catName)->exists()));
                     // Új kategória hozzáadása, ha létezik
-                    if (Category::where('name', $page->title)->exists()) {
+                    if (Category::query()->where('name', $page->title)->exists()) {
                         if (! in_array($page->title, $tmpCategories, true)) {
                             $tmpCategories[] = $page->title;
                         }

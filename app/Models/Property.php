@@ -8,11 +8,13 @@ use App\Observers\PropertyObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\Unguarded;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -80,18 +82,9 @@ use Illuminate\Support\Str;
     'created_at',
     'updated_at',
 ])]
+#[Unguarded]
 final class Property extends Model
 {
-    protected $guarded = [];
-
-    protected $casts = [
-        'updated_at' => 'datetime',
-        'created_at' => 'datetime',
-        'featured' => 'boolean',
-        'vat' => 'boolean',
-        'property_photos' => 'array',
-    ];
-
     public static function countByDistrict(): array
     {
         // Kerületek római számmal
@@ -124,7 +117,7 @@ final class Property extends Model
         $result = [];
 
         foreach (array_keys($romanNumerals) as $num) {
-            $count = self::where(function ($q) use ($num): void {
+            $count = self::query()->where(function (\Illuminate\Contracts\Database\Eloquent\Builder $q) use ($num): void {
                 $q->rent()->active()->budapestOnly()->inDistrict((string) $num);
             })->count();
 
@@ -134,21 +127,33 @@ final class Property extends Model
         return $result;
     }
 
+    /**
+     * @return BelongsToMany<Service, $this, Pivot>
+     */
     public function services(): BelongsToMany
     {
         return $this->belongsToMany(Service::class);
     }
 
+    /**
+     * @return BelongsToMany<Tag, $this, Pivot>
+     */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
 
+    /**
+     * @return BelongsToMany<Category, $this, Pivot>
+     */
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
     }
 
+    /**
+     * @return HasMany<Gallery, $this>
+     */
     public function images(): HasMany
     {
         return $this->hasMany(Gallery::class, 'target_table_id')
@@ -197,6 +202,9 @@ final class Property extends Model
         return $this->elado_v_kiado === 'elado-iroda';
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function byCategory(Builder $query, string $category): void
     {
@@ -205,53 +213,77 @@ final class Property extends Model
         });
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function featured(Builder $query): void
     {
         $query->where('featured', true);
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function active(Builder $query): void
     {
         $query->where('status', 'active');
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function inactive(Builder $query): void
     {
         $query->where('status', 'inactive');
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function sale(Builder $query): void
     {
         $query->where('elado_v_kiado', 'elado-iroda');
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function rent(Builder $query): void
     {
         $query->where('elado_v_kiado', 'kiado-iroda');
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function agglomeration(Builder $query): void
     {
         $query->where('cim_varos', '!=', 'Budapest');
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function budapestOnly(Builder $query): void
     {
-        $query->where(function ($q): void {
+        $query->where(function (\Illuminate\Contracts\Database\Query\Builder $q): void {
             $q->where('cim_varos', 'like', '%Budapest%')
-                ->orWhere(function ($subQ): void {
+                ->orWhere(function (\Illuminate\Contracts\Database\Query\Builder $subQ): void {
                     $subQ->where('cim_irsz', 'like', '1%');
                 });
         });
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function inDistrict(Builder $query, string $district): void
     {
@@ -286,14 +318,14 @@ final class Property extends Model
 
         $romanDistrict = $romanNumerals[$districtNum] ?? $district;
 
-        $query->where(function ($q) use ($romanDistrict, $district, $districtNum): void {
+        $query->where(function (\Illuminate\Contracts\Database\Query\Builder $q) use ($romanDistrict, $district, $districtNum): void {
             // District oszlopban keresés
             $q->where('district', $romanDistrict)
                 ->orWhere('district', $district);
 
             // Irányítószám alapú keresés - matematikai megoldás
             if ($districtNum >= 1 && $districtNum <= 23) {
-                $q->orWhere(function ($subQ) use ($districtNum): void {
+                $q->orWhere(function (\Illuminate\Contracts\Database\Query\Builder $subQ) use ($districtNum): void {
                     // Irányítószám → szám → osztás 10-zel → kivonás 100
                     // Például: 1051 → 1051/10=105 → 105-100=5 → 5. kerület
                     $this->applyPostalCodeDistrictFilter($subQ, $districtNum);
@@ -302,12 +334,15 @@ final class Property extends Model
         });
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function inDistricts(Builder $query, array $districts): void
     {
-        $query->where(function ($q) use ($districts): void {
+        $query->where(function (\Illuminate\Contracts\Database\Query\Builder $q) use ($districts): void {
             foreach ($districts as $district) {
-                $q->orWhere(function ($subQ) use ($district): void {
+                $q->orWhere(function (\Illuminate\Contracts\Database\Query\Builder $subQ) use ($district): void {
                     $districtNum = (int) $district;
 
                     // Roman numerals mapping
@@ -345,7 +380,7 @@ final class Property extends Model
 
                     // Irányítószám alapú keresés - matematikai megoldás
                     if ($districtNum >= 1 && $districtNum <= 23) {
-                        $subQ->orWhere(function ($postalQ) use ($districtNum): void {
+                        $subQ->orWhere(function (\Illuminate\Contracts\Database\Query\Builder $postalQ) use ($districtNum): void {
                             // Irányítószám → szám → osztás 10-zel → kivonás 100
                             // Például: 1051 → 1051/10=105 → 105-100=5 → 5. kerület
                             $this->applyPostalCodeDistrictFilter($postalQ, $districtNum);
@@ -356,6 +391,9 @@ final class Property extends Model
         });
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function searchText(Builder $query, string $search): void
     {
@@ -372,12 +410,18 @@ final class Property extends Model
         });
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function byOfficeName(Builder $query, string $officeName): void
     {
         $query->where('title', 'like', '%'.$officeName.'%');
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function areaRange(Builder $query, ?int $minArea = null, ?int $maxArea = null): void
     {
@@ -390,6 +434,9 @@ final class Property extends Model
         }
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function priceRange(Builder $query, ?int $minPrice = null, ?int $maxPrice = null): void
     {
@@ -410,6 +457,17 @@ final class Property extends Model
         );
     }
 
+    protected function casts(): array
+    {
+        return [
+            'updated_at' => 'datetime',
+            'created_at' => 'datetime',
+            'featured' => 'boolean',
+            'vat' => 'boolean',
+            'property_photos' => 'array',
+        ];
+    }
+
     /**
      * Apply the postal-code based district filter in a database-portable way.
      *
@@ -418,7 +476,7 @@ final class Property extends Model
      * math functions differently, so we branch on the active driver while keeping
      * identical semantics.
      */
-    private function applyPostalCodeDistrictFilter($query, int $districtNum): void
+    private function applyPostalCodeDistrictFilter(\Illuminate\Contracts\Database\Query\Builder $query, int $districtNum): void
     {
         if ($query->getConnection()->getDriverName() === 'sqlite') {
             $query->whereRaw('LENGTH(cim_irsz) = 4')

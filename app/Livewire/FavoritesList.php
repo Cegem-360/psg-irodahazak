@@ -52,7 +52,7 @@ final class FavoritesList extends Component
         $this->favoriteCount = count($favorites);
 
         if ($favorites !== []) {
-            $this->favoriteProperties = Property::whereIn('id', $favorites)
+            $this->favoriteProperties = Property::query()->whereIn('id', $favorites)
                 ->active()
                 ->get();
         } else {

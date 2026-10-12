@@ -42,7 +42,7 @@ final class FavoritesSendModal extends Component
     public function loadProperties(): void
     {
         $favorites = json_decode(Cookie::get('property_favorites', '[]'), true);
-        $this->properties = Property::whereIn('id', $favorites)->get()->map(fn ($property): array => [
+        $this->properties = Property::query()->whereIn('id', $favorites)->get()->map(fn ($property): array => [
             'title' => $property->title,
             'url' => URL::temporarySignedRoute(
                 app()->getLocale() === 'en'
@@ -51,7 +51,7 @@ final class FavoritesSendModal extends Component
                 now()->addDays(12),
                 ['property' => $property->slug]),
 
-        ])->toArray();
+        ])->all();
     }
 
     public function sendFavorites(): void

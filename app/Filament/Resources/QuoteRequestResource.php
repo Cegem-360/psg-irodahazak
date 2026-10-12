@@ -238,13 +238,13 @@ final class QuoteRequestResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = self::getModel()::where('status', 'new')->count();
+        $count = self::getModel()::query()->where('status', 'new')->count();
 
         return $count > 0 ? (string) $count : null;
     }
 
     public static function getNavigationBadgeColor(): ?string
     {
-        return self::getModel()::where('status', 'new')->count() > 0 ? 'danger' : null;
+        return self::getModel()::query()->where('status', 'new')->count() > 0 ? 'danger' : null;
     }
 }

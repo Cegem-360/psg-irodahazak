@@ -17,11 +17,11 @@ final class NewsSeeder extends Seeder
     public function run(): void
     {
         // Ensure we have categories and users
-        if (NewsCategory::count() === 0) {
+        if (NewsCategory::query()->count() === 0) {
             $this->call(NewsCategorySeeder::class);
         }
 
-        if (User::count() === 0) {
+        if (User::query()->count() === 0) {
             User::factory()->create([
                 'name' => 'Admin User',
                 'email' => 'admin@example.com',

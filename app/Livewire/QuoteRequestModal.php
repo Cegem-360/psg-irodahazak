@@ -91,7 +91,7 @@ final class QuoteRequestModal extends Component
 
         try {
             // Create quote request
-            $quoteRequest = QuoteRequest::create([
+            $quoteRequest = QuoteRequest::query()->create([
                 'name' => $this->name,
                 'phone' => $this->phone,
                 'email' => $this->email,

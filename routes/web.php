@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function (): void {
 Route::get('/kedvencek/export-excel', function (): StreamedResponse {
     $cookieValue = Cookie::get('property_favorites') ?? '[]';
     $favorites = json_decode((string) $cookieValue, true) ?? [];
-    $properties = Property::whereIn('id', $favorites)->active()->get();
+    $properties = Property::query()->whereIn('id', $favorites)->active()->get();
 
     return (new FavoritesExcelExportService)->generate($properties);
 })->name('favorites.export-excel');
@@ -101,7 +101,7 @@ Route::group(['as' => 'en.'], function (): void {
     Route::get('/favorites/export-excel', function (): StreamedResponse {
         $cookieValue = Cookie::get('property_favorites') ?? '[]';
         $favorites = json_decode((string) $cookieValue, true) ?? [];
-        $properties = Property::whereIn('id', $favorites)->active()->get();
+        $properties = Property::query()->whereIn('id', $favorites)->active()->get();
 
         return (new FavoritesExcelExportService)->generate($properties);
     })->name('favorites.export-excel');

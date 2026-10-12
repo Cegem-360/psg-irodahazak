@@ -20,10 +20,10 @@ final class ReferenceFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->company(),
-            'image' => $this->faker->imageUrl(400, 200, 'business'),
-            'order' => $this->faker->numberBetween(0, 100),
-            'is_active' => $this->faker->boolean(80), // 80% chance of being active
+            'name' => fake()->company(),
+            'image' => fake()->imageUrl(400, 200, 'business'),
+            'order' => fake()->numberBetween(0, 100),
+            'is_active' => fake()->boolean(80), // 80% chance of being active
         ];
     }
 }

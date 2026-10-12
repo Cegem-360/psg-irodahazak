@@ -126,7 +126,7 @@ final class TestimonialSeeder extends Seeder
         ];
 
         foreach ($testimonials as $testimonial) {
-            Testimonial::create($testimonial);
+            Testimonial::query()->create($testimonial);
         }
     }
 }

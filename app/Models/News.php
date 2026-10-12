@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,24 +38,18 @@ final class News extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'is_published' => 'boolean',
-        'is_breaking' => 'boolean',
-        'published_at' => 'date',
-        'meta_data' => 'array',
-        'views_count' => 'integer',
-        'priority' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'date',
-
-    ];
-
     // Relationships
+    /**
+     * @return BelongsTo<NewsCategory, $this>
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(NewsCategory::class, 'news_category_id');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -122,50 +117,66 @@ final class News extends Model
         });
     }
 
-    protected function scopeDraft(Builder $query): Builder
+    /**
+     * @param  Builder<self>  $query
+     * @return Builder<self>
+     */
+    #[Scope]
+    protected function draft(Builder $query): Builder
     {
         return $query->where('is_published', false);
     }
 
-    protected function scopeBreaking(Builder $query): Builder
+    /**
+     * @param  Builder<self>  $query
+     * @return Builder<self>
+     */
+    #[Scope]
+    protected function breaking(Builder $query): Builder
     {
         return $query->where('is_breaking', true);
     }
 
-    // Accessors
-    protected function getReadingTimeAttribute(): string
+    protected function readingTime(): Attribute
     {
-        $wordCount = str_word_count(strip_tags($this->content));
-        $minutes = ceil($wordCount / 200); // Average reading speed
+        return Attribute::make(get: function (): string {
+            $wordCount = str_word_count(strip_tags($this->content));
+            $minutes = ceil($wordCount / 200);
 
-        return $minutes.' perc olvasás';
+            // Average reading speed
+            return $minutes.' perc olvasás';
+        });
     }
 
-    protected function getStatusAttribute(): string
+    protected function status(): Attribute
     {
-        if ($this->is_published && $this->published_at && $this->published_at <= now()) {
-            return 'published';
-        }
+        return Attribute::make(get: function (): string {
+            if ($this->is_published && $this->published_at && $this->published_at <= now()) {
+                return 'published';
+            }
+            if ($this->is_published && $this->published_at && $this->published_at > now()) {
+                return 'scheduled';
+            }
 
-        if ($this->is_published && $this->published_at && $this->published_at > now()) {
-            return 'scheduled';
-        }
-
-        return 'draft';
+            return 'draft';
+        });
     }
 
-    protected function getPriorityLabelAttribute(): string
+    protected function priorityLabel(): Attribute
     {
-        return match ($this->priority) {
+        return Attribute::make(get: fn (): string => match ($this->priority) {
             1 => 'Alacsony',
             2 => 'Normál',
             3 => 'Magas',
             4 => 'Sürgős',
             5 => 'Kritikus',
             default => 'Normál',
-        };
+        });
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function byPriority(Builder $query): void
     {
@@ -173,15 +184,36 @@ final class News extends Model
             ->latest('published_at');
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function byCategory(Builder $query, int $categoryId): void
     {
         $query->where('news_category_id', $categoryId);
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function published(Builder $query): void
     {
         $query->where('is_published', true);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_published' => 'boolean',
+            'is_breaking' => 'boolean',
+            'published_at' => 'date',
+            'meta_data' => 'array',
+            'views_count' => 'integer',
+            'priority' => 'integer',
+            'created_at' => 'datetime',
+            'updated_at' => 'date',
+
+        ];
     }
 }

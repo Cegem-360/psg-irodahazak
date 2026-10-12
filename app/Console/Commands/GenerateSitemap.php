@@ -8,6 +8,8 @@ use App\Models\BlogPost;
 use App\Models\News;
 use App\Models\Property;
 use Closure;
+use Illuminate\Console\Attributes\Description;
+use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Routing\ViewController;
@@ -16,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
+#[Description('Write sitemap.xml from the published content')]
+#[Signature('sitemap:generate {--path= : Where to write the file (defaults to public/sitemap.xml)}')]
 final class GenerateSitemap extends Command
 {
     /**
@@ -29,10 +33,6 @@ final class GenerateSitemap extends Command
         'favorites.export-excel',
         'clearCache',
     ];
-
-    protected $signature = 'sitemap:generate {--path= : Where to write the file (defaults to public/sitemap.xml)}';
-
-    protected $description = 'Write sitemap.xml from the published content';
 
     public function handle(): int
     {

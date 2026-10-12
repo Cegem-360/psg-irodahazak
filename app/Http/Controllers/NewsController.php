@@ -19,7 +19,7 @@ final class NewsController extends Controller
 
     public function show(string $slug): View
     {
-        $news = News::where('slug', $slug)
+        $news = News::query()->where('slug', $slug)
             ->published()
             ->firstOrFail();
 

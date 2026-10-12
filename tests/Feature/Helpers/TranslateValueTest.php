@@ -25,14 +25,14 @@ beforeEach(function (): void {
 
 it('returns the value unchanged for non-english locales', function (): void {
     app()->setLocale('hu');
-    Translate::create(['name' => 'Bruttó', 'translated' => 'Gross']);
+    Translate::query()->create(['name' => 'Bruttó', 'translated' => 'Gross']);
 
     expect(translate_value('Bruttó'))->toBe('Bruttó');
 });
 
 it('returns the english translation when one exists', function (): void {
     app()->setLocale('en');
-    Translate::create(['name' => 'Bruttó', 'translated' => 'Gross']);
+    Translate::query()->create(['name' => 'Bruttó', 'translated' => 'Gross']);
 
     expect(translate_value('Bruttó'))->toBe('Gross');
 });
@@ -45,7 +45,7 @@ it('falls back to the original free-text value when no translation exists', func
 
 it('falls back to the original value when the translation is empty', function (): void {
     app()->setLocale('en');
-    Translate::create(['name' => 'Bruttó', 'translated' => '']);
+    Translate::query()->create(['name' => 'Bruttó', 'translated' => '']);
 
     expect(translate_value('Bruttó'))->toBe('Bruttó');
 });

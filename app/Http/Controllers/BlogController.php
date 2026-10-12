@@ -13,12 +13,12 @@ final class BlogController extends Controller
 {
     public function index(Request $request): View
     {
-        BlogCategory::where('is_active', true)
+        BlogCategory::query()->where('is_active', true)
             ->withCount('blogPosts')
             ->orderBy('name')
             ->get();
 
-        $query = BlogPost::published()
+        $query = BlogPost::query()->published()
             ->with(['category', 'author'])
             ->latest('published_at');
 
@@ -47,15 +47,13 @@ final class BlogController extends Controller
     public function show(BlogPost $post): View
     {
         // Csak publikált bejegyzéseket mutatjuk
-        if (! $post->is_published || ! $post->published_at || $post->published_at > now()) {
-            abort(404);
-        }
+        abort_if(! $post->is_published || ! $post->published_at || $post->published_at > now(), 404);
 
         // Megtekintések számának növelése
         $post->incrementViews();
 
         // Kapcsolódó bejegyzések (ugyanabból a kategóriából)
-        $relatedPosts = BlogPost::published()
+        $relatedPosts = BlogPost::query()->published()
             ->where('blog_category_id', $post->blog_category_id)
             ->where('id', '!=', $post->id)
             ->with(['category', 'author'])
@@ -68,17 +66,15 @@ final class BlogController extends Controller
 
     public function category(BlogCategory $category): View
     {
-        if (! $category->is_active) {
-            abort(404);
-        }
+        abort_unless($category->is_active, 404);
 
-        $posts = BlogPost::published()
+        $posts = BlogPost::query()->published()
             ->where('blog_category_id', $category->id)
             ->with(['category', 'author'])
             ->latest('published_at')
             ->paginate(12);
 
-        $categories = BlogCategory::where('is_active', true)
+        $categories = BlogCategory::query()->where('is_active', true)
             ->withCount('blogPosts')
             ->orderBy('name')
             ->get();

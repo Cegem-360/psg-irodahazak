@@ -22,25 +22,25 @@ final class BlogPostFactory extends Factory
      */
     public function definition(): array
     {
-        $title = $this->faker->sentence(6, true);
-        $isPublished = $this->faker->boolean(70); // 70% publikált
+        $title = fake()->sentence(6, true);
+        $isPublished = fake()->boolean(70); // 70% publikált
 
         return [
             'title' => $title,
             'slug' => Str::slug($title),
-            'excerpt' => $this->faker->paragraph(2),
+            'excerpt' => fake()->paragraph(2),
             'content' => $this->generateRichContent(),
             'featured_image' => null, // Egyelőre nincs kép
             'blog_category_id' => BlogCategory::factory(),
             'user_id' => User::factory(),
             'is_published' => $isPublished,
-            'published_at' => $isPublished ? $this->faker->dateTimeBetween('-1 month', 'now') : null,
+            'published_at' => $isPublished ? fake()->dateTimeBetween('-1 month', 'now') : null,
             'meta_data' => [
                 'meta_title' => $title,
-                'meta_description' => $this->faker->paragraph(1),
-                'meta_keywords' => implode(', ', $this->faker->words(5)),
+                'meta_description' => fake()->paragraph(1),
+                'meta_keywords' => implode(', ', fake()->words(5)),
             ],
-            'views_count' => $this->faker->numberBetween(0, 1000),
+            'views_count' => fake()->numberBetween(0, 1000),
         ];
     }
 
@@ -48,7 +48,7 @@ final class BlogPostFactory extends Factory
     {
         return $this->state(fn (array $attributes): array => [
             'is_published' => true,
-            'published_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
+            'published_at' => fake()->dateTimeBetween('-1 month', 'now'),
         ]);
     }
 
@@ -63,21 +63,21 @@ final class BlogPostFactory extends Factory
     private function generateRichContent(): string
     {
         $content = '';
-        $paragraphs = $this->faker->numberBetween(5, 10);
+        $paragraphs = fake()->numberBetween(5, 10);
 
         for ($i = 0; $i < $paragraphs; $i++) {
-            $content .= '<p>'.$this->faker->paragraph($this->faker->numberBetween(3, 8)).'</p>';
+            $content .= '<p>'.fake()->paragraph(fake()->numberBetween(3, 8)).'</p>';
 
             // Véletlenszerűen hozzáadunk címsorokat
-            if ($this->faker->boolean(30)) {
-                $content .= '<h3>'.$this->faker->sentence(4).'</h3>';
+            if (fake()->boolean(30)) {
+                $content .= '<h3>'.fake()->sentence(4).'</h3>';
             }
 
             // Véletlenszerűen hozzáadunk listákat
-            if ($this->faker->boolean(20)) {
+            if (fake()->boolean(20)) {
                 $content .= '<ul>';
-                for ($j = 0; $j < $this->faker->numberBetween(3, 6); $j++) {
-                    $content .= '<li>'.$this->faker->sentence(8).'</li>';
+                for ($j = 0; $j < fake()->numberBetween(3, 6); $j++) {
+                    $content .= '<li>'.fake()->sentence(8).'</li>';
                 }
 
                 $content .= '</ul>';

@@ -23,7 +23,7 @@ final class AddWatermarkToPropertyPhotos extends Command
 
         // Először megszámoljuk az összes képet
         $total = 0;
-        Property::chunk(100, function (Collection $properties) use (&$total): void {
+        Property::query()->chunk(100, function (Collection $properties) use (&$total): void {
             foreach ($properties as $property) {
                 $photos = $property->property_photos;
                 if (is_array($photos)) {
@@ -37,7 +37,7 @@ final class AddWatermarkToPropertyPhotos extends Command
         $bar->start();
 
         $count = 0;
-        Property::chunk(100, function (Collection $properties) use ($watermarkService, &$count, $bar): void {
+        Property::query()->chunk(100, function (Collection $properties) use ($watermarkService, &$count, $bar): void {
             foreach ($properties as $property) {
                 $photos = $property->property_photos;
                 if (! is_array($photos)) {

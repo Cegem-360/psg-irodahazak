@@ -38,7 +38,7 @@ final class ReferenceSeeder extends Seeder
         ];
 
         foreach ($references as $reference) {
-            Reference::create($reference);
+            Reference::query()->create($reference);
         }
     }
 }

@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
@@ -24,33 +25,48 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 final class Testimonial extends Model
 {
-    protected $casts = [
-        'is_featured' => 'boolean',
-        'is_active' => 'boolean',
-        'rating' => 'integer',
-    ];
-
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function active($query): void
     {
         $query->where('is_active', true);
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function featured($query): void
     {
         $query->where('is_featured', true);
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function ordered($query): void
     {
-        $query->orderBy('order')->orderBy('created_at', 'desc');
+        $query->orderBy('order')->latest();
     }
 
+    /**
+     * @param  Builder<self>  $query
+     */
     #[Scope]
     protected function forLang($query, $lang): void
     {
         $query->where('lang', $lang);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_featured' => 'boolean',
+            'is_active' => 'boolean',
+            'rating' => 'integer',
+        ];
     }
 }

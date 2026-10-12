@@ -60,7 +60,7 @@ final class FetchBloghuFeed extends Command
             }
 
             $featuredImage = $all['blh']->image ?? null;
-            $blog = BlogPost::firstOrCreate([
+            $blog = BlogPost::query()->firstOrCreate([
                 'slug' => Str::slug($title),
             ]);
             $blog->update([

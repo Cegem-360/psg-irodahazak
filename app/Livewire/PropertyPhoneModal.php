@@ -25,7 +25,7 @@ final class PropertyPhoneModal extends Component
 
         // Backend-en lekérjük a property adatokat
         if ($propertyId) {
-            $this->property = Property::find($propertyId);
+            $this->property = Property::query()->find($propertyId);
         }
 
         $this->showModal = true;

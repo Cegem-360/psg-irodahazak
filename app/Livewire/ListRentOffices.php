@@ -72,7 +72,7 @@ final class ListRentOffices extends Component
         $this->min_rent_addons = $queryParams['min_rent_addons'] ?? request('min_rent_addons');
 
         if ($this->officeName) {
-            $office = Offices::where('title', $this->officeName)->first();
+            $office = Offices::query()->where('title', $this->officeName)->first();
 
             $this->redirect(localized_route('properties.show', ['property' => $office->slug]));
         }
@@ -164,7 +164,7 @@ final class ListRentOffices extends Component
         }
 
         if ($this->category) {
-            $category_model = Category::where('slug', 'like', $this->category)->first();
+            $category_model = Category::query()->where('slug', 'like', $this->category)->first();
 
             // A slug with no matching category is a page that does not exist. Returning
             // 404 rather than quietly listing everything keeps it out of search results

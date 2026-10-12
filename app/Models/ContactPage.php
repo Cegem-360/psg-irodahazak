@@ -16,15 +16,18 @@ final class ContactPage extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'content' => 'string',
-    ];
-
     /**
      * Get the active contact page by language.
      */
     public static function getActiveByLanguage(string $language = 'hu'): ?self
     {
-        return self::where('language', $language)->first();
+        return self::query()->where('language', $language)->first();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'content' => 'string',
+        ];
     }
 }

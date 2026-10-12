@@ -56,14 +56,11 @@ final class BlogSeeder extends Seeder
         ];
 
         foreach ($categories as $categoryData) {
-            BlogCategory::firstOrCreate(
-                ['slug' => $categoryData['slug']],
-                $categoryData
-            );
+            BlogCategory::query()->firstOrCreate(['slug' => $categoryData['slug']], $categoryData);
         }
 
         // Első felhasználó lekérése vagy létrehozása
-        $user = User::first();
+        $user = User::query()->first();
         if (! $user) {
             $user = User::factory()->create([
                 'name' => 'Admin User',

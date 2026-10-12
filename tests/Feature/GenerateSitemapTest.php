@@ -3,10 +3,12 @@
 declare(strict_types=1);
 
 use App\Models\Property;
+use Tests\TestCase;
 
 it('writes a sitemap with the static pages and published properties', function (): void {
     // forceCreate rather than the factory: PropertyFactory is still an empty stub
     // and the model does not use HasFactory.
+    /** @var TestCase $this */
     $property = Property::query()->forceCreate([
         'title' => 'Teszt ingatlan',
         'status' => 'active',
