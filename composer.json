@@ -97,8 +97,8 @@
             "@php vendor/bin/pint"
         ],
         "fix": [
-            "@php vendor/bin/pint",
-            "@rector"
+            "@rector",
+            "@php vendor/bin/pint"
         ]
     },
     "extra": {
