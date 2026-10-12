@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
@@ -24,8 +23,6 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 final class QuoteRequest extends Model
 {
-    use HasFactory;
-
     protected function statusColor(): Attribute
     {
         return Attribute::make(get: fn (): string => match ($this->status) {
