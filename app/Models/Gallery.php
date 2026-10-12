@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\Unguarded;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,6 +32,8 @@ use Illuminate\Support\Facades\Storage;
 #[Unguarded]
 final class Gallery extends Model
 {
+    use HasFactory;
+
     protected $attributes = [
         'ord' => 0,
         'gallery_category_id' => 0,

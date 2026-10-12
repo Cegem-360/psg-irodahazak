@@ -11325,16 +11325,16 @@
         },
         {
             "name": "madbox-99/rector-filament",
-            "version": "v1.3.1",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MadBox-99/rector-filament.git",
-                "reference": "eaabc88befc901155267a51379bb81e5b42598e3"
+                "reference": "7705178f5721c4f029cc84c7368891814ac53dcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MadBox-99/rector-filament/zipball/eaabc88befc901155267a51379bb81e5b42598e3",
-                "reference": "eaabc88befc901155267a51379bb81e5b42598e3",
+                "url": "https://api.github.com/repos/MadBox-99/rector-filament/zipball/7705178f5721c4f029cc84c7368891814ac53dcc",
+                "reference": "7705178f5721c4f029cc84c7368891814ac53dcc",
                 "shasum": ""
             },
             "require": {
@@ -11359,9 +11359,9 @@
             "description": "Rector rules for Filament codebases.",
             "support": {
                 "issues": "https://github.com/MadBox-99/rector-filament/issues",
-                "source": "https://github.com/MadBox-99/rector-filament/tree/v1.3.1"
+                "source": "https://github.com/MadBox-99/rector-filament/tree/v1.4.0"
             },
-            "time": "2026-10-12T09:08:00+00:00"
+            "time": "2026-10-12T10:25:47+00:00"
         },
         {
             "name": "mockery/mockery",

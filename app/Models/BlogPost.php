@@ -108,6 +108,7 @@ final class BlogPost extends Model
             if ($this->is_published && $this->published_at && $this->published_at <= now()) {
                 return 'published';
             }
+
             if ($this->is_published && $this->published_at && $this->published_at > now()) {
                 return 'scheduled';
             }

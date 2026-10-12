@@ -16,8 +16,8 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\RecordActionsPosition;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
-use Session;
 use UnitEnum;
 
 final class ListRentProperties extends Page implements HasTable

@@ -28,6 +28,4 @@ return RectorConfig::configure()
     ->withSets([
         LaravelSetList::LARAVEL_130,
         FilamentSetList::LARAVEL_APP,
-        LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
-        LaravelSetList::LARAVEL_ARRAYACCESS_TO_METHOD_CALL,
     ]);
