@@ -25,7 +25,7 @@
             "description": "{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 160) }}",
             "author": {
                 "@type": "Person",
-                "name": "{{ $post->author->name }}"
+                "name": "{{ $post->author?->name ?? 'PSG-IRODAHÁZAK' }}"
             },
             "datePublished": "{{ $post->published_at->toISOString() }}",
             "dateModified": "{{ $post->updated_at->toISOString() }}",
@@ -48,9 +48,11 @@
                     <a href="{{ localized_route('home') }}" class="hover:text-blue-600">Főoldal</a>
                     <span>/</span>
                     <a href="#" class="hover:text-blue-600">Blog</a>
-                    <span>/</span>
-                    <a href="{{ route('en.blog.category', ['category' => $post->category->slug]) }}"
-                        class="hover:text-blue-600">{{ $post->category->name }}</a>
+                    @if ($post->category)
+                        <span>/</span>
+                        <a href="{{ route('en.blog.category', ['category' => $post->category->slug]) }}"
+                            class="hover:text-blue-600">{{ $post->category->name }}</a>
+                    @endif
                     <span>/</span>
                     <span class="text-gray-900">{{ Str::limit($post->title, 50) }}</span>
                 </nav>
@@ -61,10 +63,12 @@
             <!-- Article Header -->
             <header class="mb-8">
                 <div class="flex items-center mb-4">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white"
-                        style="background-color: {{ $post->category->color }}">
-                        {{ $post->category->name }}
-                    </span>
+                    @if ($post->category)
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white"
+                            style="background-color: {{ $post->category->color }}">
+                            {{ $post->category->name }}
+                        </span>
+                    @endif
                     <span class="ml-3 text-sm text-gray-500">{{ $post->reading_time }}</span>
                 </div>
 
@@ -75,10 +79,10 @@
                         <div class="flex items-center">
                             <div
                                 class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-medium">
-                                {{ strtoupper(substr($post->author->name, 0, 1)) }}
+                                {{ strtoupper(substr(($post->author?->name ?? 'PSG-IRODAHÁZAK'), 0, 1)) }}
                             </div>
                             <div class="ml-3">
-                                <p class="font-medium text-gray-900">{{ $post->author->name }}</p>
+                                <p class="font-medium text-gray-900">{{ $post->author?->name ?? 'PSG-IRODAHÁZAK' }}</p>
                                 <p class="text-gray-500">Szerző</p>
                             </div>
                         </div>
@@ -125,14 +129,16 @@
             <!-- Article Footer -->
             <footer class="mt-12 pt-8 border-t">
                 <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-500 mb-2">Kategória:</p>
-                        <a href="{{ route('en.blog.category', ['category' => $post->category->slug]) }}"
-                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white hover:opacity-90 transition duration-150"
-                            style="background-color: {{ $post->category->color }}">
-                            {{ $post->category->name }}
-                        </a>
-                    </div>
+                    @if ($post->category)
+                        <div>
+                            <p class="text-sm text-gray-500 mb-2">Kategória:</p>
+                            <a href="{{ route('en.blog.category', ['category' => $post->category->slug]) }}"
+                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white hover:opacity-90 transition duration-150"
+                                style="background-color: {{ $post->category->color }}">
+                                {{ $post->category->name }}
+                            </a>
+                        </div>
+                    @endif
                     <div class="text-right">
                         <p class="text-sm text-gray-500 mb-2">Megosztás:</p>
                         <div class="flex space-x-2">
@@ -194,11 +200,13 @@
 
                                 <div class="p-6">
                                     <div class="flex items-center mb-3">
-                                        <span
-                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-white"
-                                            style="background-color: {{ $relatedPost->category->color }}">
-                                            {{ $relatedPost->category->name }}
-                                        </span>
+                                        @if ($relatedPost->category)
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-white"
+                                                style="background-color: {{ $relatedPost->category->color }}">
+                                                {{ $relatedPost->category->name }}
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <h3 class="text-lg font-semibold text-gray-900 mb-2">

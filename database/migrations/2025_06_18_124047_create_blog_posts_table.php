@@ -20,8 +20,8 @@ return new class extends Migration
             $table->text('excerpt')->nullable();
             $table->longText('content')->nullable();
             $table->string('featured_image')->nullable();
-            $table->foreignId('blog_category_id')->constrained()->onDelete('cascade')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->nullable();
+            $table->foreignId('blog_category_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->boolean('is_published')->default(false)->nullable();
             $table->timestamp('published_at')->nullable();
             $table->json('meta_data')->nullable(); // SEO meta data

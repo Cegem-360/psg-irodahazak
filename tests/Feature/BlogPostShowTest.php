@@ -35,4 +35,16 @@ final class BlogPostShowTest extends TestCase
         $response->assertSee(route('en.blog.category', $post->category->slug), false);
         $response->assertSee(route('en.blog.show', $relatedPost->slug), false);
     }
+
+    public function test_post_without_author_and_category_renders_with_brand_as_author(): void
+    {
+        // Imported posts in production have neither an author nor a category.
+        $post = BlogPost::factory()->published()->create(['user_id' => null, 'blog_category_id' => null]);
+
+        $response = $this->get(route('en.blog.show', $post->slug));
+
+        $response->assertOk();
+        $response->assertSee('PSG-IRODAHÁZAK');
+        $response->assertDontSee('Kategória:');
+    }
 }
