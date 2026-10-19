@@ -129,4 +129,19 @@ return [
 
     'admin_address' => env('ADMIN_EMAIL', 'info@psg-irodahazak.hu'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Notification Sender
+    |--------------------------------------------------------------------------
+    |
+    | Sender of the admin notifications. It must differ from the admin address:
+    | Gmail files mail "from yourself" under Sent instead of the Inbox.
+    |
+    */
+
+    'notification_from' => [
+        'address' => env('MAIL_NOTIFICATION_FROM_ADDRESS', 'weboldal@psg-irodahazak.hu'),
+        'name' => env('MAIL_NOTIFICATION_FROM_NAME', 'PSG-IRODAHÁZAK weboldal'),
+    ],
+
 ];

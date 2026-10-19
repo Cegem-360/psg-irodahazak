@@ -8,6 +8,12 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+        {{-- Pages may add their own head tags via the "meta" slot; those replace the matching defaults below. --}}
+        @php
+            $metaSlotHtml = isset($meta) ? (string) $meta : '';
+            $metaSlotHas = fn (string $needle): bool => str_contains($metaSlotHtml, $needle);
+        @endphp
+
         @isset($title)
             <title>{{ $title }}</title>
         @else
@@ -15,25 +21,37 @@
         @endisset
         <meta name="author" content="{{ $metaAuthor ?? 'Cegem360 Kft.' }}">
 
-        @isset($metaDescription)
-            <meta name="description" content="{{ $metaDescription }}">
-        @else
-            <meta name="description"
-                content="Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ">
-        @endisset
+        @unless ($metaSlotHas('name="description"'))
+            @isset($metaDescription)
+                <meta name="description" content="{{ $metaDescription }}">
+            @else
+                <meta name="description"
+                    content="Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ">
+            @endisset
+        @endunless
 
-        @isset($metaKeywords)
-            <meta name="keywords" content="{{ $metaKeywords }}">
-        @else
-            <meta name="keywords"
-                content="kiadó irodaházak,bérbeadó irodák,azonnali irodák,kiadó iroda,eladó irodaházak,belvárosi irodák,loft iroda,kiadó iroda Budán,kiadó iroda Pesten,A-kategóriás irodaházak,zöld irodák,irodaházak listája,Bérlő képviselet,">
-        @endisset
+        @unless ($metaSlotHas('name="keywords"'))
+            @isset($metaKeywords)
+                <meta name="keywords" content="{{ $metaKeywords }}">
+            @else
+                <meta name="keywords"
+                    content="kiadó irodaházak,bérbeadó irodák,azonnali irodák,kiadó iroda,eladó irodaházak,belvárosi irodák,loft iroda,kiadó iroda Budán,kiadó iroda Pesten,A-kategóriás irodaházak,zöld irodák,irodaházak listája,Bérlő képviselet,">
+            @endisset
+        @endunless
 
-        <meta property="og:title"
-            content="{{ $metaOgTitle ?? 'PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet! | ' }}">
-        <meta property="og:type" content="{{ $metaOgType ?? 'website' }}">
-        <meta property="og:url" content="{{ $metaOgUrl ?? Request::url() }}">
-        <meta property="og:description" content="{{ $metaOgDescription ?? '' }}">
+        @unless ($metaSlotHas('property="og:title"'))
+            <meta property="og:title"
+                content="{{ $metaOgTitle ?? 'PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet! | ' }}">
+        @endunless
+        @unless ($metaSlotHas('property="og:type"'))
+            <meta property="og:type" content="{{ $metaOgType ?? 'website' }}">
+        @endunless
+        @unless ($metaSlotHas('property="og:url"'))
+            <meta property="og:url" content="{{ $metaOgUrl ?? Request::url() }}">
+        @endunless
+        @unless ($metaSlotHas('property="og:description"'))
+            <meta property="og:description" content="{{ $metaOgDescription ?? '' }}">
+        @endunless
         <meta name="twitter:card" content="{{ $metaTwitterCard ?? 'summary' }}">
         <meta name="twitter:url" content="{{ $metaTwitterUrl ?? Request::url() }}">
         <meta name="twitter:title"
@@ -44,9 +62,17 @@
             content="{{ $metaItempropName ?? 'PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet! | ' }}">
         <meta itemprop="description"
             content="{{ $metaItempropDescription ?? 'Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ' }}">
-        <link rel="canonical" href="{{ $metaCanonical ?? Request::url() }}">
-        <meta name="robots" content="{{ $metaRobots ?? 'index, follow' }}">
-        <meta name="googlebot" content="{{ $metaGooglebot ?? 'index, follow' }}">
+        @unless ($metaSlotHas('rel="canonical"'))
+            <link rel="canonical" href="{{ $metaCanonical ?? Request::url() }}">
+        @endunless
+        @unless ($metaSlotHas('name="robots"'))
+            <meta name="robots" content="{{ $metaRobots ?? 'index, follow' }}">
+        @endunless
+        @unless ($metaSlotHas('name="googlebot"'))
+            <meta name="googlebot" content="{{ $metaGooglebot ?? 'index, follow' }}">
+        @endunless
+
+        {{ $meta ?? '' }}
 
         @include('googletagmanager::head')
 

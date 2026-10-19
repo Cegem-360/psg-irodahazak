@@ -111,7 +111,8 @@ final class QuoteRequestModal extends Component
                 'userMessage' => $this->message,
                 'quoteId' => $quoteRequest->id,
             ], function ($message): void {
-                $message->to(config('mail.admin_address'))
+                $message->from(config('mail.notification_from.address'), config('mail.notification_from.name'))
+                    ->to(config('mail.admin_address'))
                     ->subject($this->subject ?: 'Új árajánlat kérés érkezett')
                     ->replyTo($this->email, $this->name);
             });
@@ -124,7 +125,8 @@ final class QuoteRequestModal extends Component
                 'userMessage' => $this->message,
                 'quoteId' => $quoteRequest->id,
             ], function ($message): void {
-                $message->to('richard.fekete@psg-irodahazak.hu')
+                $message->from(config('mail.notification_from.address'), config('mail.notification_from.name'))
+                    ->to('richard.fekete@psg-irodahazak.hu')
                     ->subject($this->subject ?: 'Új árajánlat kérés érkezett')
                     ->replyTo($this->email, $this->name);
             });
@@ -136,6 +138,11 @@ final class QuoteRequestModal extends Component
                 $message->to($this->email, $this->name)
                     ->subject($this->subject ?: 'Árajánlat kérés megerősítése - PSG Irodaházak');
             });
+            Log::info('Quote request emails sent', [
+                'quote_request_id' => $quoteRequest->id,
+                'email' => $this->email,
+            ]);
+
             Notification::make()
                 ->title('Árajánlat kérés sikeres')
                 ->body('Köszönjük az árajánlat kérését! Hamarosan felvesszük Önnel a kapcsolatot.')

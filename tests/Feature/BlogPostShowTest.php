@@ -47,4 +47,19 @@ final class BlogPostShowTest extends TestCase
         $response->assertSee('PSG-IRODAHÁZAK');
         $response->assertDontSee('Kategória:');
     }
+
+    public function test_post_page_head_contains_its_own_meta_tags_once(): void
+    {
+        // The page's "meta" slot replaces the layout defaults instead of being dropped or duplicated.
+        $post = BlogPost::factory()->published()->create(['excerpt' => 'Egyedi cikk-kivonat a meta leírásba.']);
+
+        $response = $this->get(route('en.blog.show', $post->slug));
+
+        $response->assertOk();
+        $response->assertSee('<meta name="description" content="Egyedi cikk-kivonat a meta leírásba.">', false);
+        $response->assertSee('<meta property="og:type" content="article">', false);
+        $response->assertSee('"@context": "https://schema.org"', false);
+        $this->assertSame(1, mb_substr_count($response->getContent(), '<meta name="description"'));
+        $this->assertSame(1, mb_substr_count($response->getContent(), 'property="og:type"'));
+    }
 }

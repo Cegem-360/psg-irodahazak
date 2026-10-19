@@ -65,12 +65,14 @@ final class ContactController extends Controller
         try {
             // Send email notification to admin
             Mail::send('emails.contact', $validated, function ($message) use ($validated): void {
-                $message->to(config('mail.admin_address'))
+                $message->from(config('mail.notification_from.address'), config('mail.notification_from.name'))
+                    ->to(config('mail.admin_address'))
                     ->subject('Új kapcsolatfelvételi üzenet: '.$validated['contact_subject'])
                     ->replyTo($validated['email'], $validated['name']);
             });
             Mail::send('emails.contact', $validated, function ($message) use ($validated): void {
-                $message->to('richard.fekete@psg-irodahazak.hu')
+                $message->from(config('mail.notification_from.address'), config('mail.notification_from.name'))
+                    ->to('richard.fekete@psg-irodahazak.hu')
                     ->subject('Új kapcsolatfelvételi üzenet: '.$validated['contact_subject'])
                     ->replyTo($validated['email'], $validated['name']);
             });
@@ -80,6 +82,11 @@ final class ContactController extends Controller
                 $message->to($validated['email'], $validated['name'])
                     ->subject('Kapcsolatfelvételi üzenet megerősítése - PSG Irodaházak');
             });
+            Log::info('Contact form emails sent', [
+                'email' => $validated['email'],
+                'contact_subject' => $validated['contact_subject'],
+            ]);
+
             Notification::make()
                 ->title(__('Contact message sent successfully!'))
                 ->body(__('Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.'))
