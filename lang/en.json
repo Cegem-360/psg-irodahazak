@@ -231,5 +231,6 @@
     "felszíni parkoló": "surface parking",
     "utcán, közterületen": "on street, public area",
     "Export to Excel": "Export to Excel",
-    "Send favorites via email": "Send favorites via email"
+    "Send favorites via email": "Send favorites via email",
+    "Köszönjük üzenetét! Visszaigazoló e-mailt küldtünk a(z) :email címre. Hamarosan felvesszük Önnel a kapcsolatot.": "Thank you for your message! We have sent a confirmation email to :email. We will contact you shortly."
 }

@@ -33,6 +33,7 @@ final class ContactFormMailTest extends TestCase
         $response->assertRedirect();
         $response->assertSessionHasNoErrors();
         $response->assertSessionHas('success');
+        $response->assertSessionHas('toast.type', 'success');
 
         $emails = app('mailer')->getSymfonyTransport()->messages()
             ->map(fn (SentMessage $sent): Email => $sent->getOriginalMessage());

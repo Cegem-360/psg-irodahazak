@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactPage;
 use Exception;
-use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -87,13 +86,13 @@ final class ContactController extends Controller
                 'contact_subject' => $validated['contact_subject'],
             ]);
 
-            Notification::make()
-                ->title(__('Contact message sent successfully!'))
-                ->body(__('Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.'))
-                ->success()
-                ->send();
-
-            return back()->with('success', __('Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.'));
+            return back()
+                ->with('success', __('Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.'))
+                ->with('toast', [
+                    'type' => 'success',
+                    'title' => __('Contact message sent successfully!'),
+                    'body' => __('Köszönjük üzenetét! Visszaigazoló e-mailt küldtünk a(z) :email címre. Hamarosan felvesszük Önnel a kapcsolatot.', ['email' => $validated['email']]),
+                ]);
         } catch (Exception $exception) {
             Log::error('Contact form email sending failed', [
                 'error' => $exception->getMessage(),
@@ -101,13 +100,12 @@ final class ContactController extends Controller
                 'data' => $validated,
             ]);
 
-            Notification::make()
-                ->title(__('Contact message failed to send!'))
-                ->body(__('Hiba történt az üzenet küldése során. Kérjük, próbálja újra később vagy hívjon minket telefonon.'))
-                ->danger()
-                ->send();
-
             return back()
+                ->with('toast', [
+                    'type' => 'danger',
+                    'title' => __('Contact message failed to send!'),
+                    'body' => __('Hiba történt az üzenet küldése során. Kérjük, próbálja újra később vagy hívjon minket telefonon.'),
+                ])
                 ->withInput()
                 ->with('error', 'Hiba történt az üzenet küldése során. Kérjük, próbálja újra később vagy hívjon minket telefonon.');
         }

@@ -7,7 +7,6 @@ namespace App\Livewire;
 use App\Models\Property;
 use App\Models\QuoteRequest;
 use Exception;
-use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
@@ -143,11 +142,11 @@ final class QuoteRequestModal extends Component
                 'email' => $this->email,
             ]);
 
-            Notification::make()
-                ->title('Árajánlat kérés sikeres')
-                ->body('Köszönjük az árajánlat kérését! Hamarosan felvesszük Önnel a kapcsolatot.')
-                ->success()
-                ->send();
+            $this->dispatch('notify',
+                type: 'success',
+                title: 'Árajánlat kérés elküldve',
+                body: "Köszönjük az árajánlat kérését! Visszaigazoló e-mailt küldtünk a(z) {$this->email} címre. Hamarosan felvesszük Önnel a kapcsolatot.",
+            );
             $this->closeModal();
 
         } catch (Exception $exception) {
@@ -161,11 +160,11 @@ final class QuoteRequestModal extends Component
                 'subject' => $this->subject,
                 'error' => $exception->getMessage(),
             ]);
-            Notification::make()
-                ->title('Hiba történt')
-                ->body('Sajnáljuk, az árajánlat kérés küldése sikertelen volt. Kérjük, próbálja újra később.')
-                ->danger()
-                ->send();
+            $this->dispatch('notify',
+                type: 'danger',
+                title: 'Hiba történt',
+                body: 'Sajnáljuk, az árajánlat kérés küldése sikertelen volt. Kérjük, próbálja újra később.',
+            );
 
         }
     }
