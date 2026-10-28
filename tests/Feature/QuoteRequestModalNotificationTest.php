@@ -6,6 +6,7 @@ namespace Tests\Feature;
 
 use App\Livewire\QuoteRequestModal;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
 use Symfony\Component\Mailer\SentMessage;
@@ -27,7 +28,7 @@ final class QuoteRequestModalNotificationTest extends TestCase
             ->assertDispatched('notify', fn (string $event, array $params): bool => $params['type'] === 'success'
                 && str_contains((string) $params['body'], 'teszt.elek@example.com'));
 
-        $recipients = app('mailer')->getSymfonyTransport()->messages()
+        $recipients = resolve(Mailer::class)->getSymfonyTransport()->messages()
             ->map(fn (SentMessage $sent): string => $sent->getOriginalMessage()->getTo()[0]->getAddress());
 
         $this->assertContains('teszt.elek@example.com', $recipients);

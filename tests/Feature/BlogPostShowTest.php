@@ -32,8 +32,8 @@ final class BlogPostShowTest extends TestCase
         $response = $this->withSession(['locale' => 'hu'])->get(route('en.blog.show', $post->slug));
 
         $response->assertOk();
-        $response->assertSee(route('en.blog.category', $post->category->slug), false);
-        $response->assertSee(route('en.blog.show', $relatedPost->slug), false);
+        $response->assertSeeHtml(route('en.blog.category', $post->category->slug));
+        $response->assertSeeHtml(route('en.blog.show', $relatedPost->slug));
     }
 
     public function test_post_without_author_and_category_renders_with_brand_as_author(): void
@@ -56,9 +56,9 @@ final class BlogPostShowTest extends TestCase
         $response = $this->get(route('en.blog.show', $post->slug));
 
         $response->assertOk();
-        $response->assertSee('<meta name="description" content="Egyedi cikk-kivonat a meta leírásba.">', false);
-        $response->assertSee('<meta property="og:type" content="article">', false);
-        $response->assertSee('"@context": "https://schema.org"', false);
+        $response->assertSeeHtml('<meta name="description" content="Egyedi cikk-kivonat a meta leírásba.">');
+        $response->assertSeeHtml('<meta property="og:type" content="article">');
+        $response->assertSeeHtml('"@context": "https://schema.org"');
         $this->assertSame(1, mb_substr_count($response->getContent(), '<meta name="description"'));
         $this->assertSame(1, mb_substr_count($response->getContent(), 'property="og:type"'));
     }

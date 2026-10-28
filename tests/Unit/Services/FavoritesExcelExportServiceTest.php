@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Property;
 use App\Services\FavoritesExcelExportService;
+use Illuminate\Support\Facades\File;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 
 it('formats rental fee as single value when min and max are the same', function (): void {
@@ -266,7 +267,7 @@ it('generates a valid Excel spreadsheet with correct structure', function (): vo
     expect($sheet->getStyle('B1')->getFont()->getBold())->toBeTrue();
 
     // Clean up
-    unlink($tempFile);
+    File::delete($tempFile);
 });
 
 it('generates an Excel file with multiple properties', function (): void {
@@ -321,7 +322,7 @@ it('generates an Excel file with multiple properties', function (): void {
     // Row 6 should be empty (no third property)
     expect($sheet->getCell('A6')->getValue())->toBeNull();
 
-    unlink($tempFile);
+    File::delete($tempFile);
 });
 
 it('generates an empty Excel file with only headers when no properties provided', function (): void {
@@ -345,7 +346,7 @@ it('generates an empty Excel file with only headers when no properties provided'
     // No data rows
     expect($sheet->getCell('A4')->getValue())->toBeNull();
 
-    unlink($tempFile);
+    File::delete($tempFile);
 });
 
 it('returns a streamed response with correct headers', function (): void {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\Log;
 use Mockery;
 use Symfony\Component\Mailer\SentMessage;
@@ -35,7 +36,7 @@ final class ContactFormMailTest extends TestCase
         $response->assertSessionHas('success');
         $response->assertSessionHas('toast.type', 'success');
 
-        $emails = app('mailer')->getSymfonyTransport()->messages()
+        $emails = resolve(Mailer::class)->getSymfonyTransport()->messages()
             ->map(fn (SentMessage $sent): Email => $sent->getOriginalMessage());
         $adminEmail = $emails->first(fn (Email $email): bool => $email->getTo()[0]->getAddress() === config('mail.admin_address'));
 

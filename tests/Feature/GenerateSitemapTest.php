@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Property;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 it('writes a sitemap with the static pages and published properties', function (): void {
@@ -28,7 +29,7 @@ it('writes a sitemap with the static pages and published properties', function (
     $this->artisan('sitemap:generate', ['--path' => $path])->assertSuccessful();
 
     $xml = (string) file_get_contents($path);
-    @unlink($path);
+    File::delete($path);
 
     expect($xml)->toContain('<urlset')
         ->and($xml)->toContain(route('properties.show', ['property' => $property->slug]))
