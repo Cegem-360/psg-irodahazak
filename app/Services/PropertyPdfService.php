@@ -99,6 +99,22 @@ final class PropertyPdfService
 
     public function generatePdfForView(Property $property): Response
     {
+        $pdf = $this->browsershotForView($property)->pdf();
+
+        // Fájlnév generálása
+        $filename = $this->generateFilename($property);
+
+        // PDF megjelenítése böngészőben (nem letöltés)
+        return response($pdf)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="'.$filename.'"');
+    }
+
+    /**
+     * A tárhelyen (CloudLinux/CageFS) nincs használható Chromium-sandbox, ezért kell a noSandbox().
+     */
+    public function browsershotForView(Property $property): Browsershot
+    {
         // Betöltjük a kapcsolódó képek adatokat
         $property->load(['images']);
 
@@ -108,8 +124,9 @@ final class PropertyPdfService
         // PDF generálás Browsershot segítségével
         $footerHtml = (string) view('pdf.footer')->render();
 
-        $pdf = Browsershot::html($html)
-            ->setOption('args', ['--disable-web-security'])
+        $browsershot = Browsershot::html($html)
+            ->addChromiumArguments(['disable-web-security'])
+            ->noSandbox()
             ->format(config('pdf.browsershot.format', 'A4'))
             ->margins(
                 config('pdf.browsershot.margins.top', 15),
@@ -125,19 +142,11 @@ final class PropertyPdfService
             ->footerHtml($footerHtml)
             ->hideHeader();
         if (! config('services.browsershot.not_isolated')) {
-            $pdf = $pdf->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
+            $browsershot->setNodeBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/node')
                 ->setNpmBinary('/home/psgiroda/nodevenv/puppeteer/24/bin/npm');
         }
 
-        $pdf = $pdf->pdf();
-
-        // Fájlnév generálása
-        $filename = $this->generateFilename($property);
-
-        // PDF megjelenítése böngészőben (nem letöltés)
-        return response($pdf)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'inline; filename="'.$filename.'"');
+        return $browsershot;
     }
 
     private function generateFilename(Property $property): string
