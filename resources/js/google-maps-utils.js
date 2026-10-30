@@ -8,7 +8,7 @@ export class GoogleMapsManager {
         this.map = null;
         this.markers = [];
         this.geocoder = null;
-        this.isGoogleMapsLoaded = false;
+        this.loadingPromise = null;
         this.mapInitialized = false;
         this.geocodingCache = new Map();
     }
@@ -43,47 +43,54 @@ export class GoogleMapsManager {
             return;
         }
 
-        if (this.isGoogleMapsLoaded) {
+        // A wire:navigate page change can ask for the map again while the API
+        // script is still loading: wait for that load instead of starting another.
+        if (this.loadingPromise) {
+            await this.loadingPromise;
+            this.initMap(mapElementId, onInitCallback);
             return;
         }
 
-        this.isGoogleMapsLoaded = true;
-
-        return new Promise((resolve, reject) => {
+        this.loadingPromise = new Promise((resolve, reject) => {
             const script = document.createElement("script");
             script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initGoogleMapsCallback&v=weekly&loading=async&libraries=marker`;
             script.async = true;
             script.defer = true;
 
             script.onerror = () => {
+                this.loadingPromise = null;
                 this.showMapError(
                     "Google Maps betöltése sikertelen. Ellenőrizze az API kulcsot és a hálózati kapcsolatot."
                 );
                 reject(new Error("Google Maps loading failed"));
             };
 
-            // Global callback for Google Maps
-            window.initGoogleMapsCallback = () => {
-                this.initMap(mapElementId, onInitCallback);
-                resolve();
-            };
+            window.initGoogleMapsCallback = () => resolve();
 
             document.head.appendChild(script);
         });
+
+        await this.loadingPromise;
+        this.initMap(mapElementId, onInitCallback);
     }
 
     /**
      * Térkép inicializálása
      */
     initMap(mapElementId, onInitCallback) {
-        if (this.mapInitialized) {
+        const mapElement = document.getElementById(mapElementId);
+
+        // After a wire:navigate page change the page has a new map container:
+        // the old map still lives in the detached one, so a new map is needed.
+        if (this.mapInitialized && this.map && this.map.getDiv() === mapElement) {
             if (onInitCallback) onInitCallback();
             return;
         }
 
+        this.mapInitialized = false;
+        this.markers = [];
+
         try {
-            // Check if map element exists
-            const mapElement = document.getElementById(mapElementId);
             if (!mapElement) {
                 console.error(
                     `Map element with ID '${mapElementId}' not found`
