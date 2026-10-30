@@ -6,81 +6,62 @@ namespace App\Livewire;
 
 use App\Livewire\Concerns\ProtectsAgainstSpam;
 use App\Mail\FavoritesSendMail;
-use App\Models\Property;
+use App\Services\FavoriteProperties;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\URL;
-use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
+/**
+ * Emails the visitor's favorite properties to a recipient, then empties the list.
+ */
 final class FavoritesSendModal extends Component
 {
     use ProtectsAgainstSpam;
 
     public bool $showSendModal = false;
 
-    #[Validate('required')]
+    #[Validate('required|string|max:255')]
     public string $recipientName = '';
 
-    #[Validate('required|email')]
+    #[Validate('required|email|max:255')]
     public string $recipientEmail = '';
 
+    #[Validate('nullable|string|max:2000')]
     public string $bodyText = '';
 
-    /**
-     * The links that go into the email; locked so the client cannot swap in arbitrary URLs.
-     *
-     * @var list<array{title: string, url: string}>
-     */
-    #[Locked]
-    public array $properties = [];
-
-    public function mount(): void
-    {
-        $this->loadProperties();
-    }
-
-    public function loadProperties(): void
-    {
-        $favorites = json_decode((string) Cookie::get('property_favorites', '[]'), true);
-        $favorites = is_array($favorites) ? $favorites : [];
-        $this->properties = Property::query()->active()->whereIn('id', $favorites)->get()->map(fn ($property): array => [
-            'title' => $property->title,
-            'url' => URL::temporarySignedRoute(
-                app()->getLocale() === 'en'
-                    ? ($property->isRent() ? 'en.properties.show' : 'en.properties.show-for-sale')
-                    : ($property->isRent() ? 'properties.show' : 'properties.show-for-sale'),
-                now()->addDays(12),
-                ['property' => $property->slug]),
-
-        ])->all();
-    }
-
-    public function sendFavorites(): void
+    public function sendFavorites(FavoriteProperties $favorites): void
     {
         $this->validate();
+
+        // Read from the cookie at send time, so the email matches the list on screen.
+        $properties = $favorites->properties();
+
+        if ($properties->isEmpty()) {
+            $this->addError('recipientEmail', __('Your favorites list is empty.'));
+
+            return;
+        }
 
         if ($this->isBlockedAsSpam('favorites-send', maxAttempts: 5, decaySeconds: 3600)) {
             return;
         }
 
-        Mail::to($this->recipientEmail)->send(new FavoritesSendMail(
-            $this->recipientName,
-            $this->bodyText,
-            $this->properties
-        ));
-        $this->showSendModal = false;
+        Mail::to($this->recipientEmail)->send(new FavoritesSendMail($this->recipientName, $this->bodyText, $properties));
+
+        $favorites->clear();
+        $this->dispatch('set-cookie', name: FavoriteProperties::COOKIE, value: '[]', days: 365);
+        $this->dispatch('refresh-favorites');
+
         $this->dispatch('notify',
             type: 'success',
             title: __('Favorites sent'),
             body: __('We have sent the offer to :email!', ['email' => $this->recipientEmail]),
         );
-        Cookie::queue(Cookie::forget('property_favorites'));
-        session()->flash('success', __('The favorites list has been cleared!'));
+
+        $this->reset('showSendModal', 'recipientName', 'recipientEmail', 'bodyText');
     }
 
     #[On('openSendFavoritesModal')]

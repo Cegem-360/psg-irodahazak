@@ -14,7 +14,7 @@
         <p>{{ __('We recommend the following offices to you:') }}</p>
         <ul>
             @foreach ($properties as $property)
-                <li><a href="{{ $property['url'] }}">{{ $property['title'] }}</a></li>
+                <li><a href="{{ $property->url() }}">{{ $property->title }}</a></li>
             @endforeach
         </ul>
         <br>

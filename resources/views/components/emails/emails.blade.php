@@ -2,11 +2,11 @@
     The HTML document shared by the styled notification / confirmation e-mails:
     the head with the base CSS, the coloured header and the grey content box.
 
-    <x-emails.layout :title="__('New contact message')" accent="#1a365d"
+    <x-emails :title="__('New contact message')" accent="#1a365d"
         :subtitle="'PSG Irodaházak - ' . __('Contact form')">
         <x-slot:styles>...template-specific CSS...</x-slot:styles>
         ...content...
-    </x-emails.layout>
+    </x-emails>
 
     `accent` is the header background colour; `heading` (the header H1) defaults to `title`.
 --}}

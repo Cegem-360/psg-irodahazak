@@ -1,12 +1,11 @@
-@use('App\Models\Reference')
 <div class="referenciak my-12">
     <h2 class="my-16 font-bold text-gray-500 text-5xl text-center drop-shadow text-logogray/80">
         {{ __('References, who moved with us') }}</h2>
     <div class="relative py-8 bg-[#EFEFEF]">
         <div
-            class="swiper reference-swiper grid! _grid-cols-2 sm:grid-cols-3 lg:grid-cols-5_ gap-4 max-w-7xl mx-auto">
+            class="swiper reference-swiper grid! gap-4 max-w-7xl mx-auto">
             <div class="swiper-wrapper">
-                @foreach (Reference::active()->orderBy('order', 'asc')->get() ?? [] as $reference)
+                @foreach ($references as $reference)
                     <div class="swiper-slide flex! items-center justify-center px-12 py-4 bg-white rounded-xl">
                         <img class="max-h-20 object-contain object-center" src="{{ Storage::url($reference->image) }}"
                             alt="{{ $reference->name }}" loading="lazy" />

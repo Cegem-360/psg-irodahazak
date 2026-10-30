@@ -4,7 +4,6 @@
         <meta name="description"
             content="{{ $category->description ?: __(':category category news on PSG-IRODAHÁZAK.', ['category' => $category->name]) }}">
         <meta name="keywords" content="{{ $category->name }}, {{ __('news, office building, office rental') }}">
-        <link rel="canonical" href="{{ Request::url() }}">
     </x-slot>
 
     <div class="min-h-screen bg-gray-50">
@@ -77,7 +76,7 @@
                             @foreach ($allCategories as $cat)
                                 <li>
                                     <a wire:navigate.hover href="{{ localized_route('news.category', ['slug' => $cat->slug]) }}"
-                                        class="flex items-center justify-between text-gray-600 hover:text-red-600 transition duration-150 {{ $cat->id === $category->id ? 'text-red-600 font-medium' : '' }}">
+                                        @class(['flex items-center justify-between text-gray-600 hover:text-red-600 transition duration-150', 'text-red-600 font-medium' => $cat->id === $category->id])>
                                         <span class="flex items-center">
                                             @if ($cat->icon)
                                                 <span class="mr-2">{{ $cat->icon }}</span>

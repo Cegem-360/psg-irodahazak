@@ -54,6 +54,7 @@ final class ContactFormMailTest extends TestCase
             ->call('submit')
             ->assertHasErrors(['name' => 'required', 'email' => 'email', 'privacy' => 'accepted'])
             ->assertSee('A név megadása kötelező.')
+            ->assertSeeHtml('border-red-500')
             ->assertSet('sent', false);
 
         $this->assertCount(0, resolve(Mailer::class)->getSymfonyTransport()->messages());

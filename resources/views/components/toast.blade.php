@@ -10,7 +10,7 @@
             this.toasts = this.toasts.filter((toast) => toast.id !== id);
         },
     }"
-    @if (session('toast')) x-init="add({{ Js::from(session('toast')) }})" @endif
+    @session('toast') x-init="add({{ Js::from($value) }})" @endsession
     x-on:notify.window="add($event.detail)" aria-live="polite"
     class="pointer-events-none fixed inset-x-4 top-4 z-9999 flex flex-col items-end gap-3 sm:left-auto sm:right-4">
     <template x-for="toast in toasts" :key="toast.id">

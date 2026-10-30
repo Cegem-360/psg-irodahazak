@@ -15,7 +15,7 @@ final class PropertyController extends Controller
      */
     public function index(): Factory|View
     {
-        $query = Property::with('images')->active();
+        $query = Property::query()->active();
 
         // Filter by districts (multiple)
         if (request('districts')) {

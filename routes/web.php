@@ -11,10 +11,10 @@ use App\Http\Controllers\ImpresszumController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PropertyController;
 use App\Models\Property;
+use App\Services\FavoriteProperties;
 use App\Services\FavoritesExcelExportService;
 use App\Services\PropertyPdfService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -42,13 +42,7 @@ Route::get('/impresszum', [ImpresszumController::class, 'show'])->name('impressu
 // Favorites are for signed-in users only, together with their Excel export
 Route::middleware(['auth'])->group(function (): void {
     Route::view('/kedvencek', 'pages.favorites')->name('favorites');
-    Route::get('/kedvencek/export-excel', function (): StreamedResponse {
-        $cookieValue = Cookie::get('property_favorites') ?? '[]';
-        $favorites = json_decode((string) $cookieValue, true) ?? [];
-        $properties = Property::query()->whereIn('id', $favorites)->active()->get();
-
-        return (new FavoritesExcelExportService)->generate($properties);
-    })->name('favorites.export-excel');
+    Route::get('/kedvencek/export-excel', fn (FavoriteProperties $favorites, FavoritesExcelExportService $export): StreamedResponse => $export->generate($favorites->properties()))->name('favorites.export-excel');
 });
 
 // Budapest irodaház kategória route-ok
@@ -82,13 +76,7 @@ Route::group(['as' => 'en.'], function (): void {
     Route::get('/office-to-sale/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
     Route::middleware(['auth'])->group(function (): void {
         Route::view('/favorites', 'pages.favorites')->name('favorites');
-        Route::get('/favorites/export-excel', function (): StreamedResponse {
-            $cookieValue = Cookie::get('property_favorites') ?? '[]';
-            $favorites = json_decode((string) $cookieValue, true) ?? [];
-            $properties = Property::query()->whereIn('id', $favorites)->active()->get();
-
-            return (new FavoritesExcelExportService)->generate($properties);
-        })->name('favorites.export-excel');
+        Route::get('/favorites/export-excel', fn (FavoriteProperties $favorites, FavoritesExcelExportService $export): StreamedResponse => $export->generate($favorites->properties()))->name('favorites.export-excel');
     });
     Route::get('/news-blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/news-blog/category/{category:slug}', [BlogCategoryController::class, 'show'])->name('blog.category');

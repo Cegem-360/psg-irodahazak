@@ -51,20 +51,20 @@
             <meta property="og:type" content="{{ $metaOgType ?? 'website' }}">
         @endunless
         @unless ($metaSlotHas('property="og:url"'))
-            <meta property="og:url" content="{{ $metaOgUrl ?? Request::url() }}">
+            <meta property="og:url" content="{{ $metaOgUrl ?? Context::get('canonical', Request::url()) }}">
         @endunless
         @unless ($metaSlotHas('property="og:description"'))
             <meta property="og:description" content="{{ $metaOgDescription ?? $pageDescriptionText }}">
         @endunless
         <meta name="twitter:card" content="{{ $metaTwitterCard ?? 'summary' }}">
-        <meta name="twitter:url" content="{{ $metaTwitterUrl ?? Request::url() }}">
+        <meta name="twitter:url" content="{{ $metaTwitterUrl ?? Context::get('canonical', Request::url()) }}">
         <meta name="twitter:title" content="{{ $metaTwitterTitle ?? $pageTitleText }}">
         <meta name="twitter:description" content="{{ $metaTwitterDescription ?? $pageDescriptionText }}">
         <meta itemprop="name" content="{{ $metaItempropName ?? $pageTitleText }}">
         <meta itemprop="description" content="{{ $metaItempropDescription ?? $pageDescriptionText }}">
-        @unless ($metaSlotHas('rel="canonical"'))
-            <link rel="canonical" href="{{ $metaCanonical ?? Request::url() }}">
-        @endunless
+        @context('canonical')
+            <link rel="canonical" href="{{ $value }}">
+        @endcontext
         @foreach ($alternateUrls as $alternateLocale => $alternateUrl)
             <link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ $alternateUrl }}">
         @endforeach

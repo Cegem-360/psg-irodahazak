@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Actions\SendContactMessage;
+use App\Enums\InquirySubject;
 use App\Models\Property;
 use App\Models\Translate;
 use Exception;
@@ -60,14 +61,9 @@ final class ContactForm extends Component
     public function subjects(): array
     {
         if ($this->selectedPropertyTypeIsRent === null) {
-            return [
-                'iroda_keresese' => __('contact.subject_office_search'),
-                'iroda_kiadas' => __('contact.subject_office_rental'),
-                'ingatlan_ertekeles' => __('contact.subject_property_valuation'),
-                'befektetes' => __('contact.subject_investment'),
-                'tanacadas' => __('contact.subject_consulting'),
-                'egyeb' => __('contact.subject_other'),
-            ];
+            return collect(InquirySubject::cases())
+                ->mapWithKeys(fn (InquirySubject $subject): array => [$subject->getLabel() => $subject->getLabel()])
+                ->all();
         }
 
         $properties = Property::query()->active()

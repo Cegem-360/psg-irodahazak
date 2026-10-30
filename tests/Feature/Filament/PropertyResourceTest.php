@@ -11,6 +11,8 @@ use App\Filament\Resources\PropertyResource\Pages\ListProperties;
 use App\Models\Property;
 use App\Models\User;
 use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 use function Pest\Livewire\livewire;
@@ -66,4 +68,52 @@ it('edits a property and keeps its status and type as enums', function (): void 
     expect($property->refresh())
         ->status->toBe(PropertyStatus::Inactive)
         ->elado_v_kiado->toBe(PropertyType::Sale);
+});
+
+it('has no first image URL without photos', function (): void {
+    expect(adminProperty()->getFirstImageUrl())->toBeNull()
+        ->and(adminProperty(['slug' => 'with-photo', 'property_photos' => ['property/1/a.webp']])->getFirstImageUrl())->toEndWith('/storage/property/1/a.webp');
+});
+
+it('picks the English text on the English site only when it is filled in', function (): void {
+    $property = adminProperty(['content' => 'Magyar leírás', 'en_content' => 'English description', 'meta_title_en' => null, 'meta_title' => 'Magyar cím']);
+
+    expect($property->localized('content', 'en_content'))->toBe('Magyar leírás');
+
+    app()->setLocale('en');
+
+    expect($property->localized('content', 'en_content'))->toBe('English description')
+        ->and($property->localized('meta_title', 'meta_title_en'))->toBe('Magyar cím');
+});
+
+it('embeds the map by coordinates when known, by address otherwise', function (): void {
+    $byAddress = adminProperty(['cim_irsz' => '1051', 'cim_varos' => 'Budapest', 'cim_utca' => 'Szabadság tér', 'cim_hazszam' => '7']);
+    $byCoordinates = adminProperty(['slug' => 'coords', 'maps_lat' => '47.5', 'maps_lng' => '19.05']);
+
+    expect($byAddress->mapEmbedUrl())->toContain('q=1051+Budapest%2C+Szabads%C3%A1g+t%C3%A9r+7')
+        ->and($byCoordinates->mapEmbedUrl())->toContain('q=47.5%2C19.05')->toContain('output=embed');
+});
+
+it('fills in a missing slug from the title when saving', function (): void {
+    $property = Property::factory()->create(['title' => 'Árpád Center', 'slug' => null]);
+
+    expect($property->slug)->toBe('arpad-center');
+});
+
+it('tells Budapest and agglomeration properties apart', function (): void {
+    $budapest = Property::factory()->create();
+    $budaors = Property::factory()->create(['cim_irsz' => '2040', 'cim_varos' => 'Budaörs']);
+
+    expect(Property::query()->agglomeration()->pluck('id')->all())->toBe([$budaors->id])
+        ->and(Property::query()->budapestOnly()->pluck('id')->all())->toBe([$budapest->id]);
+});
+
+it('summarises rent and sale properties differently on their cards', function (): void {
+    $rent = Property::factory()->create(['min_berleti_dij' => 12, 'max_berleti_dij' => 15, 'uzemeletetesi_dij' => '5']);
+    $sale = Property::factory()->forSale()->create(['total_area' => 1200, 'min_berleti_dij' => 990000000]);
+
+    $render = fn (Property $property): string => Str::squish(strip_tags(Blade::render('<x-property.summary :property="$property" />', ['property' => $property])));
+
+    expect($render($rent))->toContain($rent->address())->toContain('12 - 15')->toContain('5')
+        ->and($render($sale))->toContain('1200 m2')->toContain('990000000');
 });

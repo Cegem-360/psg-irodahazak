@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Property as Offices;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\On;
+use Illuminate\Support\Collection;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,14 +17,17 @@ final class ListSaleOffices extends Component
 {
     use WithPagination;
 
+    /** Columns the visitor may sort by. */
+    private const array SORTABLE_FIELDS = ['title', 'date', 'ord'];
+
     public string $search = '';
 
     public string $sortField = 'title';
 
-    public string $sortDirection = 'asc';
-
+    #[Locked]
     public int $perPage = 6;
 
+    #[Locked]
     public int $totalOffices = 0;
 
     /** @var array<string, mixed> Per-request memo of getOffices(), keyed by the list state. */
@@ -42,22 +47,25 @@ final class ListSaleOffices extends Component
      * The current page of offices. Memoised per state, because the count, the list,
      * the pagination and the map markers all read it during one request.
      */
-    public function getOffices()
+    public function getOffices(): LengthAwarePaginator
     {
-        $state = serialize([$this->search, $this->sortField, $this->sortDirection, $this->perPage, $this->getPage()]);
+        $sortField = in_array($this->sortField, self::SORTABLE_FIELDS, true) ? $this->sortField : 'title';
+        $state = serialize([$this->search, $sortField, $this->perPage, $this->getPage()]);
 
         return $this->officesMemo[$state] ??= Offices::query()
-            ->with('images') // Eager load images
             ->when($this->search, function ($query): void {
                 $query->searchText($this->search);
             })
             ->sale()
             ->active()
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy($sortField)
             ->paginate($this->perPage);
     }
 
-    public function getOfficesForMap()
+    /**
+     * @return Collection<int, array<string, mixed>>
+     */
+    public function getOfficesForMap(): Collection
     {
         // Transform the current page of offices to map format (coordinates will be geocoded on frontend)
         return $this->getOffices()->getCollection()
@@ -81,8 +89,7 @@ final class ListSaleOffices extends Component
                     'house_number' => $office->cim_hazszam ?? '',
                     'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
                     'operating_fee' => (translate_value($office->uzemeletetesi_dij) ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
-                    'url' => route('properties.show', ['property' => $office]),
-
+                    'url' => $office->url(),
                 ];
             })
             ->values(); // Reset array keys to ensure clean JSON
@@ -94,22 +101,8 @@ final class ListSaleOffices extends Component
         $this->updateTotalOffices();
     }
 
-    public function sortBy(string $field): void
+    public function updatedSortField(): void
     {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-
-        $this->resetPage();
-    }
-
-    #[On('refreshList')]
-    public function refreshList(): void
-    {
-        $this->updateTotalOffices();
         $this->resetPage();
     }
 

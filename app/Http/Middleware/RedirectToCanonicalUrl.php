@@ -6,12 +6,16 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Context;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Sends every request that arrives on a duplicate address of the site (http://,
  * www., or the /public/ prefix the hosting's document root exposes) to the same
  * path under APP_URL with a 301, so search engines index one URL per page.
+ *
+ * It also puts that address, without the query string, into the request Context
+ * as "canonical"; the layout prints it, and a page may override it.
  */
 final class RedirectToCanonicalUrl
 {
@@ -20,11 +24,14 @@ final class RedirectToCanonicalUrl
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $appUrl = mb_rtrim((string) config('app.url'), '/');
+
+        Context::add('canonical', $appUrl.mb_rtrim($request->getPathInfo(), '/'));
+
         if (! app()->isProduction()) {
             return $next($request);
         }
 
-        $appUrl = mb_rtrim((string) config('app.url'), '/');
         $canonicalScheme = parse_url($appUrl, PHP_URL_SCHEME);
         $canonicalHost = parse_url($appUrl, PHP_URL_HOST);
 

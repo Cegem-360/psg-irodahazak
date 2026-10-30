@@ -13,25 +13,22 @@
     @endif
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <x-forms.input name="name" id="contact_name" :label="__('contact.name')"
-            :placeholder="__('contact.name_placeholder')" required />
-        <x-forms.input name="email" id="contact_email" type="email" :label="__('contact.email')"
-            :placeholder="__('contact.email_placeholder')" required />
+        <x-forms.input name="name" id="contact_name" :label="__('contact.name')" :placeholder="__('contact.name_placeholder')" required />
+        <x-forms.input name="email" id="contact_email" type="email" :label="__('contact.email')" :placeholder="__('contact.email_placeholder')" required />
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <x-forms.input name="phone" id="contact_phone" type="tel" :label="__('contact.phone')"
-            :placeholder="__('contact.phone_placeholder')" required />
-        <x-forms.input name="company" id="contact_company" :label="__('contact.company')"
-            :placeholder="__('contact.company_placeholder')" />
+        <x-forms.input name="phone" id="contact_phone" type="tel" :label="__('contact.phone')" :placeholder="__('contact.phone_placeholder')" required />
+        <x-forms.input name="company" id="contact_company" :label="__('contact.company')" :placeholder="__('contact.company_placeholder')" />
     </div>
 
     <div>
         <label for="contact_subject" class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.subject') }}
             *</label>
-        <select id="contact_subject" wire:model="contact_subject"
-            class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('contact_subject') border-red-500 @enderror"
-            required>
+        <select id="contact_subject" wire:model="contact_subject" @class([
+            'block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors',
+            'border-red-500' => $errors->has('contact_subject'),
+        ]) required>
             <option value="">{{ __('contact.subject_placeholder') }}</option>
             @foreach ($this->subjects as $value => $label)
                 <option value="{{ $value }}">{{ $label }}</option>
@@ -45,8 +42,10 @@
     <div>
         <label for="contact_message" class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.message') }}
             *</label>
-        <textarea id="contact_message" wire:model="message" rows="6"
-            class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 transition-colors @error('message') border-red-500 @enderror"
+        <textarea id="contact_message" wire:model="message" rows="6" @class([
+            'block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 transition-colors',
+            'border-red-500' => $errors->has('message'),
+        ])
             placeholder="{{ __('contact.message_placeholder') }}" required></textarea>
         @error('message')
             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -55,9 +54,10 @@
 
     <div class="flex items-start">
         <div class="flex items-center h-5">
-            <input id="contact_privacy" wire:model="privacy" type="checkbox"
-                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 checked:bg-primary checked:border-primary focus:ring-3 focus:ring-primary-300 @error('privacy') border-red-500 @enderror"
-                required>
+            <input id="contact_privacy" wire:model="privacy" type="checkbox" @class([
+                'w-4 h-4 border border-gray-300 rounded bg-gray-50 checked:bg-primary checked:border-primary focus:ring-3 focus:ring-primary-300',
+                'border-red-500' => $errors->has('privacy'),
+            ]) required>
         </div>
         <div class="ml-3 text-sm">
             <label for="contact_privacy" class="font-light text-gray-500">{{ __('contact.privacy_text') }} <a

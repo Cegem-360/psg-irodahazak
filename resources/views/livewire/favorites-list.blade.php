@@ -46,13 +46,7 @@
             <div class="container mx-auto py-16">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-8">
                     @foreach ($favoriteProperties as $property)
-                        @if ($property->isRent())
-                            <livewire:ingatlan-card :property="$property" :image="$property->getFirstImageUrl()" :title="$property->title"
-                                :description="$property->getAddressFormated()" :link="localized_route('properties.show', ['property' => $property->slug])" :small="false" :key="'favorite-' . $property->id" />
-                        @else
-                            <livewire:ingatlan-card :property="$property" :image="$property->getFirstImageUrl()" :title="$property->title"
-                                :description="$property->getAddressFormated()" :link="localized_route('properties.show-for-sale', ['property' => $property->slug])" :small="false" :key="'favorite-' . $property->id" />
-                        @endif
+                        <livewire:property-card :property="$property" :key="'favorite-' . $property->id" />
                     @endforeach
                 </div>
             </div>

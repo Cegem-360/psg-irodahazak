@@ -1,4 +1,4 @@
-// Office search form (pages/forms/szuro.blade.php): district picker with map,
+// Office search form (components/office-search-form.blade.php): district picker with map,
 // office-name picker and the two range sliders. Initialised on every
 // "livewire:navigated" (which also fires on the first page load), so it works
 // with wire:navigate page changes; each form is wired up only once.

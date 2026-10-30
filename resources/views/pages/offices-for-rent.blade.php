@@ -2,6 +2,6 @@
 
     <livewire:list-rent-offices />
 
-    @include('pages.forms.szuro')
+    <x-office-search-form />
 
 </div>

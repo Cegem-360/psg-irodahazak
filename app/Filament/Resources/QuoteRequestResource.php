@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\InquirySubject;
 use App\Enums\QuoteRequestStatus;
 use App\Filament\Resources\QuoteRequestResource\Pages\CreateQuoteRequest;
 use App\Filament\Resources\QuoteRequestResource\Pages\EditQuoteRequest;
@@ -78,10 +79,10 @@ final class QuoteRequestResource extends Resource
 
                 Section::make('Kérés részletei')
                     ->schema([
-                        TextInput::make('subject')
+                        Select::make('subject')
                             ->label('Tárgy')
-                            ->required()
-                            ->maxLength(255),
+                            ->options(InquirySubject::class)
+                            ->enum(InquirySubject::class),
 
                         Textarea::make('message')
                             ->label('Üzenet')

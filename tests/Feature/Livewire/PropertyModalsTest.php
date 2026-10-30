@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Livewire\IngatlanCard;
+use App\Livewire\PropertyCard;
 use App\Livewire\PropertyMapModal;
 use App\Livewire\PropertyPhoneModal;
 use App\Models\Property;
+use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
 
 function modalProperty(): Property
@@ -25,7 +26,7 @@ function modalProperty(): Property
 it('sends the title and property id as named event parameters from the card', function (): void {
     $property = modalProperty();
 
-    Livewire::test(IngatlanCard::class, ['property' => $property, 'title' => 'Bank Center', 'images' => ['a.webp']])
+    Livewire::test(PropertyCard::class, ['property' => $property, 'title' => 'Bank Center', 'images' => ['a.webp']])
         ->call('showMapModal')
         ->assertDispatched('show-map-modal', title: 'Bank Center', propertyId: $property->id)
         ->call('showPhoneModal')
@@ -48,4 +49,14 @@ it('opens the phone modal without a property too', function (): void {
         ->assertSet('showModal', true)
         ->assertSet('title', 'Bank Center')
         ->assertSee('+36');
+});
+
+it('gives the similar-property card an Alpine scope and the property id for the modals', function (): void {
+    $property = modalProperty();
+
+    $html = Blade::render('<x-property.similar-card :property="$property" />', ['property' => $property]);
+
+    expect($html)->toContain('<div x-data')
+        ->and($html)->toContain('propertyId')->toContain(':'.$property->id.'}')
+        ->and($html)->toContain('href="'.$property->url().'"');
 });

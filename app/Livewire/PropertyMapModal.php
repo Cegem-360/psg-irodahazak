@@ -23,10 +23,7 @@ final class PropertyMapModal extends Component
     {
         $this->title = $title;
 
-        // Backend-en lekérjük a property adatokat
-        if ($propertyId) {
-            $this->property = Property::query()->find($propertyId);
-        }
+        $this->property = $propertyId === null ? null : Property::query()->active()->find($propertyId);
 
         $this->showModal = true;
     }

@@ -3,7 +3,6 @@
     <x-slot name="meta">
         <meta name="description" content="{{ __('What our clients say about us - PSG Irodaházak') }}">
         <meta name="keywords" content="{{ __('reviews, references, client feedback, PSG Irodaházak') }}">
-        <link rel="canonical" href="{{ url()->current() }}">
     </x-slot>
 
     <div class="bg-white">

@@ -1,47 +1,23 @@
-@use('App\Models\Translate')
 @inject('structuredData', 'App\Services\StructuredDataService')
-@php
-    $propertyUrl = $property->isSale()
-        ? localized_route('properties.show-for-sale', ['property' => $property->slug])
-        : localized_route('properties.show', ['property' => $property->slug]);
-@endphp
 <x-layouts.app :breadcrumbs="[
     ['name' => __('Homepage'), 'url' => localized_route('home')],
-    $property->isSale()
-        ? ['name' => __('Office Buildings for Sale'), 'url' => localized_route('elado-irodahazak')]
-        : ['name' => __('Rental Offices'), 'url' => localized_route('kiado-irodak')],
-    ['name' => $property->title, 'url' => $propertyUrl],
+    ['name' => $property->type()->listTitle(), 'url' => localized_route($property->type()->listRoute())],
+    ['name' => $property->title, 'url' => $property->url()],
 ]">
     <x-slot name="title">
-        @if (app()->getLocale() === 'en' && $property->meta_title_en)
-            {{ $property->meta_title_en }}
-        @elseif ($property->meta_title)
-            {{ $property->meta_title }}
-        @else
-            {{ $property->title }} | PSG Irodaházak
-        @endif
+        {{ $property->localized('meta_title', 'meta_title_en') ?: $property->title.' | PSG Irodaházak' }}
     </x-slot>
 
     <x-slot name="meta">
-        {{ $structuredData->toScript($structuredData->property($property, $propertyUrl)) }}
+        {{ $structuredData->toScript($structuredData->property($property, $property->url())) }}
     </x-slot>
 
     <x-slot name="metaDescription">
-        @if (app()->getLocale() === 'en' && $property->meta_description_en)
-            {{ $property->meta_description_en }}
-        @elseif ($property->meta_description)
-            {{ $property->meta_description }}
-        @else
-            {{ Str::limit(Str::squish(strip_tags((string) $property->content)), 160) }}
-        @endif
+        {{ $property->localized('meta_description', 'meta_description_en') ?: Str::limit(Str::squish(strip_tags((string) $property->localized('content', 'en_content'))), 160) }}
     </x-slot>
 
     <x-slot name="metaKeywords">
-        @if (app()->getLocale() === 'en' && $property->meta_keywords_en)
-            {{ $property->meta_keywords_en }}
-        @elseif ($property->meta_keywords)
-            {{ $property->meta_keywords }}
-        @endif
+        {{ $property->localized('meta_keywords', 'meta_keywords_en') }}
     </x-slot>
 
     @if (!$property->isActive())
@@ -49,16 +25,10 @@
     @endif
 
     <x-page-section spacing="space-y-8">
-        <x-slot:heading>
-            @if (app()->getLocale() === 'en')
-                {{ Translate::whereName($property->title)->first()?->translated ?: $property->title }}
-            @else
-                {{ $property->title }}
-            @endif
-        </x-slot:heading>
+        <x-slot:heading>{{ translate_value($property->title) }}</x-slot:heading>
         <x-glass-panel class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-                <x-cards.ingatlan-gallery-carousel :images="collect($property->property_photos)" :title="$property->title" />
+                <x-property.gallery-carousel :images="collect($property->property_photos)" :title="$property->title" />
             </div>
             <div class="p-4">
 
@@ -85,7 +55,8 @@
                                 </x-property.spec-row>
                             @endif
                             @if ($property->parkolas)
-                                <x-property.spec-row :label="__('Parking')">{{ __($property->parkolas) }}</x-property.spec-row>
+                                <x-property.spec-row
+                                    :label="__('Parking')">{{ __($property->parkolas) }}</x-property.spec-row>
                             @endif
                             @if ($property->kodszam)
                                 <x-property.spec-row :label="__('Code')">{{ $property->kodszam }}</x-property.spec-row>
@@ -98,7 +69,8 @@
                                 {{ __($property->cim_utca_addons ?? '') }} {{ $property->cim_hazszam }}
                             </x-property.spec-row>
                             @if ($property->construction_year)
-                                <x-property.spec-row :label="__('Construction Year')">{{ $property->construction_year }}</x-property.spec-row>
+                                <x-property.spec-row
+                                    :label="__('Construction Year')">{{ $property->construction_year }}</x-property.spec-row>
                             @endif
                             @if ($property->total_area)
                                 <x-property.spec-row :label="__('Total Area')">
@@ -107,7 +79,8 @@
                                 </x-property.spec-row>
                             @endif
                             @if ($property->jelenleg_kiado)
-                                <x-property.spec-row :label="__('Currently Available')">{{ $property->jelenleg_kiado }} m2</x-property.spec-row>
+                                <x-property.spec-row :label="__('Currently Available')">{{ $property->jelenleg_kiado }}
+                                    m2</x-property.spec-row>
                             @endif
                             @if ($property->min_kiado)
                                 <x-property.spec-row :label="__('Min. Available')">
@@ -141,7 +114,8 @@
                                 </x-property.spec-row>
                             @endif
                             @if ($property->parkolas)
-                                <x-property.spec-row :label="__('Parking')">{{ __($property->parkolas) }}</x-property.spec-row>
+                                <x-property.spec-row
+                                    :label="__('Parking')">{{ __($property->parkolas) }}</x-property.spec-row>
                             @endif
                             @if ($property->min_parkolas_dija)
                                 <x-property.spec-row :label="__('Parking Fee')">
@@ -175,12 +149,8 @@
 
                             @if ($property->vat)
                                 <tr>
-                                    <td style="padding-top: 20px" class="font-bold" colspan="2">
-                                        @if ($property->vat)
-                                            {{ __('The above fees are subject to an additional 27% VAT!') }}
-                                        @else
-                                            {{ __('The above fees are NOT subject to an additional 27% VAT!') }}
-                                        @endif
+                                    <td class="pt-5 font-bold" colspan="2">
+                                        {{ __('The above fees are subject to an additional 27% VAT!') }}
                                     </td>
                                 </tr>
                             @endif
@@ -195,7 +165,7 @@
                     <h3 class="text-2xl font-bold mb-4">{{ __('Property Details') }}</h3>
                     <p class="mb-6 text-gray-600">{{ __('Download detailed information about this property') }}</p>
 
-                    <a href="{{ URL::signedRoute('property.pdf', ['property' => $property->id]) }}" target="_blank"
+                    <a href="{{ URL::signedRoute(app()->getLocale() === 'en' ? 'en.property.pdf' : 'property.pdf', ['property' => $property->id]) }}" target="_blank"
                         class="inline-flex items-center px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent/90 transition-colors">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -212,19 +182,8 @@
         <x-glass-panel class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
                 @if (!$property->isSale())
-                    @if ($property->maps_lat && $property->maps_lng)
-                        {{-- Ingyenes: Koordináta alapú térkép pin-nel --}}
-                        <iframe
-                            src="https://maps.google.com/maps?q={{ $property->maps_lat }},{{ $property->maps_lng }}&hl={{ app()->getLocale() }}&z=16&output=embed"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    @else
-                        {{-- Ingyenes: Cím alapú keresés pin-nel --}}
-                        <iframe
-                            src="https://maps.google.com/maps?q={{ urlencode($property->cim_irsz . ' ' . $property->cim_varos . ', ' . $property->cim_utca . ' ' . $property->cim_hazszam . ($property->cim_utca_addons ? ', ' . $property->cim_utca_addons : '')) }}&hl={{ app()->getLocale() }}&z=16&output=embed"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    @endif
+                    <iframe src="{{ $property->mapEmbedUrl() }}" width="100%" height="100%" style="border:0;"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 @else
                     <livewire:contact-form :selected-property-id="$property->id" :selected-property-type-is-rent="$property->isRent()" />
                 @endif
@@ -232,15 +191,11 @@
             </div>
             <div class="p-4">
                 <h2 class="text-3xl">
-                    {{ __(':title Presentation', ['title' => app()->getLocale() === 'en' ? (Translate::whereName($property->title)->first()?->translated ?: $property->title) : $property->title]) }}
+                    {{ __(':title Presentation', ['title' => translate_value($property->title)]) }}
                 </h2>
                 <div class="space-y-4 mt-4">
                     <div class="text-justify leading-relaxed">
-                        @if (app()->getLocale() === 'en' && $property->en_content)
-                            {!! $property->en_content !!}
-                        @elseif ($property->content)
-                            {!! $property->content !!}
-                        @endif
+                        {!! $property->localized('content', 'en_content') !!}
                     </div>
                 </div>
 
@@ -264,31 +219,9 @@
                     <div class="space-y-4">
                         <h2 class="text-3xl">{{ __('Features') }}</h2>
                         <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
-                            @if ($property->services || $property->tags)
-                                @php
-                                    $allItems = collect($property->services)
-                                        ->merge($property->tags ?? [])
-                                        ->sortBy(function ($item) {
-                                            // Ékezetek eltávolítása és kisbetűsítés a rendezéshez
-                                            $normalized = strtolower($item->name);
-                                            $normalized = str_replace(
-                                                ['á', 'é', 'í', 'ó', 'ő', 'ú', 'ű', 'ü', 'ö'],
-                                                ['a', 'e', 'i', 'o', 'o', 'u', 'u', 'u', 'o'],
-                                                $normalized,
-                                            );
-                                            return $normalized;
-                                        });
-                                @endphp
-                                @foreach ($allItems as $item)
-                                    <li class="jellemzok pb-1">
-                                        @if (app()->getLocale() === 'en')
-                                            {{ Translate::whereName($item->name)->first()?->translated ?? $item->name }}
-                                        @else
-                                            {{ $item->name }}
-                                        @endif
-                                    </li>
-                                @endforeach
-                            @endif
+                            @foreach (collect($property->services)->merge($property->tags ?? [])->sortBy(fn ($item) => Str::lower(Str::ascii($item->name))) as $item)
+                                <li class="jellemzok pb-1">{{ translate_value($item->name) }}</li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -304,17 +237,7 @@
                 {{ __('Similar Offices') }}</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
                 @foreach ($similarProperties ?? [] as $similarProperty)
-                    @if ($similarProperty->isRent())
-                        <x-cards.ingatlan-card
-                            image="{{ $similarProperty->getFirstImageUrl() ?: Vite::asset('resources/images/default-office.jpg') }}"
-                            title="{{ $similarProperty->title }}" :description="$similarProperty->getAddressFormated()"
-                            link="{{ route('properties.show', $similarProperty->slug) }}" />
-                    @else
-                        <x-cards.ingatlan-card
-                            image="{{ $similarProperty->getFirstImageUrl() ?: Vite::asset('resources/images/default-office.jpg') }}"
-                            title="{{ $similarProperty->title }}" :description="$similarProperty->getAddressFormatedForSale()"
-                            link="{{ route('properties.show-for-sale', $similarProperty->slug) }}" />
-                    @endif
+                    <x-property.similar-card :property="$similarProperty" />
                 @endforeach
 
             </div>

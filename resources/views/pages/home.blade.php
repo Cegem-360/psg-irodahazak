@@ -47,20 +47,20 @@
         </div>
 
     </div>
-    <x-pages.sections.home.bizalomerosito />
+    <x-home.stats />
 
-    @include('pages.forms.szuro')
+    <x-office-search-form />
 
-    <x-pages.sections.home.kiemelt-ajanlatok />
+    <x-home.featured-offers />
 
-    <x-pages.sections.home.rolunk-mondtak />
+    <x-home.testimonials />
 
-    <x-pages.sections.home.referenciak />
+    <x-home.references />
 
     @if (app()->getLocale() === 'hu')
-        <x-pages.sections.home.blog-section />
+        <x-home.blog />
 
-        <x-pages.sections.home.hirek-section />
+        <x-home.news />
     @endif
 
 </div>

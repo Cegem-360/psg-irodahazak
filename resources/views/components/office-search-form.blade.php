@@ -49,7 +49,7 @@
                         <label class="text-sm text-primary flex items-center">
                             <input type="checkbox" name="include_agglomeration" value="1"
                                 class="mr-2 appearance-none checked:bg-accent focus:ring-accent"
-                                {{ request('include_agglomeration') ? 'checked' : '' }}>
+                                @checked(request()->boolean('include_agglomeration'))>
                             {{ __('Show agglomeration results only') }}
                         </label>
                     </div>

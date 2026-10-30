@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\InquirySubject;
 use App\Enums\QuoteRequestStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -63,6 +64,7 @@ final class QuoteRequest extends Model
     {
         return [
             'status' => QuoteRequestStatus::class,
+            'subject' => InquirySubject::class,
             'contacted_at' => 'datetime',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',

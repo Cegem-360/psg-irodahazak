@@ -2,6 +2,6 @@
 
     <livewire:list-sale-offices />
 
-    @include('pages.forms.szuro')
+    <x-office-search-form />
 
 </div>

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\InquirySubject;
 use App\Livewire\ContactForm;
 use App\Models\Property;
 use Livewire\Livewire;
@@ -34,6 +35,6 @@ test('contact form on a property page preselects the building as subject', funct
 
 test('contact form on the contact page offers the general subjects', function (): void {
     Livewire::test(ContactForm::class)
-        ->assertSeeHtml('value="iroda_keresese"')
+        ->assertSeeHtml('value="'.InquirySubject::OfficeSearch->getLabel().'"')
         ->assertSet('contact_subject', '');
 });

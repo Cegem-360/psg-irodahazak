@@ -1,4 +1,3 @@
-@use('App\Models\Property')
 <div class="relative bg-cover bg-center bg-no-repeat"
     style="background-image: url({{ Vite::asset('resources/images/the-office-building-2025-04-02-15-55-34-utc.webp') }});">
     <div class="absolute inset-0 z-1 bg-linear-to-b from-white to-white/30"></div>
@@ -6,11 +5,10 @@
         <h2 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
             {{ __('Featured Offers') }}</h2>
         <div
-            class="swiper kiemeltajanlatok-swiper grid! _grid-cols-1 md:grid-cols-2 lg:grid-cols-3_ gap-4 max-w-7xl mx-auto">
+            class="swiper kiemeltajanlatok-swiper grid! gap-4 max-w-7xl mx-auto">
             <div class="swiper-wrapper">
-                @foreach (Property::active()->featured()->get() ?? [] as $property)
-                    <livewire:ingatlan-card :property="$property" :image="$property->getFirstImageUrl()" :title="$property->title" :description="$property->getAddressFormated()"
-                        :link="localized_route('properties.show', ['property' => $property->slug])" :key="$property->id" :small="false" :swiper="true" />
+                @foreach ($properties as $property)
+                    <livewire:property-card :property="$property" :key="$property->id" :swiper="true" />
                 @endforeach
             </div>
         </div>

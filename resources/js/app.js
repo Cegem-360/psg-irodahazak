@@ -137,7 +137,7 @@ document.addEventListener("livewire:navigated", function () {
     });
 
     // NOTE: minicarousel-swiper initialization has been moved to Alpine.js
-    // in the ingatlan-card Blade component. Each card now initializes its own
+    // in the property-card Livewire component. Each card now initializes its own
     // Swiper instance via x-data/x-init, which ensures Swiper works correctly
     // after Livewire pagination re-renders the DOM.
 });
@@ -156,7 +156,7 @@ function getCookie(name) {
     for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) == " ") c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        if (c.indexOf(nameEQ) == 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
     }
     return null;
 }

@@ -1,8 +1,3 @@
-@php
-    $currentLang = app()->getLocale();
-    $testimonials = \App\Models\Testimonial::active()->forLang($currentLang)->ordered()->get();
-@endphp
-
 <div class="rolunk-mondtak mt-12">
     <div class="relative">
         <h2 class="my-16 font-bold text-accent text-5xl text-center drop-shadow text-logogray/80">
@@ -18,21 +13,21 @@
             <x-svg.psg-irodahazak-symbol-3 />
         </div>
     </div>
-    @if ($testimonials->count() > 0)
+    @if ($testimonials->isNotEmpty())
         <div class="relative py-4 bg-linear-to-b from-gray-400 to-accent/20">
             <div
-                class="swiper rolunkmondtak-swiper relative z-50 grid! _grid-cols-1 md:grid-cols-2_ gap-2 max-w-7xl mx-auto">
+                class="swiper rolunkmondtak-swiper relative z-50 grid! gap-2 max-w-7xl mx-auto">
                 <div class="swiper-wrapper">
-                    @foreach ($testimonials ?? [] as $testimonial)
+                    @foreach ($testimonials as $testimonial)
                         <div class="swiper-slide flex! flex-col lg:flex-row gap-8 p-12 pb-4">
 
                             <img loading="lazy"
-                                src="{{ $testimonial?->client_image ? Storage::url($testimonial->client_image) : Vite::asset('resources/images/psg-irodahazak-logo.png') }}"
+                                src="{{ $testimonial->client_image ? Storage::url($testimonial->client_image) : Vite::asset('resources/images/psg-irodahazak-logo.png') }}"
                                 alt="{{ $testimonial->client_company }}"
                                 class="w-1/2 lg:w-1/3 h-fit max-h-20 lg:max-h-60 object-contain rounded-lg mb-4 p-2 bg-white" />
 
                             <div class="lg:w-2/3 text-md italic text-justify">
-                                {!! preg_replace(['/^<p>/', '/<\/p>$/'], ['<p>”', '„</p>'], $testimonial->testimonial) !!}
+                                {!! preg_replace(['/^<p>/', '/<\/p>$/'], ['<p>„', '”</p>'], $testimonial->testimonial) !!}
                                 <br>
                                 <br>
                                 <strong>

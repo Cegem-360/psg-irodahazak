@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 use App\Livewire\FavoritesSendModal;
 use App\Livewire\QuoteRequestModal;
+use App\Mail\FavoritesSendMail;
 use App\Models\BlogPost;
 use App\Models\Property;
 use App\Models\QuoteRequest;
 use App\Models\User;
+use App\Services\FavoriteProperties;
 use Illuminate\Support\Facades\Mail;
-use Livewire\Features\SupportLockedProperties\CannotUpdateLockedPropertyException;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -33,21 +34,34 @@ it('lists only published posts in the home page blog section', function (): void
         ->assertDontSee($draft->title);
 });
 
-it('does not let the client replace the links of the favorites email', function (): void {
-    Livewire::test(FavoritesSendModal::class)
-        ->set('properties', [['title' => 'Spam', 'url' => 'https://example.com']]);
-})->throws(CannotUpdateLockedPropertyException::class);
-
-it('leaves inactive properties out of the favorites email', function (): void {
-    /** @var TestCase $this */
+it('emails the active favorites from the cookie, never a list sent by the client', function (): void {
+    Mail::fake();
     $active = Property::query()->forceCreate(['title' => 'Aktív', 'status' => 'active', 'slug' => 'aktiv', 'elado_v_kiado' => 'kiado-iroda']);
     $inactive = Property::query()->forceCreate(['title' => 'Inaktív', 'status' => 'inactive', 'slug' => 'inaktiv', 'elado_v_kiado' => 'kiado-iroda']);
 
-    $titles = Livewire::withCookies(['property_favorites' => json_encode([$active->id, $inactive->id])])
+    Livewire::withCookies([FavoriteProperties::COOKIE => json_encode([$active->id, $inactive->id])])
         ->test(FavoritesSendModal::class)
-        ->get('properties');
+        ->set('recipientName', 'Címzett')
+        ->set('recipientEmail', 'cimzett@example.com')
+        ->call('sendFavorites')
+        ->assertHasNoErrors()
+        ->assertDispatched('refresh-favorites');
 
-    expect(array_column($titles, 'title'))->toBe(['Aktív']);
+    Mail::assertSent(FavoritesSendMail::class, fn (FavoritesSendMail $mail): bool => $mail->hasTo('cimzett@example.com')
+        && $mail->properties->pluck('title')->all() === ['Aktív']
+        && str_contains($mail->render(), route('properties.show', ['property' => 'aktiv'])));
+});
+
+it('does not send an empty favorites list', function (): void {
+    Mail::fake();
+
+    Livewire::test(FavoritesSendModal::class)
+        ->set('recipientName', 'Címzett')
+        ->set('recipientEmail', 'cimzett@example.com')
+        ->call('sendFavorites')
+        ->assertHasErrors('recipientEmail');
+
+    Mail::assertNothingSent();
 });
 
 it('asks guests to sign in before showing the favorites', function (string $uri): void {
@@ -101,7 +115,10 @@ it('rate limits the quote request form per visitor', function (): void {
 it('rate limits the favorites email', function (): void {
     Mail::fake();
 
-    $send = fn () => Livewire::test(FavoritesSendModal::class)
+    $property = Property::query()->forceCreate(['title' => 'Aktív', 'status' => 'active', 'slug' => 'aktiv', 'elado_v_kiado' => 'kiado-iroda']);
+
+    $send = fn () => Livewire::withCookies([FavoriteProperties::COOKIE => json_encode([$property->id])])
+        ->test(FavoritesSendModal::class)
         ->set('recipientName', 'Címzett')
         ->set('recipientEmail', 'cimzett@example.com')
         ->call('sendFavorites');

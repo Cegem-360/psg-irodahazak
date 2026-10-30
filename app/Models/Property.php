@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -25,7 +24,6 @@ use Illuminate\Support\Str;
 
 #[ObservedBy(PropertyObserver::class)]
 #[Fillable([
-
     'title',
     'status',
     'content',
@@ -163,27 +161,53 @@ final class Property extends Model
             ->orderBy('ord');
     }
 
-    public function getAddressFormated(): string
+    /**
+     * The street address on one line: "1051 Budapest, Szabadság tér 7."
+     */
+    public function address(): string
     {
-        $address = mb_trim(sprintf('%s %s, %s %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, __($this->cim_utca_addons), $this->cim_hazszam));
-        $rent = __('Rental fee');
-        $address .=
-         '<br><strong>'.$rent.':</strong> '.
-          $this->min_berleti_dij
-          .($this->max_berleti_dij && $this->max_berleti_dij !== $this->min_berleti_dij ? ' - '.$this->max_berleti_dij.' '.__($this->min_berleti_dij_addons) : ' '.__($this->min_berleti_dij_addons))
-          .'<br><strong>'.__('Operating Fee').': </strong>'.translate_value($this->uzemeletetesi_dij).' '.__($this->uzemeletetesi_dij_addons);
-
-        return $address;
+        return Str::squish(sprintf('%s %s, %s %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, __($this->cim_utca_addons ?? ''), $this->cim_hazszam));
     }
 
-    public function getAddressFormatedForSale(): string
+    /**
+     * The English version of a text field on the English site when it is filled
+     * in, the Hungarian one otherwise.
+     */
+    public function localized(string $field, string $englishField): ?string
     {
-        return sprintf('%s %s, %s %s <br><strong>', $this->cim_irsz, $this->cim_varos, $this->cim_utca ?? '', __($this->cim_utca_addons) ?? '').__('Total Area').sprintf(':</strong> %s m2<br><strong>', $this->total_area).__('Price').sprintf(':</strong> %s %s', $this->min_berleti_dij, __($this->min_berleti_dij_addons));
+        if (app()->getLocale() === 'en' && filled($this->{$englishField})) {
+            return $this->{$englishField};
+        }
+
+        return $this->{$field};
     }
 
+    /**
+     * A Google Maps embed of the building: its coordinates when known, its address otherwise.
+     */
+    public function mapEmbedUrl(): string
+    {
+        $query = $this->maps_lat && $this->maps_lng ? $this->maps_lat.','.$this->maps_lng : $this->address();
+
+        return 'https://maps.google.com/maps?'.http_build_query(['q' => $query, 'hl' => app()->getLocale(), 'z' => 16, 'output' => 'embed']);
+    }
+
+    /**
+     * The public URL of the first gallery photo, or null when the property has none.
+     */
     public function getFirstImageUrl(): ?string
     {
-        return Storage::url(collect($this->property_photos)->first());
+        $firstPhoto = collect($this->property_photos)->first();
+
+        return $firstPhoto === null ? null : Storage::url($firstPhoto);
+    }
+
+    /**
+     * Rent or sale; a property without a type is treated as a rental, as the site always has.
+     */
+    public function type(): PropertyType
+    {
+        return $this->elado_v_kiado ?? PropertyType::Rent;
     }
 
     public function isRent(): bool
@@ -206,18 +230,16 @@ final class Property extends Model
      */
     public function url(): string
     {
-        return localized_route(($this->elado_v_kiado ?? PropertyType::Rent)->showRoute(), ['property' => $this->slug]);
+        return localized_route($this->type()->showRoute(), ['property' => $this->slug]);
     }
 
     /**
      * @param  Builder<self>  $query
      */
     #[Scope]
-    protected function byCategory(Builder $query, string $category): void
+    protected function inCategory(Builder $query, Category $category): void
     {
-        $query->whereHas('categories', function (Builder $q) use ($category): void {
-            $q->where('name', $category);
-        });
+        $query->whereRelation('categories', 'categories.id', $category->id);
     }
 
     /**
@@ -271,7 +293,7 @@ final class Property extends Model
     #[Scope]
     protected function agglomeration(Builder $query): void
     {
-        $query->where('cim_varos', '!=', 'Budapest');
+        $query->whereNot(fn (Builder $q): Builder => $q->budapestOnly());
     }
 
     /**
@@ -355,19 +377,9 @@ final class Property extends Model
         }
     }
 
-    protected function slug(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value ?: Str::slug($this->title),
-            set: fn ($value) => $value ?: Str::slug($this->title)
-        );
-    }
-
     protected function casts(): array
     {
         return [
-            'updated_at' => 'datetime',
-            'created_at' => 'datetime',
             'featured' => 'boolean',
             'vat' => 'boolean',
             'property_photos' => 'array',

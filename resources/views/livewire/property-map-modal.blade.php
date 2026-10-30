@@ -28,9 +28,8 @@
 
                             <div class="mt-4 h-96 bg-gray-200 rounded-lg overflow-hidden">
                                 @if ($property)
-                                    {{-- Cím alapú keresés pin-nel --}}
                                     <iframe
-                                        src="https://maps.google.com/maps?q={{ urlencode($property->cim_irsz . ' ' . $property->cim_varos . ', ' . $property->cim_utca . ' ' . $property->cim_hazszam . ($property->cim_utca_addons ? ', ' . $property->cim_utca_addons : '')) }}&hl={{ app()->getLocale() }}&z=16&output=embed"
+                                        src="{{ $property->mapEmbedUrl() }}"
                                         width="100%" height="100%" style="border:0;" allowfullscreen=""
                                         loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                 @else

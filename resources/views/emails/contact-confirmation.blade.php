@@ -1,4 +1,4 @@
-<x-emails.layout :title="__('Contact message confirmation')" accent="#1a365d"
+<x-emails :title="__('Contact message confirmation')" accent="#1a365d"
     :heading="__('Thank you for your message!')">
     <x-slot:styles>
         <x-emails.styles.contact-info />
@@ -18,4 +18,4 @@
     </div>
 
     <x-emails.contact-details />
-</x-emails.layout>
+</x-emails>

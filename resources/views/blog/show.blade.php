@@ -11,7 +11,6 @@
         @endif
         <meta name="description" content="{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 160) }}">
         <meta name="keywords" content="{{ $post->meta_data['meta_keywords'] ?? __('blog, office market, real estate') }}">
-        <link rel="canonical" href="{{ Request::url() }}">
 
         <!-- Open Graph -->
         <meta property="og:title" content="{{ $post->title }}">

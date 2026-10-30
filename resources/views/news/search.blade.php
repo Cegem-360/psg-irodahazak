@@ -78,7 +78,7 @@
                         <ul class="space-y-3">
                             <li>
                                 <a wire:navigate.hover href="{{ localized_route('news.search', ['q' => $search]) }}"
-                                    class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-150 {{ !request('category') ? 'text-blue-600 font-medium' : '' }}">
+                                    @class(['flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-150', 'text-blue-600 font-medium' => !request('category')])>
                                     <span>{{ __('All categories') }}</span>
                                 </a>
                             </li>

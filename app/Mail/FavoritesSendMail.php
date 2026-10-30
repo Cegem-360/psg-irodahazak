@@ -4,20 +4,30 @@ declare(strict_types=1);
 
 namespace App\Mail;
 
-use Illuminate\Bus\Queueable;
+use App\Models\Property;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 
 final class FavoritesSendMail extends Mailable
 {
-    use Queueable;
-    use SerializesModels;
+    /**
+     * @param  Collection<int, Property>  $properties
+     */
+    public function __construct(
+        public string $recipientName,
+        public string $bodyText,
+        public Collection $properties,
+    ) {}
 
-    public function __construct(public $recipientName, public $bodyText, public $properties) {}
-
-    public function build()
+    public function envelope(): Envelope
     {
-        return $this->subject('Online irodaház ajánlat érkezett!')
-            ->view('emails.favorites-send');
+        return new Envelope(subject: __('You have received an online office building offer!'));
+    }
+
+    public function content(): Content
+    {
+        return new Content(view: 'emails.favorites-send');
     }
 }

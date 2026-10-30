@@ -1,15 +1,10 @@
-@use('App\Models\Translate')
 @props(['property'])
 
-@php
-    $firstImage = $property->getFirstImageUrl();
-@endphp
-
-<a wire:navigate.hover href="{{ localized_route('properties.show', ['property' => $property->slug]) }}"
+<a wire:navigate.hover href="{{ $property->url() }}"
     class="block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer">
-    @if ($firstImage)
+    @if ($property->getFirstImageUrl())
         <div class="aspect-4/3 overflow-hidden">
-            <img src="{{ $firstImage }}" alt="{{ $property->title }}"
+            <img src="{{ $property->getFirstImageUrl() }}" alt="{{ $property->title }}"
                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" loading="lazy">
         </div>
     @else
@@ -24,21 +19,17 @@
 
     <div class="p-6">
         <h3 class="text-xl font-semibold text-gray-900 mb-2">
-            @if (app()->getLocale() === 'en')
-                {{ Translate::whereName($property->title)->first()?->translated ?: $property->title }}
-            @else
-                {{ $property->title }}
-            @endif
+            {{ translate_value($property->title) }}
         </h3>
 
         <div class="flex justify-between items-center">
-            @if (collect($property->property_photos)->count() > 0)
-                <span class="text-sm text-gray-500">{{ __(':count images', ['count' => collect($property->property_photos)->count()]) }}</span>
+            @if (filled($property->property_photos))
+                <span class="text-sm text-gray-500">{{ __(':count images', ['count' => count($property->property_photos)]) }}</span>
             @endif
 
             @if ($property->status)
                 <span
-                    class="px-2 py-1 text-xs rounded-full {{ $property->isActive() ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                    @class(['px-2 py-1 text-xs rounded-full', 'bg-green-100 text-green-800' => $property->isActive(), 'bg-red-100 text-red-800' => ! $property->isActive()])>
                     {{ $property->isActive() ? __('Active') : __('Inactive') }}
                 </span>
             @endif

@@ -27,10 +27,10 @@
                 $alternateUrls = app(App\Services\LocalizedRoutes::class)->alternates(request()->route());
             @endphp
             <a href="{{ $alternateUrls['hu'] ?? route('language.switch', ['locale' => 'hu']) }}" title="HUN"
-                class="{{ $currentLocale === 'hu' ? 'active' : '' }} hover:underline">HUN</a>
+                @class(['active' => $currentLocale === 'hu', 'hover:underline'])>HUN</a>
             <span> | </span>
             <a href="{{ $alternateUrls['en'] ?? route('language.switch', ['locale' => 'en']) }}" title="ENG"
-                class="{{ $currentLocale === 'en' ? 'active' : '' }} hover:underline">ENG</a>
+                @class(['active' => $currentLocale === 'en', 'hover:underline'])>ENG</a>
         </div>
     </div>
 </div>
@@ -47,7 +47,7 @@
             function getCookie(name) {
                 const value = `; ${document.cookie}`;
                 const parts = value.split(`; ${name}=`);
-                if (parts.length === 2) return parts.pop().split(';').shift();
+                if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
             }
 
             try {

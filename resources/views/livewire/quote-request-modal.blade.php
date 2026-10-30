@@ -74,40 +74,16 @@
 
                         <!-- Modal Body -->
                         <div class="bg-white px-6 py-6">
-                            @if (session()->has('success'))
-                                <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-                                    <div class="flex">
-                                        <svg class="w-5 h-5 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span>{{ session('success') }}</span>
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if (session()->has('error'))
-                                <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                                    <div class="flex">
-                                        <svg class="w-5 h-5 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                        <span>{{ session('error') }}</span>
-                                    </div>
-                                </div>
-                            @endif
-
                             <form wire:submit.prevent="submitForm" class="relative space-y-4">
                                 <x-forms.honeypot id="quote-website" />
                                 <!-- Name Field -->
                                 <div>
                                     <label for="name"
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('Name') }}</label>
-                                    <input type="text" id="name" wire:model="name"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('name') border-red-500 @enderror"
+                                    <input type="text" id="name" wire:model="name" @class([
+                                        'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                                        'border-red-500' => $errors->has('name'),
+                                    ])
                                         placeholder="{{ __('modal.enter_your_name') }}">
                                     @error('name')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -119,8 +95,10 @@
                                     <label for="company"
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.company_name') }}</label>
                                     <input type="text" id="company" wire:model="company"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('company') border-red-500 @enderror"
-                                        placeholder="{{ __('modal.enter_company_name') }}">
+                                        @class([
+                                            'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                                            'border-red-500' => $errors->has('company'),
+                                        ]) placeholder="{{ __('modal.enter_company_name') }}">
                                     @error('company')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -130,8 +108,10 @@
                                 <div>
                                     <label for="phone"
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.phone_number') }}</label>
-                                    <input type="tel" id="phone" wire:model="phone"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('phone') border-red-500 @enderror"
+                                    <input type="tel" id="phone" wire:model="phone" @class([
+                                        'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                                        'border-red-500' => $errors->has('phone'),
+                                    ])
                                         placeholder="+36 20 381 3917">
                                     @error('phone')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -142,8 +122,10 @@
                                 <div>
                                     <label for="email"
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.email_address') }}</label>
-                                    <input type="email" id="email" wire:model="email"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('email') border-red-500 @enderror"
+                                    <input type="email" id="email" wire:model="email" @class([
+                                        'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                                        'border-red-500' => $errors->has('email'),
+                                    ])
                                         placeholder="{{ app()->getLocale() === 'en' ? 'example@email.com' : 'pelda@email.hu' }}">
                                     @error('email')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -155,21 +137,15 @@
                                 <div>
                                     <label for="subject"
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.subject') }}</label>
-                                    <select id="subject" wire:model="subject"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('subject') border-red-500 @enderror">
+                                    <select id="subject" wire:model="subject" @class([
+                                        'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                                        'border-red-500' => $errors->has('subject'),
+                                    ])>
                                         <option value="">{{ __('modal.select_subject') }}</option>
-                                        <option value="{{ __('modal.subject_office_search') }}">
-                                            {{ __('modal.subject_office_search') }}</option>
-                                        <option value="{{ __('modal.subject_office_rent') }}">
-                                            {{ __('modal.subject_office_rent') }}</option>
-                                        <option value="{{ __('modal.subject_property_valuation') }}">
-                                            {{ __('modal.subject_property_valuation') }}</option>
-                                        <option value="{{ __('modal.subject_investment') }}">
-                                            {{ __('modal.subject_investment') }}</option>
-                                        <option value="{{ __('modal.subject_consulting') }}">
-                                            {{ __('modal.subject_consulting') }}</option>
-                                        <option value="{{ __('modal.subject_other') }}">
-                                            {{ __('modal.subject_other') }}</option>
+                                        @foreach (App\Enums\InquirySubject::cases() as $subjectOption)
+                                            <option value="{{ $subjectOption->value }}">
+                                                {{ $subjectOption->getLabel() }}</option>
+                                        @endforeach
                                     </select>
                                     @error('subject')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -190,7 +166,10 @@
                                     <div class="flex items-start">
                                         <div class="flex items-center h-5">
                                             <input id="privacy" type="checkbox" wire:model="privacy"
-                                                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 checked:bg-blue-600 checked:border-blue-600 focus:ring-3 focus:ring-blue-300 @error('privacy') border-red-500 @enderror">
+                                                @class([
+                                                    'w-4 h-4 border border-gray-300 rounded bg-gray-50 checked:bg-blue-600 checked:border-blue-600 focus:ring-3 focus:ring-blue-300',
+                                                    'border-red-500' => $errors->has('privacy'),
+                                                ])>
                                         </div>
                                         <div class="ml-3 text-sm">
                                             <label for="privacy" class="font-light text-gray-500">

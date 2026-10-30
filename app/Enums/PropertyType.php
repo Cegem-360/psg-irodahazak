@@ -23,6 +23,28 @@ enum PropertyType: string implements HasLabel
     }
 
     /**
+     * The route of the office list this type belongs to.
+     */
+    public function listRoute(): string
+    {
+        return match ($this) {
+            self::Rent => 'kiado-irodak',
+            self::Sale => 'elado-irodahazak',
+        };
+    }
+
+    /**
+     * The title of that office list, as shown in the breadcrumbs.
+     */
+    public function listTitle(): string
+    {
+        return match ($this) {
+            self::Rent => __('Rental Offices'),
+            self::Sale => __('Office Buildings for Sale'),
+        };
+    }
+
+    /**
      * The public page route of a property of this type.
      */
     public function showRoute(): string

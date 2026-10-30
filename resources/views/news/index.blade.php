@@ -7,7 +7,6 @@
         <meta name="description"
             content="{{ __('PSG-IRODAHÁZAK news - The latest news, developments and professional insights from the office market.') }}">
         <meta name="keywords" content="{{ __('news, office market, real estate news, office buildings, office rental, industry news') }}">
-        <link rel="canonical" href="{{ Request::url() }}">
     </x-slot>
     <x-page-section>
         <x-slot:heading>{{ __('News') }}</x-slot:heading>

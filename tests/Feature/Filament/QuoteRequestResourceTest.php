@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
+use App\Enums\InquirySubject;
 use App\Enums\QuoteRequestStatus;
 use App\Filament\Resources\QuoteRequestResource;
 use App\Filament\Resources\QuoteRequestResource\Pages\ListQuoteRequests;
+use App\Livewire\QuoteRequestModal;
 use App\Models\QuoteRequest;
 use App\Models\User;
 use Filament\Facades\Filament;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 use function Pest\Livewire\livewire;
@@ -56,4 +59,20 @@ it('moves a request to contacted and then closed from the table', function (): v
     livewire(ListQuoteRequests::class)->callTableAction('close', $request);
 
     expect($request->refresh()->status)->toBe(QuoteRequestStatus::Closed);
+});
+
+it('stores the chosen topic as an enum and rejects anything else', function (): void {
+    Livewire::test(QuoteRequestModal::class)
+        ->set('name', 'Teszt Elek')
+        ->set('phone', '+36301234567')
+        ->set('email', 'teszt.elek@example.com')
+        ->set('privacy', true)
+        ->set('subject', 'nem-letezik')
+        ->call('submitForm')
+        ->assertHasErrors('subject')
+        ->set('subject', InquirySubject::Consulting->value)
+        ->call('submitForm')
+        ->assertHasNoErrors();
+
+    expect(QuoteRequest::query()->sole()->subject)->toBe(InquirySubject::Consulting);
 });

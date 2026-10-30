@@ -40,19 +40,16 @@
         @endif
         <meta name="keywords"
             content="{{ __('office buildings for rent,offices for lease,instant offices,office for rent,office buildings for sale,downtown offices,loft office,office for rent in Buda,office for rent in Pest,A-category office buildings,green offices,list of office buildings,serviced offices,Tenant representation,') }}">
-        <link rel="canonical" href="{{ Request::url() }}">
     </x-slot>
     <div class="overflow-hidden max-w-[2200px] mx-auto bg-white">
         @if (request()->routeIs('home') || request()->routeIs('en.home'))
             @include('pages.home')
-        @elseif (request()->routeIs('adatlap-oldal') || request()->routeIs('en.adatlap-oldal'))
-            <x-pages.adatlap-oldal />
         @elseif (request()->routeIs('kiado-irodak') || request()->routeIs('en.kiado-irodak'))
             @include('pages.offices-for-rent')
         @elseif (request()->routeIs('elado-irodahazak') || request()->routeIs('en.elado-irodahazak'))
             @include('pages.offices-for-sale')
         @elseif (request()->routeIs('rolunk') || request()->routeIs('en.rolunk'))
-            <x-pages.rolunk />
+            <x-pages.about-us />
         @elseif (request()->routeIs('kapcsolat') || request()->routeIs('en.kapcsolat'))
             @include('pages.contact')
         @endif

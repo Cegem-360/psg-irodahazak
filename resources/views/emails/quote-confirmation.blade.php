@@ -1,4 +1,4 @@
-<x-emails.layout :title="__('Quote request confirmation')" accent="#3b82f6"
+<x-emails :title="__('Quote request confirmation')" accent="#3b82f6"
     :heading="__('Thank you for your quote request!')">
     <x-slot:styles>
         <x-emails.styles.contact-info />
@@ -10,4 +10,4 @@
     </p>
 
     <x-emails.contact-details />
-</x-emails.layout>
+</x-emails>

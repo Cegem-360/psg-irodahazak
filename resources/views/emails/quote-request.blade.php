@@ -1,4 +1,4 @@
-<x-emails.layout :title="__('New quote request')" accent="#f97316"
+<x-emails :title="__('New quote request')" accent="#f97316"
     :heading="__('A new quote request has arrived')"
     :subtitle="'PSG Irodaházak - ' . __('Online quote request')">
     <x-slot:styles>
@@ -34,4 +34,4 @@
         <br>
         {{ __('Please contact the client as soon as possible!') }}
     </p>
-</x-emails.layout>
+</x-emails>

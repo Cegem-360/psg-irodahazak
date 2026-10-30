@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Actions\SendQuoteRequest;
+use App\Enums\InquirySubject;
 use App\Livewire\Concerns\ProtectsAgainstSpam;
-use App\Models\QuoteRequest;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -42,7 +44,7 @@ final class QuoteRequestModal extends Component
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, mixed>
      */
     public function rules(): array
     {
@@ -52,7 +54,7 @@ final class QuoteRequestModal extends Component
             'email' => 'required|email|max:255',
             'company' => 'nullable|string|max:255',
             'message' => 'nullable|string|max:1000',
-            'subject' => 'nullable|string|max:255',
+            'subject' => ['nullable', Rule::enum(InquirySubject::class)],
             'privacy' => 'required|accepted',
         ];
     }
@@ -87,92 +89,38 @@ final class QuoteRequestModal extends Component
         $this->resetForm();
     }
 
-    public function submitForm(): void
+    public function submitForm(SendQuoteRequest $sendQuoteRequest): void
     {
-        $this->validate();
+        $validated = $this->validate();
 
         if ($this->isBlockedAsSpam('quote-request', maxAttempts: 3, decaySeconds: 600)) {
             return;
         }
 
         try {
-            // Create quote request
-            $quoteRequest = QuoteRequest::query()->create([
-                'name' => $this->name,
-                'phone' => $this->phone,
-                'email' => $this->email,
-                'company' => $this->company,
-                'message' => $this->message,
-                'subject' => $this->subject,
-            ]);
-
-            // Send email notification to admin
-            Mail::send('emails.quote-request', [
-                'name' => $this->name,
-                'phone' => $this->phone,
-                'email' => $this->email,
-                'company' => $this->company,
-                'subject' => $this->subject,
-                'userMessage' => $this->message,
-                'quoteId' => $quoteRequest->id,
-            ], function ($message): void {
-                $message->from(config('mail.notification_from.address'), config('mail.notification_from.name'))
-                    ->to(config('mail.admin_address'))
-                    ->subject($this->subject ?: 'Új árajánlat kérés érkezett')
-                    ->replyTo($this->email, $this->name);
-            });
-            Mail::send('emails.quote-request', [
-                'name' => $this->name,
-                'phone' => $this->phone,
-                'email' => $this->email,
-                'company' => $this->company,
-                'subject' => $this->subject,
-                'userMessage' => $this->message,
-                'quoteId' => $quoteRequest->id,
-            ], function ($message): void {
-                $message->from(config('mail.notification_from.address'), config('mail.notification_from.name'))
-                    ->to(config('mail.agent_address'))
-                    ->subject($this->subject ?: 'Új árajánlat kérés érkezett')
-                    ->replyTo($this->email, $this->name);
-            });
-
-            // Send confirmation email to user
-            Mail::send('emails.quote-confirmation', [
-                'name' => $this->name,
-            ], function ($message): void {
-                $message->to($this->email, $this->name)
-                    ->subject($this->subject ?: 'Árajánlat kérés megerősítése - PSG Irodaházak');
-            });
-            Log::info('Quote request emails sent', [
-                'quote_request_id' => $quoteRequest->id,
-                'email' => $this->email,
-            ]);
-
-            $this->dispatch('notify',
-                type: 'success',
-                title: 'Árajánlat kérés elküldve',
-                body: "Köszönjük az árajánlat kérését! Visszaigazoló e-mailt küldtünk a(z) {$this->email} címre. Hamarosan felvesszük Önnel a kapcsolatot.",
-            );
-            $this->closeModal();
-
+            $quoteRequest = $sendQuoteRequest->handle(Arr::except($validated, ['privacy']));
         } catch (Exception $exception) {
+            // The request itself may already be saved; the visitor's details are in the database, not the log.
+            Log::error('Quote request submission failed', ['error' => $exception->getMessage()]);
 
-            Log::error('Quote request submission failed', [
-                'name' => $this->name,
-                'phone' => $this->phone,
-                'email' => $this->email,
-                'company' => $this->company,
-                'message' => $this->message,
-                'subject' => $this->subject,
-                'error' => $exception->getMessage(),
-            ]);
             $this->dispatch('notify',
                 type: 'danger',
-                title: 'Hiba történt',
-                body: 'Sajnáljuk, az árajánlat kérés küldése sikertelen volt. Kérjük, próbálja újra később.',
+                title: __('An error occurred'),
+                body: __('Sorry, the quote request could not be sent. Please try again later.'),
             );
 
+            return;
         }
+
+        Log::info('Quote request emails sent', ['quote_request_id' => $quoteRequest->id]);
+
+        $this->dispatch('notify',
+            type: 'success',
+            title: __('Quote request sent'),
+            body: __('Thank you for your quote request! We have sent a confirmation email to :email. We will contact you shortly.', ['email' => $quoteRequest->email]),
+        );
+
+        $this->closeModal();
     }
 
     public function render(): Factory|View
@@ -182,14 +130,7 @@ final class QuoteRequestModal extends Component
 
     private function resetForm(): void
     {
-        $this->name = '';
-        $this->phone = '';
-        $this->email = '';
-        $this->company = '';
-        $this->message = '';
-        $this->subject = '';
-        $this->privacy = false;
-        $this->website = '';
+        $this->reset('name', 'phone', 'email', 'company', 'message', 'subject', 'privacy', 'website');
         $this->resetValidation();
     }
 }

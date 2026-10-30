@@ -148,6 +148,7 @@ it('puts the counter values and the image alt texts in the home page HTML', func
         'status' => 'active',
         'featured' => true,
         'elado_v_kiado' => 'kiado-iroda',
+        'property_photos' => ['property/1/vaci-greens.webp'],
     ]);
 
     /** @var TestCase $this */
@@ -299,4 +300,32 @@ it('does not ping IndexNow without a key', function (): void {
     bankCenter();
 
     Bus::assertNothingDispatched();
+});
+
+it('prints one canonical link per page, under APP_URL and without the query string', function (string $uri, string $canonicalPath): void {
+    /** @var TestCase $this */
+    config(['app.url' => 'https://psg-irodahazak.hu']);
+
+    $html = $this->get($uri)->assertOk()->getContent();
+
+    expect(mb_substr_count((string) $html, 'rel="canonical"'))->toBe(1)
+        ->and($html)->toContain('<link rel="canonical" href="https://psg-irodahazak.hu'.$canonicalPath.'">');
+})->with([
+    'home' => ['/', ''],
+    'filtered list' => ['/kiado-irodak?districts=V,XIII&page=2', '/kiado-irodak'],
+    'page with its own meta slot' => ['/impresszum', '/impresszum'],
+]);
+
+it('links a for-sale property page to the sale list in its breadcrumbs', function (): void {
+    /** @var TestCase $this */
+    $property = Property::query()->forceCreate(['title' => 'Eladó székház', 'slug' => 'elado-szekhaz', 'status' => 'active', 'elado_v_kiado' => 'elado-iroda']);
+
+    $nodes = jsonLdNodes((string) $this->get(route('properties.show-for-sale', ['property' => $property->slug]))->assertOk()->getContent());
+    $breadcrumbs = collect($nodes)->firstWhere('@type', 'BreadcrumbList');
+
+    expect(collect($breadcrumbs['itemListElement'])->pluck('item')->all())->toBe([
+        route('home'),
+        route('elado-irodahazak'),
+        route('properties.show-for-sale', ['property' => $property->slug]),
+    ]);
 });

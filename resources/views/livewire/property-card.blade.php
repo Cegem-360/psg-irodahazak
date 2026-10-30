@@ -1,39 +1,38 @@
-@use('App\Models\Translate')
 @php
     // Image alt text: the building's name, marked as an office building unless the name already says so.
-    $imageAlt = Str::contains(Str::lower((string) $title), 'iroda') ? $title : __(':name office building', ['name' => $title]);
+    $imageAlt = Str::contains(Str::lower($property->title), 'iroda')
+        ? $property->title
+        : __(':name office building', ['name' => $property->title]);
 @endphp
-<div
-    class="{{ $swiper ? 'swiper-slide' : '' }} group relative bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl hover:brightness-95 transition-all duration-300 ease-in-out border border-white/15">
+<div @class([
+    'swiper-slide' => $swiper,
+    'group relative bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl hover:brightness-95 transition-all duration-300 ease-in-out border border-white/15',
+])>
     <div class="relative">
 
         <!-- Swiper slides for images -->
-        @if ($minicarousel && count($images) > 0)
-            <div
-                x-data="{
-                    swiperInstance: null,
-                    initSwiper() {
-                        if (this.swiperInstance) {
-                            this.swiperInstance.destroy(true, true);
-                        }
-                        this.swiperInstance = new window.Swiper(this.$refs.swiperContainer, {
-                            direction: 'horizontal',
-                            loop: true,
-                            slidesPerView: 1,
-                            spaceBetween: 0,
-                            navigation: {
-                                nextEl: this.$refs.btnNext,
-                                prevEl: this.$refs.btnPrev,
-                            },
-                        });
+        @if ($minicarousel && filled($property->property_photos))
+            <div x-data="{
+                swiperInstance: null,
+                initSwiper() {
+                    if (this.swiperInstance) {
+                        this.swiperInstance.destroy(true, true);
                     }
-                }"
-                x-init="initSwiper()"
-                x-ref="swiperContainer"
-                class="swiper minicarousel-swiper grid!"
-            >
+                    this.swiperInstance = new window.Swiper(this.$refs.swiperContainer, {
+                        direction: 'horizontal',
+                        loop: true,
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                        navigation: {
+                            nextEl: this.$refs.btnNext,
+                            prevEl: this.$refs.btnPrev,
+                        },
+                    });
+                }
+            }" x-init="initSwiper()" x-ref="swiperContainer"
+                class="swiper minicarousel-swiper grid!">
                 <div class="swiper-wrapper">
-                    @foreach ($images as $carouselimage)
+                    @foreach ($property->property_photos as $carouselimage)
                         <div class="swiper-slide">
                             <img src="{{ Storage::url($carouselimage) }}" alt="{{ $imageAlt }}"
                                 class="w-full h-auto object-cover aspect-3/2" loading="lazy" />
@@ -49,18 +48,20 @@
             </div>
         @endif
         <!-- Fallback image if no swiper -->
-        @if (!$minicarousel && $image)
-            <img src="{{ $image }}" alt="{{ $imageAlt }}" class="w-full h-auto object-cover aspect-3/2"
+        @if (!$minicarousel && $property->getFirstImageUrl())
+            <img src="{{ $property->getFirstImageUrl() }}" alt="{{ $imageAlt }}" class="w-full h-auto object-cover aspect-3/2"
                 loading="lazy" />
         @endif
 
         <!-- Favorite button in top-right corner -->
         @auth
             @if ($property)
-                <button wire:click="toggleFavorite"
-                    class="absolute top-2 right-2 p-2 rounded-full shadow-lg transition-all duration-200 z-10
-                   {{ $favoritestatus ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-white/80 hover:bg-white text-gray-700 hover:text-red-500' }}">
-                    <svg class="w-5 h-5" fill="{{ $favoritestatus ? 'currentColor' : 'none' }}" stroke="currentColor"
+                <button wire:click="toggleFavorite" @class([
+                    'absolute top-2 right-2 p-2 rounded-full shadow-lg transition-all duration-200 z-10',
+                    'bg-red-500 hover:bg-red-600 text-white' => $isFavorite,
+                    'bg-white/80 hover:bg-white text-gray-700 hover:text-red-500' => !$isFavorite,
+                ])>
+                    <svg class="w-5 h-5" fill="{{ $isFavorite ? 'currentColor' : 'none' }}" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -92,19 +93,22 @@
         </div>
     </div>
 
-    <div class="{{ $small ? 'p-3 pl-4' : 'p-6 pl-8' }}">
-        <h3 class="{{ $small ? 'text-lg' : 'text-xl' }} font-bold mb-2">
-            @if (app()->getLocale() === 'en')
-                {{ Translate::whereName($title)->first()?->translated ?: $title }}
-            @else
-                {{ $title }}
-            @endif
+    <div @class(['p-3 pl-4' => $small, 'p-6 pl-8' => !$small])>
+        <h3 @class(['text-lg' => $small, 'text-xl' => !$small, 'font-bold mb-2'])>
+            {{ translate_value($property->title) }}
         </h3>
-        <p class="{{ $small ? 'text-gray-700 text-base min-h-16' : 'text-gray-700 min-h-24' }}">
-            {!! $description ?? __('None') !!}
+        <p @class([
+            'text-gray-700 text-base min-h-16' => $small,
+            'text-gray-700 min-h-24' => !$small,
+        ])>
+            <x-property.summary :property="$property" />
         </p>
-        <a wire:navigate.hover href="{{ $link ?? '#' }}"
-            class="inline-block {{ $small ? 'mb-2 px-3 py-1 text-sm' : 'mb-4 px-6 py-2' }} bg-primary/70 text-white rounded group-hover:bg-primary/90 transition-colors duration-300 ease-in-out">
+        <a wire:navigate.hover href="{{ $property->url() }}" @class([
+            'inline-block',
+            'mb-2 px-3 py-1 text-sm' => $small,
+            'mb-4 px-6 py-2' => !$small,
+            'bg-primary/70 text-white rounded group-hover:bg-primary/90 transition-colors duration-300 ease-in-out',
+        ])>
             {{ __('More details') }}
         </a>
     </div>

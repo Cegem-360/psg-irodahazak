@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\Property;
-use Exception;
+use App\Services\FavoriteProperties;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Cookie;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -20,54 +19,26 @@ final class FavoritesList extends Component
 
     public int $favoriteCount = 0;
 
-    public function mount(): void
+    public function mount(FavoriteProperties $favorites): void
     {
-        $this->loadFavorites();
+        $this->loadFavorites($favorites);
     }
 
     #[On('favorites-updated')]
     #[On('refresh-favorites')]
-    public function refreshFavorites(): void
+    public function refreshFavorites(FavoriteProperties $favorites): void
     {
-        $this->loadFavorites();
-    }
-
-    public function openSendFavoritesModal(): void
-    {
-        $this->dispatch('openSendFavoritesModal')->to('favorites-send-modal');
+        $this->loadFavorites($favorites);
     }
 
     public function render(): Factory|View
     {
-        return view('livewire.favorites-list', [
-            'favoriteProperties' => $this->favoriteProperties,
-            'favoriteCount' => $this->favoriteCount,
-        ]);
+        return view('livewire.favorites-list');
     }
 
-    private function loadFavorites(): void
+    private function loadFavorites(FavoriteProperties $favorites): void
     {
-        $favorites = $this->getFavorites();
-        $this->favoriteCount = count($favorites);
-
-        if ($favorites !== []) {
-            $this->favoriteProperties = Property::query()->whereIn('id', $favorites)
-                ->active()
-                ->get();
-        } else {
-            $this->favoriteProperties = new Collection;
-        }
-    }
-
-    private function getFavorites(): array
-    {
-        try {
-            $favorites = Cookie::get('property_favorites', '[]');
-            $decoded = json_decode($favorites, true);
-
-            return is_array($decoded) ? $decoded : [];
-        } catch (Exception) {
-            return [];
-        }
+        $this->favoriteProperties = $favorites->properties();
+        $this->favoriteCount = $this->favoriteProperties->count();
     }
 }

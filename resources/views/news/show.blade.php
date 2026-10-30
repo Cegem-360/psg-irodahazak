@@ -7,7 +7,6 @@
     <x-slot name="meta">
         <meta name="description" content="{{ $news->excerpt }}">
         <meta name="keywords" content="{{ __('news item, office building, office rental') }}">
-        <link rel="canonical" href="{{ Request::url() }}">
 
         <!-- Open Graph -->
         <meta property="og:title" content="{{ $news->title }}">

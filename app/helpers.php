@@ -22,7 +22,10 @@ if (! function_exists('translate_value')) {
             return $value;
         }
 
-        return Translate::whereName($value)->first()?->translated ?: $value;
+        // One query per request for the whole table rather than one per translated value.
+        $translations = once(fn () => Translate::query()->pluck('translated', 'name'));
+
+        return $translations->get($value) ?: $value;
     }
 }
 

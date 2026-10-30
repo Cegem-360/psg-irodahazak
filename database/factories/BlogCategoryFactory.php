@@ -35,7 +35,8 @@ final class BlogCategoryFactory extends Factory
 
         return [
             'name' => $name,
-            'slug' => Str::slug($name),
+            // Eight names only, so the slug gets a suffix to stay unique across a test's categories.
+            'slug' => Str::slug($name).'-'.fake()->unique()->numberBetween(1, 99999),
             'description' => fake()->paragraph(3),
             'color' => $categories[$name],
             'is_active' => fake()->boolean(90), // 90% aktív

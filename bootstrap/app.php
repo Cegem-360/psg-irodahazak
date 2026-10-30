@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Middleware\RedirectToCanonicalUrl;
 use App\Http\Middleware\SetLocale;
+use App\Services\FavoriteProperties;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,6 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->prepend(RedirectToCanonicalUrl::class);
+
+        // The browser reads and writes the favorites list too, so it stays plain JSON.
+        $middleware->encryptCookies(except: [FavoriteProperties::COOKIE]);
 
         $middleware->web(append: [
             SetLocale::class,

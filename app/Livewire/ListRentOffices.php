@@ -6,8 +6,12 @@ namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Property as Offices;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -33,20 +37,21 @@ final class ListRentOffices extends Component
 
     public bool $includeAgglomeration = false;
 
-    public string $sortField = 'title';
-
-    public string $sortDirection = 'asc';
-
+    #[Locked]
     public int $perPage = 6;
 
+    #[Locked]
     public int $totalOffices = 0;
 
     public null|int|string $min_rent = '';
 
     public ?string $min_rent_addons = '';
 
+    #[Locked]
     public ?string $title = null;
 
+    /** The category page this list belongs to; set by the route, not by the visitor. */
+    #[Locked]
     public ?string $category = null;
 
     /** @var array<string, mixed> Per-request memo of getOffices(), keyed by the filter state. */
@@ -75,7 +80,7 @@ final class ListRentOffices extends Component
             $office = Offices::query()->where('title', $this->officeName)->first();
 
             if ($office !== null) {
-                $this->redirect(localized_route('properties.show', ['property' => $office->slug]));
+                $this->redirect($office->url());
             }
         }
 
@@ -95,27 +100,15 @@ final class ListRentOffices extends Component
      * The current page of offices. Memoised per state, because the count, the list
      * and the map markers all read it during one request.
      */
-    public function getOffices()
+    public function getOffices(): LengthAwarePaginator
     {
         $state = serialize([$this->search, $this->districts, $this->district, $this->officeName, $this->areaMin,
             $this->areaMax, $this->priceMin, $this->priceMax, $this->includeAgglomeration, $this->category,
-            $this->min_rent, $this->min_rent_addons, $this->sortField, $this->sortDirection, $this->perPage, $this->getPage()]);
+            $this->min_rent, $this->min_rent_addons, $this->perPage, $this->getPage()]);
 
         return $this->officesMemo[$state] ??= $this->buildQuery()
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy('title')
             ->paginate($this->perPage);
-    }
-
-    public function sortBy(string $field): void
-    {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-
-        $this->resetPage();
     }
 
     public function render(): Factory|View
@@ -128,7 +121,10 @@ final class ListRentOffices extends Component
         ]);
     }
 
-    public function getOfficesForMap()
+    /**
+     * @return Collection<int, array<string, mixed>>
+     */
+    public function getOfficesForMap(): Collection
     {
         // Get only the currently paginated offices that have coordinates
         $paginatedOffices = $this->getOffices();
@@ -147,12 +143,15 @@ final class ListRentOffices extends Component
                 'address' => $office->cim_irsz.' '.$office->cim_varos.($office->district ? ' '.$office->district.'. kerület' : '').', '.$office->cim_utca.' '.$office->cim_hazszam,
                 'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
                 'operating_fee' => (translate_value($office->uzemeletetesi_dij) ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
-                'url' => route('properties.show', ['property' => $office]),
+                'url' => $office->url(),
             ])
             ->values(); // Reset array keys to ensure clean JSON
     }
 
-    private function buildQuery()
+    /**
+     * @return Builder<Offices>
+     */
+    private function buildQuery(): Builder
     {
         $query = Offices::query()
             ->rent()
@@ -166,13 +165,6 @@ final class ListRentOffices extends Component
             $query->where('min_berleti_idoszak_addons', $this->min_rent_addons);
         }
 
-        // If agglomeration is not included, only show Budapest properties
-        if ($this->includeAgglomeration) {
-            $query->whereNot(function ($query): void {
-                $query->budapestOnly();
-            });
-        }
-
         if ($this->category) {
             $category_model = $this->categoryMemo[$this->category] ??= Category::query()->where('slug', 'like', $this->category)->first();
 
@@ -182,7 +174,7 @@ final class ListRentOffices extends Component
             abort_if($category_model === null, 404);
 
             $this->title = $category_model->heading ?: ($category_model->name ?? __('page.title.offices_for_rent'));
-            $query->byCategory(stripslashes((string) $category_model->name));
+            $query->inCategory($category_model);
         }
 
         // Apply search filter
@@ -230,7 +222,6 @@ final class ListRentOffices extends Component
 
         // If agglomeration is included, return only agglomeration properties and skip district filters
         if ($this->includeAgglomeration) {
-
             return $query->agglomeration();
         }
 

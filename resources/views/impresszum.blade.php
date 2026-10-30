@@ -6,7 +6,6 @@
     <x-slot name="meta">
         <meta name="description" content="{{ __('PSG-IRODAHÁZAK imprint - Legal information and contact details.') }}">
         <meta name="keywords" content="{{ __('imprint, legal information, PSG-IRODAHÁZAK') }}">
-        <link rel="canonical" href="{{ Request::url() }}">
     </x-slot>
 
     <x-page-section spacing="space-y-8">
