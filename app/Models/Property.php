@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -88,46 +89,44 @@ final class Property extends Model
 {
     use HasFactory;
 
+    public const string DISTRICT_COUNTS_CACHE_KEY = 'properties.rent_count_by_district';
+
+    /**
+     * Active rental offices per Budapest district (1–23), for the district map.
+     *
+     * One query plus PHP matching instead of 23 counts, cached until a property is
+     * saved or deleted. A property counts in a district when its district column
+     * names it (Roman or Arabic numeral) or its postal code belongs to it, the same
+     * rule as the inDistrict() scope.
+     *
+     * @return array<int, int>
+     */
     public static function countByDistrict(): array
     {
-        // Kerületek római számmal
-        $romanNumerals = [
-            1 => 'I',
-            2 => 'II',
-            3 => 'III',
-            4 => 'IV',
-            5 => 'V',
-            6 => 'VI',
-            7 => 'VII',
-            8 => 'VIII',
-            9 => 'IX',
-            10 => 'X',
-            11 => 'XI',
-            12 => 'XII',
-            13 => 'XIII',
-            14 => 'XIV',
-            15 => 'XV',
-            16 => 'XVI',
-            17 => 'XVII',
-            18 => 'XVIII',
-            19 => 'XIX',
-            20 => 'XX',
-            21 => 'XXI',
-            22 => 'XXII',
-            23 => 'XXIII',
-        ];
+        return once(fn (): array => Cache::remember(self::DISTRICT_COUNTS_CACHE_KEY, now()->addDay(), function (): array {
+            $romanNumerals = [1 => 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII',
+                'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI', 'XXII', 'XXIII'];
 
-        $result = [];
+            $properties = self::query()->rent()->active()->budapestOnly()->get(['district', 'cim_irsz']);
+            $result = array_fill_keys(array_keys($romanNumerals), 0);
 
-        foreach (array_keys($romanNumerals) as $num) {
-            $count = self::query()->where(function (\Illuminate\Contracts\Database\Eloquent\Builder $q) use ($num): void {
-                $q->rent()->active()->budapestOnly()->inDistrict((string) $num);
-            })->count();
+            foreach ($romanNumerals as $number => $roman) {
+                $result[$number] = $properties->filter(function (self $property) use ($number, $roman): bool {
+                    $district = mb_strtoupper(mb_trim((string) $property->district));
 
-            $result[$num] = $count;
-        }
+                    return $district === $roman
+                        || $district === (string) $number
+                        || self::postalCodeDistrict((string) $property->cim_irsz) === $number;
+                })->count();
+            }
 
-        return $result;
+            return $result;
+        }));
+    }
+
+    public static function forgetDistrictCounts(): void
+    {
+        Cache::forget(self::DISTRICT_COUNTS_CACHE_KEY);
     }
 
     /**
@@ -469,6 +468,18 @@ final class Property extends Model
             'vat' => 'boolean',
             'property_photos' => 'array',
         ];
+    }
+
+    /**
+     * The district a four-digit Budapest postal code belongs to: 1054 → 5.
+     */
+    private static function postalCodeDistrict(string $postalCode): ?int
+    {
+        if (mb_strlen($postalCode) !== 4 || ! ctype_digit($postalCode)) {
+            return null;
+        }
+
+        return intdiv((int) $postalCode, 10) - 100;
     }
 
     /**

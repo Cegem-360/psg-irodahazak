@@ -25,8 +25,9 @@ it('writes a sitemap index pointing at the page, property and article sitemaps',
         'elado_v_kiado' => 'kiado',
     ]);
 
+    // BlogCategoryFactory picks from eight fixed names, so two posts share one category to avoid a slug clash.
     $indexedPost = BlogPost::factory()->published()->create();
-    $noindexPost = BlogPost::factory()->published()->create(['noindex' => true]);
+    $noindexPost = BlogPost::factory()->published()->create(['noindex' => true, 'blog_category_id' => $indexedPost->blog_category_id]);
 
     $directory = sys_get_temp_dir().'/sitemap-test-'.bin2hex(random_bytes(6));
     File::ensureDirectoryExists($directory);

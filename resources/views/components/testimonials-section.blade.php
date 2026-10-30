@@ -29,7 +29,7 @@
             </div>
 
             <div class="text-center mt-12">
-                <a href="{{ route('testimonials.index') }}"
+                <a wire:navigate.hover href="{{ route('testimonials.index') }}"
                     class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     {{ __('View all testimonials') }}
                     <svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

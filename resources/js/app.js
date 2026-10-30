@@ -16,12 +16,27 @@ import "swiper/css/navigation";
 window.Swiper = Swiper;
 import "flowbite";
 import { initFlowbite } from "flowbite";
+import "./office-search-form.js";
+import "./counters.js";
 document.addEventListener("livewire:navigated", () => {
     initFlowbite();
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const galleryCarouselSwiperThumbs = new Swiper(
+// Swipers are (re)initialised on every "livewire:navigated", which also fires on the
+// first page load, so carousels work after wire:navigate page changes too. An
+// element that already carries a Swiper instance is skipped.
+function initSwiper(selector, options) {
+    const element = document.querySelector(selector);
+
+    if (!element || element.swiper) {
+        return element?.swiper ?? null;
+    }
+
+    return new Swiper(element, options);
+}
+
+document.addEventListener("livewire:navigated", function () {
+    const galleryCarouselSwiperThumbs = initSwiper(
         ".gallery-carousel-swiper-thumbs",
         {
             slidesPerView: 4,
@@ -30,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
-    const galleryCarouselSwiper = new Swiper(".gallery-carousel-swiper", {
+    const galleryCarouselSwiper = initSwiper(".gallery-carousel-swiper", {
         direction: "horizontal",
         loop: true,
         thumbs: {
@@ -42,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     });
 
-    const referenceSwiper = new Swiper(".reference-swiper", {
+    const referenceSwiper = initSwiper(".reference-swiper", {
         direction: "horizontal",
         autoplay: {
             delay: 3000,
@@ -69,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     });
 
-    const rolunkmondtakSwiper = new Swiper(".rolunkmondtak-swiper", {
+    const rolunkmondtakSwiper = initSwiper(".rolunkmondtak-swiper", {
         direction: "horizontal",
         autoplay: {
             delay: 5000,
@@ -97,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     });
 
-    const kiemeltajanlatokSwiper = new Swiper(".kiemeltajanlatok-swiper", {
+    const kiemeltajanlatokSwiper = initSwiper(".kiemeltajanlatok-swiper", {
         direction: "horizontal",
         autoplay: {
             delay: 5000,
@@ -173,7 +188,7 @@ function updateFavoritesCounter() {
     }
 }
 
-// Initialize counter on page load
-document.addEventListener("DOMContentLoaded", function () {
+// Initialize counter on page load and after every wire:navigate page change
+document.addEventListener("livewire:navigated", function () {
     updateFavoritesCounter();
 });

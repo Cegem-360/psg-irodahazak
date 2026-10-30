@@ -55,6 +55,12 @@ final class ListRentOffices extends Component
 
     public ?string $category = null;
 
+    /** @var array<string, mixed> Per-request memo of getOffices(), keyed by the filter state. */
+    private array $officesMemo = [];
+
+    /** @var array<string, Category|null> Per-request memo of the category looked up by slug. */
+    private array $categoryMemo = [];
+
     public function mount(array $queryParams = []): void
     {
         // Initialize filters from queryParams if provided, otherwise from request parameters
@@ -77,21 +83,29 @@ final class ListRentOffices extends Component
             $this->redirect(localized_route('properties.show', ['property' => $office->slug]));
         }
 
-        $this->updateTotalOffices();
-
+        // Before the first query: buildQuery() replaces the title with the category's heading.
         $this->title = $queryParams['title'] ?? request('title', __('page.title.offices_for_rent'));
+
+        $this->updateTotalOffices();
 
     }
 
     public function updateTotalOffices(): void
     {
-        $this->totalOffices = $this->buildQuery()->count();
+        $this->totalOffices = $this->getOffices()->total();
     }
 
+    /**
+     * The current page of offices. Memoised per state, because the count, the list
+     * and the map markers all read it during one request.
+     */
     public function getOffices()
     {
+        $state = serialize([$this->search, $this->districts, $this->district, $this->officeName, $this->areaMin,
+            $this->areaMax, $this->priceMin, $this->priceMax, $this->includeAgglomeration, $this->category,
+            $this->min_rent, $this->min_rent_addons, $this->sortField, $this->sortDirection, $this->perPage, $this->getPage()]);
 
-        return $this->buildQuery()
+        return $this->officesMemo[$state] ??= $this->buildQuery()
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate($this->perPage);
     }
@@ -164,7 +178,7 @@ final class ListRentOffices extends Component
         }
 
         if ($this->category) {
-            $category_model = Category::query()->where('slug', 'like', $this->category)->first();
+            $category_model = $this->categoryMemo[$this->category] ??= Category::query()->where('slug', 'like', $this->category)->first();
 
             // A slug with no matching category is a page that does not exist. Returning
             // 404 rather than quietly listing everything keeps it out of search results

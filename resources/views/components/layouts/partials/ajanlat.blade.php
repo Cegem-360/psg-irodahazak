@@ -14,25 +14,25 @@
 
             <ul class="space-y-2">
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-azonnali-szolgaltatott-irodak']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-azonnali-szolgaltatott-irodak']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('serviced offices') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-pesti-irodak']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-pesti-irodak']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Offices for rent in Pest') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-belvarosi-irodak']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-belvarosi-irodak']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Rent offices in downtown') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-irodak-v-kerulet']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-irodak-v-kerulet']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Offices for rent in District V') }}
                     </a>
@@ -41,25 +41,25 @@
 
             <ul class="space-y-2">
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-vaci-uti-irodak']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-vaci-uti-irodak']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Rent offices on Váci street') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-budai-irodak']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-budai-irodak']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Rent offices in Buda') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-bel-budai-irodak']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-bel-budai-irodak']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Offices for rent in inner Buda') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-irodak-xi-kerulet']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-irodak-xi-kerulet']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Offices for rent in District XI.') }}
                     </a>
@@ -68,25 +68,25 @@
 
             <ul class="space-y-2">
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-zold-irodak']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-zold-irodak']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Green offices for rent') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-klasszikus-irodahazak']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-klasszikus-irodahazak']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Classic office buildings for rent') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('budapest.category', ['category' => 'kiado-uj-irodahazak']) }}"
+                    <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-uj-irodahazak']) }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('New office buildings for rent') }}
                     </a>
                 </li>
                 <li>
-                    <a href="{{ localized_route('elado-irodahazak') }}"
+                    <a wire:navigate.hover href="{{ localized_route('elado-irodahazak') }}"
                         class="hover:text-blue-600 hover:underline transition-colors duration-200">
                         {{ __('Offices for sale') }}
                     </a>

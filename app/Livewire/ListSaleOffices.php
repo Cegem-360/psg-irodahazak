@@ -31,6 +31,9 @@ final class ListSaleOffices extends Component
 
     public $officeDetails = [];
 
+    /** @var array<string, mixed> Per-request memo of getOffices(), keyed by the list state. */
+    private array $officesMemo = [];
+
     public function mount(): void
     {
         $this->updateTotalOffices();
@@ -38,18 +41,18 @@ final class ListSaleOffices extends Component
 
     public function updateTotalOffices(): void
     {
-        $this->totalOffices = Offices::query()
-            ->sale()
-            ->when($this->search, function ($query): void {
-                $query->searchText($this->search);
-            })
-            ->active()
-            ->count();
+        $this->totalOffices = $this->getOffices()->total();
     }
 
+    /**
+     * The current page of offices. Memoised per state, because the count, the list,
+     * the pagination and the map markers all read it during one request.
+     */
     public function getOffices()
     {
-        return Offices::query()
+        $state = serialize([$this->search, $this->sortField, $this->sortDirection, $this->perPage, $this->getPage()]);
+
+        return $this->officesMemo[$state] ??= Offices::query()
             ->with('images') // Eager load images
             ->when($this->search, function ($query): void {
                 $query->searchText($this->search);
@@ -62,19 +65,8 @@ final class ListSaleOffices extends Component
 
     public function getOfficesForMap()
     {
-        // Get only the currently paginated offices
-        $paginatedOffices = Offices::query()
-            ->with('images')
-            ->when($this->search, function ($query): void {
-                $query->searchText($this->search);
-            })
-            ->sale()
-            ->active()
-            ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate($this->perPage);
-
-        // Transform all offices to map format (coordinates will be geocoded on frontend)
-        return $paginatedOffices->getCollection()
+        // Transform the current page of offices to map format (coordinates will be geocoded on frontend)
+        return $this->getOffices()->getCollection()
             ->map(function ($office): array {
                 // Build full address for geocoding
                 $addressParts = array_filter([

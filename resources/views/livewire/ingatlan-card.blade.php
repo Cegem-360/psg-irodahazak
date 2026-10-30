@@ -103,7 +103,7 @@
         <p class="{{ $small ? 'text-gray-700 text-base min-h-16' : 'text-gray-700 min-h-24' }}">
             {!! $description ?? __('None') !!}
         </p>
-        <a href="{{ $link ?? '#' }}"
+        <a wire:navigate.hover href="{{ $link ?? '#' }}"
             class="inline-block {{ $small ? 'mb-2 px-3 py-1 text-sm' : 'mb-4 px-6 py-2' }} bg-primary/70 text-white rounded group-hover:bg-primary/90 transition-colors duration-300 ease-in-out">
             {{ __('More details') }}
         </a>

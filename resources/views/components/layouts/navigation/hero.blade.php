@@ -6,7 +6,7 @@
             <x-svg.psg-irodahazak-symbol />
         </div>
         <div class="logo pt-8 sm:pt-0">
-            <a href="{{ localized_route('home') }}" class="flex items-center">
+            <a wire:navigate.hover href="{{ localized_route('home') }}" class="flex items-center">
                 <img src="{{ Vite::asset('resources/images/psg-irodahazak-logo.png') }}" class="mr-3 h-12 sm:h-24"
                     alt="PSG Irodaházak logo" loading="lazy">
             </a>

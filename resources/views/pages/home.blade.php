@@ -3,7 +3,7 @@
     <div class="relative">
 
         <div class="kategoria-valaszto grid grid-cols-1 md:grid-cols-4 font-bold">
-            <a href="{{ localized_route('budapest.category', ['category' => 'kiado-belvarosi-irodak']) }}"
+            <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-belvarosi-irodak']) }}"
                 class="hero-image relative group">
                 <img src="{{ Vite::asset('resources/images/belvarosi_kiado_irodak-2.webp') }}"
                     alt="{{ __('Downtown offices for rent') }}" class="w-full h-auto object-cover aspect-3/2" loading="lazy" />
@@ -13,7 +13,7 @@
                         {{ __('Offices for rent in downtown') }}</h2>
                 </div>
             </a>
-            <a href="{{ localized_route('budapest.category', ['category' => 'kiado-budai-irodak']) }}"
+            <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-budai-irodak']) }}"
                 class="hero-image relative group">
                 <img src="{{ Vite::asset('resources/images/budai_kiado_irodak.webp') }}" alt="{{ __('Buda offices for rent') }}"
                     class="w-full h-auto object-cover aspect-3/2" loading="lazy" />
@@ -23,7 +23,7 @@
                         {{ __('Offices for rent in Buda') }}</h2>
                 </div>
             </a>
-            <a href="{{ localized_route('budapest.category', ['category' => 'kiado-vaci-uti-irodak']) }}"
+            <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-vaci-uti-irodak']) }}"
                 class="hero-image relative group">
                 <img src="{{ Vite::asset('resources/images/vaci-uti-irodak.webp') }}" alt="{{ __('Váci street offices for rent') }}"
                     class="w-full h-auto object-cover aspect-3/2" loading="lazy" />
@@ -33,7 +33,7 @@
                         {{ __('Offices for rent on Váci street') }}</h2>
                 </div>
             </a>
-            <a href="{{ localized_route('budapest.category', ['category' => 'kiado-azonnali-szolgaltatott-irodak']) }}"
+            <a wire:navigate.hover href="{{ localized_route('budapest.category', ['category' => 'kiado-azonnali-szolgaltatott-irodak']) }}"
                 class="hero-image relative group">
                 <img src="{{ Vite::asset('resources/images/azonnali_szolgaltatott_irodak-2.webp') }}"
                     alt="{{ __('Instant serviced offices') }}" class="w-full h-auto object-cover aspect-3/2"

@@ -13,7 +13,7 @@
                 <nav class="flex" aria-label="Breadcrumb">
                     <ol class="flex items-center space-x-4">
                         <li>
-                            <a href="{{ localized_route('home') }}" class="text-gray-500 hover:text-gray-700">
+                            <a wire:navigate.hover href="{{ localized_route('home') }}" class="text-gray-500 hover:text-gray-700">
                                 {{ __('Homepage') }}
                             </a>
                         </li>
@@ -22,7 +22,7 @@
                                 fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                 <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
                             </svg>
-                            <a href="{{ localized_route('testimonials.index') }}"
+                            <a wire:navigate.hover href="{{ localized_route('testimonials.index') }}"
                                 class="text-gray-500 hover:text-gray-700">
                                 {{ __('Testimonials') }}
                             </a>
@@ -107,7 +107,7 @@
 
                 <!-- Back Button -->
                 <div class="text-center mt-8">
-                    <a href="{{ route('testimonials.index') }}"
+                    <a wire:navigate.hover href="{{ route('testimonials.index') }}"
                         class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">

@@ -64,7 +64,7 @@
 
 <!-- Read More Link -->
 <div class="mt-4 text-right">
-    <a href="{{ route('testimonials.show', $testimonial) }}"
+    <a wire:navigate.hover href="{{ route('testimonials.show', $testimonial) }}"
         class="text-blue-600 hover:text-blue-800 text-sm font-medium">
         {{ __('Details') }} →
     </a>

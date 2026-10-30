@@ -27,7 +27,7 @@
                             {!! $news->excerpt !!}
                         </div>
 
-                        <a href="{{ localized_route('news.show', ['slug' => $news->slug]) }}"
+                        <a wire:navigate.hover href="{{ localized_route('news.show', ['slug' => $news->slug]) }}"
                             class="inline-block mt-6 px-6 py-2 bg-primary/70 text-white rounded hover:bg-accent/80 transition-colors">{{ __('Full article') }}</a>
                     </div>
                 </div>

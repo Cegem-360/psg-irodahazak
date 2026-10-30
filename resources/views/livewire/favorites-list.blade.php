@@ -76,7 +76,7 @@
                     <p class="text-gray-600 mb-8">
                         {{ __('Start adding properties to your favorites by clicking the heart icon on property cards.') }}
                     </p>
-                    <a href="{{ route('kiado-irodak') }}"
+                    <a wire:navigate.hover href="{{ route('kiado-irodak') }}"
                         class="inline-block px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-300">
                         {{ __('Browse Properties') }}
                     </a>

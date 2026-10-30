@@ -30,12 +30,12 @@
         <div class="bg-white border-b">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <nav class="flex items-center space-x-2 text-sm text-gray-500">
-                    <a href="{{ localized_route('home') }}" class="hover:text-blue-600">{{ __('Homepage') }}</a>
+                    <a wire:navigate.hover href="{{ localized_route('home') }}" class="hover:text-blue-600">{{ __('Homepage') }}</a>
                     <span>/</span>
                     <a href="#" class="hover:text-blue-600">Blog</a>
                     @if ($post->category)
                         <span>/</span>
-                        <a href="{{ route('en.blog.category', ['category' => $post->category->slug]) }}"
+                        <a wire:navigate.hover href="{{ route('en.blog.category', ['category' => $post->category->slug]) }}"
                             class="hover:text-blue-600">{{ $post->category->name }}</a>
                     @endif
                     <span>/</span>
@@ -117,7 +117,7 @@
                     @if ($post->category)
                         <div>
                             <p class="text-sm text-gray-500 mb-2">{{ __('Category:') }}</p>
-                            <a href="{{ route('en.blog.category', ['category' => $post->category->slug]) }}"
+                            <a wire:navigate.hover href="{{ route('en.blog.category', ['category' => $post->category->slug]) }}"
                                 class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white hover:opacity-90 transition duration-150"
                                 style="background-color: {{ $post->category->color }}">
                                 {{ $post->category->name }}
@@ -195,7 +195,7 @@
                                     </div>
 
                                     <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                                        <a href="{{ route('en.blog.show', ['post' => $relatedPost->slug]) }}"
+                                        <a wire:navigate.hover href="{{ route('en.blog.show', ['post' => $relatedPost->slug]) }}"
                                             class="hover:text-blue-600 transition duration-150">
                                             {{ $relatedPost->title }}
                                         </a>
