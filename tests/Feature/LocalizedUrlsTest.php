@@ -33,7 +33,7 @@ it('links a page to its other language version with hreflang and in the switcher
 
 it('keeps the route parameters in the alternates of a property page', function (): void {
     /** @var TestCase $this */
-    $property = Property::query()->forceCreate(['title' => 'Teszt', 'status' => 'active', 'slug' => 'teszt-hreflang', 'elado_v_kiado' => 'kiado-iroda']);
+    $property = Property::query()->forceCreate(['title' => 'Teszt', 'status' => 'active', 'slug' => 'teszt-hreflang', 'offer_type' => 'kiado-iroda']);
 
     $this->get('/office-to-let/'.$property->slug)
         ->assertOk()

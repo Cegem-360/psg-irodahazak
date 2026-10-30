@@ -95,19 +95,19 @@ final class FavoritesExcelExportService
     {
         return mb_trim(sprintf(
             '%s %s, %s %s %s',
-            $property->cim_irsz ?? '',
-            $property->cim_varos ?? '',
-            $property->cim_utca ?? '',
-            $property->cim_utca_addons ?? '',
-            $property->cim_hazszam ?? '',
+            $property->postal_code ?? '',
+            $property->city ?? '',
+            $property->street ?? '',
+            $property->street_type ?? '',
+            $property->house_number ?? '',
         ));
     }
 
     private function formatRentalFee(Property $property): string
     {
-        $min = $property->min_berleti_dij;
-        $max = $property->max_berleti_dij;
-        $addons = $property->min_berleti_dij_addons ?? '';
+        $min = $property->min_rent;
+        $max = $property->max_rent;
+        $addons = $property->min_rent_unit ?? '';
 
         if (! $min) {
             return '';
@@ -124,8 +124,8 @@ final class FavoritesExcelExportService
 
     private function formatOperatingFee(Property $property): string
     {
-        $value = $property->uzemeletetesi_dij;
-        $addons = $property->uzemeletetesi_dij_addons ?? '';
+        $value = $property->operating_fee;
+        $addons = $property->operating_fee_unit ?? '';
 
         if (! $value) {
             return '';
@@ -136,8 +136,8 @@ final class FavoritesExcelExportService
 
     private function formatCommonAreaRatio(Property $property): string
     {
-        $value = $property->kozos_teruleti_arany;
-        $addons = $property->kozos_teruleti_arany_addons ?? '';
+        $value = $property->common_area_ratio;
+        $addons = $property->common_area_ratio_unit ?? '';
 
         if (! $value) {
             return '';
@@ -148,9 +148,9 @@ final class FavoritesExcelExportService
 
     private function formatParkingFee(Property $property): string
     {
-        $min = $property->min_parkolas_dija;
-        $max = $property->max_parkolas_dija;
-        $addons = $property->min_parkolas_dija_addons ?? '';
+        $min = $property->min_parking_fee;
+        $max = $property->max_parking_fee;
+        $addons = $property->min_parking_fee_unit ?? '';
 
         if (! $min) {
             return '';
@@ -167,8 +167,8 @@ final class FavoritesExcelExportService
 
     private function formatMinRentalPeriod(Property $property): string
     {
-        $value = $property->min_berleti_idoszak;
-        $addons = $property->min_berleti_idoszak_addons ?? '';
+        $value = $property->min_lease_term;
+        $addons = $property->min_lease_term_unit ?? '';
 
         if (! $value) {
             return '';

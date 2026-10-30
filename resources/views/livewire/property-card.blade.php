@@ -10,7 +10,7 @@
 ])>
     <div class="relative">
 
-        <!-- Swiper slides for images -->
+        {{-- Swiper slides for images --}}
         @if ($minicarousel && filled($property->property_photos))
             <div x-data="{
                 swiperInstance: null,
@@ -47,13 +47,13 @@
                 </div>
             </div>
         @endif
-        <!-- Fallback image if no swiper -->
+        {{-- Fallback image if no swiper --}}
         @if (!$minicarousel && $property->getFirstImageUrl())
             <img src="{{ $property->getFirstImageUrl() }}" alt="{{ $imageAlt }}" class="w-full h-auto object-cover aspect-3/2"
                 loading="lazy" />
         @endif
 
-        <!-- Favorite button in top-right corner -->
+        {{-- Favorite button in top-right corner --}}
         @auth
             @if ($property)
                 <button wire:click="toggleFavorite" @class([
@@ -70,9 +70,9 @@
             @endif
         @endauth
 
-        <!-- Icon boxes positioned at bottom-right of image -->
+        {{-- Icon boxes positioned at bottom-right of image --}}
         <div class="absolute bottom-2 right-5 flex gap-1 z-10">
-            <!-- Map icon box -->
+            {{-- Map icon box --}}
             <button wire:click="showMapModal"
                 class="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded shadow-lg transition-colors duration-200">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -82,7 +82,7 @@
                 </svg>
             </button>
 
-            <!-- Phone icon box -->
+            {{-- Phone icon box --}}
             <button wire:click="showPhoneModal"
                 class="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded shadow-lg transition-colors duration-200">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -101,7 +101,7 @@
             'text-gray-700 text-base min-h-16' => $small,
             'text-gray-700 min-h-24' => !$small,
         ])>
-            <x-property.summary :property="$property" />
+            <x-property.summary :$property />
         </p>
         <a wire:navigate.hover href="{{ $property->url() }}" @class([
             'inline-block',

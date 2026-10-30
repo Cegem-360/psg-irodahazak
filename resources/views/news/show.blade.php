@@ -8,7 +8,7 @@
         <meta name="description" content="{{ $news->excerpt }}">
         <meta name="keywords" content="{{ __('news item, office building, office rental') }}">
 
-        <!-- Open Graph -->
+        {{-- Open Graph --}}
         <meta property="og:title" content="{{ $news->title }}">
         <meta property="og:description" content="{{ $news->excerpt }}">
         <meta property="og:type" content="article">
@@ -17,7 +17,7 @@
             <meta property="og:image" content="{{ Storage::url($news->featured_image) }}">
         @endif
 
-        <!-- Article specific -->
+        {{-- Article specific --}}
         <meta property="article:published_time" content="{{ $news?->published_at?->toISOString() }}">
         <meta property="article:author" content="{{ $news->author->name }}">
         @if ($news->category)
@@ -26,18 +26,18 @@
     </x-slot>
 
     <div class="min-h-screen bg-gray-50">
-        <!-- Breadcrumb -->
+        {{-- Breadcrumb --}}
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <article class="bg-white rounded-lg shadow-sm overflow-hidden">
-                <!-- Article Header -->
+                {{-- Article Header --}}
                 <div class="p-8">
 
                     <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{{ $news->title }}</h1>
 
                 </div>
 
-                <!-- Featured Image -->
+                {{-- Featured Image --}}
                 @if ($news->featured_image)
                     <div class="px-8 mb-8">
                         <img src="{{ Storage::url($news->featured_image) }}" alt="{{ $news->title }}"
@@ -45,20 +45,20 @@
                     </div>
                 @endif
 
-                <!-- Article Content -->
+                {{-- Article Content --}}
                 <div class="px-8 pb-8">
                     <div class="prose prose-lg max-w-none">
                         {!! $news->excerpt !!}
                     </div>
                 </div>
 
-                <!-- Article Content -->
+                {{-- Article Content --}}
                 <div class="px-8 pb-8">
                     <div class="prose prose-lg max-w-none">
                         {!! $news->content !!}
                     </div>
                 </div>
-                <!-- Article Content -->
+                {{-- Article Content --}}
                 @if ($news->source)
                     <div class="px-8 pb-8">
                         <div class="prose prose-lg max-w-none">
@@ -71,7 +71,7 @@
 
             </article>
 
-            <!-- Back to News -->
+            {{-- Back to News --}}
             <div class="mt-12 text-center">
                 <a wire:navigate.hover href="{{ localized_route('news.index') }}"
                     class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition duration-150">

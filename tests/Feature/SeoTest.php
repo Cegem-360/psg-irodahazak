@@ -43,31 +43,31 @@ function bankCenter(array $attributes = []): Property
         'title' => 'Bank Center',
         'slug' => 'bank-center',
         'status' => 'active',
-        'elado_v_kiado' => 'kiado-iroda',
-        'cim_irsz' => '1054',
-        'cim_varos' => 'Budapest',
-        'cim_utca' => 'Szabadság',
-        'cim_utca_addons' => 'tér',
-        'cim_hazszam' => '7.',
+        'offer_type' => 'kiado-iroda',
+        'postal_code' => '1054',
+        'city' => 'Budapest',
+        'street' => 'Szabadság',
+        'street_type' => 'tér',
+        'house_number' => '7.',
         'maps_lat' => '47.5028034',
         'maps_lng' => '19.0521024',
         'construction_year' => '1995',
         'total_area' => '32,000',
-        'osszterulet_addons' => 'm2',
-        'jelenleg_kiado' => '1820',
-        'min_kiado' => '79',
-        'min_kiado_addons' => 'm2',
-        'min_berleti_dij' => '22',
-        'max_berleti_dij' => '25',
-        'min_berleti_dij_addons' => 'EUR/m2/hó',
-        'uzemeletetesi_dij' => '2840',
-        'uzemeletetesi_dij_addons' => 'HUF/m2/hó',
-        'min_parkolas_dija' => '220',
-        'min_parkolas_dija_addons' => 'EUR/hely/hó',
-        'kozos_teruleti_arany' => '10',
-        'kozos_teruleti_arany_addons' => '%',
-        'min_berleti_idoszak' => '3',
-        'min_berleti_idoszak_addons' => 'év',
+        'total_area_unit' => 'm2',
+        'available_area' => '1820',
+        'min_available_area' => '79',
+        'min_available_area_unit' => 'm2',
+        'min_rent' => '22',
+        'max_rent' => '25',
+        'min_rent_unit' => 'EUR/m2/hó',
+        'operating_fee' => '2840',
+        'operating_fee_unit' => 'HUF/m2/hó',
+        'min_parking_fee' => '220',
+        'min_parking_fee_unit' => 'EUR/hely/hó',
+        'common_area_ratio' => '10',
+        'common_area_ratio_unit' => '%',
+        'min_lease_term' => '3',
+        'min_lease_term_unit' => 'év',
         ...$attributes,
     ]);
 }
@@ -147,7 +147,7 @@ it('puts the counter values and the image alt texts in the home page HTML', func
         'slug' => 'vaci-greens',
         'status' => 'active',
         'featured' => true,
-        'elado_v_kiado' => 'kiado-iroda',
+        'offer_type' => 'kiado-iroda',
         'property_photos' => ['property/1/vaci-greens.webp'],
     ]);
 
@@ -318,7 +318,7 @@ it('prints one canonical link per page, under APP_URL and without the query stri
 
 it('links a for-sale property page to the sale list in its breadcrumbs', function (): void {
     /** @var TestCase $this */
-    $property = Property::query()->forceCreate(['title' => 'Eladó székház', 'slug' => 'elado-szekhaz', 'status' => 'active', 'elado_v_kiado' => 'elado-iroda']);
+    $property = Property::query()->forceCreate(['title' => 'Eladó székház', 'slug' => 'elado-szekhaz', 'status' => 'active', 'offer_type' => 'elado-iroda']);
 
     $nodes = jsonLdNodes((string) $this->get(route('properties.show-for-sale', ['property' => $property->slug]))->assertOk()->getContent());
     $breadcrumbs = collect($nodes)->firstWhere('@type', 'BreadcrumbList');

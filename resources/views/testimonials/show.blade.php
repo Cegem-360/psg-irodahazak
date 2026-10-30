@@ -7,7 +7,7 @@
     </x-slot>
 
     <div class="bg-white">
-        <!-- Breadcrumb -->
+        {{-- Breadcrumb --}}
         <div class="bg-gray-50 py-4">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <nav class="flex" aria-label="Breadcrumb">
@@ -40,12 +40,12 @@
             </div>
         </div>
 
-        <!-- Testimonial Detail -->
+        {{-- Testimonial Detail --}}
         <div class="py-16">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-white shadow-lg rounded-lg overflow-hidden">
                     <div class="p-8">
-                        <!-- Client Info -->
+                        {{-- Client Info --}}
                         <div class="flex items-center mb-8">
                             @if ($testimonial->client_image)
                                 <img class="h-16 w-16 rounded-full object-cover mr-4"
@@ -70,7 +70,7 @@
                             </div>
                         </div>
 
-                        <!-- Rating -->
+                        {{-- Rating --}}
                         <div class="flex items-center mb-6">
                             <div class="flex items-center">
                                 @for ($i = 1; $i <= 5; $i++)
@@ -87,19 +87,19 @@
                             <span class="ml-2 text-gray-600">{{ $testimonial->rating }}/5</span>
                         </div>
 
-                        <!-- Project Type -->
+                        {{-- Project Type --}}
                         @if ($testimonial->project_type)
                             <span class="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mb-6">
                                 {{ $testimonial->project_type }}
                             </span>
                         @endif
 
-                        <!-- Testimonial Text -->
+                        {{-- Testimonial Text --}}
                         <blockquote class="text-lg text-gray-700 leading-relaxed mb-8">
                             "{{ $testimonial->testimonial }}"
                         </blockquote>
 
-                        <!-- Company Logo -->
+                        {{-- Company Logo --}}
                         @if ($testimonial->company_logo)
                             <div class="flex justify-center">
                                 <img class="h-12 object-contain" src="{{ Storage::url($testimonial->company_logo) }}"
@@ -109,7 +109,7 @@
                     </div>
                 </div>
 
-                <!-- Back Button -->
+                {{-- Back Button --}}
                 <div class="text-center mt-8">
                     <a wire:navigate.hover href="{{ route('testimonials.index') }}"
                         class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">

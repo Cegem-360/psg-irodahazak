@@ -15,11 +15,11 @@ function modalProperty(): Property
         'title' => 'Bank Center',
         'slug' => 'bank-center',
         'status' => 'active',
-        'elado_v_kiado' => 'kiado-iroda',
-        'cim_irsz' => '1054',
-        'cim_varos' => 'Budapest',
-        'cim_utca' => 'Szabadság',
-        'cim_hazszam' => '7.',
+        'offer_type' => 'kiado-iroda',
+        'postal_code' => '1054',
+        'city' => 'Budapest',
+        'street' => 'Szabadság',
+        'house_number' => '7.',
     ]);
 }
 

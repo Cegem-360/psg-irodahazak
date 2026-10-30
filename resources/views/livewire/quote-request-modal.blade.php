@@ -1,28 +1,28 @@
 <div>
     <div>
-        <!-- Small Tab (default state) - hover to expand -->
+        {{-- Small Tab (default state) - hover to expand --}}
         @if (!$showModal)
             <div class="fixed top-1/4 right-0 transform -translate-y-1/2 z-50 group">
                 <div
                     class="bg-orange-500 hover:bg-orange-600 text-white rounded-l-lg shadow-lg transition-all duration-300 ease-in-out overflow-hidden
                            w-12 group-hover:w-auto py-3 px-3">
 
-                    <!-- Content wrapper -->
+                    {{-- Content wrapper --}}
                     <div class="flex items-center group-hover:flex-col group-hover:space-y-2 space-x-0">
-                        <!-- Icon - always visible -->
+                        {{-- Icon - always visible --}}
                         <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                             <path
                                 d="M3 5c0-1.1.9-2 2-2h2V1h10v2h2c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5zm12 5c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h7c.55 0 1-.45 1-1zm-3 4c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h4c.55 0 1-.45 1-1z" />
                         </svg>
 
-                        <!-- Text and phone - appears on hover -->
+                        {{-- Text and phone - appears on hover --}}
                         <div class="hidden group-hover:block">
                             <div class="text-center mb-2">
                                 <div class="text-sm font-bold whitespace-nowrap">{{ __('modal.online') }}</div>
                                 <div class="text-sm whitespace-nowrap">{{ __('modal.quote_request') }}</div>
                             </div>
 
-                            <!-- Phone number - clickable -->
+                            {{-- Phone number - clickable --}}
                             <a href="tel:+36203813917"
                                 class="relative z-20 flex items-center justify-center space-x-1 text-white hover:text-yellow-300 transition-colors duration-200 p-1 rounded hover:bg-orange-600"
                                 onclick="event.stopPropagation()">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
 
-                    <!-- Modal open button (invisible overlay) -->
+                    {{-- Modal open button (invisible overlay) --}}
                     <button wire:click="openModal" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                         title="{{ __('modal.quote_request_title') }}">
                     </button>
@@ -43,7 +43,7 @@
             </div>
         @endif
 
-        <!-- Modal -->
+        {{-- Modal --}}
         @if ($showModal)
             <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
                 aria-modal="true" x-data x-init="document.addEventListener('keydown', function(e) {
@@ -52,14 +52,14 @@
                     }
                 });">
                 <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                    <!-- Background overlay -->
+                    {{-- Background overlay --}}
                     <div class="fixed inset-0 bg-gray-500/75 transition-opacity" wire:click="closeModal">
                     </div>
 
-                    <!-- Modal panel -->
+                    {{-- Modal panel --}}
                     <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                         onclick="event.stopPropagation()">
-                        <!-- Modal Header (Orange) -->
+                        {{-- Modal Header (Orange) --}}
                         <div class="bg-orange-500 px-6 py-4 relative">
                             <button wire:click="closeModal"
                                 class="absolute top-2 right-2 text-white hover:text-gray-200 p-2 z-10" type="button"
@@ -72,11 +72,11 @@
                             <h3 class="text-lg font-semibold text-white">{{ __('modal.online_contact') }}</h3>
                         </div>
 
-                        <!-- Modal Body -->
+                        {{-- Modal Body --}}
                         <div class="bg-white px-6 py-6">
                             <form wire:submit.prevent="submitForm" class="relative space-y-4">
                                 <x-forms.honeypot id="quote-website" />
-                                <!-- Name Field -->
+                                {{-- Name Field --}}
                                 <div>
                                     <label for="name"
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('Name') }}</label>
@@ -90,7 +90,7 @@
                                     @enderror
                                 </div>
 
-                                <!-- Company Field -->
+                                {{-- Company Field --}}
                                 <div>
                                     <label for="company"
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.company_name') }}</label>
@@ -104,7 +104,7 @@
                                     @enderror
                                 </div>
 
-                                <!-- Phone Field -->
+                                {{-- Phone Field --}}
                                 <div>
                                     <label for="phone"
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.phone_number') }}</label>
@@ -118,7 +118,7 @@
                                     @enderror
                                 </div>
 
-                                <!-- Email Field -->
+                                {{-- Email Field --}}
                                 <div>
                                     <label for="email"
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.email_address') }}</label>
@@ -132,8 +132,8 @@
                                     @enderror
                                 </div>
 
-                                <!-- Property Selection -->
-                                <!-- Subject Field (as select option) -->
+                                {{-- Property Selection --}}
+                                {{-- Subject Field (as select option) --}}
                                 <div>
                                     <label for="subject"
                                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('modal.subject') }}</label>
@@ -153,7 +153,7 @@
                                 </div>
                                 <div>
 
-                                    <!-- Message Field -->
+                                    {{-- Message Field --}}
                                     <div>
                                         <label for="message"
                                             class="block text-sm font-medium text-gray-700 mb-1">{{ __('Message') }}</label>
@@ -162,7 +162,7 @@
                                             placeholder="{{ __('modal.write_your_request') }}"></textarea>
                                     </div>
 
-                                    <!-- Privacy Checkbox -->
+                                    {{-- Privacy Checkbox --}}
                                     <div class="flex items-start">
                                         <div class="flex items-center h-5">
                                             <input id="privacy" type="checkbox" wire:model="privacy"
@@ -185,7 +185,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Phone Display -->
+                                    {{-- Phone Display --}}
                                     <div class="flex items-center justify-center">
                                         <a href="tel:+36203813917"
                                             class="inline-flex items-center bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded-lg transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg cursor-pointer">
@@ -199,7 +199,7 @@
                                         </a>
                                     </div>
 
-                                    <!-- Submit Buttons -->
+                                    {{-- Submit Buttons --}}
                                     <div class="flex space-x-3 pt-4">
                                         <button type="button" wire:click="closeModal"
                                             class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md transition-colors duration-200">

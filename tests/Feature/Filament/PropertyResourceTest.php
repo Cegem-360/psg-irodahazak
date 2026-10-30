@@ -29,7 +29,7 @@ function adminProperty(array $attributes = []): Property
         'title' => 'Bank Center',
         'slug' => 'bank-center',
         'status' => 'active',
-        'elado_v_kiado' => 'kiado-iroda',
+        'offer_type' => 'kiado-iroda',
         ...$attributes,
     ]);
 }
@@ -38,14 +38,14 @@ it('casts status and type to enums', function (): void {
     $property = adminProperty()->refresh();
 
     expect($property->status)->toBe(PropertyStatus::Active)
-        ->and($property->elado_v_kiado)->toBe(PropertyType::Rent)
+        ->and($property->offer_type)->toBe(PropertyType::Rent)
         ->and($property->isRent())->toBeTrue()
         ->and($property->url())->toBe(route('properties.show', ['property' => 'bank-center']));
 });
 
 it('lists properties with their status badge', function (string $page): void {
     $rent = adminProperty();
-    $sale = adminProperty(['title' => 'Eladó ház', 'slug' => 'elado-haz', 'elado_v_kiado' => 'elado-iroda', 'status' => 'inactive']);
+    $sale = adminProperty(['title' => 'Eladó ház', 'slug' => 'elado-haz', 'offer_type' => 'elado-iroda', 'status' => 'inactive']);
 
     livewire($page)
         ->assertSuccessful()
@@ -60,14 +60,14 @@ it('edits a property and keeps its status and type as enums', function (): void 
     $property = adminProperty();
 
     livewire(EditProperty::class, ['record' => $property->getRouteKey()])
-        ->assertSchemaStateSet(['status' => PropertyStatus::Active, 'elado_v_kiado' => PropertyType::Rent])
-        ->fillForm(['status' => PropertyStatus::Inactive, 'elado_v_kiado' => PropertyType::Sale])
+        ->assertSchemaStateSet(['status' => PropertyStatus::Active, 'offer_type' => PropertyType::Rent])
+        ->fillForm(['status' => PropertyStatus::Inactive, 'offer_type' => PropertyType::Sale])
         ->call('save')
         ->assertHasNoFormErrors();
 
     expect($property->refresh())
         ->status->toBe(PropertyStatus::Inactive)
-        ->elado_v_kiado->toBe(PropertyType::Sale);
+        ->offer_type->toBe(PropertyType::Sale);
 });
 
 it('has no first image URL without photos', function (): void {
@@ -87,7 +87,7 @@ it('picks the English text on the English site only when it is filled in', funct
 });
 
 it('embeds the map by coordinates when known, by address otherwise', function (): void {
-    $byAddress = adminProperty(['cim_irsz' => '1051', 'cim_varos' => 'Budapest', 'cim_utca' => 'Szabadság tér', 'cim_hazszam' => '7']);
+    $byAddress = adminProperty(['postal_code' => '1051', 'city' => 'Budapest', 'street' => 'Szabadság tér', 'house_number' => '7']);
     $byCoordinates = adminProperty(['slug' => 'coords', 'maps_lat' => '47.5', 'maps_lng' => '19.05']);
 
     expect($byAddress->mapEmbedUrl())->toContain('q=1051+Budapest%2C+Szabads%C3%A1g+t%C3%A9r+7')
@@ -102,15 +102,15 @@ it('fills in a missing slug from the title when saving', function (): void {
 
 it('tells Budapest and agglomeration properties apart', function (): void {
     $budapest = Property::factory()->create();
-    $budaors = Property::factory()->create(['cim_irsz' => '2040', 'cim_varos' => 'Budaörs']);
+    $budaors = Property::factory()->create(['postal_code' => '2040', 'city' => 'Budaörs']);
 
     expect(Property::query()->agglomeration()->pluck('id')->all())->toBe([$budaors->id])
         ->and(Property::query()->budapestOnly()->pluck('id')->all())->toBe([$budapest->id]);
 });
 
 it('summarises rent and sale properties differently on their cards', function (): void {
-    $rent = Property::factory()->create(['min_berleti_dij' => 12, 'max_berleti_dij' => 15, 'uzemeletetesi_dij' => '5']);
-    $sale = Property::factory()->forSale()->create(['total_area' => 1200, 'min_berleti_dij' => 990000000]);
+    $rent = Property::factory()->create(['min_rent' => 12, 'max_rent' => 15, 'operating_fee' => '5']);
+    $sale = Property::factory()->forSale()->create(['total_area' => 1200, 'min_rent' => 990000000]);
 
     $render = fn (Property $property): string => Str::squish(strip_tags(Blade::render('<x-property.summary :property="$property" />', ['property' => $property])));
 

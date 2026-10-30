@@ -7,7 +7,7 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasLabel;
 
 /**
- * Whether a property is offered for rent or for sale (the `elado_v_kiado` column).
+ * Whether a property is offered for rent or for sale (the `offer_type` column).
  */
 enum PropertyType: string implements HasLabel
 {

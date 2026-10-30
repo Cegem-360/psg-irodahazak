@@ -36,7 +36,7 @@
             import('{{ Vite::asset('resources/js/rent-offices-map.js') }}').then(module => {
                 const apiKey = '{{ config('services.google_maps.api_key') }}';
                 const mapId = '{{ config('services.google_maps.map_id') }}';
-                let officesData = @json($this->getOfficesForMap());
+                let officesData = {{ Js::from($this->getOfficesForMap()) }};
 
                 // Check if API key and map ID are available
                 if (!apiKey || apiKey.trim() === '') {
@@ -124,7 +124,7 @@
                                     console.error('Failed to fetch fresh office data:',
                                         error);
                                     // Fallback to current visible data (no server call)
-                                    const currentData = @json($this->getOfficesForMap());
+                                    const currentData = {{ Js::from($this->getOfficesForMap()) }};
                                     window.rentOfficesMapHandler.refreshMarkers(
                                         currentData);
                                 }).finally(() => {

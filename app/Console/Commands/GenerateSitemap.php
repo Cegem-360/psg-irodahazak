@@ -90,7 +90,7 @@ final class GenerateSitemap extends Command
         foreach ($properties as $property) {
             $this->addLocalized(
                 $sitemap,
-                $property->elado_v_kiado?->showRoute() ?? 'properties.show',
+                $property->offer_type?->showRoute() ?? 'properties.show',
                 ['property' => $property->slug],
                 fn (Url $url): Url => $url->setLastModificationDate($property->updated_at ?? now())->setPriority(0.9),
             );

@@ -107,9 +107,9 @@ final class StructuredDataService
                 ->all(),
             'address' => array_filter([
                 '@type' => 'PostalAddress',
-                'streetAddress' => Str::squish(implode(' ', array_filter([$property->cim_utca, $property->cim_utca_addons, $property->cim_hazszam]))),
-                'postalCode' => $property->cim_irsz,
-                'addressLocality' => $property->cim_varos,
+                'streetAddress' => Str::squish(implode(' ', array_filter([$property->street, $property->street_type, $property->house_number]))),
+                'postalCode' => $property->postal_code,
+                'addressLocality' => $property->city,
                 'addressCountry' => 'HU',
             ]),
             'geo' => is_numeric($property->maps_lat) && is_numeric($property->maps_lng) ? [
@@ -139,7 +139,7 @@ final class StructuredDataService
             ],
             'availableAtOrFrom' => ['@id' => $place['@id']],
             'priceSpecification' => $this->priceSpecification($property),
-            'availability' => $property->isSale() || filled($property->jelenleg_kiado)
+            'availability' => $property->isSale() || filled($property->available_area)
                 ? 'https://schema.org/InStock'
                 : 'https://schema.org/OutOfStock',
             'seller' => ['@id' => $this->organizationId()],
@@ -214,25 +214,25 @@ final class StructuredDataService
     {
         $values = $property->isSale()
             ? [
-                ['Összterület', $property->total_area, $property->osszterulet_addons],
-                ['Ár', $property->min_berleti_dij, $property->min_berleti_dij_addons],
-                ['Parkolás', $property->parkolas, null],
-                ['Kódszám', $property->kodszam, null],
+                ['Összterület', $property->total_area, $property->total_area_unit],
+                ['Ár', $property->min_rent, $property->min_rent_unit],
+                ['Parkolás', $property->parking, null],
+                ['Kódszám', $property->code, null],
             ]
             : [
                 ['Építés éve', $property->construction_year, null],
-                ['Összterület', $property->total_area, $property->osszterulet_addons],
-                ['Jelenleg kiadó', $property->jelenleg_kiado, $property->jelenleg_kiado_addons ?: 'm2'],
-                ['Minimum kiadó', $property->min_kiado, $property->min_kiado_addons],
-                ['Bérleti díj', $this->range($property->min_berleti_dij, $property->max_berleti_dij), $property->min_berleti_dij_addons],
-                ['Üzemeltetési díj', $property->uzemeletetesi_dij, $property->uzemeletetesi_dij_addons],
-                ['Raktár terület', $property->raktar_terulet, $property->raktar_terulet_addons],
-                ['Raktár bérleti díj', $property->raktar_berleti_dij, $property->raktar_berleti_dij_addons],
-                ['Parkolás', $property->parkolas, null],
-                ['Parkolás díja', $this->range($property->min_parkolas_dija, $property->max_parkolas_dija), $property->min_parkolas_dija_addons],
-                ['Közös területi arány', $property->kozos_teruleti_arany, $property->kozos_teruleti_arany_addons],
-                ['Minimum bérleti időszak', $property->min_berleti_idoszak, $property->min_berleti_idoszak_addons],
-                ['Kódszám', $property->kodszam, null],
+                ['Összterület', $property->total_area, $property->total_area_unit],
+                ['Jelenleg kiadó', $property->available_area, $property->available_area_unit ?: 'm2'],
+                ['Minimum kiadó', $property->min_available_area, $property->min_available_area_unit],
+                ['Bérleti díj', $this->range($property->min_rent, $property->max_rent), $property->min_rent_unit],
+                ['Üzemeltetési díj', $property->operating_fee, $property->operating_fee_unit],
+                ['Raktár terület', $property->storage_area, $property->storage_area_unit],
+                ['Raktár bérleti díj', $property->storage_rent, $property->storage_rent_unit],
+                ['Parkolás', $property->parking, null],
+                ['Parkolás díja', $this->range($property->min_parking_fee, $property->max_parking_fee), $property->min_parking_fee_unit],
+                ['Közös területi arány', $property->common_area_ratio, $property->common_area_ratio_unit],
+                ['Minimum bérleti időszak', $property->min_lease_term, $property->min_lease_term_unit],
+                ['Kódszám', $property->code, null],
             ];
 
         return collect($values)
@@ -265,15 +265,15 @@ final class StructuredDataService
      */
     private function priceSpecification(Property $property): ?array
     {
-        $unit = (string) $property->min_berleti_dij_addons;
+        $unit = (string) $property->min_rent_unit;
 
         if (! preg_match('/^(m?)(EUR|HUF)(?:\/(.+))?$/', $unit, $matches)) {
             return null;
         }
 
         $multiplier = $matches[1] === 'm' ? 1_000_000 : 1;
-        $minPrice = $this->number((string) $property->min_berleti_dij);
-        $maxPrice = $this->number((string) $property->max_berleti_dij);
+        $minPrice = $this->number((string) $property->min_rent);
+        $maxPrice = $this->number((string) $property->max_rent);
 
         if ($minPrice === null) {
             return null;

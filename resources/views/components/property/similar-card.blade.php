@@ -6,7 +6,7 @@
     <img src="{{ $property->getFirstImageUrl() ?: Vite::asset('resources/images/default-office.jpg') }}"
         alt="{{ $property->title }}" class="w-full h-auto object-cover aspect-3/2" loading="lazy" />
     <div class="absolute bottom-64 right-2 flex gap-1">
-        <!-- Map icon box -->
+        {{-- Map icon box --}}
         <button type="button"
             @click="$dispatch('show-map-modal', {{ Js::from(['title' => $property->title, 'propertyId' => $property->id]) }})"
             class="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded shadow-lg transition-colors duration-200">
@@ -17,7 +17,7 @@
             </svg>
         </button>
 
-        <!-- Phone icon box -->
+        {{-- Phone icon box --}}
         <button type="button"
             @click="$dispatch('show-phone-modal', {{ Js::from(['title' => $property->title, 'propertyId' => $property->id]) }})"
             class="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded shadow-lg transition-colors duration-200">
@@ -33,7 +33,7 @@
             'text-gray-700 text-xs min-h-16' => $small,
             'text-gray-700 min-h-24' => !$small,
         ])>
-            <x-property.summary :property="$property" /></p>
+            <x-property.summary :$property /></p>
         <a wire:navigate.hover href="{{ $property->url() }}" @class([
             'inline-block',
             'mb-2 px-3 py-1 text-sm' => $small,
@@ -42,7 +42,7 @@
         ])>
             {{ __('More details') }}
         </a>
-        <!-- Icon boxes positioned at bottom-left of image -->
+        {{-- Icon boxes positioned at bottom-left of image --}}
 
     </div>
 

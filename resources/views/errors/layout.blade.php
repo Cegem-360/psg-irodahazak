@@ -6,7 +6,7 @@
 
         <title>@yield('title')</title>
 
-        <!-- Styles -->
+        {{-- Styles --}}
         <style>
             html, body {
                 background-color: #fff;

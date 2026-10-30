@@ -2,16 +2,16 @@
     @if ($showModal)
         <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <!-- Background overlay -->
+                {{-- Background overlay --}}
                 <div class="fixed inset-0 bg-gray-500/75 transition-opacity" wire:click="closeModal"></div>
 
-                <!-- Modal panel -->
+                {{-- Modal panel --}}
                 <div
                     class="relative inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
-                    <!-- Modal Header -->
+                    {{-- Modal Header --}}
                     <div class="bg-orange-500 px-8 py-5">
                         <h3 class="text-2xl font-semibold text-white text-center">{{ __('Get in touch') }}</h3>
-                    </div> <!-- Modal Body -->
+                    </div> {{-- Modal Body --}}
                     <div class="bg-white px-6 py-6">
                         <div class="grid grid-cols-3 gap-3 mb-6">
                             <a href="mailto:info@psg-irodahazak.hu"

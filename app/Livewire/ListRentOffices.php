@@ -43,9 +43,10 @@ final class ListRentOffices extends Component
     #[Locked]
     public int $totalOffices = 0;
 
-    public null|int|string $min_rent = '';
+    /** Minimum lease term filter, from the search form. */
+    public null|int|string $minLeaseTerm = '';
 
-    public ?string $min_rent_addons = '';
+    public ?string $minLeaseTermUnit = '';
 
     #[Locked]
     public ?string $title = null;
@@ -73,8 +74,8 @@ final class ListRentOffices extends Component
         $this->priceMax = $queryParams['price_max'] ?? request('price_max', '');
         $this->includeAgglomeration = (bool) ($queryParams['include_agglomeration'] ?? request('include_agglomeration', false));
         $this->category = $queryParams['category'] ?? request('category');
-        $this->min_rent = $queryParams['min_rent'] ?? request('min_rent');
-        $this->min_rent_addons = $queryParams['min_rent_addons'] ?? request('min_rent_addons');
+        $this->minLeaseTerm = $queryParams['min_lease_term'] ?? request('min_lease_term');
+        $this->minLeaseTermUnit = $queryParams['min_lease_term_unit'] ?? request('min_lease_term_unit');
 
         if ($this->officeName) {
             $office = Offices::query()->where('title', $this->officeName)->first();
@@ -104,7 +105,7 @@ final class ListRentOffices extends Component
     {
         $state = serialize([$this->search, $this->districts, $this->district, $this->officeName, $this->areaMin,
             $this->areaMax, $this->priceMin, $this->priceMax, $this->includeAgglomeration, $this->category,
-            $this->min_rent, $this->min_rent_addons, $this->perPage, $this->getPage()]);
+            $this->minLeaseTerm, $this->minLeaseTermUnit, $this->perPage, $this->getPage()]);
 
         return $this->officesMemo[$state] ??= $this->buildQuery()
             ->orderBy('title')
@@ -140,9 +141,9 @@ final class ListRentOffices extends Component
                 'title' => $office->title,
                 'lat' => (float) $office->maps_lat,
                 'lng' => (float) $office->maps_lng,
-                'address' => $office->cim_irsz.' '.$office->cim_varos.($office->district ? ' '.$office->district.'. kerület' : '').', '.$office->cim_utca.' '.$office->cim_hazszam,
-                'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
-                'operating_fee' => (translate_value($office->uzemeletetesi_dij) ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
+                'address' => $office->postal_code.' '.$office->city.($office->district ? ' '.$office->district.'. kerület' : '').', '.$office->street.' '.$office->house_number,
+                'rent' => ($office->min_rent ?? '').' - '.($office->max_rent ?? '').' '.($office->max_rent_unit ?? ''),
+                'operating_fee' => (translate_value($office->operating_fee) ?? '').' '.($office->operating_fee_unit ?? ''),
                 'url' => $office->url(),
             ])
             ->values(); // Reset array keys to ensure clean JSON
@@ -157,12 +158,12 @@ final class ListRentOffices extends Component
             ->rent()
             ->active();
 
-        if ($this->min_rent) {
-            $query->where('min_berleti_idoszak', $this->min_rent);
+        if ($this->minLeaseTerm) {
+            $query->where('min_lease_term', $this->minLeaseTerm);
         }
 
-        if ($this->min_rent_addons) {
-            $query->where('min_berleti_idoszak_addons', $this->min_rent_addons);
+        if ($this->minLeaseTermUnit) {
+            $query->where('min_lease_term_unit', $this->minLeaseTermUnit);
         }
 
         if ($this->category) {
@@ -203,8 +204,8 @@ final class ListRentOffices extends Component
             $amin = $this->areaMin ? (int) $this->areaMin : 1;
             $amax = $this->areaMax ? (int) $this->areaMax : 3000;
 
-            $query->where('min_kiado', '<=', $amax)
-                ->where('jelenleg_kiado', '>=', $amin);
+            $query->where('min_available_area', '<=', $amax)
+                ->where('available_area', '>=', $amin);
         }
 
         // Apply price range filter

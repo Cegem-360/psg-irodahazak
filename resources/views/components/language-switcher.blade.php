@@ -35,6 +35,7 @@
     </div>
 </div>
 
+@pushOnce('scripts', 'language-switcher')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Update favorites heart icon and count in language switcher
@@ -98,3 +99,4 @@
         setInterval(updateFavoritesDisplay, 3000);
     });
 </script>
+@endPushOnce

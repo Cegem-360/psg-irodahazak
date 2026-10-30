@@ -50,7 +50,7 @@ final class ListRentProperties extends Page implements HasTable
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('kodszam')
+                TextColumn::make('code')
                     ->label('Kódszám')
                     ->sortable()
                     ->searchable(),

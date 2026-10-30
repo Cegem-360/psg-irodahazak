@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="bg-white">
-        <!-- Hero Section -->
+        {{-- Hero Section --}}
         <div class="bg-linear-to-r from-blue-600 to-indigo-700 py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <!-- Featured Testimonials -->
+        {{-- Featured Testimonials --}}
         @if ($featuredTestimonials->count() > 0)
             <div class="py-16 bg-gray-50">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,14 +32,14 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         @foreach ($featuredTestimonials as $testimonial)
-                            <x-testimonial-card :testimonial="$testimonial" :featured="true" />
+                            <x-testimonial-card :$testimonial :featured="true" />
                         @endforeach
                     </div>
                 </div>
             </div>
         @endif
 
-        <!-- All Testimonials -->
+        {{-- All Testimonials --}}
         <div class="py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
@@ -50,7 +50,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     @forelse($testimonials as $testimonial)
-                        <x-testimonial-card :testimonial="$testimonial" />
+                        <x-testimonial-card :$testimonial />
                     @empty
                         <div class="col-span-full text-center py-12">
                             <div class="text-gray-400 text-lg">
@@ -60,7 +60,7 @@
                     @endforelse
                 </div>
 
-                <!-- Pagination -->
+                {{-- Pagination --}}
                 @if ($testimonials->hasPages())
                     <div class="mt-12">
                         {{ $testimonials->links() }}

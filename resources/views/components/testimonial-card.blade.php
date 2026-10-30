@@ -2,7 +2,7 @@
 
 <div
     @class(['bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6', 'border-l-4 border-yellow-400' => $featured])>
-    <!-- Rating -->
+    {{-- Rating --}}
     <div class="flex items-center mb-4">
         @for ($i = 1; $i <= 5; $i++)
             <svg @class(['h-4 w-4', 'text-yellow-400' => $i <= $testimonial->rating, 'text-gray-300' => $i > $testimonial->rating])
@@ -16,19 +16,19 @@
         @endif
     </div>
 
-    <!-- Testimonial Text -->
+    {{-- Testimonial Text --}}
     <blockquote class="text-gray-700 mb-4 line-clamp-4">
         "{{ Str::limit($testimonial->testimonial, 150) }}"
     </blockquote>
 
-    <!-- Project Type -->
+    {{-- Project Type --}}
     @if ($testimonial->project_type)
         <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-4">
             {{ $testimonial->project_type }}
         </span>
     @endif
 
-    <!-- Client Info -->
+    {{-- Client Info --}}
     <div class="flex items-center justify-between">
         <div class="flex items-center">
             @if ($testimonial->client_image)
@@ -55,14 +55,14 @@
         </div>
     </div>
 
-    <!-- Company Logo -->
+    {{-- Company Logo --}}
     @if ($testimonial->company_logo)
         <img class="h-8 object-contain" src="{{ Storage::url($testimonial->company_logo) }}"
             alt="{{ $testimonial->client_company }}">
     @endif
 </div>
 
-<!-- Read More Link -->
+{{-- Read More Link --}}
 <div class="mt-4 text-right">
     <a wire:navigate.hover href="{{ route('testimonials.show', $testimonial) }}"
         class="text-blue-600 hover:text-blue-800 text-sm font-medium">

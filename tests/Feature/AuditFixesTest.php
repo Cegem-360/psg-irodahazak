@@ -36,8 +36,8 @@ it('lists only published posts in the home page blog section', function (): void
 
 it('emails the active favorites from the cookie, never a list sent by the client', function (): void {
     Mail::fake();
-    $active = Property::query()->forceCreate(['title' => 'Aktív', 'status' => 'active', 'slug' => 'aktiv', 'elado_v_kiado' => 'kiado-iroda']);
-    $inactive = Property::query()->forceCreate(['title' => 'Inaktív', 'status' => 'inactive', 'slug' => 'inaktiv', 'elado_v_kiado' => 'kiado-iroda']);
+    $active = Property::query()->forceCreate(['title' => 'Aktív', 'status' => 'active', 'slug' => 'aktiv', 'offer_type' => 'kiado-iroda']);
+    $inactive = Property::query()->forceCreate(['title' => 'Inaktív', 'status' => 'inactive', 'slug' => 'inaktiv', 'offer_type' => 'kiado-iroda']);
 
     Livewire::withCookies([FavoriteProperties::COOKIE => json_encode([$active->id, $inactive->id])])
         ->test(FavoritesSendModal::class)
@@ -71,7 +71,7 @@ it('asks guests to sign in before showing the favorites', function (string $uri)
 
 it('hides inactive properties from visitors but not from signed-in admins', function (): void {
     /** @var TestCase $this */
-    $property = Property::query()->forceCreate(['title' => 'Inaktív', 'status' => 'inactive', 'slug' => 'inaktiv-adatlap', 'elado_v_kiado' => 'kiado-iroda']);
+    $property = Property::query()->forceCreate(['title' => 'Inaktív', 'status' => 'inactive', 'slug' => 'inaktiv-adatlap', 'offer_type' => 'kiado-iroda']);
 
     $this->get(route('properties.show', ['property' => $property->slug]))->assertNotFound();
 
@@ -115,7 +115,7 @@ it('rate limits the quote request form per visitor', function (): void {
 it('rate limits the favorites email', function (): void {
     Mail::fake();
 
-    $property = Property::query()->forceCreate(['title' => 'Aktív', 'status' => 'active', 'slug' => 'aktiv', 'elado_v_kiado' => 'kiado-iroda']);
+    $property = Property::query()->forceCreate(['title' => 'Aktív', 'status' => 'active', 'slug' => 'aktiv', 'offer_type' => 'kiado-iroda']);
 
     $send = fn () => Livewire::withCookies([FavoriteProperties::COOKIE => json_encode([$property->id])])
         ->test(FavoritesSendModal::class)

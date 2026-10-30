@@ -22,7 +22,7 @@
 
         <x-glass-panel class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="relative hidden md:block">
-                <!-- Google Maps Container -->
+                {{-- Google Maps Container --}}
                 <div wire:ignore id="map"
                     class="sticky top-8 h-[120vh] rounded-lg shadow-lg bg-gray-100 flex items-center justify-center">
                     <div class="text-center text-gray-500" id="map-placeholder">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                <!-- Map Error Display -->
+                {{-- Map Error Display --}}
                 <div id="map-error"
                     class="sticky top-8 h-[120vh] rounded-lg shadow-lg bg-red-50 border-2 border-red-200 items-center justify-center text-center p-8 hidden">
                     <div class="text-red-600">
@@ -75,7 +75,7 @@
         import('{{ Vite::asset('resources/js/sale-offices-map.js') }}').then(module => {
             const apiKey = @js(config('services.google_maps.api_key'));
             const mapId = @js(config('services.google_maps.map_id'));
-            let officesData = @json($this->getOfficesForMap());
+            let officesData = {{ Js::from($this->getOfficesForMap()) }};
 
             // Check if API key is available
             if (!apiKey || apiKey.trim() === '') {
@@ -163,7 +163,7 @@
                                 console.error('Failed to fetch fresh office data:',
                                     error);
                                 // Fallback to current visible data (no server call)
-                                const currentData = @json($this->getOfficesForMap());
+                                const currentData = {{ Js::from($this->getOfficesForMap()) }};
                                 window.saleOfficesMapHandler.refreshMarkers(
                                     currentData);
                             }).finally(() => {

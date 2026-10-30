@@ -1,4 +1,4 @@
-    <!-- Kerjen ajanlatot -->
+    {{-- Kerjen ajanlatot --}}
     <div class="bg-linear-to-r from-accentdark to-accent text-white py-10 text-center">
         <p class="text-lg md:text-3xl font-bold">
             <a href="mailto:info@psg-irodahazak.hu" class="hover:text-gray-200 transition-colors duration-200"><x-svg.mail
@@ -8,7 +8,7 @@
                 <span class="inline-block ml-8"><x-svg.phone class="text-accent mr-2" /> +36 20 381 3917</span></a>
         </p>
     </div>
-    <!-- Linklista -->
+    {{-- Linklista --}}
     <div class="bg-[#EFEFEF] py-12 px-4">
         <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-gray-800 text-lg">
 

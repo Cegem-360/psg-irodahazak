@@ -7,7 +7,7 @@
     </x-slot>
 
     <div class="min-h-screen bg-gray-50">
-        <!-- Category Header -->
+        {{-- Category Header --}}
         <div class="bg-linear-to-r from-gray-700 to-gray-900 text-white py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <!-- Breadcrumb -->
+        {{-- Breadcrumb --}}
         <div class="bg-white border-b">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <nav class="flex" aria-label="Breadcrumb">
@@ -62,7 +62,7 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <!-- Sidebar -->
+                {{-- Sidebar --}}
                 <aside class="lg:col-span-1">
                     <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
                         <h3 class="text-lg font-semibold mb-4 text-gray-900">{{ __('Categories') }}</h3>
@@ -92,7 +92,7 @@
                     </div>
                 </aside>
 
-                <!-- Main Content -->
+                {{-- Main Content --}}
                 <main class="lg:col-span-3">
                     @if ($news->count() > 0)
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -142,7 +142,7 @@
                             @endforeach
                         </div>
 
-                        <!-- Pagination -->
+                        {{-- Pagination --}}
                         @if ($news->hasPages())
                             <div class="mt-12">
                                 {{ $news->links() }}

@@ -21,7 +21,7 @@
 
     <x-glass-panel wire:loading.class="opacity-60">
         @forelse ($news as $article)
-            <x-news.list-item :article="$article" wire:key="news-{{ $article->id }}" />
+            <x-news.list-item :$article wire:key="news-{{ $article->id }}" />
         @empty
             <div class="p-6 text-center text-gray-600">
                 <p>{{ __('No news matches your search.') }}</p>

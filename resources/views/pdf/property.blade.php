@@ -57,15 +57,15 @@
 
     <body class="text-gray-800 bg-white text-sm leading-normal">
         <div class="max-w-[210mm] mx-auto p-0">
-            <!-- Header -->
+            {{-- Header --}}
             <div class="bg-white text-black px-6 py-4 relative min-h-[80px]">
-                <!-- Logo bal felső sarokban -->
+                {{-- Logo bal felső sarokban --}}
                 <div class="absolute top-3 left-6">
                     <img src="{{ Vite::asset('resources/images/psg-irodahazak-logo.png') }}" alt="PSG Logo"
                         class="h-16 w-auto" loading="lazy">
                 </div>
 
-                <!-- Cím középen, több távolsággal a logótól -->
+                {{-- Cím középen, több távolsággal a logótól --}}
                 <div class="text-center pt-8 px-40">
                     <h1 class="text-xl font-bold mb-1 break-words">
                         @if (app()->getLocale() === 'en')
@@ -76,17 +76,17 @@
                     </h1>
                     <div class="text-sm font-medium opacity-90">
 
-                        {{ $property->cim_irsz ?? '' }} {{ $property->cim_varos ?? '' }},
-                        {{ $property->cim_utca ?? '' }} {{ $property->cim_utca_addons ?? '' }}
-                        {{ $property->cim_hazszam ?? '' }}
+                        {{ $property->postal_code ?? '' }} {{ $property->city ?? '' }},
+                        {{ $property->street ?? '' }} {{ $property->street_type ?? '' }}
+                        {{ $property->house_number ?? '' }}
 
                     </div>
                 </div>
             </div>
 
-            <!-- Main Content -->
+            {{-- Main Content --}}
             <div class="flex min-h-[380px]">
-                <!-- Left Column - Image -->
+                {{-- Left Column - Image --}}
                 <div class="w-1/2 p-0">
                     @if ($property->property_photos && collect($property->property_photos)->count() > 0)
                         <img src="{{ $property->getFirstImageUrl() }}" alt="{{ $property->title }}"
@@ -98,7 +98,7 @@
                     @endif
                 </div>
 
-                <!-- Right Column - Details -->
+                {{-- Right Column - Details --}}
                 <div class="w-1/2 p-6 bg-gray-50 text-sm leading-snug">
                     @if ($property->construction_year)
                         <x-pdf.property-column :first_span="__('Construction Year')" :second_span="$property->construction_year" />
@@ -108,74 +108,74 @@
                         <x-pdf.property-column :first_span="__('Total Area')" :second_span="$property->total_area . ' m2'" />
                     @endif
 
-                    @if ($property->jelenleg_kiado)
-                        <x-pdf.property-column :first_span="__('Currently Available')" :second_span="$property->jelenleg_kiado . ' m2'" />
+                    @if ($property->available_area)
+                        <x-pdf.property-column :first_span="__('Currently Available')" :second_span="$property->available_area . ' m2'" />
                     @endif
 
-                    @if ($property->min_kiado)
-                        <x-pdf.property-column :first_span="__('Min. Available')" :second_span="$property->min_kiado . ' ' . __($property->min_kiado_addons ?? '')" />
+                    @if ($property->min_available_area)
+                        <x-pdf.property-column :first_span="__('Min. Available')" :second_span="$property->min_available_area . ' ' . __($property->min_available_area_unit ?? '')" />
                     @endif
 
                     @if ($property->isSale())
-                        <x-pdf.property-column :first_span="__('Sale Price')" :second_span="$property->min_berleti_dij . ' ' . __($property->min_berleti_dij_addons ?? '')" />
+                        <x-pdf.property-column :first_span="__('Sale Price')" :second_span="$property->min_rent . ' ' . __($property->min_rent_unit ?? '')" />
                     @endif
 
                     @if ($property->isRent())
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Rent') }}:</span>
                             <span class="font-medium text-gray-900">
-                                @if ($property->min_berleti_dij && $property->max_berleti_dij)
-                                    {{ $property->min_berleti_dij . ' - ' . $property->max_berleti_dij }}
+                                @if ($property->min_rent && $property->max_rent)
+                                    {{ $property->min_rent . ' - ' . $property->max_rent }}
                                 @else
-                                    {{ $property->min_berleti_dij }}
+                                    {{ $property->min_rent }}
                                 @endif
-                                {{ __($property->min_berleti_dij_addons ?? '') }}
+                                {{ __($property->min_rent_unit ?? '') }}
                             </span>
                         </div>
                     @endif
-                    @if ($property->uzemeletetesi_dij)
-                        <x-pdf.property-column :first_span="__('Operating Fee')" :second_span="translate_value($property->uzemeletetesi_dij) . ' ' . __($property->uzemeletetesi_dij_addons ?? '')" />
+                    @if ($property->operating_fee)
+                        <x-pdf.property-column :first_span="__('Operating Fee')" :second_span="translate_value($property->operating_fee) . ' ' . __($property->operating_fee_unit ?? '')" />
                     @endif
 
-                    @if ($property->raktar_terulet)
-                        <x-pdf.property-column :first_span="__('Storage Area')" :second_span="number_format((int) $property->raktar_terulet, 0, ',', ' ') .
+                    @if ($property->storage_area)
+                        <x-pdf.property-column :first_span="__('Storage Area')" :second_span="number_format((int) $property->storage_area, 0, ',', ' ') .
                             ' ' .
-                            __($property->raktar_terulet_addons ?? '')" />
+                            __($property->storage_area_unit ?? '')" />
                     @endif
-                    @if ($property->raktar_berleti_dij)
-                        <x-pdf.property-column :first_span="__('Storage Rent')" :second_span="number_format((int) $property->raktar_berleti_dij, 0, ',', ' ') .
+                    @if ($property->storage_rent)
+                        <x-pdf.property-column :first_span="__('Storage Rent')" :second_span="number_format((int) $property->storage_rent, 0, ',', ' ') .
                             ' ' .
-                            __($property->raktar_berleti_dij_addons ?? '')" />
+                            __($property->storage_rent_unit ?? '')" />
                     @endif
-                    @if ($property->parkolas)
-                        <x-pdf.property-column :first_span="__('Parking')" :second_span="__($property->parkolas)" />
+                    @if ($property->parking)
+                        <x-pdf.property-column :first_span="__('Parking')" :second_span="__($property->parking)" />
                     @endif
-                    @if ($property->min_parkolas_dija)
+                    @if ($property->min_parking_fee)
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-200">
                             <span class="font-bold text-gray-600">{{ __('Parking Fee') }}:</span>
                             <span class="font-medium text-gray-900">
-                                @if ($property->min_parkolas_dija && $property->max_parkolas_dija)
-                                    {{ $property->min_parkolas_dija . ' - ' . $property->max_parkolas_dija }}
+                                @if ($property->min_parking_fee && $property->max_parking_fee)
+                                    {{ $property->min_parking_fee . ' - ' . $property->max_parking_fee }}
                                 @else
-                                    {{ $property->min_parkolas_dija }}
+                                    {{ $property->min_parking_fee }}
                                 @endif
-                                {{ __($property->min_parkolas_dija_addons ?? '') }}
+                                {{ __($property->min_parking_fee_unit ?? '') }}
                             </span>
                         </div>
                     @endif
 
-                    @if ($property->kozos_teruleti_arany)
-                        <x-pdf.property-column :first_span="__('Common Area Ratio')" :second_span="$property->kozos_teruleti_arany . '%'" />
+                    @if ($property->common_area_ratio)
+                        <x-pdf.property-column :first_span="__('Common Area Ratio')" :second_span="$property->common_area_ratio . '%'" />
                     @endif
 
-                    @if ($property->min_berleti_idoszak)
-                        <x-pdf.property-column :first_span="__('Min. Rental Period')" :second_span="$property->min_berleti_idoszak .
+                    @if ($property->min_lease_term)
+                        <x-pdf.property-column :first_span="__('Min. Rental Period')" :second_span="$property->min_lease_term .
                             ' ' .
-                            __($property->min_berleti_idoszak_addons ?? '')" />
+                            __($property->min_lease_term_unit ?? '')" />
                     @endif
 
-                    @if ($property->kodszam)
-                        <x-pdf.property-column :first_span="__('Code')" :second_span="$property->kodszam" />
+                    @if ($property->code)
+                        <x-pdf.property-column :first_span="__('Code')" :second_span="$property->code" />
                     @endif
 
                     @if ($property->vat)
@@ -189,7 +189,7 @@
             </div>
         </div>
 
-        <!-- Images Gallery -->
+        {{-- Images Gallery --}}
         @if ($property->property_photos && collect($property->property_photos)->count() > 1)
             <div class="mt-6 px-6">
                 <div class="grid grid-cols-3 gap-3">
@@ -202,16 +202,16 @@
                 </div>
             </div>
         @endif
-        <!-- Egyéb mezők -->
-        @if ($property->egyeb)
+        {{-- Egyéb mezők --}}
+        @if ($property->other_info)
             <div class="mt-6 px-6 py-4 bg-gray-50">
                 <div class="text-sm text-gray-700 leading-relaxed">
-                    {!! $property->egyeb !!}
+                    {!! $property->other_info !!}
                 </div>
             </div>
         @endif
 
-        <!-- Description -->
+        {{-- Description --}}
         @if (app()->getLocale() === 'en' ? $property->en_content : $property->content)
             <div class="mt-6 px-6 py-4 bg-gray-50">
                 <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">

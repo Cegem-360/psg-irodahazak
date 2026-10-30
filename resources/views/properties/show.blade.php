@@ -37,36 +37,36 @@
                         @if ($property->isSale())
 
                             <x-property.spec-row :label="__('Address')">
-                                {{ $property->cim_irsz ?? '' }}
-                                {{ $property->cim_varos ?? '' }}, {{ $property->cim_utca ?? '' }}
-                                {{ __($property->cim_utca_addons ?? '') }}
+                                {{ $property->postal_code ?? '' }}
+                                {{ $property->city ?? '' }}, {{ $property->street ?? '' }}
+                                {{ __($property->street_type ?? '') }}
                             </x-property.spec-row>
 
                             @if ($property->total_area)
                                 <x-property.spec-row :label="__('Total Area')">
                                     {{ $property->total_area }}
-                                    {{ __($property->osszterulet_addons ?? '') }}
+                                    {{ __($property->total_area_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
-                            @if ($property->min_berleti_dij)
+                            @if ($property->min_rent)
                                 <x-property.spec-row :label="__('Price')">
-                                    {{ $property->min_berleti_dij ?? '' }}
-                                    {{ __($property->min_berleti_dij_addons ?? '') }}
+                                    {{ $property->min_rent ?? '' }}
+                                    {{ __($property->min_rent_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
-                            @if ($property->parkolas)
+                            @if ($property->parking)
                                 <x-property.spec-row
-                                    :label="__('Parking')">{{ __($property->parkolas) }}</x-property.spec-row>
+                                    :label="__('Parking')">{{ __($property->parking) }}</x-property.spec-row>
                             @endif
-                            @if ($property->kodszam)
-                                <x-property.spec-row :label="__('Code')">{{ $property->kodszam }}</x-property.spec-row>
+                            @if ($property->code)
+                                <x-property.spec-row :label="__('Code')">{{ $property->code }}</x-property.spec-row>
                             @endif
                         @else
                             {{-- Default fields for rental offices --}}
                             <x-property.spec-row :label="__('Address')">
-                                {{ $property->cim_irsz }} {{ $property->cim_varos }},
-                                {{ $property->cim_utca }}
-                                {{ __($property->cim_utca_addons ?? '') }} {{ $property->cim_hazszam }}
+                                {{ $property->postal_code }} {{ $property->city }},
+                                {{ $property->street }}
+                                {{ __($property->street_type ?? '') }} {{ $property->house_number }}
                             </x-property.spec-row>
                             @if ($property->construction_year)
                                 <x-property.spec-row
@@ -75,70 +75,70 @@
                             @if ($property->total_area)
                                 <x-property.spec-row :label="__('Total Area')">
                                     {{ $property->total_area }}
-                                    {{ __($property->osszterulet_addons ?? '') }}
+                                    {{ __($property->total_area_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
-                            @if ($property->jelenleg_kiado)
-                                <x-property.spec-row :label="__('Currently Available')">{{ $property->jelenleg_kiado }}
+                            @if ($property->available_area)
+                                <x-property.spec-row :label="__('Currently Available')">{{ $property->available_area }}
                                     m2</x-property.spec-row>
                             @endif
-                            @if ($property->min_kiado)
+                            @if ($property->min_available_area)
                                 <x-property.spec-row :label="__('Min. Available')">
-                                    {{ $property->min_kiado }}
-                                    {{ __($property->min_kiado_addons ?? '') }}
+                                    {{ $property->min_available_area }}
+                                    {{ __($property->min_available_area_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
-                            @if ($property->min_berleti_dij)
+                            @if ($property->min_rent)
                                 <x-property.spec-row :label="__('Rent')">
-                                    {{ $property->min_berleti_dij }}{{ $property->max_berleti_dij && $property->max_berleti_dij !== $property->min_berleti_dij ? ' - ' . $property->max_berleti_dij : '' }}
-                                    {{ __($property->min_berleti_dij_addons ?? '') }}
+                                    {{ $property->min_rent }}{{ $property->max_rent && $property->max_rent !== $property->min_rent ? ' - ' . $property->max_rent : '' }}
+                                    {{ __($property->min_rent_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
-                            @if ($property->uzemeletetesi_dij)
+                            @if ($property->operating_fee)
                                 <x-property.spec-row :label="__('Operating Fee')">
-                                    {{ translate_value($property->uzemeletetesi_dij) }}
-                                    {{ __($property->uzemeletetesi_dij_addons ?? '') }}
+                                    {{ translate_value($property->operating_fee) }}
+                                    {{ __($property->operating_fee_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
 
-                            @if ($property->raktar_terulet)
+                            @if ($property->storage_area)
                                 <x-property.spec-row :label="__('Storage Area')">
-                                    {{ number_format((int) $property->raktar_terulet) }}
-                                    {{ __($property->raktar_terulet_addons ?? '') }}
+                                    {{ number_format((int) $property->storage_area) }}
+                                    {{ __($property->storage_area_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
-                            @if ($property->raktar_berleti_dij)
+                            @if ($property->storage_rent)
                                 <x-property.spec-row :label="__('Storage Rent')">
-                                    {{ $property->raktar_berleti_dij }}
-                                    {{ __($property->raktar_berleti_dij_addons ?? '') }}
+                                    {{ $property->storage_rent }}
+                                    {{ __($property->storage_rent_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
-                            @if ($property->parkolas)
+                            @if ($property->parking)
                                 <x-property.spec-row
-                                    :label="__('Parking')">{{ __($property->parkolas) }}</x-property.spec-row>
+                                    :label="__('Parking')">{{ __($property->parking) }}</x-property.spec-row>
                             @endif
-                            @if ($property->min_parkolas_dija)
+                            @if ($property->min_parking_fee)
                                 <x-property.spec-row :label="__('Parking Fee')">
-                                    {{ $property->min_parkolas_dija }}{{ $property->max_parkolas_dija ? ' - ' . $property->max_parkolas_dija : '' }}
-                                    {{ __($property->min_parkolas_dija_addons ?? '') }}
+                                    {{ $property->min_parking_fee }}{{ $property->max_parking_fee ? ' - ' . $property->max_parking_fee : '' }}
+                                    {{ __($property->min_parking_fee_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
-                            @if ($property->kozos_teruleti_arany)
+                            @if ($property->common_area_ratio)
                                 <x-property.spec-row :label="__('Common Area Ratio')">
-                                    {{ $property->kozos_teruleti_arany }}
-                                    {{ __($property->kozos_teruleti_arany_addons ?? '') }}
+                                    {{ $property->common_area_ratio }}
+                                    {{ __($property->common_area_ratio_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
-                            @if ($property->min_berleti_idoszak)
+                            @if ($property->min_lease_term)
                                 <x-property.spec-row :label="__('Min. Rental Period')">
-                                    {{ $property->min_berleti_idoszak }}
-                                    {{ __($property->min_berleti_idoszak_addons ?? '') }}
+                                    {{ $property->min_lease_term }}
+                                    {{ __($property->min_lease_term_unit ?? '') }}
                                 </x-property.spec-row>
                             @endif
-                            @if ($property->kodszam)
-                                <x-property.spec-row :label="__('Code')">{{ $property->kodszam }}</x-property.spec-row>
+                            @if ($property->code)
+                                <x-property.spec-row :label="__('Code')">{{ $property->code }}</x-property.spec-row>
                             @endif
-                            @if (!$property->jelenleg_kiado)
+                            @if (!$property->available_area)
                                 <tr>
                                     <td class="py-8 text-red-500 italic font-font-bold text-center text-xl"
                                         colspan="2">

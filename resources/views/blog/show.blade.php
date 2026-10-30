@@ -12,7 +12,7 @@
         <meta name="description" content="{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 160) }}">
         <meta name="keywords" content="{{ $post->meta_data['meta_keywords'] ?? __('blog, office market, real estate') }}">
 
-        <!-- Open Graph -->
+        {{-- Open Graph --}}
         <meta property="og:title" content="{{ $post->title }}">
         <meta property="og:description" content="{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 160) }}">
         <meta property="og:type" content="article">
@@ -25,7 +25,7 @@
     </x-slot>
 
     <div class="min-h-screen bg-gray-50">
-        <!-- Breadcrumb -->
+        {{-- Breadcrumb --}}
         <div class="bg-white border-b">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <nav class="flex items-center space-x-2 text-sm text-gray-500">
@@ -44,7 +44,7 @@
         </div>
 
         <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <!-- Article Header -->
+            {{-- Article Header --}}
             <header class="mb-8">
                 <div class="flex items-center mb-4">
                     @if ($post->category)
@@ -89,7 +89,7 @@
                 </div>
             </header>
 
-            <!-- Featured Image -->
+            {{-- Featured Image --}}
             @if ($post->featured_image)
                 <div class="mb-8">
                     <img src="{{ $structuredData->imageUrl($post->featured_image) }}" alt="{{ $post->title }}"
@@ -97,7 +97,7 @@
                 </div>
             @endif
 
-            <!-- Article Content -->
+            {{-- Article Content --}}
             <div class="prose prose-lg max-w-none">
                 @if ($post->excerpt)
                     <div class="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
@@ -110,7 +110,7 @@
                 </div>
             </div>
 
-            <!-- Article Footer -->
+            {{-- Article Footer --}}
             <footer class="mt-12 pt-8 border-t">
                 <div class="flex items-center justify-between">
                     @if ($post->category)
@@ -156,7 +156,7 @@
             </footer>
         </article>
 
-        <!-- Related Posts -->
+        {{-- Related Posts --}}
         @if ($relatedPosts->count() > 0)
             <section class="bg-white border-t py-16">
                 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

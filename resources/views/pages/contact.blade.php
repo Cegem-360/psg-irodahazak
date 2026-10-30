@@ -9,14 +9,14 @@
             <x-slot:heading>{{ __('contact.title') }}</x-slot:heading>
 
             <x-glass-panel>
-                <!-- Kapcsolati információk szekció -->
+                {{-- Kapcsolati információk szekció --}}
                 <div
                     class="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 border-b border-gray-300 hover:brightness-95 transition-all duration-300 ease-in-out mb-8">
                     <div>
                         @if ($contactPage && $contactPage->content)
                             {!! $contactPage->content !!}
                         @else
-                            <!-- Alapértelmezett tartalom, ha nincs még beállítva az adatbázisban -->
+                            {{-- Alapértelmezett tartalom, ha nincs még beállítva az adatbázisban --}}
                             <h3 class="mb-3 text-logogray/80 text-xl">Property Solution Group Kft.</h3>
                             <p class="mb-3 text-gray-600">
                                 {{ __('Office:') }} 1016 Budapest, Derék u. 2.
@@ -40,9 +40,9 @@
                     @endif
                 </div>
 
-                <!-- Kapcsolatfelvételi űrlap szekció -->
+                {{-- Kapcsolatfelvételi űrlap szekció --}}
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Kapcsolatfelvételi űrlap -->
+                    {{-- Kapcsolatfelvételi űrlap --}}
                     <div class="bg-white rounded-xl p-8 shadow-lg">
                         <h3 class="mb-6 text-3xl tracking-tight font-bold text-accent">
                             {{ __('contact.contact_form') }}
@@ -52,9 +52,9 @@
                         <livewire:contact-form />
                     </div>
 
-                    <!-- További információk -->
+                    {{-- További információk --}}
                     <div class="space-y-6">
-                        <!-- Nyitvatartás -->
+                        {{-- Nyitvatartás --}}
                         <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
                             <h4 class="text-xl font-bold text-gray-800 mb-4">{{ __('contact.opening_hours') }}
                             </h4>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
 
-                        <!-- Szolgáltatások -->
+                        {{-- Szolgáltatások --}}
                         <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
                             <h4 class="text-xl font-bold text-gray-800 mb-4">{{ __('contact.our_services') }}</h4>
                             <ul class="space-y-2 text-gray-600">
@@ -98,7 +98,7 @@
                             </ul>
                         </div>
 
-                        <!-- Gyors kapcsolatfelvétel -->
+                        {{-- Gyors kapcsolatfelvétel --}}
                         <div class="bg-linear-to-r from-primary to-accent text-white rounded-xl p-6 shadow-lg">
                             <h4 class="text-xl font-bold mb-4">{{ __('contact.immediate_contact') }}</h4>
                             <p class="mb-4">{{ __('contact.urgent_call') }}</p>

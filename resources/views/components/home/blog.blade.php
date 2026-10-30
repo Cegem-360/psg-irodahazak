@@ -5,7 +5,7 @@
     </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
-        <!-- Blog post -->
+        {{-- Blog post --}}
         @foreach ($posts as $blogPost)
             <div class="bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl">
                 <img src="{{ $blogPost->featured_image }}" alt="{{ $blogPost->title }}" loading="lazy"

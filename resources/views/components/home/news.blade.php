@@ -6,7 +6,7 @@
         </h2>
 
         <div class="grid grid-cols-1 gap-4 md:gap-8 max-w-7xl mx-auto">
-            <!-- News post -->
+            {{-- News post --}}
             @foreach ($news as $newsItem)
                 <div class="grid md:grid-cols-2 gap-4 bg-white rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl">
                     @if ($newsItem->featured_image)

@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 function favoriteProperty(string $slug = 'kedvenc'): Property
 {
-    return Property::query()->forceCreate(['title' => 'Kedvenc', 'status' => 'active', 'slug' => $slug, 'elado_v_kiado' => 'kiado-iroda']);
+    return Property::query()->forceCreate(['title' => 'Kedvenc', 'status' => 'active', 'slug' => $slug, 'offer_type' => 'kiado-iroda']);
 }
 
 it('adds a property to the favorites and takes it off again', function (): void {

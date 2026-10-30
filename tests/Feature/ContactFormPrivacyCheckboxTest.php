@@ -25,7 +25,7 @@ test('contact form on a property page preselects the building as subject', funct
         'title' => 'Bank Center',
         'slug' => 'bank-center',
         'status' => 'active',
-        'elado_v_kiado' => 'kiado-iroda',
+        'offer_type' => 'kiado-iroda',
     ]);
 
     Livewire::test(ContactForm::class, ['selectedPropertyId' => $property->id, 'selectedPropertyTypeIsRent' => true])

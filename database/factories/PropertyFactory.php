@@ -26,22 +26,22 @@ final class PropertyFactory extends Factory
         return [
             'title' => fake()->unique()->company().' irodaház',
             'status' => PropertyStatus::Active,
-            'elado_v_kiado' => PropertyType::Rent,
-            'cim_irsz' => (string) (1000 + $district * 10 + fake()->numberBetween(1, 9)),
-            'cim_varos' => 'Budapest',
-            'cim_utca' => fake()->streetName(),
-            'cim_hazszam' => fake()->buildingNumber().'.',
+            'offer_type' => PropertyType::Rent,
+            'postal_code' => (string) (1000 + $district * 10 + fake()->numberBetween(1, 9)),
+            'city' => 'Budapest',
+            'street' => fake()->streetName(),
+            'house_number' => fake()->buildingNumber().'.',
             'total_area' => fake()->numberBetween(1000, 40000),
-            'min_berleti_dij' => fake()->numberBetween(10, 20),
-            'max_berleti_dij' => fake()->numberBetween(20, 30),
-            'min_berleti_dij_addons' => 'EUR/m2/hó',
+            'min_rent' => fake()->numberBetween(10, 20),
+            'max_rent' => fake()->numberBetween(20, 30),
+            'min_rent_unit' => 'EUR/m2/hó',
             'featured' => false,
         ];
     }
 
     public function forSale(): self
     {
-        return $this->state(['elado_v_kiado' => PropertyType::Sale]);
+        return $this->state(['offer_type' => PropertyType::Sale]);
     }
 
     public function inactive(): self

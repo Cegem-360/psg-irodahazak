@@ -37,47 +37,47 @@ use Illuminate\Support\Str;
     'meta_description_en',
     'construction_year',
     'total_area',
-    'uzemeletetesi_dij',
-    'raktar_berleti_dij',
-    'parkolas',
-    'kozos_teruleti_arany',
-    'cim_irsz',
-    'cim_varos',
+    'operating_fee',
+    'storage_rent',
+    'parking',
+    'common_area_ratio',
+    'postal_code',
+    'city',
     'district',
-    'cim_utca',
-    'cim_hazszam',
+    'street',
+    'house_number',
     'maps_lat',
     'maps_lng',
-    'azonosito',
-    'osszterulet_addons',
-    'max_berleti_dij',
-    'max_berleti_dij_addons',
-    'min_berleti_dij',
-    'min_berleti_dij_addons',
-    'raktar_terulet',
-    'raktar_terulet_addons',
-    'raktar_berleti_dij_addons',
-    'uzemeletetesi_dij_addons',
-    'min_parkolas_dija',
-    'min_parkolas_dija_addons',
-    'max_parkolas_dija',
-    'max_parkolas_dija_addons',
-    'kozos_teruleti_arany_addons',
-    'min_kiado',
-    'min_kiado_addons',
-    'jelenleg_kiado',
-    'jelenleg_kiado_addons',
-    'kodszam',
+    'identifier',
+    'total_area_unit',
+    'max_rent',
+    'max_rent_unit',
+    'min_rent',
+    'min_rent_unit',
+    'storage_area',
+    'storage_area_unit',
+    'storage_rent_unit',
+    'operating_fee_unit',
+    'min_parking_fee',
+    'min_parking_fee_unit',
+    'max_parking_fee',
+    'max_parking_fee_unit',
+    'common_area_ratio_unit',
+    'min_available_area',
+    'min_available_area_unit',
+    'available_area',
+    'available_area_unit',
+    'code',
     'en_content',
-    'min_berleti_idoszak',
-    'min_berleti_idoszak_addons',
-    'cim_utca_addons',
-    'cimke',
+    'min_lease_term',
+    'min_lease_term_unit',
+    'street_type',
+    'label',
     'service',
     'maps',
-    'elado_v_kiado',
+    'offer_type',
     'updated',
-    'egyeb',
+    'other_info',
     'vat',
     'slug',
     'featured',
@@ -102,7 +102,7 @@ final class Property extends Model
     public static function countByDistrict(): array
     {
         return once(fn (): array => Cache::remember(self::DISTRICT_COUNTS_CACHE_KEY, now()->addDay(), function (): array {
-            $properties = self::query()->rent()->active()->budapestOnly()->get(['district', 'cim_irsz']);
+            $properties = self::query()->rent()->active()->budapestOnly()->get(['district', 'postal_code']);
 
             return collect(BudapestDistrict::cases())
                 ->mapWithKeys(fn (BudapestDistrict $district): array => [
@@ -124,7 +124,7 @@ final class Property extends Model
     public function isInDistrict(BudapestDistrict $district): bool
     {
         return BudapestDistrict::tryFromName((string) $this->district) === $district
-            || BudapestDistrict::tryFromPostalCode((string) $this->cim_irsz) === $district;
+            || BudapestDistrict::tryFromPostalCode((string) $this->postal_code) === $district;
     }
 
     /**
@@ -166,7 +166,7 @@ final class Property extends Model
      */
     public function address(): string
     {
-        return Str::squish(sprintf('%s %s, %s %s %s', $this->cim_irsz, $this->cim_varos, $this->cim_utca, __($this->cim_utca_addons ?? ''), $this->cim_hazszam));
+        return Str::squish(sprintf('%s %s, %s %s %s', $this->postal_code, $this->city, $this->street, __($this->street_type ?? ''), $this->house_number));
     }
 
     /**
@@ -207,17 +207,17 @@ final class Property extends Model
      */
     public function type(): PropertyType
     {
-        return $this->elado_v_kiado ?? PropertyType::Rent;
+        return $this->offer_type ?? PropertyType::Rent;
     }
 
     public function isRent(): bool
     {
-        return $this->elado_v_kiado === PropertyType::Rent;
+        return $this->offer_type === PropertyType::Rent;
     }
 
     public function isSale(): bool
     {
-        return $this->elado_v_kiado === PropertyType::Sale;
+        return $this->offer_type === PropertyType::Sale;
     }
 
     public function isActive(): bool
@@ -275,7 +275,7 @@ final class Property extends Model
     #[Scope]
     protected function sale(Builder $query): void
     {
-        $query->where('elado_v_kiado', PropertyType::Sale);
+        $query->where('offer_type', PropertyType::Sale);
     }
 
     /**
@@ -284,7 +284,7 @@ final class Property extends Model
     #[Scope]
     protected function rent(Builder $query): void
     {
-        $query->where('elado_v_kiado', PropertyType::Rent);
+        $query->where('offer_type', PropertyType::Rent);
     }
 
     /**
@@ -303,8 +303,8 @@ final class Property extends Model
     protected function budapestOnly(Builder $query): void
     {
         $query->where(fn (QueryBuilder $q): QueryBuilder => $q
-            ->where('cim_varos', 'like', '%Budapest%')
-            ->orWhere('cim_irsz', 'like', '1%'));
+            ->where('city', 'like', '%Budapest%')
+            ->orWhere('postal_code', 'like', '1%'));
     }
 
     /**
@@ -343,7 +343,7 @@ final class Property extends Model
         $query->where(function (Builder $subQ) use ($search): void {
             $subQ->where('title', 'like', '%'.$search.'%')
                 ->orWhere('content', 'like', '%'.$search.'%')
-                ->orWhere('kodszam', 'like', '%'.$search.'%')
+                ->orWhere('code', 'like', '%'.$search.'%')
                 ->orWhereHas('tags', function (Builder $q) use ($search): void {
                     $q->where('name', 'like', '%'.$search.'%');
                 })
@@ -369,11 +369,11 @@ final class Property extends Model
     protected function priceRange(Builder $query, ?int $minPrice = null, ?int $maxPrice = null): void
     {
         if ($minPrice && $maxPrice) {
-            $query->whereBetween('max_berleti_dij', [$minPrice, $maxPrice]);
+            $query->whereBetween('max_rent', [$minPrice, $maxPrice]);
         } elseif ($minPrice) {
-            $query->where('max_berleti_dij', '>=', $minPrice);
+            $query->where('max_rent', '>=', $minPrice);
         } elseif ($maxPrice) {
-            $query->where('max_berleti_dij', '<=', $maxPrice);
+            $query->where('max_rent', '<=', $maxPrice);
         }
     }
 
@@ -384,7 +384,7 @@ final class Property extends Model
             'vat' => 'boolean',
             'property_photos' => 'array',
             'status' => PropertyStatus::class,
-            'elado_v_kiado' => PropertyType::class,
+            'offer_type' => PropertyType::class,
         ];
     }
 
@@ -408,7 +408,7 @@ final class Property extends Model
     /**
      * Apply the postal-code based district filter in a database-portable way.
      *
-     * A `cim_irsz` postal code such as 1051 maps to a Budapest district via
+     * A `postal_code` postal code such as 1051 maps to a Budapest district via
      * floor(1051 / 10) - 100 = 5. MySQL and SQLite spell the required string and
      * math functions differently, so we branch on the active driver while keeping
      * identical semantics.
@@ -416,17 +416,17 @@ final class Property extends Model
     private function applyPostalCodeDistrictFilter(QueryBuilder $query, int $districtNum): void
     {
         if ($query->getConnection()->getDriverName() === 'sqlite') {
-            $query->whereRaw('LENGTH(cim_irsz) = 4')
-                ->whereRaw('CAST(cim_irsz AS INTEGER) > 999')
-                ->whereRaw('CAST(cim_irsz AS INTEGER) < 10000')
-                ->whereRaw('(CAST(cim_irsz AS INTEGER) / 10) - 100 = ?', [$districtNum]);
+            $query->whereRaw('LENGTH(postal_code) = 4')
+                ->whereRaw('CAST(postal_code AS INTEGER) > 999')
+                ->whereRaw('CAST(postal_code AS INTEGER) < 10000')
+                ->whereRaw('(CAST(postal_code AS INTEGER) / 10) - 100 = ?', [$districtNum]);
 
             return;
         }
 
-        $query->whereRaw('CHAR_LENGTH(cim_irsz) = 4')
-            ->whereRaw('CAST(cim_irsz AS UNSIGNED) > 999')
-            ->whereRaw('CAST(cim_irsz AS UNSIGNED) < 10000')
-            ->whereRaw('FLOOR(CAST(cim_irsz AS UNSIGNED) / 10) - 100 = ?', [$districtNum]);
+        $query->whereRaw('CHAR_LENGTH(postal_code) = 4')
+            ->whereRaw('CAST(postal_code AS UNSIGNED) > 999')
+            ->whereRaw('CAST(postal_code AS UNSIGNED) < 10000')
+            ->whereRaw('FLOOR(CAST(postal_code AS UNSIGNED) / 10) - 100 = ?', [$districtNum]);
     }
 }

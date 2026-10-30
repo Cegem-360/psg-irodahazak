@@ -22,7 +22,7 @@
         <div class="absolute inset-0 z-1 bg-linear-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto pt-12 pb-20">
             <form id="filterForm" method="GET" action="{{ localized_route('kiado-irodak') }}" class="search-form">
-                <!-- Hidden inputs for map selection and parameters -->
+                {{-- Hidden inputs for map selection and parameters --}}
                 <input type="hidden" name="type" value="rent">
                 <input type="hidden" name="districts" id="selectedDistricts" value="">
                 <input type="hidden" name="area_min" id="areaMin" value="">
@@ -33,7 +33,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     <div
                         class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/15">
-                        <!-- Térkép -->
+                        {{-- Térkép --}}
                         <h3 class="text-lg mb-4">{{ __('Map Search') }}</h3>
                         <div class="map-container">
                             {{-- Térkép --}}
@@ -56,9 +56,9 @@
 
                     <div
                         class="relative z-10 p-8 space-y-8 bg-black/5 rounded-xl _overflow-hidden_ shadow-xl backdrop-blur-3xl border border-white/15">
-                        <!-- Keresőmezők -->
+                        {{-- Keresőmezők --}}
                         <h3 class="text-lg mb-4">{{ __('Search Criteria') }}</h3>
-                        <!-- Custom Multi-Select Dropdown -->
+                        {{-- Custom Multi-Select Dropdown --}}
                         <div class="relative">
                             <button type="button" id="dropdownButton"
                                 class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-white text-left focus:ring-2 focus:ring-accent focus:border-accent flex justify-between items-center">
@@ -70,7 +70,7 @@
                                 </svg>
                             </button>
 
-                            <!-- Dropdown Menu -->
+                            {{-- Dropdown Menu --}}
                             <div id="dropdownMenu"
                                 class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-48 overflow-y-auto hidden">
                                 <div class="p-2">
@@ -84,7 +84,7 @@
                             </div>
                         </div>
 
-                        <!-- Office Name Search Dropdown -->
+                        {{-- Office Name Search Dropdown --}}
                         <div class="relative">
                             <button type="button" id="officeDropdownButton"
                                 class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-white text-left focus:ring-2 focus:ring-accent focus:border-accent flex justify-between items-center">
@@ -96,24 +96,24 @@
                                 </svg>
                             </button>
 
-                            <!-- Hidden input for form submission -->
+                            {{-- Hidden input for form submission --}}
                             <input type="hidden" name="office_name" id="selectedOfficeName"
                                 value="{{ request('office_name') }}">
 
-                            <!-- Dropdown Menu -->
+                            {{-- Dropdown Menu --}}
                             <div id="officeDropdownMenu"
                                 class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-64 overflow-hidden hidden">
-                                <!-- Search input inside dropdown -->
+                                {{-- Search input inside dropdown --}}
                                 <div class="p-3 border-b border-gray-200">
                                     <input type="text" id="officeSearchInput"
                                         placeholder="{{ __('Search among office buildings...') }}"
                                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-accent focus:border-accent text-sm">
                                 </div>
 
-                                <!-- Results container -->
+                                {{-- Results container --}}
                                 <div class="max-h-48 overflow-y-auto">
                                     <div id="officeResults" class="p-2">
-                                        <!-- Static default options (will be replaced with dynamic content) -->
+                                        {{-- Static default options (will be replaced with dynamic content) --}}
                                         <div class="office-option" data-value="">
                                             <div class="text-gray-500 italic">{{ __('All Office Buildings') }}</div>
                                         </div>
@@ -149,7 +149,7 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="space-y-2">
                                     <label class="text-sm font-semibold">{{ __('Min Rent') }}</label>
-                                    <select name="min_rent"
+                                    <select name="min_lease_term"
                                         class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-white focus:ring-2 focus:ring-accent focus:border-accent">
                                         <option value="">{{ __('Select') }}</option>
                                         <option value="1">1</option>
@@ -162,7 +162,7 @@
 
                                 <div class="space-y-2">
                                     <label class="text-sm font-semibold">{{ __('Min Rent Addons') }}</label>
-                                    <select name="min_rent_addons"
+                                    <select name="min_lease_term_unit"
                                         class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-white focus:ring-2 focus:ring-accent focus:border-accent">
                                         <option value="">{{ __('Select') }}</option>
                                         <option value="év">{{ __('year') }}</option>
@@ -175,7 +175,7 @@
 
                     <div
                         class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/15">
-                        <!-- Range szűrők -->
+                        {{-- Range szűrők --}}
                         <h3 class="text-lg mb-4">{{ __('Filter by Parameters') }}</h3>
                         <div class="space-y-2">
                             <label class="text-sm font-semibold">{{ __('Floor Area') }} (m2)</label>
@@ -187,7 +187,7 @@
                             <input type="text" class="ar-slider" name="ar_range" value="" />
                         </div>
 
-                        <!-- Keresés gomb -->
+                        {{-- Keresés gomb --}}
                         <div>
                             <button type="submit"
                                 class="w-full bg-primary/70 text-white font-semibold px-8 py-2 rounded hover:bg-accent/80 transition">
@@ -241,8 +241,8 @@
         </style>
         @php
             $szuroConfig = [
-                'offices' => Property::rent()->active()->orderBy('title')->get(['title', 'cim_irsz'])
-                    ->map(fn (Property $office): array => ['title' => $office->title, 'city' => $office->cim_irsz ?? 'Budapest'])
+                'offices' => Property::rent()->active()->orderBy('title')->get(['title', 'postal_code'])
+                    ->map(fn (Property $office): array => ['title' => $office->title, 'city' => $office->postal_code ?? 'Budapest'])
                     ->values(),
                 'i18n' => [
                     'selectDistricts' => __('Select Districts'),

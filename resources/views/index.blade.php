@@ -29,7 +29,7 @@
         ],
     };
 @endphp
-<x-layouts.app :breadcrumbs="$breadcrumbs">
+<x-layouts.app :$breadcrumbs>
     <x-slot name="title">{{ $pageTitle }}</x-slot>
     <x-slot name="meta">
         @if (request()->routeIs('adatlap-oldal', 'en.adatlap-oldal'))

@@ -120,33 +120,33 @@ final class PropertyResource extends Resource
                         TextInput::make('construction_year')
                             ->label('Építés éve')
                             ->maxLength(255),
-                        TextInput::make('jelenleg_kiado')
+                        TextInput::make('available_area')
                             ->label('Jelenleg kiadó')
                             ->maxLength(255),
                         TextInput::make('total_area')
                             ->label('Összterület')
                             ->maxLength(255),
-                        Select::make('osszterulet_addons')
+                        Select::make('total_area_unit')
                             ->label('Összterület kiegészítések')
                             ->options([
                                 'm2' => 'm2',
                                 'ft2' => 'ft2',
                             ])
                             ->default('m2'),
-                        TextInput::make('min_berleti_idoszak')
+                        TextInput::make('min_lease_term')
                             ->label('Min. bérleti időszak')
                             ->maxLength(255),
-                        Select::make('min_berleti_idoszak_addons')
+                        Select::make('min_lease_term_unit')
                             ->label('Min. bérleti időszak kiegészítések')
                             ->options([
                                 'év' => 'év',
                                 'hónap' => 'hónap',
                                 'nap' => 'nap',
                             ]),
-                        TextInput::make('min_kiado')
+                        TextInput::make('min_available_area')
                             ->label('Min. kiadó')
                             ->maxLength(255),
-                        Select::make('min_kiado_addons')
+                        Select::make('min_available_area_unit')
                             ->label('Min. kiadó kiegészítések')
                             ->options([
                                 'm2' => 'm2',
@@ -159,11 +159,11 @@ final class PropertyResource extends Resource
                 Section::make('bérleti díj')->schema([
                     Grid::make()
                         ->schema([
-                            TextInput::make('min_berleti_dij')
-                                ->label(fn (Get $get): string => self::isSaleState($get('elado_v_kiado')) ? 'Eladási ár ' : 'Min. bérleti díj')
+                            TextInput::make('min_rent')
+                                ->label(fn (Get $get): string => self::isSaleState($get('offer_type')) ? 'Eladási ár ' : 'Min. bérleti díj')
                                 ->maxLength(255),
-                            Select::make('min_berleti_dij_addons')
-                                ->label(fn (Get $get): string => self::isSaleState($get('elado_v_kiado')) ? 'Eladási ár addons' : 'Min. bérleti díj addons')
+                            Select::make('min_rent_unit')
+                                ->label(fn (Get $get): string => self::isSaleState($get('offer_type')) ? 'Eladási ár addons' : 'Min. bérleti díj addons')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
                                     'HUF/m2/hó' => 'HUF/m2/hó',
@@ -178,12 +178,12 @@ final class PropertyResource extends Resource
                                     'm. EUR' => 'm. EUR',
                                     'mrd HUF' => 'mrd HUF',
                                 ]),
-                            TextInput::make('max_berleti_dij')
-                                ->hidden(fn (Get $get): bool => self::isSaleState($get('elado_v_kiado')))
+                            TextInput::make('max_rent')
+                                ->hidden(fn (Get $get): bool => self::isSaleState($get('offer_type')))
                                 ->label('Max. bérleti díj')
                                 ->maxLength(255),
-                            Select::make('max_berleti_dij_addons')
-                                ->hidden(fn (Get $get): bool => self::isSaleState($get('elado_v_kiado')))
+                            Select::make('max_rent_unit')
+                                ->hidden(fn (Get $get): bool => self::isSaleState($get('offer_type')))
                                 ->label('Max. bérleti díj kiegészítések')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
@@ -196,35 +196,35 @@ final class PropertyResource extends Resource
                 Section::make('egyéb díj')->schema([
                     Grid::make()
                         ->schema([
-                            TextInput::make('uzemeletetesi_dij')
+                            TextInput::make('operating_fee')
                                 ->label('Üzemeltetési díj')
                                 ->maxLength(255),
-                            Select::make('uzemeletetesi_dij_addons')
+                            Select::make('operating_fee_unit')
                                 ->label('Üzemeltetési díj kiegészítések')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
                                     'HUF/m2/hó' => 'HUF/m2/hó',
                                 ]),
-                            TextInput::make('raktar_terulet')
+                            TextInput::make('storage_area')
                                 ->label('Raktár terület')
                                 ->maxLength(255),
-                            Select::make('raktar_terulet_addons')
+                            Select::make('storage_area_unit')
                                 ->label('Raktár terület kiegészítések')
                                 ->options([
                                     'm2' => 'm2',
                                     'ft2' => 'ft2',
                                 ])
                                 ->default('m2'),
-                            TextInput::make('raktar_berleti_dij')
+                            TextInput::make('storage_rent')
                                 ->label('Raktár bérleti díj')
                                 ->maxLength(255),
-                            Select::make('raktar_berleti_dij_addons')
+                            Select::make('storage_rent_unit')
                                 ->label('Raktár bérleti díj kiegészítések')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
                                     'HUF/m2/hó' => 'HUF/m2/hó',
                                 ]),
-                            Select::make('parkolas')
+                            Select::make('parking')
                                 ->label('Parkolás')
                                 ->columnSpanFull()
                                 ->options([
@@ -233,28 +233,28 @@ final class PropertyResource extends Resource
                                     'felszíni parkoló és teremgarázs' => 'felszíni parkoló és teremgarázs',
                                     'utcán, közterületen' => 'utcán, közterületen',
                                 ]),
-                            TextInput::make('min_parkolas_dija')
+                            TextInput::make('min_parking_fee')
                                 ->label('Min. parkolás díja')
                                 ->maxLength(255),
-                            Select::make('min_parkolas_dija_addons')
+                            Select::make('min_parking_fee_unit')
                                 ->label('Min. parkolás díja kiegészítések')
                                 ->options([
                                     'EUR/hely/hó' => 'EUR/hely/hó',
                                     'HUF/hely/hó' => 'HUF/hely/hó',
                                 ]),
-                            TextInput::make('max_parkolas_dija')
+                            TextInput::make('max_parking_fee')
                                 ->label('Max. parkolás díja')
                                 ->maxLength(255),
-                            Select::make('max_parkolas_dija_addons')
+                            Select::make('max_parking_fee_unit')
                                 ->label('Max. parkolás díja kiegészítések')
                                 ->options([
                                     'EUR/hely/hó' => 'EUR/hely/hó',
                                     'HUF/hely/hó' => 'HUF/hely/hó',
                                 ]),
-                            TextInput::make('kozos_teruleti_arany')
+                            TextInput::make('common_area_ratio')
                                 ->label('Közös területi arány')
                                 ->maxLength(255),
-                            Select::make('kozos_teruleti_arany_addons')
+                            Select::make('common_area_ratio_unit')
                                 ->label('Közös területi arány kiegészítések')
                                 ->options([
                                     '%' => '%',
@@ -267,19 +267,19 @@ final class PropertyResource extends Resource
                 Section::make('Ingatlan hely adatok')->schema([
                     Grid::make()
                         ->schema([
-                            TextInput::make('cim_irsz')
+                            TextInput::make('postal_code')
                                 ->label('Irányítószám')
                                 ->maxLength(255),
                             TextInput::make('district')
                                 ->label('Kerület')
                                 ->maxLength(255),
-                            TextInput::make('cim_varos')
+                            TextInput::make('city')
                                 ->label('Város')
                                 ->maxLength(255),
-                            TextInput::make('cim_utca')
+                            TextInput::make('street')
                                 ->label('Utca')
                                 ->maxLength(255),
-                            Select::make('cim_utca_addons')
+                            Select::make('street_type')
                                 ->options([
                                     'utca' => 'utca',
                                     'út' => 'út',
@@ -293,7 +293,7 @@ final class PropertyResource extends Resource
                                     'fasor' => 'fasor',
                                 ])
                                 ->label('Utca kiegészítések'),
-                            TextInput::make('cim_hazszam')
+                            TextInput::make('house_number')
                                 ->label('Házszám')
                                 ->maxLength(255),
                             Grid::make()
@@ -331,11 +331,11 @@ final class PropertyResource extends Resource
                         ->gridDirection('row')
                         ->columnSpanFull(),
                 ]),
-                TextInput::make('azonosito')
+                TextInput::make('identifier')
                     ->label('Azonosító')
                     ->maxLength(255),
 
-                TextInput::make('kodszam')
+                TextInput::make('code')
                     ->label('Kódszám')
                     ->maxLength(255),
                 RichEditor::make('en_content')
@@ -344,7 +344,7 @@ final class PropertyResource extends Resource
                 TextInput::make('lang')
                     ->label('Nyelv')
                     ->maxLength(2),
-                TextInput::make('cimke')
+                TextInput::make('label')
                     ->label('Címke')
                     ->maxLength(255),
                 TextInput::make('service')
@@ -353,7 +353,7 @@ final class PropertyResource extends Resource
                 TextInput::make('maps')
                     ->label('Térképek')
                     ->maxLength(255),
-                Select::make('elado_v_kiado')
+                Select::make('offer_type')
                     ->label('Eladó v. kiadó')
                     ->options(PropertyType::class)
                     ->enum(PropertyType::class)
@@ -361,7 +361,7 @@ final class PropertyResource extends Resource
                     ->required(),
                 DatePicker::make('updated')
                     ->label('Frissítve'),
-                RichEditor::make('egyeb')
+                RichEditor::make('other_info')
                     ->label('Egyéb')
                     ->columnSpanFull(),
                 Select::make('vat')
@@ -405,7 +405,7 @@ final class PropertyResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('kodszam')
+                TextColumn::make('code')
                     ->label('Kódszám')
                     ->searchable(),
                 TextColumn::make('date')

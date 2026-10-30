@@ -9,9 +9,9 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 
 it('formats rental fee as single value when min and max are the same', function (): void {
     $property = new Property([
-        'min_berleti_dij' => '12',
-        'max_berleti_dij' => '12',
-        'min_berleti_dij_addons' => 'EUR/m2/ho',
+        'min_rent' => '12',
+        'max_rent' => '12',
+        'min_rent_unit' => 'EUR/m2/ho',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -23,9 +23,9 @@ it('formats rental fee as single value when min and max are the same', function 
 
 it('formats rental fee as range when min and max differ', function (): void {
     $property = new Property([
-        'min_berleti_dij' => '10',
-        'max_berleti_dij' => '15',
-        'min_berleti_dij_addons' => 'EUR/m2/ho',
+        'min_rent' => '10',
+        'max_rent' => '15',
+        'min_rent_unit' => 'EUR/m2/ho',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -37,8 +37,8 @@ it('formats rental fee as range when min and max differ', function (): void {
 
 it('formats rental fee without addons', function (): void {
     $property = new Property([
-        'min_berleti_dij' => '10',
-        'max_berleti_dij' => '15',
+        'min_rent' => '10',
+        'max_rent' => '15',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -60,8 +60,8 @@ it('returns empty string for rental fee when min is missing', function (): void 
 
 it('formats operating fee with addons', function (): void {
     $property = new Property([
-        'uzemeletetesi_dij' => '3.5',
-        'uzemeletetesi_dij_addons' => 'EUR/m2/ho',
+        'operating_fee' => '3.5',
+        'operating_fee_unit' => 'EUR/m2/ho',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -83,8 +83,8 @@ it('returns empty string for operating fee when value is missing', function (): 
 
 it('formats common area ratio with addons', function (): void {
     $property = new Property([
-        'kozos_teruleti_arany' => '10',
-        'kozos_teruleti_arany_addons' => '%',
+        'common_area_ratio' => '10',
+        'common_area_ratio_unit' => '%',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -106,9 +106,9 @@ it('returns empty string for common area ratio when value is missing', function 
 
 it('formats parking fee as range when min and max differ', function (): void {
     $property = new Property([
-        'min_parkolas_dija' => '100',
-        'max_parkolas_dija' => '150',
-        'min_parkolas_dija_addons' => 'EUR/hely/ho',
+        'min_parking_fee' => '100',
+        'max_parking_fee' => '150',
+        'min_parking_fee_unit' => 'EUR/hely/ho',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -120,9 +120,9 @@ it('formats parking fee as range when min and max differ', function (): void {
 
 it('formats parking fee as single value when min and max are the same', function (): void {
     $property = new Property([
-        'min_parkolas_dija' => '120',
-        'max_parkolas_dija' => '120',
-        'min_parkolas_dija_addons' => 'EUR/hely/ho',
+        'min_parking_fee' => '120',
+        'max_parking_fee' => '120',
+        'min_parking_fee_unit' => 'EUR/hely/ho',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -144,8 +144,8 @@ it('returns empty string for parking fee when min is missing', function (): void
 
 it('formats minimum rental period with addons', function (): void {
     $property = new Property([
-        'min_berleti_idoszak' => '5',
-        'min_berleti_idoszak_addons' => 'ev',
+        'min_lease_term' => '5',
+        'min_lease_term_unit' => 'ev',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -167,11 +167,11 @@ it('returns empty string for minimum rental period when value is missing', funct
 
 it('formats address by concatenating address fields', function (): void {
     $property = new Property([
-        'cim_irsz' => '1051',
-        'cim_varos' => 'Budapest',
-        'cim_utca' => 'Vaci',
-        'cim_utca_addons' => 'utca',
-        'cim_hazszam' => '10',
+        'postal_code' => '1051',
+        'city' => 'Budapest',
+        'street' => 'Vaci',
+        'street_type' => 'utca',
+        'house_number' => '10',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -183,8 +183,8 @@ it('formats address by concatenating address fields', function (): void {
 
 it('formats address with missing fields gracefully', function (): void {
     $property = new Property([
-        'cim_irsz' => '1051',
-        'cim_varos' => 'Budapest',
+        'postal_code' => '1051',
+        'city' => 'Budapest',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -197,24 +197,24 @@ it('formats address with missing fields gracefully', function (): void {
 it('generates a valid Excel spreadsheet with correct structure', function (): void {
     $property = new Property([
         'title' => 'Test Building',
-        'cim_irsz' => '1051',
-        'cim_varos' => 'Budapest',
-        'cim_utca' => 'Vaci',
-        'cim_utca_addons' => 'utca',
-        'cim_hazszam' => '10',
+        'postal_code' => '1051',
+        'city' => 'Budapest',
+        'street' => 'Vaci',
+        'street_type' => 'utca',
+        'house_number' => '10',
         'construction_year' => '2018',
-        'min_berleti_dij' => '12',
-        'max_berleti_dij' => '15',
-        'min_berleti_dij_addons' => 'EUR/m2/ho',
-        'uzemeletetesi_dij' => '3.5',
-        'uzemeletetesi_dij_addons' => 'EUR/m2/ho',
-        'kozos_teruleti_arany' => '10',
-        'kozos_teruleti_arany_addons' => '%',
-        'min_parkolas_dija' => '100',
-        'max_parkolas_dija' => '150',
-        'min_parkolas_dija_addons' => 'EUR/hely/ho',
-        'min_berleti_idoszak' => '5',
-        'min_berleti_idoszak_addons' => 'ev',
+        'min_rent' => '12',
+        'max_rent' => '15',
+        'min_rent_unit' => 'EUR/m2/ho',
+        'operating_fee' => '3.5',
+        'operating_fee_unit' => 'EUR/m2/ho',
+        'common_area_ratio' => '10',
+        'common_area_ratio_unit' => '%',
+        'min_parking_fee' => '100',
+        'max_parking_fee' => '150',
+        'min_parking_fee_unit' => 'EUR/hely/ho',
+        'min_lease_term' => '5',
+        'min_lease_term_unit' => 'ev',
     ]);
 
     $service = new FavoritesExcelExportService;
@@ -274,27 +274,27 @@ it('generates an Excel file with multiple properties', function (): void {
     $properties = collect([
         new Property([
             'title' => 'Building A',
-            'cim_irsz' => '1051',
-            'cim_varos' => 'Budapest',
-            'cim_utca' => 'Vaci',
-            'cim_utca_addons' => 'utca',
-            'cim_hazszam' => '1',
+            'postal_code' => '1051',
+            'city' => 'Budapest',
+            'street' => 'Vaci',
+            'street_type' => 'utca',
+            'house_number' => '1',
             'construction_year' => '2015',
-            'min_berleti_dij' => '10',
-            'max_berleti_dij' => '10',
-            'min_berleti_dij_addons' => 'EUR/m2/ho',
+            'min_rent' => '10',
+            'max_rent' => '10',
+            'min_rent_unit' => 'EUR/m2/ho',
         ]),
         new Property([
             'title' => 'Building B',
-            'cim_irsz' => '1061',
-            'cim_varos' => 'Budapest',
-            'cim_utca' => 'Andrassy',
-            'cim_utca_addons' => 'ut',
-            'cim_hazszam' => '5',
+            'postal_code' => '1061',
+            'city' => 'Budapest',
+            'street' => 'Andrassy',
+            'street_type' => 'ut',
+            'house_number' => '5',
             'construction_year' => '2020',
-            'min_berleti_dij' => '15',
-            'max_berleti_dij' => '20',
-            'min_berleti_dij_addons' => 'EUR/m2/ho',
+            'min_rent' => '15',
+            'max_rent' => '20',
+            'min_rent_unit' => 'EUR/m2/ho',
         ]),
     ]);
 

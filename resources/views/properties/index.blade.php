@@ -2,7 +2,7 @@
     <x-slot name="title">{{ __('Properties') }} - {{ config('app.name') }}</x-slot>
 
     <div class="min-h-screen bg-gray-50">
-        <!-- Header -->
+        {{-- Header --}}
         <div class="bg-white shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <h1 class="text-3xl font-bold text-gray-900">{{ __('Properties') }}</h1>
@@ -10,16 +10,16 @@
             </div>
         </div>
 
-        <!-- Properties Grid -->
+        {{-- Properties Grid --}}
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             @if ($properties->count() > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     @foreach ($properties as $property)
-                        <x-property.card :property="$property" />
+                        <x-property.card :$property />
                     @endforeach
                 </div>
 
-                <!-- Pagination -->
+                {{-- Pagination --}}
                 <div class="mt-8">
                     {{ $properties->links() }}
                 </div>

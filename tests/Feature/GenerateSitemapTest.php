@@ -15,14 +15,14 @@ it('writes a sitemap index pointing at the page, property and article sitemaps',
         'title' => 'Teszt ingatlan',
         'status' => 'active',
         'slug' => 'teszt-ingatlan-sitemap',
-        'elado_v_kiado' => 'kiado-iroda',
+        'offer_type' => 'kiado-iroda',
     ]);
 
     $hidden = Property::query()->forceCreate([
         'title' => 'Nem aktív ingatlan',
         'status' => 'inactive',
         'slug' => 'nem-aktiv-ingatlan',
-        'elado_v_kiado' => 'kiado-iroda',
+        'offer_type' => 'kiado-iroda',
     ]);
 
     // BlogCategoryFactory picks from eight fixed names, so two posts share one category to avoid a slug clash.

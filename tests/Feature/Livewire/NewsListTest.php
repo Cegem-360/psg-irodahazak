@@ -40,7 +40,7 @@ it('lists only published news, newest first', function (): void {
 
 it('filters by search term and category, and keeps them in the URL', function (): void {
     $market = NewsCategory::factory()->create(['name' => 'Irodapiac', 'slug' => 'irodapiac']);
-    $other = NewsCategory::factory()->create(['name' => 'Egyéb', 'slug' => 'egyeb']);
+    $other = NewsCategory::factory()->create(['name' => 'Egyéb', 'slug' => 'other_info']);
     publishedNews(['title' => 'Bérleti díjak 2026-ban', 'news_category_id' => $market->id]);
     publishedNews(['title' => 'Céges évzáró', 'news_category_id' => $other->id]);
 
@@ -50,7 +50,7 @@ it('filters by search term and category, and keeps them in the URL', function ()
         ->assertSee('Bérleti díjak 2026-ban')
         ->assertDontSee('Céges évzáró')
         ->set('search', '')
-        ->set('category', 'egyeb')
+        ->set('category', 'other_info')
         ->assertSee('Céges évzáró')
         ->assertDontSee('Bérleti díjak 2026-ban')
         ->call('resetFilters')

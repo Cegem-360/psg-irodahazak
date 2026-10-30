@@ -26,7 +26,7 @@ final class PropertyController extends Controller
             if ($districts !== []) {
                 $query->where(function ($q) use ($districts): void {
                     foreach ($districts as $district) {
-                        $q->orWhere('cim_varos', 'like', '%'.$district.'%');
+                        $q->orWhere('city', 'like', '%'.$district.'%');
                     }
                 });
             }
@@ -34,7 +34,7 @@ final class PropertyController extends Controller
 
         // Filter by district (single - for backward compatibility)
         if (request('district') && ! request('districts')) {
-            $query->where('cim_varos', 'like', '%'.request('district').'%');
+            $query->where('city', 'like', '%'.request('district').'%');
         }
 
         // Filter by office building name
@@ -61,7 +61,7 @@ final class PropertyController extends Controller
         if (request('price_min') || request('price_max')) {
             $priceMin = request('price_min', 0);
             $priceMax = request('price_max', 9999999);
-            $query->whereBetween('max_berleti_dij', [$priceMin, $priceMax]);
+            $query->whereBetween('max_rent', [$priceMin, $priceMax]);
         }
 
         // Filter by rental properties only if rental filter is applied

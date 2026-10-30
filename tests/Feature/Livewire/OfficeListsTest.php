@@ -10,7 +10,7 @@ use Livewire\Features\SupportLockedProperties\CannotUpdateLockedPropertyExceptio
 use Livewire\Livewire;
 
 it('falls back to sorting by name when the client sends an unknown column', function (): void {
-    Property::query()->forceCreate(['title' => 'Eladó ház', 'status' => 'active', 'slug' => 'elado-haz', 'elado_v_kiado' => 'elado-iroda']);
+    Property::query()->forceCreate(['title' => 'Eladó ház', 'status' => 'active', 'slug' => 'elado-haz', 'offer_type' => 'elado-iroda']);
 
     $list = Livewire::test(ListSaleOffices::class)
         ->set('sortField', 'password; drop table properties')
@@ -28,7 +28,7 @@ it('does not let the client change the page size or the category', function (str
 ]);
 
 it('links the map markers to the property page in the current language', function (): void {
-    $property = Property::query()->forceCreate(['title' => 'Térképes', 'status' => 'active', 'slug' => 'terkepes', 'elado_v_kiado' => 'kiado-iroda', 'maps_lat' => '47.5', 'maps_lng' => '19.05']);
+    $property = Property::query()->forceCreate(['title' => 'Térképes', 'status' => 'active', 'slug' => 'terkepes', 'offer_type' => 'kiado-iroda', 'maps_lat' => '47.5', 'maps_lng' => '19.05']);
     app()->setLocale('en');
 
     $markers = Livewire::test(ListRentOffices::class)->instance()->getOfficesForMap();
@@ -37,7 +37,7 @@ it('links the map markers to the property page in the current language', functio
 });
 
 it('does not show the location of an inactive property', function (): void {
-    $property = Property::query()->forceCreate(['title' => 'Inaktív', 'status' => 'inactive', 'slug' => 'inaktiv-terkep', 'elado_v_kiado' => 'kiado-iroda']);
+    $property = Property::query()->forceCreate(['title' => 'Inaktív', 'status' => 'inactive', 'slug' => 'inaktiv-terkep', 'offer_type' => 'kiado-iroda']);
 
     Livewire::test(PropertyMapModal::class)
         ->dispatch('show-map-modal', title: 'Inaktív', propertyId: $property->id)

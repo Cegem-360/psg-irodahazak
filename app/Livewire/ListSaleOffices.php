@@ -72,10 +72,10 @@ final class ListSaleOffices extends Component
             ->map(function ($office): array {
                 // Build full address for geocoding
                 $addressParts = array_filter([
-                    $office->cim_irsz,
-                    $office->cim_varos,
-                    $office->cim_utca,
-                    $office->cim_hazszam,
+                    $office->postal_code,
+                    $office->city,
+                    $office->street,
+                    $office->house_number,
                 ]);
                 $fullAddress = implode(' ', $addressParts);
 
@@ -83,12 +83,12 @@ final class ListSaleOffices extends Component
                     'id' => $office->id,
                     'title' => $office->title,
                     'address' => $fullAddress,
-                    'postal_code' => $office->cim_irsz ?? '',
-                    'city' => $office->cim_varos ?? '',
-                    'street' => $office->cim_utca ?? '',
-                    'house_number' => $office->cim_hazszam ?? '',
-                    'rent' => ($office->min_berleti_dij ?? '').' - '.($office->max_berleti_dij ?? '').' '.($office->max_berleti_dij_addons ?? ''),
-                    'operating_fee' => (translate_value($office->uzemeletetesi_dij) ?? '').' '.($office->uzemeletetesi_dij_addons ?? ''),
+                    'postal_code' => $office->postal_code ?? '',
+                    'city' => $office->city ?? '',
+                    'street' => $office->street ?? '',
+                    'house_number' => $office->house_number ?? '',
+                    'rent' => ($office->min_rent ?? '').' - '.($office->max_rent ?? '').' '.($office->max_rent_unit ?? ''),
+                    'operating_fee' => (translate_value($office->operating_fee) ?? '').' '.($office->operating_fee_unit ?? ''),
                     'url' => $office->url(),
                 ];
             })
