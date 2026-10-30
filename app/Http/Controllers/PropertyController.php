@@ -79,6 +79,8 @@ final class PropertyController extends Controller
      */
     public function show(Property $property): Factory|View
     {
+        // Inactive listings stay viewable for signed-in admins, who use the page as a preview
+        abort_unless($property->isActive() || auth()->check(), 404);
 
         // Apply the appropriate scope based on property type
         $similarPropertiesQuery = Property::query()->where('id', '!=', $property->id)
@@ -125,59 +127,5 @@ final class PropertyController extends Controller
             'property' => $property,
             'similarProperties' => $similarProperties,
         ]);
-    }
-
-    /**
-     * API endpoint to get property images
-     */
-    public function images(Property $property)
-    {
-        $images = $property->images()->orderBy('ord')->get()->map(fn ($image): array => [
-            'id' => $image->id,
-            'url' => $image->image_url,
-            'alt' => $image->alt,
-            'size' => $image->size,
-            'order' => $image->ord,
-        ]);
-
-        return response()->json($images);
-    }
-
-    /**
-     * Get property images in different sizes
-     */
-    public function imagesWithSize(Property $property, $size = null)
-    {
-        $images = $property->images()->orderBy('ord')->get()->map(fn ($image): array => [
-            'id' => $image->id,
-            'url' => $image->getImageUrl($size),
-            'alt' => $image->alt,
-            'size' => $size ?? $image->size,
-            'order' => $image->ord,
-        ]);
-
-        return response()->json($images);
-    }
-
-    /**
-     * Search office names for autocomplete
-     */
-    public function searchOfficeNames()
-    {
-        $searchTerm = request('q', '');
-
-        if (mb_strlen((string) $searchTerm) < 2) {
-            return response()->json([]);
-        }
-
-        $offices = Property::active()
-            ->where('title', 'like', '%'.$searchTerm.'%')
-            ->select('title', 'cim_varos')
-            ->distinct()
-            ->orderBy('title')
-            ->limit(10)
-            ->get();
-
-        return response()->json($offices);
     }
 }

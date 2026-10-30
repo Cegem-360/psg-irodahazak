@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Livewire\Concerns\ProtectsAgainstSpam;
 use App\Models\QuoteRequest;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -16,6 +17,8 @@ use Livewire\Component;
 
 final class QuoteRequestModal extends Component
 {
+    use ProtectsAgainstSpam;
+
     public bool $showModal = false;
 
     public string $name = '';
@@ -88,6 +91,10 @@ final class QuoteRequestModal extends Component
     {
         $this->validate();
 
+        if ($this->isBlockedAsSpam('quote-request', maxAttempts: 3, decaySeconds: 600)) {
+            return;
+        }
+
         try {
             // Create quote request
             $quoteRequest = QuoteRequest::query()->create([
@@ -125,7 +132,7 @@ final class QuoteRequestModal extends Component
                 'quoteId' => $quoteRequest->id,
             ], function ($message): void {
                 $message->from(config('mail.notification_from.address'), config('mail.notification_from.name'))
-                    ->to('richard.fekete@psg-irodahazak.hu')
+                    ->to(config('mail.agent_address'))
                     ->subject($this->subject ?: 'Új árajánlat kérés érkezett')
                     ->replyTo($this->email, $this->name);
             });
@@ -183,6 +190,7 @@ final class QuoteRequestModal extends Component
         $this->message = '';
         $this->subject = '';
         $this->privacy = false;
+        $this->website = '';
         $this->resetValidation();
     }
 }

@@ -10,8 +10,6 @@ Artisan::command('inspire', function (): void {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::call(function (): void {
-    Artisan::call('bloghu:fetch-feed');
-})->daily();
+Schedule::command('bloghu:fetch-feed')->daily()->withoutOverlapping();
 
 Schedule::command('sitemap:generate')->dailyAt('04:10');

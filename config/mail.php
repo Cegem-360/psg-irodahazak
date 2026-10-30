@@ -131,6 +131,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Agent Address
+    |--------------------------------------------------------------------------
+    |
+    | The broker who receives contact and quote request submissions alongside
+    | the admin address, and who signs the favorites emails.
+    |
+    */
+
+    'agent_address' => env('AGENT_EMAIL', 'richard.fekete@psg-irodahazak.hu'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Admin Notification Sender
     |--------------------------------------------------------------------------
     |

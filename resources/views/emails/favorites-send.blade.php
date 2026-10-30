@@ -21,7 +21,7 @@
         <p>{{ __('Kind regards') }},</p>
         <p>Fekete Richárd<br>
             {{ __('mobile') }}: +36 20 381 3917<br>
-            e-mail: richard.fekete@psg-irodahazak.hu</p>
+            e-mail: {{ config('mail.agent_address') }}</p>
     </body>
 
 </html>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Actions\SwitchLocale;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -12,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class SetLocale
 {
+    public function __construct(private readonly SwitchLocale $switchLocale) {}
+
     /**
      * Handle an incoming request.
      *
@@ -21,8 +24,7 @@ final class SetLocale
     {
         // Force English locale for specific routes
         if ($request->routeIs('en.properties.show', 'en.properties.show-for-sale', 'en.property.pdf')) {
-            App::setLocale('en');
-            Session::put('locale', 'en');
+            $this->switchLocale->handle('en');
         } elseif (Session::has('locale')) {
             App::setLocale(Session::get('locale'));
         }

@@ -4,43 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\BlogCategory;
 use App\Models\BlogPost;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 final class BlogController extends Controller
 {
-    public function index(Request $request): View
+    public function index(): View
     {
-        BlogCategory::query()->where('is_active', true)
-            ->withCount('blogPosts')
-            ->orderBy('name')
-            ->get();
-
-        $query = BlogPost::query()->published()
-            ->with(['category', 'author'])
-            ->latest('published_at');
-
-        // Kategória szűrés
-        if ($request->filled('category')) {
-            $query->whereHas('category', function ($q) use ($request): void {
-                $q->where('slug', $request->category);
-            });
-        }
-
-        // Keresés
-        if ($request->filled('search')) {
-            $searchTerm = $request->search;
-            $query->where(function ($q) use ($searchTerm): void {
-                $q->where('title', 'like', '%'.$searchTerm.'%')
-                    ->orWhere('excerpt', 'like', '%'.$searchTerm.'%')
-                    ->orWhere('content', 'like', '%'.$searchTerm.'%');
-            });
-        }
-
-        $query->paginate(12);
-
         return view('index');
     }
 
@@ -62,23 +32,5 @@ final class BlogController extends Controller
             ->get();
 
         return view('blog.show', ['post' => $post, 'relatedPosts' => $relatedPosts]);
-    }
-
-    public function category(BlogCategory $category): View
-    {
-        abort_unless($category->is_active, 404);
-
-        $posts = BlogPost::query()->published()
-            ->where('blog_category_id', $category->id)
-            ->with(['category', 'author'])
-            ->latest('published_at')
-            ->paginate(12);
-
-        $categories = BlogCategory::query()->where('is_active', true)
-            ->withCount('blogPosts')
-            ->orderBy('name')
-            ->get();
-
-        return view('blog.category', ['posts' => $posts, 'category' => $category, 'categories' => $categories]);
     }
 }

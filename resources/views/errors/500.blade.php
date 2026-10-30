@@ -10,5 +10,5 @@
     {{ __('Or contact us if the problem persists.') }}
     <br><br>
     {{ __('Contact us:') }}
-    <a href="mailto:tamas@cegem360.hu">tamas@cegem360.hu</a>
+    <a href="mailto:{{ config('mail.admin_address') }}">{{ config('mail.admin_address') }}</a>
 @endsection

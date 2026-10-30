@@ -32,7 +32,6 @@ final class GenerateSitemap extends Command
         'favorites',
         'kedvencek',
         'favorites.export-excel',
-        'clearCache',
         'adatlap-oldal',
     ];
 

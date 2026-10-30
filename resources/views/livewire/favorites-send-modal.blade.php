@@ -1,7 +1,8 @@
 <div>
     <x-modal wire:model="showSendModal">
         <x-slot name="title">{{ __('Send favorites') }}</x-slot>
-        <form wire:submit.prevent="sendFavorites">
+        <form wire:submit.prevent="sendFavorites" class="relative">
+            <x-forms.honeypot id="favorites-website" />
             <div class="mb-4">
                 <input type="text" wire:model.defer="recipientName" class="w-full p-2 border rounded"
                     placeholder="{{ __('Recipient name') }}" required />

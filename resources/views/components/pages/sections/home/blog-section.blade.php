@@ -7,7 +7,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
         <!-- Blog post -->
-        @foreach (BlogPost::orderBy('published_at', 'desc')->take(3)->get() as $blogPost)
+        @foreach (BlogPost::query()->published()->latest('published_at')->take(3)->get() as $blogPost)
             <div class="bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl">
                 <img src="{{ $blogPost->featured_image }}" alt="{{ $blogPost->title }}" loading="lazy"
                     class="w-full h-auto object-cover aspect-video" />

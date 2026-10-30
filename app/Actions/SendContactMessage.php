@@ -55,7 +55,7 @@ final class SendContactMessage
         $mailData = [...$data, 'userMessage' => $data['message']];
         unset($mailData['message'], $mailData['privacy']);
 
-        foreach ([config('mail.admin_address'), 'richard.fekete@psg-irodahazak.hu'] as $recipient) {
+        foreach ([config('mail.admin_address'), config('mail.agent_address')] as $recipient) {
             Mail::send('emails.contact', $mailData, function ($message) use ($mailData, $recipient): void {
                 $message->from(config('mail.notification_from.address'), config('mail.notification_from.name'))
                     ->to($recipient)

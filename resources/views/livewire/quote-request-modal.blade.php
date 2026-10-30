@@ -100,7 +100,8 @@
                                 </div>
                             @endif
 
-                            <form wire:submit.prevent="submitForm" class="space-y-4">
+                            <form wire:submit.prevent="submitForm" class="relative space-y-4">
+                                <x-forms.honeypot id="quote-website" />
                                 <!-- Name Field -->
                                 <div>
                                     <label for="name"

@@ -47,15 +47,13 @@ final class LanguageSwitchTest extends TestCase
         $response->assertSessionHas('locale', 'hu');
     }
 
-    public function test_unknown_locale_still_redirects_back(): void
+    public function test_unknown_locale_is_rejected(): void
     {
-        // The route does not constrain the locale, so an unknown value simply redirects back.
-        $response = $this->get('/language/invalid', [
-            'HTTP_REFERER' => 'http://localhost/',
-        ]);
+        // Only the supported locales reach the controller, so nothing unknown lands in the session.
+        $response = $this->get('/language/invalid');
 
-        $response->assertRedirect('http://localhost/');
-        $response->assertSessionHas('locale', 'invalid');
+        $response->assertNotFound();
+        $response->assertSessionMissing('locale');
     }
 
     public function test_english_contact_url_works(): void
