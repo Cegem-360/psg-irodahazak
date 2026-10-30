@@ -3,6 +3,7 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/*.php
 /storage/pail
 /vendor
 .env
@@ -26,3 +27,4 @@ yarn-error.log
 /psg-irodahazak
 *.sqlite
 /public/sitemap.xml
+_ide_helper.php
