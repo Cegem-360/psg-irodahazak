@@ -16,10 +16,11 @@ use Illuminate\Routing\ViewController;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\SitemapIndex;
 use Spatie\Sitemap\Tags\Url;
 
-#[Description('Write sitemap.xml from the published content')]
-#[Signature('sitemap:generate {--path= : Where to write the file (defaults to public/sitemap.xml)}')]
+#[Description('Write the sitemap index (sitemap.xml) and its page, property and article sitemaps')]
+#[Signature('sitemap:generate {--path= : Where to write the index; the sitemaps go next to it (defaults to public/sitemap.xml)}')]
 final class GenerateSitemap extends Command
 {
     /**
@@ -32,15 +33,50 @@ final class GenerateSitemap extends Command
         'kedvencek',
         'favorites.export-excel',
         'clearCache',
+        'adatlap-oldal',
     ];
 
     public function handle(): int
+    {
+        $indexPath = $this->option('path') ?: public_path('sitemap.xml');
+        $directory = dirname((string) $indexPath);
+
+        $sitemaps = [
+            'sitemap-oldalak.xml' => $this->pagesSitemap(),
+            'sitemap-ingatlanok.xml' => $this->propertiesSitemap(),
+            'sitemap-hirek.xml' => $this->articlesSitemap(),
+        ];
+
+        $index = SitemapIndex::create();
+
+        foreach ($sitemaps as $fileName => $sitemap) {
+            $sitemap->writeToFile($directory.'/'.$fileName);
+            $index->add(url($fileName));
+
+            $this->info(sprintf('Wrote %d URLs to %s', count($sitemap->getTags()), $directory.'/'.$fileName));
+        }
+
+        $index->writeToFile($indexPath);
+
+        $this->info('Wrote the sitemap index to '.$indexPath);
+
+        return self::SUCCESS;
+    }
+
+    private function pagesSitemap(): Sitemap
     {
         $sitemap = Sitemap::create();
 
         foreach ($this->staticUrls() as $url) {
             $sitemap->add(Url::create($url)->setPriority(0.8));
         }
+
+        return $sitemap;
+    }
+
+    private function propertiesSitemap(): Sitemap
+    {
+        $sitemap = Sitemap::create();
 
         $properties = Property::query()
             ->where('status', 'active')
@@ -60,6 +96,13 @@ final class GenerateSitemap extends Command
             );
         }
 
+        return $sitemap;
+    }
+
+    private function articlesSitemap(): Sitemap
+    {
+        $sitemap = Sitemap::create();
+
         foreach (News::query()->where('is_published', true)->whereNotNull('slug')->cursor() as $news) {
             $sitemap->add(
                 Url::create(route('news.show', ['slug' => $news->slug]))
@@ -69,7 +112,13 @@ final class GenerateSitemap extends Command
         }
 
         if (Route::has('en.blog.show')) {
-            foreach (BlogPost::query()->where('is_published', true)->whereNotNull('slug')->cursor() as $post) {
+            $posts = BlogPost::query()
+                ->where('is_published', true)
+                ->where('noindex', false)
+                ->whereNotNull('slug')
+                ->cursor();
+
+            foreach ($posts as $post) {
                 $sitemap->add(
                     Url::create(route('en.blog.show', ['post' => $post->slug]))
                         ->setLastModificationDate($post->updated_at ?? now())
@@ -78,12 +127,7 @@ final class GenerateSitemap extends Command
             }
         }
 
-        $path = $this->option('path') ?: public_path('sitemap.xml');
-        $sitemap->writeToFile($path);
-
-        $this->info(sprintf('Wrote %d URLs to %s', count($sitemap->getTags()), $path));
-
-        return self::SUCCESS;
+        return $sitemap;
     }
 
     /**

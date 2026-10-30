@@ -26,5 +26,5 @@ yarn-error.log
 # Stray SQLite DB accidentally created at repo root
 /psg-irodahazak
 *.sqlite
-/public/sitemap.xml
+/public/sitemap*.xml
 _ide_helper.php

@@ -4,9 +4,11 @@
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
-            <h2 class="mt-4 mb-4 font-bold text-5xl text-center drop-shadow text-logogray/80">
-                {{ __('page.title.office_buildings_for_sale') }}</h2>
-            <h4 class="text-xl text-center mb-16">({{ $totalOffices }} {{ __('page.results') }})</h4>
+            <h1 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
+                {{ __('page.title.office_buildings_for_sale') }}
+                <span class="block mt-4 text-xl font-normal text-gray-700">({{ $totalOffices }}
+                    {{ __('irodaház') }})</span>
+            </h1>
             <div
                 class="flex justify-end gap-8 max-w-screen-xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div class="">

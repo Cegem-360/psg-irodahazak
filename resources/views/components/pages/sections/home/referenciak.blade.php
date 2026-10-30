@@ -8,7 +8,8 @@
             <div class="swiper-wrapper">
                 @foreach (Reference::active()->orderBy('order', 'asc')->get() ?? [] as $reference)
                     <div class="swiper-slide !flex items-center justify-center px-12 py-4 bg-white rounded-xl">
-                        <img class="max-h-20 object-contain object-center" src="{{ Storage::url($reference->image) }}" />
+                        <img class="max-h-20 object-contain object-center" src="{{ Storage::url($reference->image) }}"
+                            alt="{{ $reference->name }}" loading="lazy" />
                     </div>
                 @endforeach
             </div>

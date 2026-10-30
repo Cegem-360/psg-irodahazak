@@ -1,3 +1,5 @@
+@props(['breadcrumbs' => []])
+@inject('structuredData', 'App\\Services\\StructuredDataService')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -12,22 +14,21 @@
         @php
             $metaSlotHtml = isset($meta) ? (string) $meta : '';
             $metaSlotHas = fn (string $needle): bool => str_contains($metaSlotHtml, $needle);
+
+            $defaultDescription = 'Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon.';
+            $pageTitleText = Str::squish(isset($title) ? strip_tags((string) $title) : '') ?: __('page.title.default');
+            $pageDescriptionText = Str::squish(isset($metaDescription) ? strip_tags((string) $metaDescription) : '');
+            if ($pageDescriptionText === '' && preg_match('/name="description"\s+content="([^"]*)"/', $metaSlotHtml, $slotDescription)) {
+                $pageDescriptionText = html_entity_decode($slotDescription[1]);
+            }
+            $pageDescriptionText = $pageDescriptionText ?: $defaultDescription;
         @endphp
 
-        @isset($title)
-            <title>{{ $title }}</title>
-        @else
-            <title>{{ __('page.title.default') }}</title>
-        @endisset
-        <meta name="author" content="{{ $metaAuthor ?? 'Cegem360 Kft.' }}">
+        <title>{{ $pageTitleText }}</title>
+        <meta name="author" content="{{ $metaAuthor ?? 'Property Solution Group Kft.' }}">
 
         @unless ($metaSlotHas('name="description"'))
-            @isset($metaDescription)
-                <meta name="description" content="{{ $metaDescription }}">
-            @else
-                <meta name="description"
-                    content="Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ">
-            @endisset
+            <meta name="description" content="{{ $pageDescriptionText }}">
         @endunless
 
         @unless ($metaSlotHas('name="keywords"'))
@@ -40,8 +41,7 @@
         @endunless
 
         @unless ($metaSlotHas('property="og:title"'))
-            <meta property="og:title"
-                content="{{ $metaOgTitle ?? 'PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet! | ' }}">
+            <meta property="og:title" content="{{ $metaOgTitle ?? $pageTitleText }}">
         @endunless
         @unless ($metaSlotHas('property="og:type"'))
             <meta property="og:type" content="{{ $metaOgType ?? 'website' }}">
@@ -50,29 +50,29 @@
             <meta property="og:url" content="{{ $metaOgUrl ?? Request::url() }}">
         @endunless
         @unless ($metaSlotHas('property="og:description"'))
-            <meta property="og:description" content="{{ $metaOgDescription ?? '' }}">
+            <meta property="og:description" content="{{ $metaOgDescription ?? $pageDescriptionText }}">
         @endunless
         <meta name="twitter:card" content="{{ $metaTwitterCard ?? 'summary' }}">
         <meta name="twitter:url" content="{{ $metaTwitterUrl ?? Request::url() }}">
-        <meta name="twitter:title"
-            content="{{ $metaTwitterTitle ?? 'PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet! | ' }}">
-        <meta name="twitter:description"
-            content="{{ $metaTwitterDescription ?? 'Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ' }}">
-        <meta itemprop="name"
-            content="{{ $metaItempropName ?? 'PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet! | ' }}">
-        <meta itemprop="description"
-            content="{{ $metaItempropDescription ?? 'Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon. ' }}">
+        <meta name="twitter:title" content="{{ $metaTwitterTitle ?? $pageTitleText }}">
+        <meta name="twitter:description" content="{{ $metaTwitterDescription ?? $pageDescriptionText }}">
+        <meta itemprop="name" content="{{ $metaItempropName ?? $pageTitleText }}">
+        <meta itemprop="description" content="{{ $metaItempropDescription ?? $pageDescriptionText }}">
         @unless ($metaSlotHas('rel="canonical"'))
             <link rel="canonical" href="{{ $metaCanonical ?? Request::url() }}">
         @endunless
         @unless ($metaSlotHas('name="robots"'))
-            <meta name="robots" content="{{ $metaRobots ?? 'index, follow' }}">
-        @endunless
-        @unless ($metaSlotHas('name="googlebot"'))
-            <meta name="googlebot" content="{{ $metaGooglebot ?? 'index, follow' }}">
+            <meta name="robots"
+                content="{{ $metaRobots ?? 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' }}">
         @endunless
 
         {{ $meta ?? '' }}
+
+        @if (file_exists(public_path('llms.txt')))
+            <link rel="alternate" type="text/plain" href="/llms.txt">
+        @endif
+
+        {{ $structuredData->toScript($structuredData->siteGraph($breadcrumbs)) }}
 
         @include('googletagmanager::head')
 

@@ -1,8 +1,14 @@
-<x-layouts.app>
+@inject('structuredData', 'App\Services\StructuredDataService')
+<x-layouts.app :breadcrumbs="[
+    ['name' => __('Homepage'), 'url' => localized_route('home')],
+    ['name' => 'Blog', 'url' => route('en.blog.index')],
+    ['name' => $post->title, 'url' => Request::url()],
+]">
     <x-slot name="title">{{ $post->title }} | PSG-IRODAHÁZAK Blog</x-slot>
     <x-slot name="meta">
-        <meta name="robots" content="index, follow">
-        <meta name="googlebot" content="index, follow">
+        @if ($post->noindex)
+            <meta name="robots" content="noindex, follow">
+        @endif
         <meta name="description" content="{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 160) }}">
         <meta name="keywords" content="{{ $post->meta_data['meta_keywords'] ?? 'blog, irodapiac, ingatlan' }}">
         <link rel="canonical" href="{{ Request::url() }}">
@@ -13,31 +19,10 @@
         <meta property="og:type" content="article">
         <meta property="og:url" content="{{ Request::url() }}">
         @if ($post->featured_image)
-            <meta property="og:image" content="{{ Storage::url($post->featured_image) }}">
+            <meta property="og:image" content="{{ $structuredData->imageUrl($post->featured_image) }}">
         @endif
 
-        <!-- Article Schema -->
-        <script type="application/ld+json">
-        {
-            "@@context": "https://schema.org",
-            "@type": "Article",
-            "headline": "{{ $post->title }}",
-            "description": "{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 160) }}",
-            "author": {
-                "@type": "Person",
-                "name": "{{ $post->author?->name ?? 'PSG-IRODAHÁZAK' }}"
-            },
-            "datePublished": "{{ $post->published_at->toISOString() }}",
-            "dateModified": "{{ $post->updated_at->toISOString() }}",
-            @if($post->featured_image)
-            "image": "{{ Storage::url($post->featured_image) }}",
-            @endif
-            "publisher": {
-                "@type": "Organization",
-                "name": "PSG-IRODAHÁZAK"
-            }
-        }
-        </script>
+        {{ $structuredData->toScript($structuredData->article($post, Request::url())) }}
     </x-slot>
 
     <div class="min-h-screen bg-gray-50">
@@ -108,7 +93,7 @@
             <!-- Featured Image -->
             @if ($post->featured_image)
                 <div class="mb-8">
-                    <img src="{{ Storage::url($post->featured_image) }}" alt="{{ $post->title }}"
+                    <img src="{{ $structuredData->imageUrl($post->featured_image) }}" alt="{{ $post->title }}"
                         class="w-full h-auto rounded-lg shadow-lg" loading="lazy">
                 </div>
             @endif
@@ -183,7 +168,7 @@
                                 class="bg-gray-50 rounded-lg overflow-hidden hover:shadow-md transition duration-300">
                                 @if ($relatedPost->featured_image)
                                     <div class="aspect-w-16 aspect-h-9">
-                                        <img src="{{ Storage::url($relatedPost->featured_image) }}"
+                                        <img src="{{ $structuredData->imageUrl($relatedPost->featured_image) }}"
                                             alt="{{ $relatedPost->title }}" class="w-full h-48 object-cover"
                                             loading="lazy">
                                     </div>

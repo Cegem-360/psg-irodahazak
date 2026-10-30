@@ -92,7 +92,7 @@
          <div class="sm:flex sm:items-center sm:justify-between">
              <span class="text-sm text-gray-500 sm:text-center">©2014-{{ date('Y') }} <a href="/"
                      class="hover:underline hover:text-blue-600 transition-colors duration-200">Property Solution
-                     Group</a> - {{ __('All rights reserved.') }}</span>
+                     Group Kft.</a> - {{ __('All rights reserved.') }}</span>
              <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
                  <a href="https://www.facebook.com/psgirodahazak" target="_blank"
                      class="text-gray-500 hover:text-blue-600 transition-colors duration-200">

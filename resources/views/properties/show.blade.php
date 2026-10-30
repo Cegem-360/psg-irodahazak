@@ -1,11 +1,29 @@
 @use('App\Models\Translate')
-<x-layouts.app>
+@inject('structuredData', 'App\Services\StructuredDataService')
+@php
+    $propertyUrl = $property->isSale()
+        ? localized_route('properties.show-for-sale', ['property' => $property->slug])
+        : localized_route('properties.show', ['property' => $property->slug]);
+@endphp
+<x-layouts.app :breadcrumbs="[
+    ['name' => __('Homepage'), 'url' => localized_route('home')],
+    $property->isSale()
+        ? ['name' => __('Office Buildings for Sale'), 'url' => localized_route('elado-irodahazak')]
+        : ['name' => __('Rental Offices'), 'url' => localized_route('kiado-irodak')],
+    ['name' => $property->title, 'url' => $propertyUrl],
+]">
     <x-slot name="title">
         @if (app()->getLocale() === 'en' && $property->meta_title_en)
             {{ $property->meta_title_en }}
         @elseif ($property->meta_title)
             {{ $property->meta_title }}
+        @else
+            {{ $property->title }} | PSG Irodaházak
         @endif
+    </x-slot>
+
+    <x-slot name="meta">
+        {{ $structuredData->toScript($structuredData->property($property, $propertyUrl)) }}
     </x-slot>
 
     <x-slot name="metaDescription">
@@ -13,6 +31,8 @@
             {{ $property->meta_description_en }}
         @elseif ($property->meta_description)
             {{ $property->meta_description }}
+        @else
+            {{ Str::limit(Str::squish(strip_tags((string) $property->content)), 160) }}
         @endif
     </x-slot>
 
@@ -26,20 +46,19 @@
 
     @if ($property->status !== 'active')
         <x-slot name="metaRobots">noindex, nofollow</x-slot>
-        <x-slot name="metaGooglebot">noindex, nofollow</x-slot>
     @endif
 
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-8 pt-24 pb-20">
-            <h2 class="mt-4 mb-16 font-font-bold text-5xl text-center drop-shadow text-logogray/80">
+            <h1 class="mt-4 mb-16 font-font-bold text-5xl text-center drop-shadow text-logogray/80">
                 @if (app()->getLocale() === 'en')
                     {{ Translate::whereName($property->title)->first()?->translated ?: $property->title }}
                 @else
                     {{ $property->title }}
                 @endif
-            </h2>
+            </h1>
             <div
                 class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div>

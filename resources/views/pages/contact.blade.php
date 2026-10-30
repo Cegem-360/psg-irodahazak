@@ -1,11 +1,16 @@
-<x-layouts.app>
+<x-layouts.app :breadcrumbs="[
+    ['name' => __('Homepage'), 'url' => localized_route('home')],
+    ['name' => __('contact.title'), 'url' => localized_route('kapcsolat')],
+]">
+    <x-slot name="title">{{ __('Kapcsolat | PSG Irodaházak') }}</x-slot>
+    <x-slot name="metaDescription">{{ __('Vegye fel velünk a kapcsolatot! Property Solution Group Kft. – 1016 Budapest, Derék u. 2., +36 20 381 3917, info@psg-irodahazak.hu. Személyre szabott irodaajánlat még ma.') }}</x-slot>
     <div>
         <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
             style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
             <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
             <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
-                <h2 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
-                    {{ __('contact.title') }}</h2>
+                <h1 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
+                    {{ __('contact.title') }}</h1>
 
                 <div class="max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                     <!-- Kapcsolati információk szekció -->
@@ -30,11 +35,11 @@
                         </div>
                         @if ($contactPage && $contactPage->image)
                             <div class="flex justify-center"><img class="mb-3"
-                                    src="{{ Storage::url($contactPage->image) }}" />
+                                    src="{{ Storage::url($contactPage->image) }}" alt="Property Solution Group Kft. – {{ __('contact.title') }}" />
                             </div>
                         @else
                             <div class="flex justify-center"><img class="mb-3"
-                                    src="{{ Vite::asset('resources/images/kapcsolat.jpg') }}" />
+                                    src="{{ Vite::asset('resources/images/kapcsolat.jpg') }}" alt="Property Solution Group Kft. – {{ __('contact.title') }}" />
                             </div>
                         @endif
                     </div>

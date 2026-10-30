@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'blog_category_id',
     'user_id',
     'is_published',
+    'noindex',
     'published_at',
     'meta_data',
     'views_count',
@@ -130,6 +131,7 @@ final class BlogPost extends Model
     {
         return [
             'is_published' => 'boolean',
+            'noindex' => 'boolean',
             'published_at' => 'datetime',
             'meta_data' => 'array',
             'views_count' => 'integer',

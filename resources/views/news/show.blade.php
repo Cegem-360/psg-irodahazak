@@ -1,8 +1,10 @@
-<x-layouts.app>
+<x-layouts.app :breadcrumbs="[
+    ['name' => __('Homepage'), 'url' => localized_route('home')],
+    ['name' => __('News'), 'url' => localized_route('news.index')],
+    ['name' => $news->title, 'url' => Request::url()],
+]">
     <x-slot name="title">{{ $news->title }} | PSG-IRODAHÁZAK Hírek</x-slot>
     <x-slot name="meta">
-        <meta name="robots" content="index, follow">
-        <meta name="googlebot" content="index, follow">
         <meta name="description" content="{{ $news->excerpt }}">
         <meta name="keywords" content="hír, irodaház, irodabérlet">
         <link rel="canonical" href="{{ Request::url() }}">

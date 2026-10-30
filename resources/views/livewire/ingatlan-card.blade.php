@@ -1,4 +1,8 @@
 @use('App\Models\Translate')
+@php
+    // Image alt text: the building's name, marked as an office building unless the name already says so.
+    $imageAlt = Str::contains(Str::lower((string) $title), 'iroda') ? $title : $title . ' irodaház';
+@endphp
 <div
     class="{{ $swiper ? 'swiper-slide' : '' }} group relative bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl hover:brightness-95 transition-all duration-300 ease-in-out border border-white/15">
     <div class="relative">
@@ -31,7 +35,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($images as $carouselimage)
                         <div class="swiper-slide">
-                            <img src="{{ Storage::url($carouselimage) }}" alt="{{ $title }}"
+                            <img src="{{ Storage::url($carouselimage) }}" alt="{{ $imageAlt }}"
                                 class="w-full h-auto object-cover aspect-[3/2]" loading="lazy" />
                         </div>
                     @endforeach
@@ -46,7 +50,7 @@
         @endif
         <!-- Fallback image if no swiper -->
         @if (!$minicarousel && $image)
-            <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-auto object-cover aspect-[3/2]"
+            <img src="{{ $image }}" alt="{{ $imageAlt }}" class="w-full h-auto object-cover aspect-[3/2]"
                 loading="lazy" />
         @endif
 

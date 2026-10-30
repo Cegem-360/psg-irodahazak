@@ -11,8 +11,12 @@
                     alt="PSG Irodaházak logo" loading="lazy">
             </a>
         </div>
-        <div class="slogan flex items-end text-center text-2xl sm:text-3xl">
-            <h2>{!! __('page.hero.slogan') !!}</h2>
+        <div class="slogan flex flex-col items-center text-center">
+            @if (request()->routeIs('home', 'en.home'))
+                <h1 class="text-xl sm:text-2xl font-bold text-logogray/80 mb-3">
+                    {{ __('Kiadó irodák Budapesten – A kategóriás irodaházak egy helyen') }}</h1>
+            @endif
+            <p class="text-2xl sm:text-3xl">{!! __('page.hero.slogan') !!}</p>
         </div>
     </div>
 </div>

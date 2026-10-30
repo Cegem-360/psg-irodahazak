@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ImpresszumController;
 use App\Http\Controllers\LanguageController;
@@ -50,16 +51,7 @@ Route::get('/kedvencek/export-excel', function (): StreamedResponse {
 })->name('favorites.export-excel');
 
 // Budapest irodaház kategória route-ok
-Route::get('/budapest/{category}', function ($category) {
-    $queryParams = [];
-    $queryParams['category'] = $category;
-
-    if ($category === 'elado-irodak') {
-        return to_route('elado-irodahazak');
-    }
-
-    return view('pages.filter', ['queryParams' => $queryParams]);
-})->name('budapest.category');
+Route::get('/budapest/{category}', [CategoryController::class, 'show'])->name('budapest.category');
 Route::get('/login', function () {
     return to_route('filament.admin.auth.login'); // Redirect to the login page
 })->name('login');
@@ -83,16 +75,7 @@ Route::group(['as' => 'en.'], function (): void {
     Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
     // English Budapest category routes
-    Route::get('/budapest-en/{category}', function ($category) {
-        $queryParams = [];
-        $queryParams['category'] = $category;
-
-        if ($category === 'elado-irodak') {
-            return to_route('en.elado-irodahazak');
-        }
-
-        return view('pages.filter', ['queryParams' => $queryParams]);
-    })->name('budapest.category');
+    Route::get('/budapest-en/{category}', [CategoryController::class, 'show'])->name('budapest.category');
 
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
     Route::get('/office-to-let/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
@@ -111,6 +94,15 @@ Route::group(['as' => 'en.'], function (): void {
     Route::get('/news', [NewsController::class, 'index'])->name('news.index');
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
 });
+
+// IndexNow key file, served at the site root once INDEXNOW_KEY is set
+Route::get('/{indexNowKey}.txt', function (string $indexNowKey): Response {
+    $key = (string) config('seo.indexnow.key');
+
+    abort_if($key === '' || ! hash_equals($key, $indexNowKey), 404);
+
+    return response($key, 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
+})->where('indexNowKey', '[A-Za-z0-9-]{8,128}')->name('indexnow.key');
 
 // Test route for PDF generation (remove in production)
 Route::get('/test-pdf/{property}', function (Property $property): StreamedResponse {

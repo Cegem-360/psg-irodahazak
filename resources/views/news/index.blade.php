@@ -1,8 +1,9 @@
-<x-layouts.app>
+<x-layouts.app :breadcrumbs="[
+    ['name' => __('Homepage'), 'url' => localized_route('home')],
+    ['name' => __('News'), 'url' => localized_route('news.index')],
+]">
     <x-slot name="title">Hírek | PSG-IRODAHÁZAK</x-slot>
     <x-slot name="meta">
-        <meta name="robots" content="index, follow">
-        <meta name="googlebot" content="index, follow">
         <meta name="description"
             content="PSG-IRODAHÁZAK hírek - Legfrissebb hírek, fejlesztések és szakmai információk az irodapiaci világból.">
         <meta name="keywords" content="hírek, irodapiac, ingatlan hírek, irodaházak, irodabérlet, szakmai hírek">
@@ -12,8 +13,8 @@
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
-            <h2 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
-                Hírek</h2>
+            <h1 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
+                Hírek</h1>
 
             <div class="max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 @foreach ($news as $index => $article)

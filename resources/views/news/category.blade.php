@@ -1,8 +1,6 @@
 <x-layouts.app>
     <x-slot name="title">{{ $category->name }} Hírek | PSG-IRODAHÁZAK</x-slot>
     <x-slot name="meta">
-        <meta name="robots" content="index, follow">
-        <meta name="googlebot" content="index, follow">
         <meta name="description"
             content="{{ $category->description ?: $category->name . ' kategória hírei a PSG-IRODAHÁZAK oldalán.' }}">
         <meta name="keywords" content="{{ $category->name }}, hírek, irodaház, irodabérlet">

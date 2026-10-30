@@ -1,4 +1,9 @@
-<x-layouts.app>
+<x-layouts.app :breadcrumbs="[
+    ['name' => __('Homepage'), 'url' => localized_route('home')],
+    ['name' => __('Privacy Policy'), 'url' => localized_route('privacy-policy')],
+]">
+    <x-slot name="title">{{ __('Adatvédelmi tájékoztató | PSG Irodaházak') }}</x-slot>
+    <x-slot name="metaDescription">{{ __('A Property Solution Group Kft. általános adatvédelmi tájékoztatója a psg-irodahazak.hu weboldal látogatói és ügyfelei számára.') }}</x-slot>
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
         <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>

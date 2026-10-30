@@ -4,7 +4,7 @@
     <div class="flex flex-col items-center text-center space-y-4">
         <x-svg.office class="text-primary brightness-75 w-20 h-20" />
         <div class="text-5xl font-bold text-primary">
-            <span class="counter" data-to="4" data-suffix=" {{ __('millió') }}">0</span>
+            <span class="counter" data-to="4" data-suffix=" {{ __('millió') }}">4 {{ __('millió') }}</span>
         </div>
         <div class="text-lg font-semibold text-gray-700">m2 {{ __('iroda') }} <br>{{ __('Budapesten') }}</div>
         <div class="w-12 border-b-2 border-primary/30 mt-2"></div>
@@ -13,7 +13,7 @@
     <div class="flex flex-col items-center text-center space-y-4">
         <x-svg.experience class="text-primary brightness-75 w-20 h-20" />
         <div class="text-5xl font-bold text-primary">
-            <span class="counter" data-to="25" data-suffix="+">0</span>
+            <span class="counter" data-to="25" data-suffix="+">25+</span>
         </div>
         <div class="text-lg font-semibold text-gray-700">{{ __('év') }} <br>{{ __('tapasztalat') }}</div>
         <div class="w-12 border-b-2 border-primary/30 mt-2"></div>
@@ -22,7 +22,7 @@
     <div class="flex flex-col items-center text-center space-y-4">
         <x-svg.market class="text-primary brightness-75 w-20 h-20" />
         <div class="text-5xl font-bold text-primary">
-            <span class="counter" data-to="90" data-suffix="%">0</span>
+            <span class="counter" data-to="90" data-suffix="%">90%</span>
         </div>
         <div class="text-lg font-semibold text-gray-700">{{ __('feletti') }}<br> {{ __('piaci ismeret') }}</div>
         <div class="w-12 border-b-2 border-primary/30 mt-2"></div>
@@ -31,7 +31,7 @@
     <div class="flex flex-col items-center text-center space-y-4">
         <x-svg.handshake class="text-primary brightness-75 w-20 h-20" />
         <div class="text-5xl font-bold text-primary">
-            <span class="counter" data-to="100" data-suffix="{{ __('ezer') }} +">0</span>
+            <span class="counter" data-to="100" data-suffix="{{ __('ezer') }} +">100{{ __('ezer') }} +</span>
         </div>
         <div class="text-lg font-semibold text-gray-700">m2 {{ __('bérbe adott') }} <br>{{ __('A-kategóriás iroda') }}
         </div>
@@ -53,6 +53,7 @@
                         const to = parseInt(el.getAttribute('data-to'));
                         const suffix = el.getAttribute('data-suffix') || '';
                         let current = 0;
+                        el.textContent = current + suffix;
                         const duration = 1500;
                         const stepTime = Math.max(Math.floor(duration / to), 30);
                         const increment = to / (duration / stepTime);

@@ -34,6 +34,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -157,6 +158,11 @@ final class BlogPostResource extends Resource
                                     ->default(now())
                                     ->visible(fn (Get $get): bool => $get('is_published'))
                                     ->required(fn (Get $get): bool => $get('is_published')),
+
+                                Toggle::make('noindex')
+                                    ->label('Rejtés a keresők elől (noindex)')
+                                    ->helperText('Az oldal elérhető marad, de a keresők nem indexelik, és kimarad a sitemapből.')
+                                    ->default(false),
                             ]),
 
                         Section::make('Kép')
@@ -237,6 +243,10 @@ final class BlogPostResource extends Resource
                         'draft' => 'Vázlat',
                         default => 'Ismeretlen',
                     }),
+
+                ToggleColumn::make('noindex')
+                    ->label('Noindex')
+                    ->sortable(),
 
                 TextColumn::make('views_count')
                     ->label('Megtekintések')

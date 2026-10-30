@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use App\Jobs\SubmitUrlsToIndexNow;
+use App\Models\Property;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,5 +26,19 @@ final class PropertyObserver
 
             Log::info('Deleted property photo: '.$photo);
         }
+    }
+
+    /**
+     * Pings IndexNow with the property's page after every save in the admin.
+     */
+    public function saved(Property $property): void
+    {
+        if (blank(config('seo.indexnow.key')) || $property->status !== 'active' || blank($property->slug)) {
+            return;
+        }
+
+        $route = $property->elado_v_kiado === 'elado-iroda' ? 'properties.show-for-sale' : 'properties.show';
+
+        SubmitUrlsToIndexNow::dispatchAfterResponse([route($route, ['property' => $property->slug])]);
     }
 }

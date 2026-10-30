@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 #[Fillable([
     'name',
     'slug',
+    'heading',
+    'seo_title',
+    'meta_description',
 ])]
 final class Category extends Model
 {

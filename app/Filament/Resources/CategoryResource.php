@@ -12,8 +12,10 @@ use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -56,6 +58,21 @@ final class CategoryResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->unique(ignorable: fn (?Category $record): ?Category => $record),
+                Section::make('SEO')
+                    ->description('Üresen hagyva a kategória neve és egy általános szöveg jelenik meg.')
+                    ->schema([
+                        TextInput::make('heading')
+                            ->label('Oldalcím (H1)')
+                            ->helperText('A találatszám automatikusan mögé kerül, pl. „Kiadó belvárosi irodák Budapesten (54 irodaház)”.')
+                            ->maxLength(255),
+                        TextInput::make('seo_title')
+                            ->label('Böngészőcím (title)')
+                            ->maxLength(255),
+                        Textarea::make('meta_description')
+                            ->label('Meta leírás')
+                            ->rows(3)
+                            ->maxLength(320),
+                    ]),
             ]);
     }
 
