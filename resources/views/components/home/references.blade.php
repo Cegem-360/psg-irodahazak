@@ -1,3 +1,5 @@
+@props(['references'])
+
 <div class="referenciak my-12">
     <h2 class="my-16 font-bold text-gray-500 text-5xl text-center drop-shadow text-logogray/80">
         {{ __('References, who moved with us') }}</h2>

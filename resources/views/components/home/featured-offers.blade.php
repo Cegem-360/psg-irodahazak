@@ -1,3 +1,5 @@
+@props(['properties'])
+
 <div class="relative bg-cover bg-center bg-no-repeat"
     style="background-image: url({{ Vite::asset('resources/images/the-office-building-2025-04-02-15-55-34-utc.webp') }});">
     <div class="absolute inset-0 z-1 bg-linear-to-b from-white to-white/30"></div>

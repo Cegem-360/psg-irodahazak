@@ -1,3 +1,5 @@
+@props(['posts'])
+
 <div class="max-w-7xl mx-auto px-4 pt-6 pb-16 space-y-8">
     <h2>
         <span

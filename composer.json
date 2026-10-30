@@ -17,6 +17,7 @@
         "laravel/framework": "^13.0",
         "laravel/tinker": "^3.0",
         "league/flysystem-ftp": "^3.31",
+        "livewire/blaze": "^1.0",
         "livewire/livewire": "^4.0",
         "madbox-99/filament-essentials": "^2.0",
         "nunomaduro/essentials": "@dev",

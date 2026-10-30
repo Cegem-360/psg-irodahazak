@@ -1,3 +1,5 @@
+@props(['news'])
+
 <div class="bg-gray-100">
     <div class="max-w-7xl mx-auto px-4 py-16 space-y-8">
         <h2>

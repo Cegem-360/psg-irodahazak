@@ -1,3 +1,5 @@
+@props(['testimonials'])
+
 <div class="rolunk-mondtak mt-12">
     <div class="relative">
         <h2 class="my-16 font-bold text-accent text-5xl text-center drop-shadow text-logogray/80">

@@ -55,16 +55,16 @@
 
         <x-office-search-form />
 
-        <x-home.featured-offers />
+        <x-home.featured-offers :properties="$this->featuredProperties" />
 
-        <x-home.testimonials />
+        <x-home.testimonials :testimonials="$this->testimonials" />
 
-        <x-home.references />
+        <x-home.references :references="$this->references" />
 
         @if (app()->getLocale() === 'hu')
-            <x-home.blog />
+            <x-home.blog :posts="$this->latestPosts" />
 
-            <x-home.news />
+            <x-home.news :news="$this->latestNews" />
         @endif
 
     </div>

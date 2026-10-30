@@ -7,6 +7,7 @@ namespace App\Providers;
 use Filament\Forms\Components\RichEditor;
 use GoogleTagManager;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Blaze\Blaze;
 use Override;
 use Whitecube\LaravelCookieConsent\Facades\Cookies;
 
@@ -26,6 +27,13 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Compile the anonymous Blade components into plain PHP functions. The
+        // layouts are left out: Livewire renders the page layout with @component,
+        // not with a component tag, which Blaze does not support.
+        Blaze::optimize()
+            ->in(resource_path('views/components'))
+            ->in(resource_path('views/components/layouts'), compile: false);
+
         GoogleTagManager::set('config', config('services.google_tag_manager.id', ''));
         if (Cookies::hasConsentFor('ad_storage')) {
             GoogleTagManager::set('ad_storage', 'granted');
