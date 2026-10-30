@@ -172,23 +172,28 @@ document.addEventListener("livewire:initialized", function () {
     Livewire.on("favorites-updated", updateFavoritesCounter);
 });
 
-// Update favorites counter in navigation
+// The favorites heart and count next to the language switcher, filled from the cookie.
 function updateFavoritesCounter() {
-    const favorites = getCookie("property_favorites");
-    const count = favorites ? JSON.parse(favorites).length : 0;
+    let count = 0;
 
-    const counter = document.querySelector(".favorites-counter");
+    try {
+        count = JSON.parse(getCookie("property_favorites") || "[]").length;
+    } catch {
+        count = 0;
+    }
+
+    const heart = document.getElementById("favorites-heart-icon");
+    if (heart) {
+        heart.setAttribute("fill", count > 0 ? "currentColor" : "none");
+    }
+
+    const counter = document.getElementById("favorites-count-lang");
     if (counter) {
         counter.textContent = count;
-        if (count > 0) {
-            counter.style.display = "flex";
-        } else {
-            counter.style.display = "none";
-        }
+        counter.classList.toggle("hidden", count === 0);
+        counter.classList.toggle("flex", count > 0);
     }
 }
 
 // Initialize counter on page load and after every wire:navigate page change
-document.addEventListener("livewire:navigated", function () {
-    updateFavoritesCounter();
-});
+document.addEventListener("livewire:navigated", updateFavoritesCounter);
