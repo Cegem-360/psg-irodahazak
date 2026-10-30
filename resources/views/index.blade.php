@@ -3,28 +3,28 @@
 
     [$pageTitle, $pageDescription, $breadcrumbs] = match (true) {
         request()->routeIs('kiado-irodak', 'en.kiado-irodak') => [
-            __('Kiadó irodák Budapesten | PSG Irodaházak'),
-            __('Kiadó irodák Budapesten egy helyen: A kategóriás irodaházak aktuális szabad területei, bérleti és üzemeltetési díjai térképpel. Kérjen ajánlatot még ma!'),
+            __('Offices for rent in Budapest | PSG Irodaházak'),
+            __('Offices for rent in Budapest in one place: current available spaces, rental and operating fees of A-category office buildings on a map. Request an offer today!'),
             [$home, ['name' => __('Rental Offices'), 'url' => localized_route('kiado-irodak')]],
         ],
         request()->routeIs('elado-irodahazak', 'en.elado-irodahazak') => [
-            __('Eladó irodaházak Budapesten | PSG Irodaházak'),
-            __('Eladó irodaházak és irodaépületek Budapesten: aktuális kínálat területtel, árral és helyszínnel. Befektetési célú irodaingatlanok a PSG Irodaházaktól.'),
+            __('Office buildings for sale in Budapest | PSG Irodaházak'),
+            __('Office buildings and office premises for sale in Budapest: current listings with area, price and location. Investment office properties from PSG Irodaházak.'),
             [$home, ['name' => __('Office Buildings for Sale'), 'url' => localized_route('elado-irodahazak')]],
         ],
         request()->routeIs('rolunk', 'en.rolunk') => [
-            __('Rólunk | PSG Irodaházak'),
-            __('A Property Solution Group Kft. 2014 óta segíti bérlőként a cégeket a budapesti irodapiacon: független bérlőképviselet, irodakeresés és tárgyalás díjmentesen.'),
+            __('About Us | PSG Irodaházak'),
+            __('Since 2014, Property Solution Group Kft. has been helping companies as tenants on the Budapest office market: independent tenant representation, office search and negotiation free of charge.'),
             [$home, ['name' => __('About Us'), 'url' => localized_route('rolunk')]],
         ],
         request()->routeIs('adatlap-oldal', 'en.adatlap-oldal') => [
-            __('Adatlap | PSG Irodaházak'),
+            __('Data Sheet | PSG Irodaházak'),
             null,
             [$home],
         ],
         default => [
-            __('PSG-IRODAHÁZAK |  Kiadó irodák, eladó irodaházak, szolgáltatott azonnali iroda megoldások, bérbeadó loft és zöld irodaházak Budapesten. Bérlő képviselet!'),
-            'Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon.',
+            __('PSG-IRODAHÁZAK | Offices for rent, office buildings for sale, serviced instant office solutions, loft and green office buildings for lease in Budapest. Tenant representation!'),
+            __('Offices for rent in Budapest! Rent from traditional and serviced offices on favourable lease terms, with a review of the entire office market database. Offers sent the same day.'),
             [$home],
         ],
     };
@@ -39,7 +39,7 @@
             <meta name="description" content="{{ $pageDescription }}">
         @endif
         <meta name="keywords"
-            content="kiadó irodaházak,bérbeadó irodák,azonnali irodák,kiadó iroda,eladó irodaházak,belvárosi irodák,loft iroda,kiadó iroda Budán,kiadó iroda Pesten,A-kategóriás irodaházak,zöld irodák,irodaházak listája,serviced offices,Bérlő képviselet,">
+            content="{{ __('office buildings for rent,offices for lease,instant offices,office for rent,office buildings for sale,downtown offices,loft office,office for rent in Buda,office for rent in Pest,A-category office buildings,green offices,list of office buildings,serviced offices,Tenant representation,') }}">
         <link rel="canonical" href="{{ Request::url() }}">
     </x-slot>
     <div class="overflow-hidden max-w-[2200px] mx-auto bg-white">

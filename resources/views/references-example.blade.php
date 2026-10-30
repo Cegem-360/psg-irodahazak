@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Referenciáink')
+@section('title', __('Our references'))
 
 @section('content')
     <div class="min-h-screen bg-gray-50 py-12">
@@ -10,7 +10,7 @@
 
             <!-- Alternatív megoldás: manuális megjelenítés -->
             <div class="mt-16">
-                <h2 class="text-2xl font-bold text-center mb-8">Referenciáink (Manuális)</h2>
+                <h2 class="text-2xl font-bold text-center mb-8">{{ __('Our references (manual)') }}</h2>
 
                 @php
                     $references = get_references();
@@ -38,12 +38,12 @@
                                     </div>
                                 @endif
                                 <h3 class="text-sm font-medium text-gray-700">{{ $reference->name }}</h3>
-                                <span class="text-xs text-gray-500">{{ $reference->order + 1 }}. sorrend</span>
+                                <span class="text-xs text-gray-500">{{ __(':position. in order', ['position' => $reference->order + 1]) }}</span>
                             </div>
                         @endforeach
                     </div>
                 @else
-                    <p class="text-center text-gray-500">Nincsenek elérhető referenciák.</p>
+                    <p class="text-center text-gray-500">{{ __('No references available.') }}</p>
                 @endif
             </div>
         </div>

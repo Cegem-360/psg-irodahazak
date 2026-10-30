@@ -2,356 +2,247 @@
     ['name' => __('Homepage'), 'url' => localized_route('home')],
     ['name' => __('Privacy Policy'), 'url' => localized_route('privacy-policy')],
 ]">
-    <x-slot name="title">{{ __('Adatvédelmi tájékoztató | PSG Irodaházak') }}</x-slot>
-    <x-slot name="metaDescription">{{ __('A Property Solution Group Kft. általános adatvédelmi tájékoztatója a psg-irodahazak.hu weboldal látogatói és ügyfelei számára.') }}</x-slot>
+    <x-slot name="title">{{ __('Privacy Notice | PSG Irodaházak') }}</x-slot>
+    <x-slot name="metaDescription">{{ __('The general privacy notice of Property Solution Group Kft. for visitors and clients of the psg-irodahazak.hu website.') }}</x-slot>
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
-        <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
+        <div class="absolute inset-0 z-1 bg-linear-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
-            <h1 class="text-2xl font-bold mb-4">Általános Adatvédelmi Tájékoztató</h1>
+            <h1 class="text-2xl font-bold mb-4">{{ __('General Privacy Notice') }}</h1>
             <ul class="mb-6">
-                <li><strong>Cégnév:</strong> Property Solution Group Kft.</li>
-                <li><strong>Székhely:</strong> 1016 Budapest, Derék utca 2.</li>
-                <li><strong>Cégjegyzékszám:</strong> 01-09-191972</li>
-                <li><strong>Adószám:</strong> 24963200-2-41</li>
+                <li><strong>{{ __('Company name:') }}</strong> Property Solution Group Kft.</li>
+                <li><strong>{{ __('Registered office:') }}</strong> 1016 Budapest, Derék utca 2.</li>
+                <li><strong>{{ __('Company registration number:') }}</strong> 01-09-191972</li>
+                <li><strong>{{ __('Tax number:') }}</strong> 24963200-2-41</li>
             </ul>
             <section class="mb-6">
-                <h2 class="text-xl font-semibold mb-2">Adatkezelői és adatfeldolgozói szerepkörök</h2>
+                <h2 class="text-xl font-semibold mb-2">{{ __('Data controller and data processor roles') }}</h2>
                 <p>
-                    Társaságunk <strong>adatkezelőként</strong> a személyes adatok kezelésének céljait és eszközeit
-                    önállóan
-                    vagy másokkal együtt meghatározza, <strong>adatfeldolgozóként</strong> pedig az adatkezelő nevében
-                    személyes
-                    adatokat kezel.
+                    {!! __('As a <strong>data controller</strong>, our company determines the purposes and means of processing personal data alone or jointly with others, and as a <strong>data processor</strong> it processes personal data on behalf of the data controller.') !!}
                 </p>
                 <p>
-                    Az <strong>adatkezelés</strong> a személyes adatokon vagy adatállományokon automatizált vagy nem
-                    automatizált módon végzett bármely művelet vagy műveletek összessége, így például: gyűjtés,
-                    rögzítés,
-                    rendszerezés, tagolás, tárolás, átalakítás vagy megváltoztatás, lekérdezés, betekintés,
-                    felhasználás,
-                    közlés, továbbítás, terjesztés vagy egyéb módon történő hozzáférhetővé tétel, összehangolás vagy
-                    összekapcsolás, korlátozás, törlés, illetve megsemmisítés.
+                    {!! __('<strong>Data processing (controlling)</strong> means any operation or set of operations performed on personal data or sets of personal data, whether or not by automated means, such as collection, recording, organisation, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction.') !!}
                 </p>
                 <p>
-                    Az <strong>adatfeldolgozás</strong> technikai jellegű adatkezelés, az adatok feletti rendelkezési és
-                    döntési
-                    joggal nem rendelkezik.
+                    {!! __('<strong>Data processing on behalf of a controller</strong> is data handling of a technical nature, without any right of disposal or decision over the data.') !!}
                 </p>
                 <p>
-                    <strong>Személyes adatnak</strong> minősül az azonosított vagy azonosítható természetes személyre
-                    („érintett”) vonatkozó bármely információ. Azonosítható az a természetes személy, aki közvetlen vagy
-                    közvetett módon, különösen valamely azonosító, például név, szám, helymeghatározó adat, online
-                    azonosító
-                    vagy a természetes személy testi, fiziológiai, genetikai, szellemi, gazdasági, kulturális vagy
-                    szociális
-                    azonosságára vonatkozó egy vagy több tényező alapján azonosítható.
+                    {!! __('<strong>Personal data</strong> means any information relating to an identified or identifiable natural person ("data subject"). An identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person.') !!}
                 </p>
                 <p>
-                    Társaságunk adatkezelőként és adatfeldolgozóként tiszteletben tartja mindazon személyek
-                    magánszféráját,
-                    akik
-                    számára személyes adatot adnak át és elkötelezett ezek védelmében.
+                    {{ __('As a data controller and data processor, our company respects the privacy of all persons who provide personal data to it and is committed to protecting such data.') }}
                 </p>
             </section>
             <section class="mb-6">
                 <div class="mb-8">
                     <h3 class="font-bold text-lg mb-2">I.</h3>
                     <p class="mb-2">
-                        Társaságunk a GDPR 13. cikke alapján az alábbi tájékoztatást adja az érintett személyek részére:
+                        {{ __('Pursuant to Article 13 of the GDPR, our company provides the following information to data subjects:') }}
                     </p>
                     <div class="mb-2">
-                        <span class="font-semibold">Az Adatkezelő adatai:</span>
+                        <span class="font-semibold">{{ __('Data controller details:') }}</span>
                         <ul class="list-none ml-0">
-                            <li>Cégnév: Property Solution Group Kft.</li>
-                            <li>Székhely: 1016 Budapest, Derék utca 2.</li>
-                            <li>Weblap: psg-irodahazak.hu</li>
-                            <li>Kapcsolattartó: Fekete József Richárd, ügyvezető</li>
-                            <li>Telefon: +36 20 381 3917</li>
-                            <li>E-mail: info@psg-irodahazak.hu</li>
+                            <li>{{ __('Company name:') }} Property Solution Group Kft.</li>
+                            <li>{{ __('Registered office:') }} 1016 Budapest, Derék utca 2.</li>
+                            <li>{{ __('Web page:') }} psg-irodahazak.hu</li>
+                            <li>{{ __('Contact person: :name, managing director', ['name' => 'Fekete József Richárd']) }}</li>
+                            <li>{{ __('Phone:') }} +36 20 381 3917</li>
+                            <li>{{ __('E-mail:') }} info@psg-irodahazak.hu</li>
                         </ul>
                     </div>
                     <div class="mb-2">
-                        <span class="font-semibold">Adatfeldolgozás:</span>
+                        <span class="font-semibold">{{ __('Data processing:') }}</span>
                         <div class="mb-2">
-                            <span class="underline">Adatfeldolgozók megnevezése:</span>
+                            <span class="underline">{{ __('Data processors:') }}</span>
                             <div class="mt-2">
-                                <span class="font-semibold">CRM rendszer</span>
+                                <span class="font-semibold">{{ __('CRM system') }}</span>
                                 <ul class="list-none ml-0">
-                                    <li>Név: DevMonkeys Software Kft. (MomoCRM)</li>
-                                    <li>Cím: 1141 Budapest, Vízakna utca 4.</li>
-                                    <li>Telefon: +36 20 500 1530</li>
-                                    <li>E-mail: hello@momocrm.hu</li>
-                                    <li>Weboldal: <a href="https://momocrm.com/"
+                                    <li>{{ __('Name:') }} DevMonkeys Software Kft. (MomoCRM)</li>
+                                    <li>{{ __('Address:') }} 1141 Budapest, Vízakna utca 4.</li>
+                                    <li>{{ __('Phone:') }} +36 20 500 1530</li>
+                                    <li>{{ __('E-mail:') }} hello@momocrm.hu</li>
+                                    <li>{{ __('Website:') }} <a href="https://momocrm.com/"
                                             class="text-blue-600 underline">https://momocrm.com/</a></li>
-                                    <li>Tárolt adatok: CRM rendszerben tárolt adatok</li>
-                                    <li>Műveletek: CRM rendszer üzemeltetés</li>
+                                    <li>{{ __('Stored data:') }} {{ __('data stored in the CRM system') }}</li>
+                                    <li>{{ __('Operations:') }} {{ __('operation of the CRM system') }}</li>
                                 </ul>
                             </div>
                             <div class="mt-4">
-                                <span class="font-semibold">Webanalitika</span>
+                                <span class="font-semibold">{{ __('Web analytics') }}</span>
                                 <ul class="list-none ml-0">
-                                    <li>Név: Google Ireland Limited</li>
-                                    <li>Cím: Gordon House Barrow Street Dublin 4, Ireland</li>
-                                    <li>Telefon: N/A</li>
-                                    <li>E-mail: N/A</li>
-                                    <li>Weboldal: <a href="https://www.google.com/"
+                                    <li>{{ __('Name:') }} Google Ireland Limited</li>
+                                    <li>{{ __('Address:') }} Gordon House Barrow Street Dublin 4, Ireland</li>
+                                    <li>{{ __('Phone:') }} N/A</li>
+                                    <li>{{ __('E-mail:') }} N/A</li>
+                                    <li>{{ __('Website:') }} <a href="https://www.google.com/"
                                             class="text-blue-600 underline">https://www.google.com/</a></li>
-                                    <li>Tárolt adatok: weboldal látogatás adatok, látogató azonosító süti (cookie)</li>
-                                    <li>Műveletek: weboldal látogatási adatok elemzése</li>
+                                    <li>{{ __('Stored data:') }} {{ __('website visit data, visitor identification cookie') }}</li>
+                                    <li>{{ __('Operations:') }} {{ __('analysis of website visit data') }}</li>
                                 </ul>
                             </div>
                             <div class="mt-4">
-                                <span class="font-semibold">Fejlesztések, szerver szolgáltatás, adatmentések, email és
-                                    dokumentum kezelés</span>
+                                <span class="font-semibold">{{ __('Development, server services, data backups, email and document management') }}</span>
                                 <ul class="list-none ml-0">
-                                    <li>Név: e-Communication Kft.</li>
-                                    <li>Cím: 1141 Budapest, Vízakna utca 4.</li>
-                                    <li>Telefon: +36 1 613 2634</li>
-                                    <li>E-mail: hello@e-com.hu</li>
-                                    <li>Weboldal: <a href="https://e-com.hu/"
+                                    <li>{{ __('Name:') }} e-Communication Kft.</li>
+                                    <li>{{ __('Address:') }} 1141 Budapest, Vízakna utca 4.</li>
+                                    <li>{{ __('Phone:') }} +36 1 613 2634</li>
+                                    <li>{{ __('E-mail:') }} hello@e-com.hu</li>
+                                    <li>{{ __('Website:') }} <a href="https://e-com.hu/"
                                             class="text-blue-600 underline">https://e-com.hu/</a></li>
-                                    <li>Tárolt adatok: levelezés, naptár bejegyzések, telefon kontaktok, titkosított
-                                        statikus
-                                        állományok.<br>
-                                        titkosított adatmentések</li>
-                                    <li>Műveletek: email szolgáltatás, dokumentum menedzsment, naptár szolgáltatás,
-                                        tárhely
-                                        biztosítás, szerver monitoring</li>
+                                    <li>{{ __('Stored data:') }} {{ __('correspondence, calendar entries, phone contacts, encrypted static files.') }}<br>
+                                        {{ __('encrypted data backups') }}</li>
+                                    <li>{{ __('Operations:') }} {{ __('email service, document management, calendar service, hosting, server monitoring') }}</li>
                                 </ul>
                                 <ul class="list-disc ml-6 mt-2 text-sm">
-                                    <li>Éles adatokat tartalmazó szerverekhez kizárólag a legszűkebb szükséges körnek
-                                        van
-                                        hozzáférése.</li>
-                                    <li>Minden hozzáférés szigorúan logolt, SSH kulccsal és jelszóval többszörösen
-                                        biztosított.
+                                    <li>{{ __('Only the narrowest necessary group of people has access to servers containing live data.') }}</li>
+                                    <li>{{ __('All access is strictly logged and protected in multiple ways with SSH keys and passwords.') }}
                                     </li>
-                                    <li>Az adatfeldolgozó kizárólag olyan utasításokat hajthat végre, amelyek írásban
-                                        rögzítettek.</li>
-                                    <li>Az adatkezelő és az adatfeldolgozó között kötelező írásbeli szerződést kötni,
-                                        melynek
-                                        tartalmaznia kell az adatkezelő által az adatfeldolgozónak átadott adatokat és
-                                        az
-                                        adatfeldolgozó azokkal végzett tevékenységét.</li>
-                                    <li>Titoktartás kötelezi a személyes adatok kezelésével foglalkozó munkavállalókat.
+                                    <li>{{ __('The data processor may only carry out instructions that are recorded in writing.') }}</li>
+                                    <li>{{ __('A written contract must be concluded between the data controller and the data processor, which must specify the data transferred by the data controller to the data processor and the activities the data processor performs with them.') }}</li>
+                                    <li>{{ __('Employees handling personal data are bound by confidentiality.') }}
                                     </li>
-                                    <li>Az adatbiztonság garantálása érdekében az adatfeldolgozó végrehajtja a
-                                        szervezési és
-                                        technikai intézkedéseket.</li>
-                                    <li>Az adatfeldolgozó segíti az adatkezelőt abban, hogy teljesítse kötelezettségeit.
+                                    <li>{{ __('To guarantee data security, the data processor implements organisational and technical measures.') }}</li>
+                                    <li>{{ __('The data processor assists the data controller in fulfilling its obligations.') }}
                                     </li>
-                                    <li>Az adatfeldolgozó az adatkezelő döntése alapján minden személyes adatot
-                                        visszajuttat
-                                        az
-                                        adatkezelőnek vagy töröl, törli a meglévő másolatokat, egy kivétellel, ha a
-                                        tagállami
-                                        vagy az uniós jog az adatok tárolását írja elő.</li>
-                                    <li>Az adatfeldolgozó elősegíti és lehetővé teszi az adatkezelő által vagy az általa
-                                        megbízott ellenőr segítségével végzett auditokat, helyszíni vizsgálatokat.</li>
-                                    <li>Amennyiben az adatfeldolgozó további adatfeldolgozó segítségét veszi igénybe,
-                                        úgy
-                                        őrá
-                                        ugyanazok a kötelezettségek vonatkoznak, mint amelyek eredetileg a szerződés
-                                        által
-                                        létrejöttek az adatfeldolgozó és az adatkezelő között.</li>
+                                    <li>{{ __('At the choice of the data controller, the data processor returns all personal data to the data controller or deletes it and deletes existing copies, with one exception: if Member State or Union law requires the storage of the data.') }}</li>
+                                    <li>{{ __('The data processor facilitates and allows audits and on-site inspections conducted by the data controller or by an auditor mandated by it.') }}</li>
+                                    <li>{{ __('If the data processor engages another data processor, the same obligations apply to it as were originally established by the contract between the data processor and the data controller.') }}</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2">
-                        <span class="font-semibold">Adatvédelmi tisztviselő:</span>
+                        <span class="font-semibold">{{ __('Data protection officer:') }}</span>
                         <ul class="list-disc ml-6">
-                            <li>Társaságunk a GDPR 37. cikke alapján nem köteles adatvédelmi tisztviselő kinevezésére
+                            <li>{{ __('Pursuant to Article 37 of the GDPR, our company is not obliged to appoint a data protection officer') }}
                             </li>
                         </ul>
                     </div>
                     <div class="mb-2">
-                        <span class="font-semibold">Adatvédelmi kérelmek:</span>
+                        <span class="font-semibold">{{ __('Data protection requests:') }}</span>
                         <span>
-                            amennyiben bármilyen kérése vagy kérdése van az adatkezeléssel kapcsolatban, kérelmét postai
-                            úton a
-                            1016 Budapest, Derék utca 2. címre vagy elektronikusan a info@psg-irodahazak.hu címre
-                            küldheti.
-                            Válaszainkat késedelem nélkül, de legfeljebb 30 napon belül küldjük az Ön által
-                            meghatározott
-                            címre.
+                            {{ __('if you have any request or question regarding data processing, you can send your request by post to 1016 Budapest, Derék utca 2. or electronically to info@psg-irodahazak.hu. We will send our reply without delay, but no later than within 30 days, to the address you specify.') }}
                         </span>
                     </div>
                     <div class="mb-2">
-                        <span class="font-semibold">Külföldi adattovábbítás:</span>
+                        <span class="font-semibold">{{ __('Data transfers abroad:') }}</span>
                         <ul class="list-disc ml-6">
-                            <li>adatokat az Európai Gazdasági Térségen (EGT) kívülre nem továbbítunk.</li>
+                            <li>{{ __('we do not transfer data outside the European Economic Area (EEA).') }}</li>
                         </ul>
                     </div>
                 </div>
                 <div class="mb-8">
                     <h3 class="font-bold text-lg mb-2">II.</h3>
-                    <span class="font-semibold">Társaságunk adatkezelésének célja, jogalapja, időtartama:</span>
+                    <span class="font-semibold">{{ __('Purpose, legal basis and duration of our company\'s data processing:') }}</span>
                     <div class="mb-2">
-                        <span class="underline">Adatkezelési célok:</span>
+                        <span class="underline">{{ __('Purposes of data processing:') }}</span>
                         <ul class="list-disc ml-6">
-                            <li>online és személyes ingatlan közvetítési tevékenység nyújtásához kapcsolódóan a
-                                szolgáltatást
-                                igénybe vevőinek adatait árajánlat, megrendelés, vagy szerződés alapján, mint jogi
-                                kötelezettség
-                                teljesítése és ügyfélkapcsolat fenntartása céljából kezeljük;</li>
-                            <li>lehetséges ügyfelek számára marketingtevékenység;</li>
-                            <li>munkavállalók és pályázók adatainak kezelése (külön szabályzatban meghatározott
-                                feltételekkel);
+                            <li>{{ __('in connection with providing online and in-person real estate brokerage services, we process the data of those using the service on the basis of a quotation, order or contract, for the purpose of fulfilling legal obligations and maintaining client relationships;') }}</li>
+                            <li>{{ __('marketing activities for potential clients;') }}</li>
+                            <li>{{ __('processing the data of employees and applicants (under conditions set out in a separate policy);') }}
                             </li>
-                            <li>szerződéses partnerek kapcsolattartói adatainak kezelése a szerződés teljesítése
-                                céljából;
+                            <li>{{ __('processing the contact details of contractual partners for the purpose of performing the contract;') }}
                             </li>
-                            <li>ügyfelek megrendeléseinek teljesítése;</li>
-                            <li>törvényben meghatározott kötelezettség teljesítése céljából</li>
+                            <li>{{ __('fulfilling client orders;') }}</li>
+                            <li>{{ __('for the purpose of fulfilling obligations prescribed by law') }}</li>
                         </ul>
                     </div>
                     <div class="mb-2">
-                        <span class="underline">Adatkezelés jogalapja:</span>
+                        <span class="underline">{{ __('Legal basis for data processing:') }}</span>
                         <ul class="list-disc ml-6">
-                            <li>GDPR 6.cikk (1) bekezdés a) pont: érintett hozzájárulása</li>
-                            <li>GDPR 6.cikk (1) bekezdés b) pont: szerződés teljesítéséhez szükséges</li>
-                            <li>GDPR 6.cikk (1) bekezdés c) pont: jogi kötelezettség teljesítéséhez szükséges</li>
-                            <li>GDPR 6.cikk (1) bekezdés a) pont: jogos érdek, mindig érdekmérlegelés szükséges</li>
+                            <li>{{ __('GDPR Article 6(1)(a): consent of the data subject') }}</li>
+                            <li>{{ __('GDPR Article 6(1)(b): necessary for the performance of a contract') }}</li>
+                            <li>{{ __('GDPR Article 6(1)(c): necessary for compliance with a legal obligation') }}</li>
+                            <li>{{ __('GDPR Article 6(1)(a): legitimate interest, a balancing of interests is always required') }}</li>
                         </ul>
                     </div>
                     <div class="mb-2">
-                        <span class="underline">Az egyes adatkezelési tevékenységek jogalapja:</span>
+                        <span class="underline">{{ __('Legal basis of individual data processing activities:') }}</span>
                         <ul class="list-disc ml-6">
-                            <li>a számviteli jogszabályoknak megfelelő számlát kiállítása: jogalap: GDPR 6. cikk (1)
-                                bekezdés c)
-                                pont</li>
-                            <li>kapcsolattartás: jogalap (a partnerek munkavállalóinak adatai esetében az adatkezelés)
-                                jogalapja: GDPR 6. cikk (1) bekezdés f) pont. Az adatkezelő jogos érdeke: üzletmenet
-                                folytonosság.</li>
-                            <li>munkavállalók adatainak kezelése: GDPR 6. cikk (1) bekezdés b), c) pontok.</li>
-                            <li>szerződéses partnerek adatainak kezelése: jogalap GDPR 6. cikk (1) bekezdés b) pont</li>
-                            <li>marketing tevékenység: jogalap: GDPR 6. cikk (1) bekezdés a) pont.<br>
-                                Marketing tevékenység céljából facebook oldal is üzemel, azonban önálló adatbázis
-                                létrehozása,
-                                profilalkotás nem történik.</li>
-                            <li>on-line regisztráció jogalap: GDPR 6. cikk (1) bekezdés a) pont</li>
-                            <li>biztonsági kamera üzemeltetése jogalap: GDPR 6. cikk (1) bekezdés f) pont. Az adatkezelő
-                                jogos
-                                érdeke: vagyonvédelem, munkavállalók esetében az Mt.-ben meghatározott munkáltatói jogos
-                                érdek.
+                            <li>{{ __('issuing invoices in accordance with accounting legislation: legal basis: GDPR Article 6(1)(c)') }}</li>
+                            <li>{{ __('contact: legal basis (for the data of partners\' employees, the data processing) legal basis: GDPR Article 6(1)(f). Legitimate interest of the data controller: business continuity.') }}</li>
+                            <li>{{ __('processing employee data: GDPR Article 6(1)(b) and (c).') }}</li>
+                            <li>{{ __('processing data of contractual partners: legal basis GDPR Article 6(1)(b)') }}</li>
+                            <li>{{ __('marketing activities: legal basis: GDPR Article 6(1)(a).') }}<br>
+                                {{ __('A Facebook page is also operated for marketing purposes, but no separate database is created and no profiling takes place.') }}</li>
+                            <li>{{ __('online registration legal basis: GDPR Article 6(1)(a)') }}</li>
+                            <li>{{ __('operation of security cameras legal basis: GDPR Article 6(1)(f). Legitimate interest of the data controller: protection of property and, in the case of employees, the legitimate employer interest defined in the Labour Code.') }}
                             </li>
                         </ul>
                         <div class="mt-2 text-sm">
-                            Az érintett személyes adatainak jogos érdek alapján történő kezelése esetén érdekmérlegelést
-                            végzünk, melynek során:
+                            {{ __('When processing the personal data of a data subject on the basis of legitimate interest, we carry out a balancing of interests, during which:') }}
                             <ul class="list-disc ml-6">
-                                <li>beazonosítjuk és rögzítjük a jogos érdeket</li>
-                                <li>beazonosítjuk és rögzítjük az érintett érdekeit és jogait</li>
-                                <li>szükségesség és arányosság, a célhoz kötöttség, adattakarékosság, korlátozott
-                                    tárolhatóság
-                                    elve alapján mérlegelés</li>
-                                <li>tájékoztatjuk az érintettet az érdekmérlegelésről</li>
+                                <li>{{ __('we identify and record the legitimate interest') }}</li>
+                                <li>{{ __('we identify and record the interests and rights of the data subject') }}</li>
+                                <li>{{ __('assessment based on the principles of necessity and proportionality, purpose limitation, data minimisation and storage limitation') }}</li>
+                                <li>{{ __('we inform the data subject about the balancing of interests') }}</li>
                             </ul>
-                            Az érintettnek tiltakozási joga van, mely alapján a személyes adatot nem kezeljük tovább,
-                            kivéve
-                            ha
-                            az adatkezelést kényszerítő ok indokolja (pl. munkaviszonnyal összefüggésben szükségszerűen
-                            kezelendő adatok esetén)<br>
-                            Nem áll fenn kényszerítő indok direkt marketing esetén, tiltakozás esetén az adatokat
-                            törölni
-                            kell.<br>
-                            (Direkt marketingbe tartoznak azok a reklámok, amelyek közvetlenül keresik meg potenciális
-                            ügyfeleiket. Ez történhet elektronikus úton, telefonhívással, postán keresztül stb. Minden
-                            egyes
-                            módszerre speciális szabályok is érvényesek. Az érintett itt a reklám címzettje lesz, azaz
-                            az a
-                            személy, akihez a reklám eljut, illetve irányul. Az érintett személyes adatait pl. egy
-                            honlap
-                            vagy
-                            webáruház üzemeltetője kezelheti.)
+                            {{ __('The data subject has the right to object, on the basis of which we no longer process the personal data, unless the processing is justified by compelling grounds (e.g. in the case of data that must necessarily be processed in connection with employment)') }}<br>
+                            {{ __('There are no compelling grounds in the case of direct marketing; in the event of an objection, the data must be deleted.') }}<br>
+                            {{ __('(Direct marketing includes advertisements that approach potential clients directly. This can be done electronically, by phone call, by post, etc. Special rules apply to each method. Here the data subject is the recipient of the advertisement, i.e. the person whom the advertisement reaches or targets. The personal data of the data subject may be processed, for example, by the operator of a website or webshop.)') }}
                         </div>
                     </div>
                     <div class="mb-2">
-                        <span class="underline">Az adatkezelés időtartama:</span>
+                        <span class="underline">{{ __('Duration of data processing:') }}</span>
                         <ul class="list-disc ml-6">
-                            <li>A számlákat jogi kötelezettség miatt legalább 8 évig megőrizzük. A számlakiállítás
-                                alapjául
-                                szolgáló iratok megőrzési ideje 8 év.</li>
-                            <li>A munkaviszony alapjául szolgáló iratok megőrzési ideje: 50 év.</li>
-                            <li>A kapcsolattartás céljából megadott adatok megőrzési ideje a kapcsolat megszűnését
-                                követő 1
-                                év.
+                            <li>{{ __('Due to legal obligations, we retain invoices for at least 8 years. The documents underlying invoicing are retained for 8 years.') }}</li>
+                            <li>{{ __('Retention period of documents underlying employment: 50 years.') }}</li>
+                            <li>{{ __('Data provided for contact purposes are retained for 1 year after the relationship ends.') }}
                             </li>
-                            <li>Szerződés teljesítéséhez kapcsolódó adatok megőrzése: 5 év.</li>
+                            <li>{{ __('Retention of data related to the performance of contracts: 5 years.') }}</li>
                         </ul>
                     </div>
                 </div>
                 <div class="mb-8">
                     <h3 class="font-bold text-lg mb-2">III.</h3>
-                    <span class="font-semibold">Érintetti jogok:</span>
+                    <span class="font-semibold">{{ __('Rights of data subjects:') }}</span>
                     <ul class="list-disc ml-6">
-                        <li>hozzáférési jog (adatok megismerése, az a tény, hogy történik-e adatkezelés);</li>
-                        <li>amennyiben egy adat elavult vagy helytelen, ennek kiigazítása;</li>
-                        <li>törlés (kizárólag a hozzájáruláson alapuló adatkezelés esetén);</li>
-                        <li>az adat kezelésének korlátozása;</li>
-                        <li>a személyes adatok direkt marketing célokra való használatának megtiltása;</li>
-                        <li>személyes adatainak harmadik személy szolgáltató számára történő átadása, vagy ennek
-                            megtiltása;
+                        <li>{{ __('right of access (to learn the data and whether data processing is taking place);') }}</li>
+                        <li>{{ __('rectification of data that is outdated or incorrect;') }}</li>
+                        <li>{{ __('erasure (only in the case of data processing based on consent);') }}</li>
+                        <li>{{ __('restriction of the processing of data;') }}</li>
+                        <li>{{ __('prohibiting the use of personal data for direct marketing purposes;') }}</li>
+                        <li>{{ __('transfer of their personal data to a third-party service provider, or prohibiting such transfer;') }}
                         </li>
-                        <li>bármely az adatkezelő által kezelt személyes adatról másolat kérése; vagy</li>
-                        <li>tiltakozás a személyes adat használata ellen.</li>
+                        <li>{{ __('requesting a copy of any personal data processed by the data controller; or') }}</li>
+                        <li>{{ __('objecting to the use of personal data.') }}</li>
                     </ul>
                 </div>
                 <div class="mb-8">
                     <h3 class="font-bold text-lg mb-2">IV.</h3>
-                    <span class="font-semibold">Adatvédelmi incidens:</span>
+                    <span class="font-semibold">{{ __('Personal data breach:') }}</span>
                     <p class="mb-2">
-                        Az adatbiztonság olyan sérülése, mely a kezelt személyes adatok véletlen vagy jogellenes
-                        megsemmisítését, elvesztését, megváltoztatását, jogosulatlan közlését vagy az azokhoz való
-                        jogosulatlan
-                        hozzáférést eredményezi.
+                        {{ __('A breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorised disclosure of, or access to, the personal data processed.') }}
                     </p>
                     <p class="mb-2">
-                        Társaságunk biztosítja az adatkezeléshez kapcsolódó kockázat mértékének megfelelő
-                        adatbiztonságot,
-                        melynek sérülése esetén késedelem nélkül, de legkésőbb a tudomásra jutástól számított 72 órán
-                        belül
-                        adatvédelmi tisztviselőnk, vagy ennek hiányában az adatkezelő/adatfeldolgozó vagy képviselője
-                        bejelentést tesz a felügyeleti hatóságnak és tájékoztatja az érintettet is.
+                        {{ __('Our company ensures a level of data security appropriate to the risk associated with data processing; in the event of a breach, without delay and no later than 72 hours after becoming aware of it, our data protection officer or, in the absence thereof, the data controller/data processor or its representative notifies the supervisory authority and also informs the data subject.') }}
                     </p>
                     <p class="mb-2">
-                        Társaságunk az adatvédelmi incidens tudomására jutását követően haladéktalanul megteszi a
-                        szükséges
-                        biztonsági intézkedéseket az adatvédelmi incidens alapját adó sérülés megszüntetése,
-                        helyreállítása
-                        céljából.
+                        {{ __('After becoming aware of a personal data breach, our company immediately takes the necessary security measures to eliminate and remedy the damage underlying the personal data breach.') }}
                     </p>
                     <p>
-                        Az érintettet értesítjük a megtett intézkedésekről és azok eredményéről.
+                        {{ __('We notify the data subject of the measures taken and their results.') }}
                     </p>
                 </div>
                 <div class="mb-8">
                     <h3 class="font-bold text-lg mb-2">V.</h3>
-                    <span class="font-semibold">Jogorvoslati tájékoztatás:</span>
+                    <span class="font-semibold">{{ __('Information on legal remedies:') }}</span>
                     <p class="mb-2">
-                        Magyarországon az adatvédelmi felügyeleti hatóság: Nemzeti Adatvédelmi és Információszabadság
-                        Hatóság
-                        (továbbiakban: NAIH, címe: 1125 Budapest, Szilágyi Erzsébet fasor 22/C, e-mail címe:
-                        ugyfelszolgalat@naih.hu). Az érintett panaszt nyújthat be a NAIH-hoz amennyiben álláspontja
-                        szerint
-                        a rá
-                        vonatkozó személyes adat kezelés nem felel meg a jogszabályi kötelezettségeknek.
+                        {{ __('In Hungary, the data protection supervisory authority is the Hungarian National Authority for Data Protection and Freedom of Information (hereinafter: NAIH, address: 1125 Budapest, Szilágyi Erzsébet fasor 22/C, e-mail: ugyfelszolgalat@naih.hu). The data subject may lodge a complaint with the NAIH if they consider that the processing of personal data relating to them does not comply with legal requirements.') }}
                     </p>
                     <p>
-                        A NAIH döntése ellen bírósági felülvizsgálat kezdeményezhető.
+                        {{ __('Judicial review may be initiated against the decision of the NAIH.') }}
                     </p>
                 </div>
                 <div class="mb-4">
                     <h3 class="font-bold text-lg mb-2">VI.</h3>
-                    <span class="font-semibold">Tájékoztatás a nyilvántartásokról:</span>
+                    <span class="font-semibold">{{ __('Information on records:') }}</span>
                     <p class="mb-2">
-                        Társaságunk az adatok kezelését és feldolgozását jogszerűen, átláthatóan és ellenőrizhetően
-                        végzi.
+                        {{ __('Our company processes and handles data lawfully, transparently and verifiably.') }}
                     </p>
                     <div class="mt-4">
-                        <p>Kelt: Budapest, 2018. május 25.</p>
-                        <p>Fekete József Richárd ügyvezető</p>
+                        <p>{{ __('Dated: Budapest, 25 May 2018.') }}</p>
+                        <p>{{ __(':name managing director', ['name' => 'Fekete József Richárd']) }}</p>
                         <p>Property Solution Group Kft.</p>
                     </div>
                 </div>

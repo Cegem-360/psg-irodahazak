@@ -1,15 +1,15 @@
 <x-layouts.app>
-    <x-slot name="title">{{ $category->name }} Hírek | PSG-IRODAHÁZAK</x-slot>
+    <x-slot name="title">{{ $category->name }} {{ __('News') }} | PSG-IRODAHÁZAK</x-slot>
     <x-slot name="meta">
         <meta name="description"
-            content="{{ $category->description ?: $category->name . ' kategória hírei a PSG-IRODAHÁZAK oldalán.' }}">
-        <meta name="keywords" content="{{ $category->name }}, hírek, irodaház, irodabérlet">
+            content="{{ $category->description ?: __(':category category news on PSG-IRODAHÁZAK.', ['category' => $category->name]) }}">
+        <meta name="keywords" content="{{ $category->name }}, {{ __('news, office building, office rental') }}">
         <link rel="canonical" href="{{ Request::url() }}">
     </x-slot>
 
     <div class="min-h-screen bg-gray-50">
         <!-- Category Header -->
-        <div class="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-16">
+        <div class="bg-linear-to-r from-gray-700 to-gray-900 text-white py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
                     <div class="flex items-center justify-center mb-4">
@@ -21,7 +21,7 @@
                     @if ($category->description)
                         <p class="text-xl text-gray-300 max-w-2xl mx-auto">{{ $category->description }}</p>
                     @endif
-                    <p class="text-gray-400 mt-2">{{ $news->total() }} hír ebben a kategóriában</p>
+                    <p class="text-gray-400 mt-2">{{ __(':count news in this category', ['count' => $news->total()]) }}</p>
                 </div>
             </div>
         </div>
@@ -34,22 +34,22 @@
                         <li>
                             <a href="{{ localized_route('home') }}"
                                 class="text-gray-500 hover:text-gray-700 transition duration-150">
-                                Főoldal
+                                {{ __('Homepage') }}
                             </a>
                         </li>
                         <li class="flex items-center">
-                            <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                     clip-rule="evenodd"></path>
                             </svg>
                             <a href="{{ localized_route('news.index') }}"
                                 class="ml-4 text-gray-500 hover:text-gray-700 transition duration-150">
-                                Hírek
+                                {{ __('News') }}
                             </a>
                         </li>
                         <li class="flex items-center">
-                            <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                     clip-rule="evenodd"></path>
@@ -66,12 +66,12 @@
                 <!-- Sidebar -->
                 <aside class="lg:col-span-1">
                     <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
-                        <h3 class="text-lg font-semibold mb-4 text-gray-900">Kategóriák</h3>
+                        <h3 class="text-lg font-semibold mb-4 text-gray-900">{{ __('Categories') }}</h3>
                         <ul class="space-y-3">
                             <li>
                                 <a href="{{ localized_route('news.index') }}"
                                     class="flex items-center justify-between text-gray-600 hover:text-red-600 transition duration-150">
-                                    <span>Összes hír</span>
+                                    <span>{{ __('All news') }}</span>
                                 </a>
                             </li>
                             @foreach ($allCategories as $cat)
@@ -117,7 +117,7 @@
                                             @if ($article->is_breaking)
                                                 <span
                                                     class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">
-                                                    Fontos
+                                                    {{ __('Important') }}
                                                 </span>
                                             @endif
                                         </div>
@@ -134,7 +134,7 @@
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center text-sm text-gray-500">
                                                 <span class="mr-4">{{ $article->author->name }}</span>
-                                                <span>{{ $article->views_count }} megtekintés</span>
+                                                <span>{{ __(':count views', ['count' => $article->views_count]) }}</span>
                                             </div>
                                             <span class="text-sm text-gray-500">{{ $article->reading_time }}</span>
                                         </div>
@@ -152,13 +152,13 @@
                     @else
                         <div class="text-center py-12">
                             <div class="text-gray-400 text-6xl mb-4">{{ $category->icon ?: '📰' }}</div>
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Nincs hír ebben a kategóriában</h3>
-                            <p class="text-gray-600">Jelenleg nincs publikált hír a {{ $category->name }} kategóriában.
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('No news in this category') }}</h3>
+                            <p class="text-gray-600">{{ __('There are currently no published news in the :category category.', ['category' => $category->name]) }}
                             </p>
                             <div class="mt-6">
                                 <a href="{{ localized_route('news.index') }}"
                                     class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition duration-150">
-                                    Vissza az összes hírhez
+                                    {{ __('Back to all news') }}
                                 </a>
                             </div>
                         </div>

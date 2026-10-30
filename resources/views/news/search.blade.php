@@ -1,21 +1,21 @@
 <x-layouts.app>
-    <x-slot name="title">Keresés: "{{ $search }}" | PSG-IRODAHÁZAK Hírek</x-slot>
+    <x-slot name="title">{{ __('Search:') }} "{{ $search }}" | PSG-IRODAHÁZAK {{ __('News') }}</x-slot>
     <x-slot name="meta">
         <meta name="robots" content="noindex, follow">
-        <meta name="description" content="Keresési eredmények: {{ $search }} - PSG-IRODAHÁZAK hírek">
+        <meta name="description" content="{{ __('Search results: :search - PSG-IRODAHÁZAK news', ['search' => $search]) }}">
     </x-slot>
 
     <div class="min-h-screen bg-gray-50">
         <!-- Search Header -->
-        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+        <div class="bg-linear-to-r from-blue-600 to-blue-800 text-white py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
-                    <h1 class="text-4xl font-bold mb-4">Keresési eredmények</h1>
+                    <h1 class="text-4xl font-bold mb-4">{{ __('Search results') }}</h1>
                     @if ($search)
                         <p class="text-xl text-blue-100 max-w-2xl mx-auto mb-2">
-                            Keresett kifejezés: <span class="font-semibold">"{{ $search }}"</span>
+                            {{ __('Search term') }}: <span class="font-semibold">"{{ $search }}"</span>
                         </p>
-                        <p class="text-blue-200">{{ $news->total() }} találat</p>
+                        <p class="text-blue-200">{{ __(':count results', ['count' => $news->total()]) }}</p>
                     @endif
                 </div>
 
@@ -23,11 +23,11 @@
                 <div class="mt-8 max-w-md mx-auto">
                     <form method="GET" action="{{ localized_route('news.search') }}" class="flex">
                         <input type="text" name="q" value="{{ $search }}"
-                            placeholder="Keresés a hírekben..."
+                            placeholder="{{ __('Search news...') }}"
                             class="flex-1 px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <button type="submit"
                             class="px-6 py-3 bg-blue-700 hover:bg-blue-800 rounded-r-lg font-medium transition duration-150">
-                            Keresés
+                            {{ __('Search') }}
                         </button>
                     </form>
                 </div>
@@ -42,27 +42,27 @@
                         <li>
                             <a href="{{ localized_route('home') }}"
                                 class="text-gray-500 hover:text-gray-700 transition duration-150">
-                                Főoldal
+                                {{ __('Homepage') }}
                             </a>
                         </li>
                         <li class="flex items-center">
-                            <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                     clip-rule="evenodd"></path>
                             </svg>
                             <a href="{{ localized_route('news.index') }}"
                                 class="ml-4 text-gray-500 hover:text-gray-700 transition duration-150">
-                                Hírek
+                                {{ __('News') }}
                             </a>
                         </li>
                         <li class="flex items-center">
-                            <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            <span class="ml-4 text-gray-500">Keresés</span>
+                            <span class="ml-4 text-gray-500">{{ __('Search') }}</span>
                         </li>
                     </ol>
                 </nav>
@@ -74,12 +74,12 @@
                 <!-- Sidebar -->
                 <aside class="lg:col-span-1">
                     <div class="bg-white rounded-lg shadow-sm p-6 sticky top-8">
-                        <h3 class="text-lg font-semibold mb-4 text-gray-900">Szűrés kategóriák szerint</h3>
+                        <h3 class="text-lg font-semibold mb-4 text-gray-900">{{ __('Filter by category') }}</h3>
                         <ul class="space-y-3">
                             <li>
                                 <a href="{{ localized_route('news.search', ['q' => $search]) }}"
                                     class="flex items-center justify-between text-gray-600 hover:text-blue-600 transition duration-150 {{ !request('category') ? 'text-blue-600 font-medium' : '' }}">
-                                    <span>Minden kategória</span>
+                                    <span>{{ __('All categories') }}</span>
                                 </a>
                             </li>
                             @foreach ($categories as $category)
@@ -126,7 +126,7 @@
                                             @if ($article->is_breaking)
                                                 <span
                                                     class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">
-                                                    Fontos
+                                                    {{ __('Important') }}
                                                 </span>
                                             @endif
                                         </div>
@@ -143,7 +143,7 @@
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center text-sm text-gray-500">
                                                 <span class="mr-4">{{ $article->author->name }}</span>
-                                                <span>{{ $article->views_count }} megtekintés</span>
+                                                <span>{{ __(':count views', ['count' => $article->views_count]) }}</span>
                                             </div>
                                             <span class="text-sm text-gray-500">{{ $article->reading_time }}</span>
                                         </div>
@@ -161,30 +161,30 @@
                     @elseif($search)
                         <div class="text-center py-12">
                             <div class="text-gray-400 text-6xl mb-4">🔍</div>
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Nincs találat</h3>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('No results') }}</h3>
                             <p class="text-gray-600 mb-6">
-                                Nem találtunk hírt a következő keresésre: <strong>"{{ $search }}"</strong>
+                                {{ __('We found no news for the following search:') }} <strong>"{{ $search }}"</strong>
                             </p>
                             <div class="space-y-2 text-sm text-gray-500">
-                                <p>Javaslatok:</p>
+                                <p>{{ __('Suggestions:') }}</p>
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>Ellenőrizze a helyesírást</li>
-                                    <li>Próbáljon kevesebb vagy általánosabb kifejezéseket</li>
-                                    <li>Használjon szinonimákat</li>
+                                    <li>{{ __('Check the spelling') }}</li>
+                                    <li>{{ __('Try fewer or more general terms') }}</li>
+                                    <li>{{ __('Use synonyms') }}</li>
                                 </ul>
                             </div>
                             <div class="mt-6">
                                 <a href="{{ localized_route('news.index') }}"
                                     class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition duration-150">
-                                    Vissza az összes hírhez
+                                    {{ __('Back to all news') }}
                                 </a>
                             </div>
                         </div>
                     @else
                         <div class="text-center py-12">
                             <div class="text-gray-400 text-6xl mb-4">🔍</div>
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Adjon meg keresési kifejezést</h3>
-                            <p class="text-gray-600">Használja a fenti keresőmezőt hírek kereséséhez.</p>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('Enter a search term') }}</h3>
+                            <p class="text-gray-600">{{ __('Use the search field above to search for news.') }}</p>
                         </div>
                     @endif
                 </main>

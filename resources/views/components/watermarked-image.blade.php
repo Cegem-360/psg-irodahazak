@@ -1,7 +1,7 @@
 @props([
     'path' => null,
     'size' => null,
-    'alt' => 'Kép',
+    'alt' => __('Image'),
     'class' => 'w-full h-auto object-cover',
     'showPlaceholder' => true,
 ])

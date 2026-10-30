@@ -1,21 +1,21 @@
 <x-layouts.app>
-    <x-slot name="title">{{ __('Rólunk mondták') }}</x-slot>
+    <x-slot name="title">{{ __('Testimonials') }}</x-slot>
     <x-slot name="meta">
-        <meta name="description" content="Ügyfeleink véleménye rólunk - PSG Irodaházak">
-        <meta name="keywords" content="vélemények, referenciák, ügyfél visszajelzések, PSG Irodaházak">
+        <meta name="description" content="{{ __('What our clients say about us - PSG Irodaházak') }}">
+        <meta name="keywords" content="{{ __('reviews, references, client feedback, PSG Irodaházak') }}">
         <link rel="canonical" href="{{ url()->current() }}">
     </x-slot>
 
     <div class="bg-white">
         <!-- Hero Section -->
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 py-16">
+        <div class="bg-linear-to-r from-blue-600 to-indigo-700 py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
                     <h1 class="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
-                        {{ __('Rólunk mondták') }}
+                        {{ __('Testimonials') }}
                     </h1>
                     <p class="mt-6 max-w-2xl mx-auto text-xl text-blue-100">
-                        {{ __('Büszkék vagyunk ügyfeleink véleményére és bizalmára, amit munkánkkal kiérdemeltünk.') }}
+                        {{ __('We are proud of the opinions and trust of our clients, which we have earned through our work.') }}
                     </p>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-12">
                         <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">
-                            {{ __('Kiemelt vélemények') }}
+                            {{ __('Featured testimonials') }}
                         </h2>
                     </div>
 
@@ -45,7 +45,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">
-                        {{ __('Összes vélemény') }}
+                        {{ __('All testimonials') }}
                     </h2>
                 </div>
 
@@ -55,7 +55,7 @@
                     @empty
                         <div class="col-span-full text-center py-12">
                             <div class="text-gray-400 text-lg">
-                                {{ __('Még nincsenek vélemények.') }}
+                                {{ __('There are no testimonials yet.') }}
                             </div>
                         </div>
                     @endforelse

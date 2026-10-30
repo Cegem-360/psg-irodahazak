@@ -50,7 +50,7 @@
 
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
-        <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
+        <div class="absolute inset-0 z-1 bg-linear-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-8 pt-24 pb-20">
             <h1 class="mt-4 mb-16 font-font-bold text-5xl text-center drop-shadow text-logogray/80">
                 @if (app()->getLocale() === 'en')
@@ -60,7 +60,7 @@
                 @endif
             </h1>
             <div
-                class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+                class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div>
                     <x-cards.ingatlan-gallery-carousel :images="collect($property->property_photos)" :title="$property->title" />
                 </div>
@@ -239,7 +239,7 @@
                 </div>
             </div>
             @if (auth()->check() || request()->hasValidSignature())
-                <div class="max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+                <div class="max-w-7xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                     <div class="text-center">
                         <h3 class="text-2xl font-bold mb-4">{{ __('Property Details') }}</h3>
                         <p class="mb-6 text-gray-600">{{ __('Download detailed information about this property') }}</p>
@@ -259,7 +259,7 @@
                 </div>
             @endif
             <div
-                class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+                class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
                 <div>
                     @if (!$property->isSale())
                         @if ($property->maps_lat && $property->maps_lng)
@@ -276,7 +276,7 @@
                                 referrerpolicy="no-referrer-when-downgrade"></iframe>
                         @endif
                     @else
-                        <x-forms.contact :selected_property_id="$property->id" :selected_property_type_is_rent="$property->isRent()" />
+                        <livewire:contact-form :selected-property-id="$property->id" :selected-property-type-is-rent="$property->isRent()" />
                     @endif
 
                 </div>
@@ -298,20 +298,20 @@
             </div>
             @if (!$property->isSale())
                 <div
-                    class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
-                    <div class="order-2 md:order-none">
+                    class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+                    <div class="order-2 md:order-0">
                         <section class="bg-white rounded-xl">
-                            <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+                            <div class="py-8 lg:py-16 px-4 mx-auto max-w-3xl">
                                 <h2 class="mb-4 text-4xl tracking-tight font-extrafont-bold text-center text-accent">
                                     {{ __('Contact Us!') }}</h2>
                                 <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 sm:text-xl">
                                     {{ __('Request a personalized offer online!') }}</p>
-                                <x-forms.contact :selected_property_id="$property->id" :selected_property_type_is_rent="$property->isRent()" />
+                                <livewire:contact-form :selected-property-id="$property->id" :selected-property-type-is-rent="$property->isRent()" />
                             </div>
                         </section>
 
                     </div>
-                    <div class="order-1 md:order-none space-y-4 p-4">
+                    <div class="order-1 md:order-0 space-y-4 p-4">
                         <div class="space-y-4">
                             <h2 class="text-3xl">{{ __('Features') }}</h2>
                             <ul class="sm:columns-2 gap-x-8 gap-y-3 list-disc text-lg">
@@ -350,11 +350,11 @@
 
     <div class="relative bg-cover bg-center bg-no-repeat"
         style="background-image: url({{ Vite::asset('resources/images/the-office-building-2025-04-02-15-55-34-utc.webp') }});">
-        <div class="absolute inset-0 z-1 bg-gradient-to-b from-white to-white/30"></div>
+        <div class="absolute inset-0 z-1 bg-linear-to-b from-white to-white/30"></div>
         <div class="kiemelt-ajanlatok relative z-10 container mx-auto pt-12 pb-20">
             <h2 class="mt-4 mb-16 font-font-bold text-5xl text-center drop-shadow text-logogray/80">
                 {{ __('Similar Offices') }}</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
                 @foreach ($similarProperties ?? [] as $similarProperty)
                     @if ($similarProperty->isRent())
                         <x-cards.ingatlan-card

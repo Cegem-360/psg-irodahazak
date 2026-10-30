@@ -2,7 +2,7 @@
     <ul class="inline-flex items-center -space-x-px">
         <li>
             <a href="#"
-                class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Előző</a>
+                class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{{ __('Previous') }}</a>
         </li>
         <li>
             <a href="#"
@@ -21,7 +21,7 @@
         </li>
         <li>
             <a href="#"
-                class="block px-3 py-2 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Következő</a>
+                class="block px-3 py-2 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{{ __('Next') }}</a>
         </li>
     </ul>
 </nav>

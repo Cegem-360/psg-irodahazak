@@ -12,7 +12,7 @@
             </svg>
         @endfor
         @if ($featured)
-            <span class="ml-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Kiemelt</span>
+            <span class="ml-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">{{ __('Featured') }}</span>
         @endif
     </div>
 
@@ -66,7 +66,7 @@
 <div class="mt-4 text-right">
     <a href="{{ route('testimonials.show', $testimonial) }}"
         class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-        Részletek →
+        {{ __('Details') }} →
     </a>
 </div>
 </div>

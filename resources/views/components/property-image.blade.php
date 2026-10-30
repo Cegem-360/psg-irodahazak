@@ -7,11 +7,11 @@
         $firstImage = collect($property->property_photos)->first();
         if ($firstImage) {
             $imageUrl = Storage::url($firstImage);
-            $alt = 'Ingatlan kép';
+            $alt = __('Property image');
         }
     }
 
-    $alt = $alt ?? 'Ingatlan kép';
+    $alt = $alt ?? __('Property image');
 @endphp
 
 @if ($imageUrl)

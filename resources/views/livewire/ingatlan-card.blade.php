@@ -1,7 +1,7 @@
 @use('App\Models\Translate')
 @php
     // Image alt text: the building's name, marked as an office building unless the name already says so.
-    $imageAlt = Str::contains(Str::lower((string) $title), 'iroda') ? $title : $title . ' irodaház';
+    $imageAlt = Str::contains(Str::lower((string) $title), 'iroda') ? $title : __(':name office building', ['name' => $title]);
 @endphp
 <div
     class="{{ $swiper ? 'swiper-slide' : '' }} group relative bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl hover:brightness-95 transition-all duration-300 ease-in-out border border-white/15">
@@ -30,27 +30,27 @@
                 }"
                 x-init="initSwiper()"
                 x-ref="swiperContainer"
-                class="swiper minicarousel-swiper !grid"
+                class="swiper minicarousel-swiper grid!"
             >
                 <div class="swiper-wrapper">
                     @foreach ($images as $carouselimage)
                         <div class="swiper-slide">
                             <img src="{{ Storage::url($carouselimage) }}" alt="{{ $imageAlt }}"
-                                class="w-full h-auto object-cover aspect-[3/2]" loading="lazy" />
+                                class="w-full h-auto object-cover aspect-3/2" loading="lazy" />
                         </div>
                     @endforeach
                 </div>
                 <div x-ref="btnPrev"
-                    class="swiper-button-prev minicarousel-button-prev !text-accent shadow bg-white/40 hover:bg-white/60 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
+                    class="swiper-button-prev minicarousel-button-prev text-accent! shadow bg-white/40 hover:bg-white/60 hover:shadow rounded after:text-xl! after:font-bold! after:drop-shadow">
                 </div>
                 <div x-ref="btnNext"
-                    class="swiper-button-next minicarousel-button-next !text-accent shadow bg-white/40 hover:bg-white/60 hover:shadow rounded after:!text-xl after:!font-bold after:drop-shadow">
+                    class="swiper-button-next minicarousel-button-next text-accent! shadow bg-white/40 hover:bg-white/60 hover:shadow rounded after:text-xl! after:font-bold! after:drop-shadow">
                 </div>
             </div>
         @endif
         <!-- Fallback image if no swiper -->
         @if (!$minicarousel && $image)
-            <img src="{{ $image }}" alt="{{ $imageAlt }}" class="w-full h-auto object-cover aspect-[3/2]"
+            <img src="{{ $image }}" alt="{{ $imageAlt }}" class="w-full h-auto object-cover aspect-3/2"
                 loading="lazy" />
         @endif
 
@@ -101,7 +101,7 @@
             @endif
         </h3>
         <p class="{{ $small ? 'text-gray-700 text-base min-h-16' : 'text-gray-700 min-h-24' }}">
-            {!! $description ?? 'Nincs' !!}
+            {!! $description ?? __('None') !!}
         </p>
         <a href="{{ $link ?? '#' }}"
             class="inline-block {{ $small ? 'mb-2 px-3 py-1 text-sm' : 'mb-4 px-6 py-2' }} bg-primary/70 text-white rounded group-hover:bg-primary/90 transition-colors duration-300 ease-in-out">

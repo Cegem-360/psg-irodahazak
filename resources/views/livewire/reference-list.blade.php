@@ -1,6 +1,6 @@
 <div class="references-section">
     <div class="container mx-auto px-4">
-        <h2 class="text-2xl font-bold text-center mb-8">Referenciáink</h2>
+        <h2 class="text-2xl font-bold text-center mb-8">{{ __('Our references') }}</h2>
 
         @if ($references->count() > 0)
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
@@ -18,7 +18,7 @@
                 @endforeach
             </div>
         @else
-            <p class="text-center text-gray-500">Nincsenek elérhető referenciák.</p>
+            <p class="text-center text-gray-500">{{ __('No references available.') }}</p>
         @endif
     </div>
 </div>

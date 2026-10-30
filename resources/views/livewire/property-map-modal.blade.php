@@ -26,7 +26,7 @@
                                     d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
-                        <h3 class="text-xl font-semibold text-white">Helyszín</h3>
+                        <h3 class="text-xl font-semibold text-white">{{ __('Location') }}</h3>
                     </div>
 
                     <!-- Modal Body -->
@@ -43,7 +43,7 @@
                                         loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                 @else
                                     <div class="flex items-center justify-center h-full">
-                                        <p class="text-gray-500">Nem található térkép adat</p>
+                                        <p class="text-gray-500">{{ __('No map data found') }}</p>
                                     </div>
                                 @endif
                             </div>

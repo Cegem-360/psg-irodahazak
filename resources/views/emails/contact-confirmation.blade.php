@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ __('Kapcsolatfelvételi üzenet megerősítése') }}</title>
+        <title>{{ __('Contact message confirmation') }}</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -58,65 +58,65 @@
 
     <body>
         <div class="header">
-            <h1>{{ __('Köszönjük üzenetét!') }}</h1>
-            <p>{{ __('PSG Irodaházak') }}</p>
+            <h1>{{ __('Thank you for your message!') }}</h1>
+            <p>PSG Irodaházak</p>
         </div>
 
         <div class="content">
-            <p>{{ __('Kedves') }} {{ $name }}!</p>
+            <p>{{ __('Dear :name!', ['name' => $name]) }}</p>
             <p>
-                {{ __('Köszönjük, hogy kapcsolatba lépett velünk. Üzenetét megkaptuk és munkatársunk hamarosan felveszi Önnel a kapcsolatot.') }}
+                {{ __('Thank you for contacting us. We have received your message and our colleague will contact you shortly.') }}
             </p>
 
-            <p><strong>{{ __('Az Ön üzenete') }}:</strong></p>
+            <p><strong>{{ __('Your message') }}:</strong></p>
             <div class="contact-info">
-                <p><strong>{{ __('Tárgy') }}:</strong>
+                <p><strong>{{ __('Subject') }}:</strong>
                     {{ __($contact_subject) }}
                 </p>
                 <p style="margin-top: 15px;">{{ $userMessage }}</p>
             </div>
 
-            <h3>{{ __('Elérhetőségeink') }}:</h3>
+            <h3>{{ __('Our contact details') }}:</h3>
             <div class="contact-info">
                 <div class="contact-item">
-                    <strong>{{ __('Telefon') }}:</strong>
+                    <strong>{{ __('Phone') }}:</strong>
                     <span>+36 20 381 3917</span>
                 </div>
                 <div class="contact-item">
-                    <strong>Email:</strong>
+                    <strong>{{ __('Email') }}:</strong>
                     <span>info@psg-irodahazak.hu</span>
                 </div>
                 <div class="contact-item">
-                    <strong>{{ __('Iroda') }}:</strong>
+                    <strong>{{ __('Office') }}:</strong>
                     <span>1016 Budapest, Derék u. 2.</span>
                 </div>
             </div>
 
-            <h3>{{ __('Nyitvatartás') }}:</h3>
+            <h3>{{ __('Opening hours') }}:</h3>
             <div class="contact-info">
                 <div class="contact-item">
-                    <strong>{{ __('Hétfő-Péntek') }}:</strong>
+                    <strong>{{ __('Monday-Friday') }}:</strong>
                     <span>9:00 - 18:00</span>
                 </div>
                 <div class="contact-item">
-                    <strong>{{ __('Szombat') }}:</strong>
+                    <strong>{{ __('Saturday') }}:</strong>
                     <span>10:00 - 14:00</span>
                 </div>
                 <div class="contact-item">
-                    <strong>{{ __('Vasárnap') }}:</strong>
-                    <span>{{ __('Zárva') }}</span>
+                    <strong>{{ __('Sunday') }}:</strong>
+                    <span>{{ __('Closed') }}</span>
                 </div>
             </div>
 
-            <p>{{ __('Amennyiben sürgős kérdése van, kérjük, hívjon minket telefonon a +36 20 381 3917 számon.') }}</p>
+            <p>{{ __('If you have an urgent question, please call us at :phone.', ['phone' => '+36 20 381 3917']) }}</p>
 
             <p style="margin-top: 30px;">
-                {{ __('Üdvözlettel') }},<br>
-                <strong>{{ __('Property Solution Group csapata') }}</strong>
+                {{ __('Kind regards') }},<br>
+                <strong>{{ __('The Property Solution Group team') }}</strong>
             </p>
 
             <p style="margin-top: 30px; font-size: 14px; color: #666;">
-                {{ __('Ez egy automatikus válasz. Kérjük, ne válaszoljon erre az emailre.') }}
+                {{ __('This is an automated reply. Please do not reply to this email.') }}
             </p>
         </div>
     </body>

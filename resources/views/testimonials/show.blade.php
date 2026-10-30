@@ -1,8 +1,8 @@
 <x-layouts.app>
-    <x-slot name="title">{{ $testimonial->client_name }} véleménye</x-slot>
+    <x-slot name="title">{{ __('Testimonial from :name', ['name' => $testimonial->client_name]) }}</x-slot>
     <x-slot name="meta">
         <meta name="description" content="{{ Str::limit($testimonial->testimonial, 160) }}">
-        <meta name="keywords" content="vélemény, {{ $testimonial->client_name }}, PSG Irodaházak">
+        <meta name="keywords" content="{{ __('testimonial, :name, PSG Irodaházak', ['name' => $testimonial->client_name]) }}">
         <link rel="canonical" href="{{ url()->current() }}">
     </x-slot>
 
@@ -14,21 +14,21 @@
                     <ol class="flex items-center space-x-4">
                         <li>
                             <a href="{{ localized_route('home') }}" class="text-gray-500 hover:text-gray-700">
-                                {{ __('Főoldal') }}
+                                {{ __('Homepage') }}
                             </a>
                         </li>
                         <li>
-                            <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                            <svg class="shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                 <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
                             </svg>
                             <a href="{{ localized_route('testimonials.index') }}"
                                 class="text-gray-500 hover:text-gray-700">
-                                {{ __('Rólunk mondták') }}
+                                {{ __('Testimonials') }}
                             </a>
                         </li>
                         <li>
-                            <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                            <svg class="shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                 <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
                             </svg>
@@ -114,7 +114,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
-                        {{ __('Vissza a véleményekhez') }}
+                        {{ __('Back to testimonials') }}
                     </a>
                 </div>
             </div>

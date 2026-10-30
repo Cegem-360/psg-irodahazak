@@ -2,7 +2,7 @@
     <x-slot name="meta">
         <title>{{ __('My Favorites') }} - PSG Irodaházak</title>
         <meta name="description" content="{{ __('Here you can find all the properties you have marked as favorites') }}">
-        <meta name="keywords" content="kedvencek,irodaház,iroda,kedvenc ingatlanok,favorites">
+        <meta name="keywords" content="{{ __('favourites,office building,office,favourite properties,favorites') }}">
         <link rel="canonical" href="{{ Request::url() }}">
     </x-slot>
     <x-slot name="content">

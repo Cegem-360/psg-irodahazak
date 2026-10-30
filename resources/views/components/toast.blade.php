@@ -12,7 +12,7 @@
     }"
     @if (session('toast')) x-init="add({{ Js::from(session('toast')) }})" @endif
     x-on:notify.window="add($event.detail)" aria-live="polite"
-    class="pointer-events-none fixed inset-x-4 top-4 z-[9999] flex flex-col items-end gap-3 sm:left-auto sm:right-4">
+    class="pointer-events-none fixed inset-x-4 top-4 z-9999 flex flex-col items-end gap-3 sm:left-auto sm:right-4">
     <template x-for="toast in toasts" :key="toast.id">
         <div x-transition.opacity.duration.300ms role="status"
             class="pointer-events-auto flex w-full max-w-sm gap-3 rounded-lg border-l-4 bg-white p-4 shadow-lg ring-1 ring-gray-900/5"
@@ -30,7 +30,7 @@
                 <p class="mt-1 text-sm text-gray-600" x-text="toast.body"></p>
             </div>
             <button type="button" x-on:click="remove(toast.id)" class="shrink-0 text-gray-400 hover:text-gray-600"
-                aria-label="Bezárás">
+                aria-label="{{ __('Close') }}">
                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>

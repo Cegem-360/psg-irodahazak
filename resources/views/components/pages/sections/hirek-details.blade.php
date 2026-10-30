@@ -2,66 +2,66 @@
     $news = [
         [
             'date' => '2025-05-09',
-            'title' => 'Eladták az Újbuda szívében épült irodaházat',
-            'url' => 'Részletek',
+            'title' => __('The office building in the heart of Újbuda has been sold'),
+            'url' => __('Details'),
         ],
         [
             'date' => '2025-04-16',
-            'title' => 'Felmérés: Tetőzik a home office-arány hazánkban?',
-            'url' => 'Részletek',
+            'title' => __('Survey: Has the home office rate peaked in Hungary?'),
+            'url' => __('Details'),
         ],
         [
             'date' => '2025-02-03',
-            'title' => 'A tavalyi év volt az irodapiac mélypontja?',
-            'url' => 'Részletek',
+            'title' => __('Was last year the low point of the office market?'),
+            'url' => __('Details'),
         ],
         [
             'date' => '2025-01-03',
-            'title' => 'Tulajdonost váltott a Tőzsdepalota - Mi lesz a történelmi épület sorsa?',
-            'url' => 'Részletek',
+            'title' => __('The Stock Exchange Palace has changed owners - What will become of the historic building?'),
+            'url' => __('Details'),
         ],
         [
             'date' => '2024-12-02',
             'title' =>
-                'Sikeres befektetési tranzakció Budapesten: német befektetőnek adták el a Honvéd Center irodaházat',
-            'url' => 'Részletek',
+                __('Successful investment transaction in Budapest: the Honvéd Center office building was sold to a German investor'),
+            'url' => __('Details'),
         ],
         [
             'date' => '2024-11-07',
-            'title' => 'A következő két évben annyi irodát adnak át Budapesten, mint szinte az egész régióban',
-            'url' => 'Részletek',
+            'title' => __('In the next two years, Budapest will deliver almost as many offices as the entire region'),
+            'url' => __('Details'),
         ],
         [
             'date' => '2024-10-02',
-            'title' => 'Hétfőtől péntekig az irodában - mint a "régi szép időkben"?',
-            'url' => 'Részletek',
+            'title' => __('Monday to Friday in the office - like in the "good old days"?'),
+            'url' => __('Details'),
         ],
         [
             'date' => '2024-09-02',
-            'title' => 'Ezt is megértük! 2024-ben Budapest lett a világ legnépszerűbb workcation városa',
-            'url' => 'Részletek',
+            'title' => __('Who would have thought! In 2024 Budapest became the most popular workcation city in the world'),
+            'url' => __('Details'),
         ],
         [
             'date' => '2024-08-08',
-            'title' => 'Fordulat az irodapiacon - Úgy tűnik, ez lesz az új trend',
-            'url' => 'Részletek',
+            'title' => __('A turnaround in the office market - It seems this will be the new trend'),
+            'url' => __('Details'),
         ],
         [
             'date' => '2024-07-02',
-            'title' => 'Megújul a HOP Technology Office Park a Hungária körúton',
-            'url' => 'Részletek',
+            'title' => __('HOP Technology Office Park on Hungária körút is being renovated'),
+            'url' => __('Details'),
         ],
     ];
 @endphp
 
 <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
     style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
-    <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
+    <div class="absolute inset-0 z-1 bg-linear-to-b from-white/90 to-white/70"></div>
     <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
         <h2 class="mt-4 mb-16 font-bold text-5xl text-center drop-shadow text-logogray/80">
-            Hírek</h2>
+            {{ __('News') }}</h2>
 
-        <div class="max-w-screen-xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+        <div class="max-w-7xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
             @foreach ($news as $newsItem)
                 <div
                     class="relative flex flex-col md:flex-row justify-start items-center gap-6 p-6 border-b border-gray-300 hover:brightness-95 transition-all duration-300 ease-in-out">
@@ -76,7 +76,7 @@
         </div>
 
         <div
-            class="flex justify-center gap-8 max-w-screen-xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+            class="flex justify-center gap-8 max-w-7xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
             {{-- Pagination --}}
             @include('pages.forms.pagination')
         </div>

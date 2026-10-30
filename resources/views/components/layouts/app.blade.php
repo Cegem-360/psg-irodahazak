@@ -15,7 +15,7 @@
             $metaSlotHtml = isset($meta) ? (string) $meta : '';
             $metaSlotHas = fn (string $needle): bool => str_contains($metaSlotHtml, $needle);
 
-            $defaultDescription = 'Kiadó irodák Budapesten! Kedvező bérleti konstrukciókkal bérelhet a teljes irodapiaci adatbázis áttekintésével hagyományos és szolgáltatott kiadó irodák közül. Ajánlatküldés még a mai napon.';
+            $defaultDescription = __('Offices for rent in Budapest! Rent from traditional and serviced offices on favourable lease terms, with an overview of the entire office market database. Offers sent the same day.');
             $pageTitleText = Str::squish(isset($title) ? strip_tags((string) $title) : '') ?: __('page.title.default');
             $pageDescriptionText = Str::squish(isset($metaDescription) ? strip_tags((string) $metaDescription) : '');
             if ($pageDescriptionText === '' && preg_match('/name="description"\s+content="([^"]*)"/', $metaSlotHtml, $slotDescription)) {
@@ -36,7 +36,7 @@
                 <meta name="keywords" content="{{ $metaKeywords }}">
             @else
                 <meta name="keywords"
-                    content="kiadó irodaházak,bérbeadó irodák,azonnali irodák,kiadó iroda,eladó irodaházak,belvárosi irodák,loft iroda,kiadó iroda Budán,kiadó iroda Pesten,A-kategóriás irodaházak,zöld irodák,irodaházak listája,Bérlő képviselet,">
+                    content="{{ __('office buildings for rent,offices for lease,serviced offices,office for rent,office buildings for sale,downtown offices,loft office,office for rent in Buda,office for rent in Pest,Category A office buildings,green offices,list of office buildings,Tenant representation,') }}">
             @endisset
         @endunless
 

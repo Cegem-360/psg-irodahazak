@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\ViewErrorBag;
+use App\Livewire\ContactForm;
+use App\Models\Property;
+use Livewire\Livewire;
 
 /*
  * The privacy consent checkbox toggles fine, but @tailwindcss/forms renders the
@@ -14,26 +14,26 @@ use Illuminate\Support\ViewErrorBag;
  * A checked-state background utility must keep the checked state visible.
  */
 test('contact form privacy checkbox renders a visible checked state', function (): void {
-    // The @error directives need a shared error bag, normally provided by web middleware.
-    View::share('errors', new ViewErrorBag);
-
-    $html = Blade::render('<x-forms.contact />');
-
-    expect($html)->toContain('id="contact_privacy"');
-    expect($html)->toContain('checked:bg-primary');
+    Livewire::test(ContactForm::class)
+        ->assertSeeHtml('id="contact_privacy"')
+        ->assertSeeHtml('checked:bg-primary');
 });
 
-/*
- * After a successful submission the controller redirects back with a flashed
- * `success` message. The reusable contact form component must render it so the
- * visitor gets a confirmation ("Köszönjük üzenetét! ...") on property pages,
- * not only on the standalone contact page.
- */
-test('contact form component displays the flashed success message', function (): void {
-    View::share('errors', new ViewErrorBag);
-    session()->flash('success', 'Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.');
+test('contact form on a property page preselects the building as subject', function (): void {
+    $property = Property::query()->forceCreate([
+        'title' => 'Bank Center',
+        'slug' => 'bank-center',
+        'status' => 'active',
+        'elado_v_kiado' => 'kiado-iroda',
+    ]);
 
-    $html = Blade::render('<x-forms.contact />');
+    Livewire::test(ContactForm::class, ['selectedPropertyId' => $property->id, 'selectedPropertyTypeIsRent' => true])
+        ->assertSet('contact_subject', 'Bank Center')
+        ->assertSeeHtml('<option value="Bank Center">Bank Center</option>');
+});
 
-    expect($html)->toContain('Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.');
+test('contact form on the contact page offers the general subjects', function (): void {
+    Livewire::test(ContactForm::class)
+        ->assertSeeHtml('value="iroda_keresese"')
+        ->assertSet('contact_subject', '');
 });

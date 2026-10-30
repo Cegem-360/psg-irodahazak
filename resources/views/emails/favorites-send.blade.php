@@ -3,24 +3,24 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Online irodaház ajánlat érkezett!</title>
+        <title>{{ __('You have received an online office building offer!') }}</title>
     </head>
 
     <body>
-        <p>Online irodaház ajánlat érkezett!</p>
+        <p>{{ __('You have received an online office building offer!') }}</p>
         <br>
-        <p>Kedves {{ $recipientName }},</p>
+        <p>{{ __('Dear :name,', ['name' => $recipientName]) }}</p>
         <p>{{ $bodyText }}</p>
-        <p>Az alábbi irodákat ajánljuk Önnek:</p>
+        <p>{{ __('We recommend the following offices to you:') }}</p>
         <ul>
             @foreach ($properties as $property)
                 <li><a href="{{ $property['url'] }}">{{ $property['title'] }}</a></li>
             @endforeach
         </ul>
         <br>
-        <p>Üdvözlettel,</p>
+        <p>{{ __('Kind regards') }},</p>
         <p>Fekete Richárd<br>
-            mobil: +36 20 381 3917<br>
+            {{ __('mobile') }}: +36 20 381 3917<br>
             e-mail: richard.fekete@psg-irodahazak.hu</p>
     </body>
 

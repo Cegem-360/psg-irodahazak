@@ -31,7 +31,6 @@ Route::view('/elado-irodahazak', 'index')->name('elado-irodahazak');
 Route::view('/rolunk', 'index')->name('rolunk');
 
 Route::get('/kapcsolat', [ContactController::class, 'show'])->name('kapcsolat');
-Route::post('/kapcsolat', [ContactController::class, 'store'])->name('contact.store');
 
 Route::view('/adatvedelmi-nyilatkozat', 'pages.privacy-policy')->name('privacy-policy');
 
@@ -72,7 +71,6 @@ Route::group(['as' => 'en.'], function (): void {
     Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
     Route::get('/impressum', [ImpresszumController::class, 'show'])->name('impressum');
     Route::get('/contact-us', [ContactController::class, 'show'])->name('kapcsolat');
-    Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
     // English Budapest category routes
     Route::get('/budapest-en/{category}', [CategoryController::class, 'show'])->name('budapest.category');

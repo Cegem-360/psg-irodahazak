@@ -4,10 +4,10 @@
         {{ __('References, who moved with us') }}</h2>
     <div class="relative py-8 bg-[#EFEFEF]">
         <div
-            class="swiper reference-swiper !grid _grid-cols-2 sm:grid-cols-3 lg:grid-cols-5_ gap-4 max-w-screen-xl mx-auto">
+            class="swiper reference-swiper grid! _grid-cols-2 sm:grid-cols-3 lg:grid-cols-5_ gap-4 max-w-7xl mx-auto">
             <div class="swiper-wrapper">
                 @foreach (Reference::active()->orderBy('order', 'asc')->get() ?? [] as $reference)
-                    <div class="swiper-slide !flex items-center justify-center px-12 py-4 bg-white rounded-xl">
+                    <div class="swiper-slide flex! items-center justify-center px-12 py-4 bg-white rounded-xl">
                         <img class="max-h-20 object-contain object-center" src="{{ Storage::url($reference->image) }}"
                             alt="{{ $reference->name }}" loading="lazy" />
                     </div>
@@ -15,10 +15,10 @@
             </div>
         </div>
         <div
-            class="swiper-button-prev reference-button-prev !hidden lg:!flex !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+            class="swiper-button-prev reference-button-prev hidden! lg:flex! text-accent! hover:bg-black/10 hover:shadow rounded after:text-2xl! after:font-bold! after:drop-shadow">
         </div>
         <div
-            class="swiper-button-next reference-button-next !hidden lg:!flex !text-accent hover:bg-black/10 hover:shadow rounded after:!text-2xl after:!font-bold after:drop-shadow">
+            class="swiper-button-next reference-button-next hidden! lg:flex! text-accent! hover:bg-black/10 hover:shadow rounded after:text-2xl! after:font-bold! after:drop-shadow">
         </div>
     </div>
 </div>

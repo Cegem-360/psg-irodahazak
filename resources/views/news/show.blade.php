@@ -3,10 +3,10 @@
     ['name' => __('News'), 'url' => localized_route('news.index')],
     ['name' => $news->title, 'url' => Request::url()],
 ]">
-    <x-slot name="title">{{ $news->title }} | PSG-IRODAHÁZAK Hírek</x-slot>
+    <x-slot name="title">{{ $news->title }} | PSG-IRODAHÁZAK {{ __('News') }}</x-slot>
     <x-slot name="meta">
         <meta name="description" content="{{ $news->excerpt }}">
-        <meta name="keywords" content="hír, irodaház, irodabérlet">
+        <meta name="keywords" content="{{ __('news item, office building, office rental') }}">
         <link rel="canonical" href="{{ Request::url() }}">
 
         <!-- Open Graph -->
@@ -64,7 +64,7 @@
                     <div class="px-8 pb-8">
                         <div class="prose prose-lg max-w-none">
                             <span class="font-semibold text-blue-700 bg-blue-100 px-2 py-1 rounded">
-                                Forrás: {{ $news->source }}
+                                {{ __('Source: :source', ['source' => $news->source]) }}
                             </span>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
                         </path>
                     </svg>
-                    Vissza a hírekhez
+                    {{ __('Back to news') }}
                 </a>
             </div>
         </div>

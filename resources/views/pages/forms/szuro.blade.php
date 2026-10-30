@@ -12,13 +12,13 @@
         </div>
         <div class="absolute -left-8 -top-16 z-10 w-1/3 text-accent/30 blur-3xl"><x-svg.psg-irodahazak-symbol-2 />
         </div>
-        <div class="absolute left-[50%] -translate-x-[50%] -bottom-40 z-10 w-96 text-accent/30 blur-3xl">
+        <div class="absolute left-[50%] translate-x-[-50%] -bottom-40 z-10 w-96 text-accent/30 blur-3xl">
             <x-svg.psg-irodahazak-symbol-3 />
         </div>
     </div>
     <div class="relative bg-cover bg-center bg-no-repeat"
         style="background-image: url({{ Vite::asset('resources/images/office-building-2025-03-18-12-43-13-utc.webp') }});">
-        <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
+        <div class="absolute inset-0 z-1 bg-linear-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto pt-12 pb-20">
             <form id="filterForm" method="GET" action="{{ localized_route('kiado-irodak') }}" class="search-form">
                 <!-- Hidden inputs for map selection and parameters -->
@@ -29,7 +29,7 @@
                 <input type="hidden" name="price_min" id="priceMin" value="">
                 <input type="hidden" name="price_max" id="priceMax" value="">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-screen-xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     <div
                         class="p-8 space-y-8 bg-black/5 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl border border-white/15">
                         <!-- Térkép -->
@@ -75,95 +75,95 @@
                                 <div class="p-2">
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="1" class="district-checkbox mr-2">
-                                        <span>I. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'I']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="2" class="district-checkbox mr-2">
-                                        <span>II. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'II']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="3" class="district-checkbox mr-2">
-                                        <span>III. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'III']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="4" class="district-checkbox mr-2">
-                                        <span>IV. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'IV']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="5" class="district-checkbox mr-2">
-                                        <span>V. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'V']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="6" class="district-checkbox mr-2">
-                                        <span>VI. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'VI']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="7" class="district-checkbox mr-2">
-                                        <span>VII. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'VII']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="8" class="district-checkbox mr-2">
-                                        <span>VIII. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'VIII']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="9" class="district-checkbox mr-2">
-                                        <span>IX. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'IX']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="10" class="district-checkbox mr-2">
-                                        <span>X. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'X']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="11" class="district-checkbox mr-2">
-                                        <span>XI. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XI']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="12" class="district-checkbox mr-2">
-                                        <span>XII. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XII']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="13" class="district-checkbox mr-2">
-                                        <span>XIII. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XIII']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="14" class="district-checkbox mr-2">
-                                        <span>XIV. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XIV']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="15" class="district-checkbox mr-2">
-                                        <span>XV. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XV']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="16" class="district-checkbox mr-2">
-                                        <span>XVI. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XVI']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="17" class="district-checkbox mr-2">
-                                        <span>XVII. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XVII']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="18" class="district-checkbox mr-2">
-                                        <span>XVIII. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XVIII']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="19" class="district-checkbox mr-2">
-                                        <span>XIX. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XIX']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="20" class="district-checkbox mr-2">
-                                        <span>XX. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XX']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="21" class="district-checkbox mr-2">
-                                        <span>XXI. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XXI']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="22" class="district-checkbox mr-2">
-                                        <span>XXII. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XXII']) }}</span>
                                     </label>
                                     <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
                                         <input type="checkbox" value="23" class="district-checkbox mr-2">
-                                        <span>XXIII. {{ __('district') }}</span>
+                                        <span>{{ __('District :number', ['number' => 'XXIII']) }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@
                                                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                                                 </path>
                                             </svg>
-                                            Keresés...
+                                            {{ __('Searching...') }}
                                         </div>
                                     </div>
 
@@ -444,7 +444,7 @@
                 } else if (selectedDistricts.length === 1) {
                     dropdownText.textContent = selectedDistricts[0];
                 } else {
-                    dropdownText.textContent = `${selectedDistricts.length} {{ __('district selected') }}`;
+                    dropdownText.textContent = `{{ __(':count districts selected', ['count' => '${selectedDistricts.length}']) }}`;
                 }
             }
 
@@ -617,7 +617,7 @@
                     if (filteredOffices.length === 0 && searchTerm) {
                         officeEmpty.classList.remove('hidden');
                         officeResults.innerHTML =
-                            '<div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option" data-value=""><div class="text-gray-500 italic">Összes irodaház</div></div>';
+                            '<div class="px-3 py-2 hover:bg-gray-50 rounded cursor-pointer office-option" data-value=""><div class="text-gray-500 italic">{{ __('All Office Buildings') }}</div></div>';
                     } else {
                         officeEmpty.classList.add('hidden');
 

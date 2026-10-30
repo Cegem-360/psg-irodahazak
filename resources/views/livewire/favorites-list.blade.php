@@ -1,14 +1,14 @@
 <div>
     <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
         style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
-        <div class="absolute inset-0 z-1 bg-gradient-to-b from-white/90 to-white/70"></div>
+        <div class="absolute inset-0 z-1 bg-linear-to-b from-white/90 to-white/70"></div>
         <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
             <h2 class="mt-4 mb-4 font-bold text-5xl text-center drop-shadow text-logogray/80">
                 {{ __('My Favorites') }}
             </h2>
             @if ($favoriteCount > 0)
                 <h4 class="text-xl text-center mb-8">
-                    {{ __('You have') }} {{ $favoriteCount }} {{ __('favorite properties') }}
+                    {{ __('You have :count favorite properties', ['count' => $favoriteCount]) }}
                 </h4>
                 <p class="text-center text-gray-600 mb-16">
                     {{ __('Here you can find all the properties you have marked as favorites') }}
@@ -24,7 +24,7 @@
         </div>
     </div>
     @if ($favoriteCount > 0)
-        <div class="flex justify-end gap-3 max-w-screen-xl mx-auto px-8 pt-8">
+        <div class="flex justify-end gap-3 max-w-7xl mx-auto px-8 pt-8">
             <a href="{{ localized_route('favorites.export-excel') }}"
                 class="flex items-center gap-2 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,7 +48,7 @@
     @if ($favoriteCount > 0)
         <div class="relative bg-white">
             <div class="container mx-auto py-16">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-screen-xl mx-auto px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-8">
                     @foreach ($favoriteProperties as $property)
                         @if ($property->isRent())
                             <livewire:ingatlan-card :property="$property" :image="$property->getFirstImageUrl()" :title="$property->title"

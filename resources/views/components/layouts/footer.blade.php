@@ -1,6 +1,6 @@
  <x-layouts.partials.ajanlat />
  <footer class="p-4 bg-white sm:p-12">
-     <div class="mx-auto max-w-screen-xl">
+     <div class="mx-auto max-w-7xl">
          <div class="md:flex md:gap-8 md:justify-between">
              <div class="mb-6 md:mb-0">
                  <a href="/" class="flex items-center">

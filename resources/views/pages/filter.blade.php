@@ -3,7 +3,7 @@
     ['name' => __('Rental Offices'), 'url' => localized_route('kiado-irodak')],
     ['name' => $category->name, 'url' => Request::url()],
 ]">
-    <x-slot name="title">{{ $category->seo_title ?: __(':category Budapesten | PSG Irodaházak', ['category' => $category->name]) }}</x-slot>
-    <x-slot name="metaDescription">{{ $category->meta_description ?: __(':category Budapesten: az irodaházak aktuális szabad területei, bérleti és üzemeltetési díjai térképpel. Kérjen személyre szabott ajánlatot a PSG Irodaházaktól!', ['category' => $category->name]) }}</x-slot>
+    <x-slot name="title">{{ $category->seo_title ?: __(':category in Budapest | PSG Irodaházak', ['category' => $category->name]) }}</x-slot>
+    <x-slot name="metaDescription">{{ $category->meta_description ?: __(':category in Budapest: current available spaces, rental and operating fees of office buildings on a map. Request a personalised offer from PSG Irodaházak!', ['category' => $category->name]) }}</x-slot>
     <livewire:list-rent-offices :queryParams />
 </x-layouts.app>
