@@ -7,19 +7,19 @@ namespace App\Livewire;
 use App\Models\Property;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 final class PropertyPhoneModal extends Component
 {
-    public $showModal = false;
+    public bool $showModal = false;
 
-    public $property;
+    public ?Property $property = null;
 
-    public $title = '';
+    public string $title = '';
 
-    protected $listeners = ['show-phone-modal' => 'openModal'];
-
-    public function openModal($title, $propertyId = null): void
+    #[On('show-phone-modal')]
+    public function openModal(string $title = '', ?int $propertyId = null): void
     {
         $this->title = $title;
 

@@ -7,19 +7,19 @@ namespace App\Livewire;
 use App\Models\Property;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 final class PropertyMapModal extends Component
 {
-    public $showModal = false;
+    public bool $showModal = false;
 
-    public $property;
+    public ?Property $property = null;
 
-    public $title = '';
+    public string $title = '';
 
-    protected $listeners = ['show-map-modal' => 'openModal'];
-
-    public function openModal($title, $propertyId = null): void
+    #[On('show-map-modal')]
+    public function openModal(string $title = '', ?int $propertyId = null): void
     {
         $this->title = $title;
 

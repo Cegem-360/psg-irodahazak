@@ -11,36 +11,34 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 final class FavoritesSendModal extends Component
 {
-    public $showSendModal = false;
+    public bool $showSendModal = false;
 
-    public $recipientName;
+    #[Validate('required')]
+    public string $recipientName = '';
 
-    public $recipientEmail;
+    #[Validate('required|email')]
+    public string $recipientEmail = '';
 
-    public $bodyText;
+    public string $bodyText = '';
 
-    public $properties = [];
-
-    protected $rules = [
-        'recipientName' => 'required',
-        'recipientEmail' => 'required|email',
-    ];
-
-    protected $listeners = ['openSendFavoritesModal' => 'showModal'];
+    /** @var list<array{title: string, url: string}> */
+    public array $properties = [];
 
     public function mount(): void
     {
-        $this->bodyText = '';
         $this->loadProperties();
     }
 
     public function loadProperties(): void
     {
-        $favorites = json_decode(Cookie::get('property_favorites', '[]'), true);
+        $favorites = json_decode((string) Cookie::get('property_favorites', '[]'), true);
+        $favorites = is_array($favorites) ? $favorites : [];
         $this->properties = Property::query()->whereIn('id', $favorites)->get()->map(fn ($property): array => [
             'title' => $property->title,
             'url' => URL::temporarySignedRoute(
@@ -64,14 +62,14 @@ final class FavoritesSendModal extends Component
         $this->showSendModal = false;
         $this->dispatch('notify',
             type: 'success',
-            title: 'Kedvencek elküldve',
-            body: "Az ajánlatot elküldtük a(z) {$this->recipientEmail} címre!",
+            title: __('Favorites sent'),
+            body: __('We have sent the offer to :email!', ['email' => $this->recipientEmail]),
         );
-        session()->flash('success', 'Az ajánlatot elküldtük!');
         Cookie::queue(Cookie::forget('property_favorites'));
-        session()->flash('success', 'A kedvencek listája kiürítve!');
+        session()->flash('success', __('The favorites list has been cleared!'));
     }
 
+    #[On('openSendFavoritesModal')]
     public function showModal(): void
     {
         $this->showSendModal = true;

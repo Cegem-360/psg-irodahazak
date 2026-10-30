@@ -13,49 +13,17 @@
     @endif
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-            <label for="contact_name" class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.name') }}
-                *</label>
-            <input type="text" id="contact_name" wire:model="name"
-                class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('name') border-red-500 @enderror"
-                placeholder="{{ __('contact.name_placeholder') }}" required>
-            @error('name')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-            @enderror
-        </div>
-        <div>
-            <label for="contact_email" class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.email') }}
-                *</label>
-            <input type="email" id="contact_email" wire:model="email"
-                class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('email') border-red-500 @enderror"
-                placeholder="{{ __('contact.email_placeholder') }}" required>
-            @error('email')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-            @enderror
-        </div>
+        <x-forms.input name="name" id="contact_name" :label="__('contact.name')"
+            :placeholder="__('contact.name_placeholder')" required />
+        <x-forms.input name="email" id="contact_email" type="email" :label="__('contact.email')"
+            :placeholder="__('contact.email_placeholder')" required />
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-            <label for="contact_phone" class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.phone') }}
-                *</label>
-            <input type="tel" id="contact_phone" wire:model="phone"
-                class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('phone') border-red-500 @enderror"
-                placeholder="{{ __('contact.phone_placeholder') }}" required>
-            @error('phone')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-            @enderror
-        </div>
-        <div>
-            <label for="contact_company"
-                class="block mb-2 text-sm font-medium text-gray-900">{{ __('contact.company') }}</label>
-            <input type="text" id="contact_company" wire:model="company"
-                class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors @error('company') border-red-500 @enderror"
-                placeholder="{{ __('contact.company_placeholder') }}">
-            @error('company')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-            @enderror
-        </div>
+        <x-forms.input name="phone" id="contact_phone" type="tel" :label="__('contact.phone')"
+            :placeholder="__('contact.phone_placeholder')" required />
+        <x-forms.input name="company" id="contact_company" :label="__('contact.company')"
+            :placeholder="__('contact.company_placeholder')" />
     </div>
 
     <div>

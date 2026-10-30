@@ -86,7 +86,7 @@ final class PropertyController extends Controller
             ->active();
 
         // If property is for sale, apply sale scope, otherwise apply rent scope
-        if ($property->elado_v_kiado === 'elado-iroda') {
+        if ($property->isSale()) {
             $similarPropertiesQuery->sale();
         } else {
             $similarPropertiesQuery->rent();
@@ -107,7 +107,7 @@ final class PropertyController extends Controller
                 ->active();
 
             // Apply the same scope for additional properties
-            if ($property->elado_v_kiado === 'elado-iroda') {
+            if ($property->isSale()) {
                 $additionalQuery->sale();
             } else {
                 $additionalQuery->rent();

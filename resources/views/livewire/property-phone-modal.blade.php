@@ -30,13 +30,6 @@
                             </a>
                         </div>
 
-                        @if ($property && $property->contact_person)
-                            <div class="text-center mb-6 pt-4 border-t border-gray-200">
-                                <p class="text-sm text-gray-600">{{ __('Contact person') }}</p>
-                                <p class="text-gray-900 font-medium">{{ $property->contact_person }}</p>
-                            </div>
-                        @endif
-
                         <div class="text-center">
                             <button wire:click="closeModal"
                                 class="bg-white text-gray-700 px-8 py-2 border border-gray-300 hover:bg-gray-50 transition-colors">

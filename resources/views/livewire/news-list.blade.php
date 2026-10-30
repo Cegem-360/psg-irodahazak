@@ -1,6 +1,5 @@
 <div>
-    <div
-        class="flex flex-col md:flex-row gap-4 max-w-7xl mx-auto mb-6 px-8 py-4 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+    <x-glass-panel padding="px-8 py-4" class="flex flex-col md:flex-row gap-4 mb-6">
         <label class="flex-1">
             <span class="sr-only">{{ __('Search news') }}</span>
             <input type="search" wire:model.live.debounce.400ms="search" placeholder="{{ __('Search news...') }}"
@@ -18,10 +17,9 @@
                 </select>
             </label>
         @endif
-    </div>
+    </x-glass-panel>
 
-    <div class="max-w-7xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl"
-        wire:loading.class="opacity-60">
+    <x-glass-panel wire:loading.class="opacity-60">
         @forelse ($news as $article)
             <x-news.list-item :article="$article" wire:key="news-{{ $article->id }}" />
         @empty
@@ -31,12 +29,11 @@
                     {{ __('Clear filters') }}</button>
             </div>
         @endforelse
-    </div>
+    </x-glass-panel>
 
     @if ($news->hasPages())
-        <div
-            class="flex justify-center gap-8 max-w-7xl mx-auto mt-3 px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
+        <x-glass-panel padding="px-8 py-3" class="flex justify-center gap-8 mt-3">
             {{ $news->links() }}
-        </div>
+        </x-glass-panel>
     @endif
 </div>

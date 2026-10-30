@@ -15,21 +15,15 @@ final class ListSaleOffices extends Component
 {
     use WithPagination;
 
-    public $search = '';
+    public string $search = '';
 
-    public $sortField = 'title';
+    public string $sortField = 'title';
 
-    public $sortDirection = 'asc';
+    public string $sortDirection = 'asc';
 
-    public $perPage = 6;
+    public int $perPage = 6;
 
-    public $totalOffices;
-
-    public $selectedOffice;
-
-    public $showModal = false;
-
-    public $officeDetails = [];
+    public int $totalOffices = 0;
 
     /** @var array<string, mixed> Per-request memo of getOffices(), keyed by the list state. */
     private array $officesMemo = [];
@@ -100,7 +94,7 @@ final class ListSaleOffices extends Component
         $this->updateTotalOffices();
     }
 
-    public function sortBy($field): void
+    public function sortBy(string $field): void
     {
         if ($this->sortField === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';

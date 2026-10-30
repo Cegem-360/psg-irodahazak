@@ -35,13 +35,11 @@ final class PropertyObserver
     {
         Property::forgetDistrictCounts();
 
-        if (blank(config('seo.indexnow.key')) || $property->status !== 'active' || blank($property->slug)) {
+        if (blank(config('seo.indexnow.key')) || ! $property->isActive() || blank($property->slug)) {
             return;
         }
 
-        $route = $property->elado_v_kiado === 'elado-iroda' ? 'properties.show-for-sale' : 'properties.show';
-
-        SubmitUrlsToIndexNow::dispatchAfterResponse([route($route, ['property' => $property->slug])]);
+        SubmitUrlsToIndexNow::dispatchAfterResponse([$property->url()]);
     }
 
     public function deleted(Property $property): void

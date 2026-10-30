@@ -38,8 +38,8 @@
 
             @if ($property->status)
                 <span
-                    class="px-2 py-1 text-xs rounded-full {{ $property->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                    {{ $property->status === 'active' ? __('Active') : __('Inactive') }}
+                    class="px-2 py-1 text-xs rounded-full {{ $property->isActive() ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                    {{ $property->isActive() ? __('Active') : __('Inactive') }}
                 </span>
             @endif
         </div>

@@ -44,11 +44,6 @@ final class ListRentProperties extends Page implements HasTable
                 TextColumn::make('status')
                     ->label('Státusz')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'active' => 'success',
-                        'inactive' => 'danger',
-                        default => 'gray',
-                    })
                     ->searchable(),
                 TextColumn::make('title')
                     ->label('Cím')

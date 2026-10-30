@@ -9,38 +9,41 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cookie;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 final class IngatlanCard extends Component
 {
-    public $property;
+    public ?Property $property = null;
 
-    public $title;
+    public string $title = '';
 
-    public $description;
+    public ?string $description = null;
 
-    public $image;
+    public ?string $image = null;
 
-    public $images = [];
+    /** @var list<string> Gallery image paths for the mini carousel */
+    public array $images = [];
 
-    public $link;
+    public ?string $link = null;
 
-    public $small = false;
+    public bool $small = false;
 
-    public $swiper = false;
+    public bool $swiper = false;
 
-    public $minicarousel = false;
+    public bool $minicarousel = false;
 
-    public $favoritestatus = false;
+    public bool $favoritestatus = false;
 
-    protected $listeners = ['favorites-updated' => 'handleFavoritesUpdate'];
-
-    public function mount(?Property $property, $title, $description = null, $image = null, $link = null, bool $small = false, $images = []): void
+    /**
+     * @param  iterable<int, string>  $images
+     */
+    public function mount(?Property $property, ?string $title, ?string $description = null, ?string $image = null, ?string $link = null, bool $small = false, iterable $images = []): void
     {
-        $this->images = $images; // Initialize images array
+        $this->images = collect($images)->values()->all();
         $this->favoritestatus = false; // Initialize favorite status
         $this->property = $property;
-        $this->title = $title;
+        $this->title = (string) $title;
         $this->description = $description;
         $this->image = $image;
         $this->link = $link;
@@ -51,18 +54,12 @@ final class IngatlanCard extends Component
 
     public function showMapModal(): void
     {
-        $this->dispatch('show-map-modal', [
-            'propertyId' => $this->property?->id,
-            'title' => $this->title,
-        ]);
+        $this->dispatch('show-map-modal', title: $this->title, propertyId: $this->property?->id);
     }
 
     public function showPhoneModal(): void
     {
-        $this->dispatch('show-phone-modal', [
-            'propertyId' => $this->property?->id,
-            'title' => $this->title,
-        ]);
+        $this->dispatch('show-phone-modal', title: $this->title, propertyId: $this->property?->id);
     }
 
     public function toggleFavorite(): void
@@ -90,7 +87,8 @@ final class IngatlanCard extends Component
         $this->dispatch('favorites-updated', propertyId: $propertyId, favoritestatus: $this->favoritestatus);
     }
 
-    public function handleFavoritesUpdate($propertyId, $favoritestatus): void
+    #[On('favorites-updated')]
+    public function handleFavoritesUpdate(int $propertyId, bool $favoritestatus): void
     {
         if ($this->property && $this->property->id === $propertyId) {
             $this->favoritestatus = $favoritestatus;
@@ -99,8 +97,6 @@ final class IngatlanCard extends Component
 
     public function render(): Factory|View
     {
-        $this->favoritestatus ??= false;
-
         return view('livewire.ingatlan-card', [
             'favoritestatus' => $this->favoritestatus,
         ]);

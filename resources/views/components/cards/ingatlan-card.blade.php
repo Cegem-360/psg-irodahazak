@@ -13,7 +13,7 @@
         loading="lazy" />
     <div class="absolute bottom-64 right-2 flex gap-1">
         <!-- Map icon box -->
-        <button @click="$dispatch('show-phone-modal')"
+        <button @click="$dispatch('show-map-modal', {{ Js::from(['title' => (string) $title, 'propertyId' => $property?->id]) }})"
             class="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded shadow-lg transition-colors duration-200">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
@@ -23,7 +23,7 @@
         </button>
 
         <!-- Phone icon box -->
-        <button
+        <button @click="$dispatch('show-phone-modal', {{ Js::from(['title' => (string) $title, 'propertyId' => $property?->id]) }})"
             class="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded shadow-lg transition-colors duration-200">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path

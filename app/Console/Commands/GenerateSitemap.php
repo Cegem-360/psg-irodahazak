@@ -79,18 +79,14 @@ final class GenerateSitemap extends Command
         $sitemap = Sitemap::create();
 
         $properties = Property::query()
-            ->where('status', 'active')
+            ->active()
             ->whereNotNull('slug')
             ->where('slug', '!=', '')
             ->cursor();
 
         foreach ($properties as $property) {
-            $route = str_starts_with((string) $property->elado_v_kiado, 'elado')
-                ? 'properties.show-for-sale'
-                : 'properties.show';
-
             $sitemap->add(
-                Url::create(route($route, ['property' => $property->slug]))
+                Url::create($property->url())
                     ->setLastModificationDate($property->updated_at ?? now())
                     ->setPriority(0.9)
             );

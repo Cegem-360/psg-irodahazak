@@ -573,5 +573,8 @@
     "Please enter your message.": "Az üzenet megadása kötelező.",
     "You must accept the privacy policy.": "Az adatvédelmi nyilatkozat elfogadása kötelező.",
     "Please correct the errors and try again.": "Kérjük, javítsa ki a hibákat és próbálja újra.",
-    "Sending...": "Küldés..."
+    "Sending...": "Küldés...",
+    "Favorites sent": "Kedvencek elküldve",
+    "We have sent the offer to :email!": "Az ajánlatot elküldtük a(z) :email címre!",
+    "The favorites list has been cleared!": "A kedvencek listája kiürítve!"
 }

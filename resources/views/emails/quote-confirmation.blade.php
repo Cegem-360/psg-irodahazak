@@ -1,116 +1,13 @@
-<!DOCTYPE html>
-<html>
+<x-emails.layout :title="__('Quote request confirmation')" accent="#3b82f6"
+    :heading="__('Thank you for your quote request!')">
+    <x-slot:styles>
+        <x-emails.styles.contact-info />
+    </x-slot:styles>
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ __('Quote request confirmation') }}</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                line-height: 1.6;
-                color: #333;
-                max-width: 600px;
-                margin: 0 auto;
-                padding: 20px;
-            }
+    <p>{{ __('Dear :name!', ['name' => $name]) }}</p>
 
-            .header {
-                background-color: #3b82f6;
-                color: white;
-                padding: 20px;
-                text-align: center;
-                border-radius: 8px 8px 0 0;
-            }
+    <p>{!! __('Thank you for requesting an online quote from us. We have received your request and our colleague will contact you <strong>within 24 hours</strong>.') !!}
+    </p>
 
-            .content {
-                background-color: #f8f9fa;
-                padding: 30px;
-                border-radius: 0 0 8px 8px;
-            }
-
-            .contact-info {
-                background-color: white;
-                padding: 20px;
-                border-radius: 5px;
-                border: 1px solid #e2e8f0;
-                margin: 20px 0;
-            }
-
-            .contact-item {
-                margin-bottom: 10px;
-                display: flex;
-                align-items: center;
-            }
-
-            .contact-item strong {
-                color: #1a365d;
-                width: 100px;
-                display: inline-block;
-            }
-
-            .logo {
-                text-align: center;
-                margin: 20px 0;
-            }
-        </style>
-    </head>
-
-    <body>
-        <div class="header">
-            <h1>{{ __('Thank you for your quote request!') }}</h1>
-            <p>PSG Irodaházak</p>
-        </div>
-
-        <div class="content">
-            <p>{{ __('Dear :name!', ['name' => $name]) }}</p>
-
-            <p>{!! __('Thank you for requesting an online quote from us. We have received your request and our colleague will contact you <strong>within 24 hours</strong>.') !!}
-            </p>
-
-            <h3>{{ __('Our contact details') }}:</h3>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <strong>{{ __('Phone') }}:</strong>
-                    <span>+36 20 381 3917</span>
-                </div>
-                <div class="contact-item">
-                    <strong>{{ __('Email') }}:</strong>
-                    <span>info@psg-irodahazak.hu</span>
-                </div>
-                <div class="contact-item">
-                    <strong>{{ __('Office') }}:</strong>
-                    <span>1016 Budapest, Derék u. 2.</span>
-                </div>
-            </div>
-
-            <h3>{{ __('Opening hours') }}:</h3>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <strong>{{ __('Monday-Friday') }}:</strong>
-                    <span>9:00 - 18:00</span>
-                </div>
-                <div class="contact-item">
-                    <strong>{{ __('Saturday') }}:</strong>
-                    <span>10:00 - 14:00</span>
-                </div>
-                <div class="contact-item">
-                    <strong>{{ __('Sunday') }}:</strong>
-                    <span>{{ __('Closed') }}</span>
-                </div>
-            </div>
-
-            <p>{{ __('If you have an urgent question, please call us at :phone.', ['phone' => '+36 20 381 3917']) }}</p>
-
-            <p style="margin-top: 30px;">
-                {{ __('Kind regards') }},<br>
-                <strong>{{ __('The Property Solution Group team') }}</strong>
-            </p>
-
-            <p style="margin-top: 30px; font-size: 14px; color: #666;">
-                {{ __('This is an automated reply. Please do not reply to this email.') }}
-            </p>
-        </div>
-    </body>
-
-</html>
+    <x-emails.contact-details />
+</x-emails.layout>

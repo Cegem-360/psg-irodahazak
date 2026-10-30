@@ -1,28 +1,24 @@
 <div>
-    <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
-        style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
-        <div class="absolute inset-0 z-1 bg-linear-to-b from-white/90 to-white/70"></div>
-        <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
-            <h2 class="mt-4 mb-4 font-bold text-5xl text-center drop-shadow text-logogray/80">
-                {{ __('My Favorites') }}
-            </h2>
-            @if ($favoriteCount > 0)
-                <h4 class="text-xl text-center mb-8">
-                    {{ __('You have :count favorite properties', ['count' => $favoriteCount]) }}
-                </h4>
-                <p class="text-center text-gray-600 mb-16">
-                    {{ __('Here you can find all the properties you have marked as favorites') }}
-                </p>
-            @else
-                <h4 class="text-xl text-center mb-8">
-                    {{ __('No favorites yet') }}
-                </h4>
-                <p class="text-center text-gray-600 mb-16">
-                    {{ __('Start adding properties to your favorites by clicking the heart icon on property cards.') }}
-                </p>
-            @endif
-        </div>
-    </div>
+    <x-page-section>
+        <h2 class="mt-4 mb-4 font-bold text-5xl text-center drop-shadow text-logogray/80">
+            {{ __('My Favorites') }}
+        </h2>
+        @if ($favoriteCount > 0)
+            <h4 class="text-xl text-center mb-8">
+                {{ __('You have :count favorite properties', ['count' => $favoriteCount]) }}
+            </h4>
+            <p class="text-center text-gray-600 mb-16">
+                {{ __('Here you can find all the properties you have marked as favorites') }}
+            </p>
+        @else
+            <h4 class="text-xl text-center mb-8">
+                {{ __('No favorites yet') }}
+            </h4>
+            <p class="text-center text-gray-600 mb-16">
+                {{ __('Start adding properties to your favorites by clicking the heart icon on property cards.') }}
+            </p>
+        @endif
+    </x-page-section>
     @if ($favoriteCount > 0)
         <div class="flex justify-end gap-3 max-w-7xl mx-auto px-8 pt-8">
             <a href="{{ localized_route('favorites.export-excel') }}"

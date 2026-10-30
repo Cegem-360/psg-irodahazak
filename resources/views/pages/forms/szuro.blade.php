@@ -1,3 +1,4 @@
+@use('App\Enums\BudapestDistrict')
 @use('App\Models\Property')
 <div>
     <div class="relative">
@@ -73,98 +74,12 @@
                             <div id="dropdownMenu"
                                 class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-xl shadow-lg max-h-48 overflow-y-auto hidden">
                                 <div class="p-2">
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="1" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'I']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="2" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'II']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="3" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'III']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="4" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'IV']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="5" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'V']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="6" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'VI']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="7" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'VII']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="8" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'VIII']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="9" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'IX']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="10" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'X']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="11" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XI']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="12" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XII']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="13" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XIII']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="14" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XIV']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="15" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XV']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="16" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XVI']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="17" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XVII']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="18" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XVIII']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="19" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XIX']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="20" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XX']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="21" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XXI']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="22" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XXII']) }}</span>
-                                    </label>
-                                    <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
-                                        <input type="checkbox" value="23" class="district-checkbox mr-2">
-                                        <span>{{ __('District :number', ['number' => 'XXIII']) }}</span>
-                                    </label>
+                                    @foreach (BudapestDistrict::cases() as $budapestDistrict)
+                                        <label class="flex items-center px-3 py-2 hover:bg-gray-50 rounded cursor-pointer">
+                                            <input type="checkbox" value="{{ $budapestDistrict->value }}" class="district-checkbox mr-2">
+                                            <span>{{ __('District :number', ['number' => $budapestDistrict->roman()]) }}</span>
+                                        </label>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

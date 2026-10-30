@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\PropertyStatus;
+use App\Enums\PropertyType;
 use App\Filament\Exports\PropertyExporter;
 use App\Filament\Imports\PropertyImporter;
 use App\Filament\Resources\PropertyResource\Pages\CreateProperty;
@@ -77,10 +79,8 @@ final class PropertyResource extends Resource
                     ->columnSpanFull(),
                 Select::make('status')
                     ->label('Státusz')
-                    ->options([
-                        'active' => 'Active',
-                        'inactive' => 'Inactive',
-                    ])
+                    ->options(PropertyStatus::class)
+                    ->enum(PropertyStatus::class)
                     ->required(),
                 Toggle::make('featured')
                     ->label('Kiemelt ajánlat')
@@ -160,10 +160,10 @@ final class PropertyResource extends Resource
                     Grid::make()
                         ->schema([
                             TextInput::make('min_berleti_dij')
-                                ->label(fn (Get $get): string => $get('elado_v_kiado') === 'elado-iroda' ? 'Eladási ár ' : 'Min. bérleti díj')
+                                ->label(fn (Get $get): string => self::isSaleState($get('elado_v_kiado')) ? 'Eladási ár ' : 'Min. bérleti díj')
                                 ->maxLength(255),
                             Select::make('min_berleti_dij_addons')
-                                ->label(fn (Get $get): string => $get('elado_v_kiado') === 'elado-iroda' ? 'Eladási ár addons' : 'Min. bérleti díj addons')
+                                ->label(fn (Get $get): string => self::isSaleState($get('elado_v_kiado')) ? 'Eladási ár addons' : 'Min. bérleti díj addons')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
                                     'HUF/m2/hó' => 'HUF/m2/hó',
@@ -179,11 +179,11 @@ final class PropertyResource extends Resource
                                     'mrd HUF' => 'mrd HUF',
                                 ]),
                             TextInput::make('max_berleti_dij')
-                                ->hidden(fn (Get $get): bool => $get('elado_v_kiado') === 'elado-iroda')
+                                ->hidden(fn (Get $get): bool => self::isSaleState($get('elado_v_kiado')))
                                 ->label('Max. bérleti díj')
                                 ->maxLength(255),
                             Select::make('max_berleti_dij_addons')
-                                ->hidden(fn (Get $get): bool => $get('elado_v_kiado') === 'elado-iroda')
+                                ->hidden(fn (Get $get): bool => self::isSaleState($get('elado_v_kiado')))
                                 ->label('Max. bérleti díj kiegészítések')
                                 ->options([
                                     'EUR/m2/hó' => 'EUR/m2/hó',
@@ -355,10 +355,9 @@ final class PropertyResource extends Resource
                     ->maxLength(255),
                 Select::make('elado_v_kiado')
                     ->label('Eladó v. kiadó')
-                    ->options([
-                        'kiado-iroda' => 'Kiadó',
-                        'elado-iroda' => 'Eladó',
-                    ])
+                    ->options(PropertyType::class)
+                    ->enum(PropertyType::class)
+                    ->live()
                     ->required(),
                 DatePicker::make('updated')
                     ->label('Frissítve'),
@@ -400,11 +399,6 @@ final class PropertyResource extends Resource
                 TextColumn::make('status')
                     ->label('Státusz')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'active' => 'success',
-                        'inactive' => 'danger',
-                        default => 'gray',
-                    })
                     ->searchable(),
                 TextColumn::make('title')
                     ->label('Cím')
@@ -475,5 +469,14 @@ final class PropertyResource extends Resource
             'create' => CreateProperty::route('/create'),
             'edit' => EditProperty::route('/{record}/edit'),
         ];
+    }
+
+    /**
+     * Whether the form's "Eladó v. kiadó" state is a sale: an enum once hydrated
+     * from the record, the raw value while the form is being edited.
+     */
+    private static function isSaleState(mixed $state): bool
+    {
+        return ($state instanceof PropertyType ? $state : PropertyType::tryFrom((string) $state)) === PropertyType::Sale;
     }
 }

@@ -1,42 +1,36 @@
 @use('App\Models\Translate')
 <div wire:key="list-rent-offices" class="list-rent-offices">
-    <div class="relative bg-cover bg-center bg-no-repeat bg-fixed"
-        style="background-image: url({{ Vite::asset('resources/images/view-of-london-city-united-kingdom-2025-02-19-07-53-44-utc.webp') }});">
-        <div class="absolute inset-0 z-1 bg-linear-to-b from-white/90 to-white/70"></div>
-        <div class="relative z-10 container mx-auto space-y-3 pt-24 pb-20">
-            <h1 class="mt-4 mb-8 font-bold text-5xl text-center drop-shadow text-logogray/80">
-                {{-- Check if the title is set and if a translation exists --}}
-                @if (app()->getLocale() === 'en' && $title && Translate::whereName($title)->exists())
-                    {{ Translate::whereName($title)->first()->translated }}
-                @else
-                    {{ $title ? __($title) : __('page.title.offices_for_rent') }}
-                @endif
-                <span class="block mt-4 text-xl font-normal text-gray-700">({{ __(':count office buildings', ['count' => $totalOffices]) }})</span>
-            </h1>
-            <div
-                class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto p-8 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
-                <div class="hidden md:block relative">
-                    <div wire:ignore id="map" class="sticky top-0 h-[120vh] rounded-lg border border-gray-300"
-                        style="width: 100%;"></div>
-                </div>
-                <div class="col-span-2">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-fit">
-                        @foreach ($offices ?? [] as $office)
-                            <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl()" :images="collect($office->property_photos)"
-                                :title="$office->title" :description="$office->getAddressFormated()" :link="localized_route('properties.show', ['property' => $office->slug])" :small="true"
-                                :minicarousel="true" wire:key="office-{{ $office->id }}" />
-                        @endforeach
-                    </div>
+    <x-page-section heading-margin="mb-8">
+        <x-slot:heading>
+            {{-- Check if the title is set and if a translation exists --}}
+            @if (app()->getLocale() === 'en' && $title && Translate::whereName($title)->exists())
+                {{ Translate::whereName($title)->first()->translated }}
+            @else
+                {{ $title ? __($title) : __('page.title.offices_for_rent') }}
+            @endif
+            <span class="block mt-4 text-xl font-normal text-gray-700">({{ __(':count office buildings', ['count' => $totalOffices]) }})</span>
+        </x-slot:heading>
+        <x-glass-panel class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="hidden md:block relative">
+                <div wire:ignore id="map" class="sticky top-0 h-[120vh] rounded-lg border border-gray-300"
+                    style="width: 100%;"></div>
+            </div>
+            <div class="col-span-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-fit">
+                    @foreach ($offices ?? [] as $office)
+                        <livewire:ingatlan-card :property="$office" :image="$office->getFirstImageUrl()" :images="$office->property_photos ?? []"
+                            :title="$office->title" :description="$office->getAddressFormated()" :link="localized_route('properties.show', ['property' => $office->slug])" :small="true"
+                            :minicarousel="true" wire:key="office-{{ $office->id }}" />
+                    @endforeach
                 </div>
             </div>
+        </x-glass-panel>
 
-            <div
-                class="flex justify-center gap-8 max-w-7xl mx-auto px-8 py-3 backdrop-blur-3xl rounded-xl border border-white/15 shadow-xl">
-                {{-- Pagination --}}
-                {{ $offices->links() }}
-            </div>
-        </div>
-    </div>
+        <x-glass-panel padding="px-8 py-3" class="flex justify-center gap-8">
+            {{-- Pagination --}}
+            {{ $offices->links() }}
+        </x-glass-panel>
+    </x-page-section>
 
     @script
         <script>

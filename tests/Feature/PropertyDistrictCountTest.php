@@ -46,3 +46,13 @@ it('answers from one query and refreshes after a property is saved', function ()
 
     expect(Property::countByDistrict()[5])->toBe(2);
 });
+
+it('filters by district number or Roman numeral, via the district column or the postal code', function (string $district): void {
+    $byColumn = rentalOffice(['district' => 'V', 'cim_irsz' => '']);
+    $byPostalCode = rentalOffice(['district' => '', 'cim_irsz' => '1054']);
+    $elsewhere = rentalOffice(['district' => 'XIII', 'cim_irsz' => '1134']);
+
+    expect(Property::query()->inDistrict($district)->pluck('id')->all())
+        ->toEqualCanonicalizing([$byColumn->id, $byPostalCode->id])
+        ->and(Property::query()->inDistricts([$district, '13'])->count())->toBe(3);
+})->with(['5', 'V', 'v']);

@@ -15,37 +15,31 @@ final class ListRentOffices extends Component
 {
     use WithPagination;
 
-    public $search = '';
+    public ?string $search = '';
 
-    public $districts = '';
+    public ?string $districts = '';
 
-    public $district = '';
+    public ?string $district = '';
 
-    public $officeName = '';
+    public ?string $officeName = '';
 
-    public $areaMin = '';
+    public ?string $areaMin = '';
 
-    public $areaMax = '';
+    public ?string $areaMax = '';
 
-    public $priceMin = '';
+    public ?string $priceMin = '';
 
-    public $priceMax = '';
+    public ?string $priceMax = '';
 
-    public $includeAgglomeration = false;
+    public bool $includeAgglomeration = false;
 
-    public $sortField = 'title';
+    public string $sortField = 'title';
 
-    public $sortDirection = 'asc';
+    public string $sortDirection = 'asc';
 
-    public $perPage = 6;
+    public int $perPage = 6;
 
-    public $totalOffices;
-
-    public $selectedOffice;
-
-    public $showModal = false;
-
-    public $officeDetails = [];
+    public int $totalOffices = 0;
 
     public null|int|string $min_rent = '';
 
@@ -72,7 +66,7 @@ final class ListRentOffices extends Component
         $this->areaMax = $queryParams['area_max'] ?? request('area_max', '');
         $this->priceMin = $queryParams['price_min'] ?? request('price_min', '');
         $this->priceMax = $queryParams['price_max'] ?? request('price_max', '');
-        $this->includeAgglomeration = $queryParams['include_agglomeration'] ?? request('include_agglomeration', false);
+        $this->includeAgglomeration = (bool) ($queryParams['include_agglomeration'] ?? request('include_agglomeration', false));
         $this->category = $queryParams['category'] ?? request('category');
         $this->min_rent = $queryParams['min_rent'] ?? request('min_rent');
         $this->min_rent_addons = $queryParams['min_rent_addons'] ?? request('min_rent_addons');
@@ -80,7 +74,9 @@ final class ListRentOffices extends Component
         if ($this->officeName) {
             $office = Offices::query()->where('title', $this->officeName)->first();
 
-            $this->redirect(localized_route('properties.show', ['property' => $office->slug]));
+            if ($office !== null) {
+                $this->redirect(localized_route('properties.show', ['property' => $office->slug]));
+            }
         }
 
         // Before the first query: buildQuery() replaces the title with the category's heading.
@@ -110,7 +106,7 @@ final class ListRentOffices extends Component
             ->paginate($this->perPage);
     }
 
-    public function sortBy($field): void
+    public function sortBy(string $field): void
     {
         if ($this->sortField === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';

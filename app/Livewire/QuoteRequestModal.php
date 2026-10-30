@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use App\Models\Property;
 use App\Models\QuoteRequest;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -12,71 +11,72 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 final class QuoteRequestModal extends Component
 {
-    public $showModal = false;
+    public bool $showModal = false;
 
-    public $name = '';
+    public string $name = '';
 
-    public $phone = '';
+    public string $phone = '';
 
-    public $email = '';
+    public string $email = '';
 
-    public $company = '';
+    public string $company = '';
 
-    public $message = '';
+    public string $message = '';
 
-    public $subject = '';
+    public string $subject = '';
 
-    public $properties = [];
-
-    public $privacy = false;
-
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'phone' => 'required|string|max:20',
-        'email' => 'required|email|max:255',
-        'company' => 'nullable|string|max:255',
-        'message' => 'nullable|string|max:1000',
-        'subject' => 'nullable|string|max:255',
-        'privacy' => 'required|accepted',
-    ];
-
-    protected $messages = [
-        'name.required' => 'A név megadása kötelező.',
-        'phone.required' => 'A telefonszám megadása kötelező.',
-        'email.required' => 'Az email cím megadása kötelező.',
-        'email.email' => 'Kérjük, adjon meg egy érvényes email címet.',
-        'privacy.required' => 'Az adatvédelmi nyilatkozat elfogadása kötelező.',
-        'privacy.accepted' => 'Az adatvédelmi nyilatkozat elfogadása kötelező.',
-    ];
-
-    protected $listeners = [
-        'open-request-quote-modal' => 'openModal',
-        'close-request-quote-modal' => 'closeModal',
-    ];
+    public bool $privacy = false;
 
     public function mount(): void
     {
-
         // Show modal only if not closed before (session)
         $this->showModal = ! Session::has('quote_modal_closed');
-
-        // Load all active properties for dropdown
-        $this->properties = Property::active()
-            ->select('id', 'title')
-            ->orderBy('title')
-            ->get();
     }
 
+    /**
+     * @return array<string, string>
+     */
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'company' => 'nullable|string|max:255',
+            'message' => 'nullable|string|max:1000',
+            'subject' => 'nullable|string|max:255',
+            'privacy' => 'required|accepted',
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.required' => __('Please enter your name.'),
+            'phone.required' => __('Please enter your phone number.'),
+            'email.required' => __('Please enter your email address.'),
+            'email.email' => __('Please enter a valid email address.'),
+            'privacy.required' => __('You must accept the privacy policy.'),
+            'privacy.accepted' => __('You must accept the privacy policy.'),
+        ];
+    }
+
+    #[On('open-request-quote-modal')]
     public function openModal(): void
     {
         $this->showModal = true;
         Session::forget('quote_modal_closed');
     }
 
+    #[On('close-request-quote-modal')]
     public function closeModal(): void
     {
         $this->showModal = false;

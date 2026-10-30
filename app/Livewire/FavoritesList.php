@@ -8,26 +8,25 @@ use App\Models\Property;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cookie;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 final class FavoritesList extends Component
 {
-    public $favoriteProperties = [];
+    /** @var Collection<int, Property> */
+    public Collection $favoriteProperties;
 
-    public $favoriteCount = 0;
-
-    protected $listeners = [
-        'favorites-updated' => 'refreshFavorites',
-        'refresh-favorites' => 'refreshFavorites',
-        'openSendFavoritesModal' => 'openSendFavoritesModal',
-    ];
+    public int $favoriteCount = 0;
 
     public function mount(): void
     {
         $this->loadFavorites();
     }
 
+    #[On('favorites-updated')]
+    #[On('refresh-favorites')]
     public function refreshFavorites(): void
     {
         $this->loadFavorites();
@@ -56,7 +55,7 @@ final class FavoritesList extends Component
                 ->active()
                 ->get();
         } else {
-            $this->favoriteProperties = collect();
+            $this->favoriteProperties = new Collection;
         }
     }
 
