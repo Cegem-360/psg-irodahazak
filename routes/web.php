@@ -2,88 +2,134 @@
 
 declare(strict_types=1);
 
+use App\Actions\ExportFavorites;
+use App\Actions\PrintProperty;
 use App\Actions\SwitchLocale;
-use App\Http\Controllers\BlogCategoryController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\ImpresszumController;
-use App\Http\Controllers\NewsController;
-use App\Http\Controllers\PropertyController;
-use App\Models\Property;
-use App\Services\FavoriteProperties;
-use App\Services\FavoritesExcelExportService;
-use App\Services\PropertyPdfService;
+use App\Livewire\Pages;
+use App\Services\LocalizedRoutes;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
-// Language switcher route
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Every public page is a full-page Livewire component (App\Livewire\Pages)
+| and exists twice: under a Hungarian URL, and under an English one whose
+| route name carries the "en." prefix. The two blocks below mirror each
+| other line by line. The URL decides the language of the page (see
+| App\Services\LocalizedRoutes), so a new page needs a route in both blocks.
+|
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Hungarian site
+|--------------------------------------------------------------------------
+*/
+
+// Pages
+Route::livewire('/', Pages\Home::class)->name('home');
+Route::livewire('/kiado-irodak', Pages\OfficesForRent::class)->name('kiado-irodak');
+Route::livewire('/elado-irodahazak', Pages\OfficesForSale::class)->name('elado-irodahazak');
+Route::livewire('/rolunk', Pages\AboutUs::class)->name('rolunk');
+Route::livewire('/adatlap-oldal', Pages\DataSheet::class)->name('adatlap-oldal');
+Route::livewire('/adatvedelmi-nyilatkozat', Pages\PrivacyPolicy::class)->name('privacy-policy');
+Route::livewire('/kapcsolat', Pages\Contact::class)->name('kapcsolat');
+Route::livewire('/impresszum', Pages\Impressum::class)->name('impressum');
+
+// Office categories (the old "for sale" category is the sale list itself)
+Route::permanentRedirect('/budapest/elado-irodak', '/elado-irodahazak');
+Route::livewire('/budapest/{category:slug}', Pages\OfficeCategory::class)->name('budapest.category');
+
+// Properties
+Route::livewire('/ingatlanok', Pages\PropertyIndex::class)->name('properties.index');
+Route::livewire('/kiado-iroda/{property:slug}', Pages\PropertyShow::class)->name('properties.show');
+Route::livewire('/elado-irodahaz/{property:slug}', Pages\PropertyShow::class)->name('properties.show-for-sale');
+
+// News
+Route::livewire('/hirek', Pages\NewsIndex::class)->name('news.index');
+Route::livewire('/hirek/{news:slug}', Pages\NewsShow::class)->name('news.show');
+
+// Favorites (signed-in users only)
+Route::middleware('auth')->group(function (): void {
+    Route::livewire('/kedvencek', Pages\Favorites::class)->name('favorites');
+    Route::get('/kedvencek/export-excel', ExportFavorites::class)->name('favorites.export-excel');
+});
+
+/*
+|--------------------------------------------------------------------------
+| English site
+|--------------------------------------------------------------------------
+*/
+
+Route::name('en.')->group(function (): void {
+    // Pages
+    Route::livewire('/home', Pages\Home::class)->name('home');
+    Route::livewire('/offices-for-rent', Pages\OfficesForRent::class)->name('kiado-irodak');
+    Route::livewire('/office-buildings-for-sale', Pages\OfficesForSale::class)->name('elado-irodahazak');
+    Route::livewire('/about-us', Pages\AboutUs::class)->name('rolunk');
+    Route::livewire('/data-sheet', Pages\DataSheet::class)->name('adatlap-oldal');
+    Route::livewire('/privacy-policy', Pages\PrivacyPolicy::class)->name('privacy-policy');
+    Route::livewire('/contact-us', Pages\Contact::class)->name('kapcsolat');
+    Route::livewire('/impressum', Pages\Impressum::class)->name('impressum');
+
+    // Office categories
+    Route::permanentRedirect('/budapest-en/elado-irodak', '/office-buildings-for-sale');
+    Route::livewire('/budapest-en/{category:slug}', Pages\OfficeCategory::class)->name('budapest.category');
+
+    // Properties
+    Route::livewire('/properties', Pages\PropertyIndex::class)->name('properties.index');
+    Route::livewire('/office-to-let/{property:slug}', Pages\PropertyShow::class)->name('properties.show');
+    Route::livewire('/office-to-sale/{property:slug}', Pages\PropertyShow::class)->name('properties.show-for-sale');
+
+    // News
+    Route::livewire('/news', Pages\NewsIndex::class)->name('news.index');
+    Route::livewire('/news/{news:slug}', Pages\NewsShow::class)->name('news.show');
+
+    // Blog (no list page of its own: the latest posts are on the home page)
+    Route::redirect('/news-blog', '/')->name('blog.index');
+    Route::livewire('/news-blog/category/{category:slug}', Pages\BlogCategoryShow::class)->name('blog.category');
+    Route::livewire('/news-blog/{post:slug}', Pages\BlogPostShow::class)->name('blog.show');
+
+    // Favorites (signed-in users only)
+    Route::middleware('auth')->group(function (): void {
+        Route::livewire('/favorites', Pages\Favorites::class)->name('favorites');
+        Route::get('/favorites/export-excel', ExportFavorites::class)->name('favorites.export-excel');
+    });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Printable property sheet
+|--------------------------------------------------------------------------
+|
+| The links are signed, and every request starts a headless Chrome, hence
+| the rate limit.
+|
+*/
+
+Route::middleware(['signed', 'throttle:20,1'])->group(function (): void {
+    Route::get('/property-pdf/{property}', PrintProperty::class)->name('property.pdf');
+    Route::get('/en/property-pdf/{property}', PrintProperty::class)->name('en.property.pdf');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Utility routes
+|--------------------------------------------------------------------------
+*/
+
+// Language switcher for pages without a twin in the other language (the blog, the login)
 Route::get('/language/{locale}', function (string $locale, SwitchLocale $switchLocale): RedirectResponse {
     $switchLocale->handle($locale);
 
     return back();
-})->whereIn('locale', ['hu', 'en'])->name('language.switch');
+})->whereIn('locale', LocalizedRoutes::LOCALES)->name('language.switch');
 
-// Hungarian routes (default, no prefix)
-Route::view('/', 'index')->name('home');
-Route::view('/adatlap-oldal', 'index')->name('adatlap-oldal');
-Route::view('/kiado-irodak', 'index')->name('kiado-irodak');
-Route::view('/elado-irodahazak', 'index')->name('elado-irodahazak');
-Route::view('/rolunk', 'index')->name('rolunk');
-
-Route::get('/kapcsolat', [ContactController::class, 'show'])->name('kapcsolat');
-
-Route::view('/adatvedelmi-nyilatkozat', 'pages.privacy-policy')->name('privacy-policy');
-
-Route::get('/impresszum', [ImpresszumController::class, 'show'])->name('impressum');
-
-// Favorites are for signed-in users only, together with their Excel export
-Route::middleware(['auth'])->group(function (): void {
-    Route::view('/kedvencek', 'pages.favorites')->name('favorites');
-    Route::get('/kedvencek/export-excel', fn (FavoriteProperties $favorites, FavoritesExcelExportService $export): StreamedResponse => $export->generate($favorites->properties()))->name('favorites.export-excel');
-});
-
-// Budapest irodaház kategória route-ok
-Route::get('/budapest/{category}', [CategoryController::class, 'show'])->name('budapest.category');
-Route::get('/login', function () {
-    return to_route('filament.admin.auth.login'); // Redirect to the login page
-})->name('login');
-Route::get('/ingatlanok', [PropertyController::class, 'index'])->name('properties.index');
-Route::get('/kiado-iroda/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
-Route::get('/elado-irodahaz/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
-
-Route::get('/hirek', [NewsController::class, 'index'])->name('news.index');
-Route::get('/hirek/{slug}', [NewsController::class, 'show'])->name('news.show');
-
-// English routes (different URLs, same functionality)
-Route::group(['as' => 'en.'], function (): void {
-    Route::view('/home', 'index')->name('home');
-    Route::view('/data-sheet', 'index')->name('adatlap-oldal');
-    Route::view('/offices-for-rent', 'index')->name('kiado-irodak');
-    Route::view('/office-buildings-for-sale', 'index')->name('elado-irodahazak');
-    Route::view('/about-us', 'index')->name('rolunk');
-    Route::view('/privacy-policy', 'pages.privacy-policy')->name('privacy-policy');
-    Route::get('/impressum', [ImpresszumController::class, 'show'])->name('impressum');
-    Route::get('/contact-us', [ContactController::class, 'show'])->name('kapcsolat');
-
-    // English Budapest category routes
-    Route::get('/budapest-en/{category}', [CategoryController::class, 'show'])->name('budapest.category');
-
-    Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
-    Route::get('/office-to-let/{property:slug}', [PropertyController::class, 'show'])->name('properties.show');
-    Route::get('/office-to-sale/{property:slug}', [PropertyController::class, 'show'])->name('properties.show-for-sale');
-    Route::middleware(['auth'])->group(function (): void {
-        Route::view('/favorites', 'pages.favorites')->name('favorites');
-        Route::get('/favorites/export-excel', fn (FavoriteProperties $favorites, FavoritesExcelExportService $export): StreamedResponse => $export->generate($favorites->properties()))->name('favorites.export-excel');
-    });
-    Route::get('/news-blog', [BlogController::class, 'index'])->name('blog.index');
-    Route::get('/news-blog/category/{category:slug}', [BlogCategoryController::class, 'show'])->name('blog.category');
-    Route::get('/news-blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
-    Route::get('/news', [NewsController::class, 'index'])->name('news.index');
-    Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
-});
+Route::redirect('/login', '/admin/login')->name('login');
 
 // IndexNow key file, served at the site root once INDEXNOW_KEY is set
 Route::get('/{indexNowKey}.txt', function (string $indexNowKey): Response {
@@ -93,15 +139,3 @@ Route::get('/{indexNowKey}.txt', function (string $indexNowKey): Response {
 
     return response($key, 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
 })->where('indexNowKey', '[A-Za-z0-9-]{8,128}')->name('indexnow.key');
-
-// PDF generation route for properties (protected by auth and signed URL)
-Route::get('/property-pdf/{property}', function (Property $property): Response {
-    $pdfService = new PropertyPdfService();
-
-    return $pdfService->generatePdfForView($property);
-})->name('property.pdf')->middleware(['signed']);
-Route::get('/en/property-pdf/{property}', function (Property $property): Response {
-    $pdfService = new PropertyPdfService();
-
-    return $pdfService->generatePdfForView($property);
-})->name('en.property.pdf')->middleware(['signed']);

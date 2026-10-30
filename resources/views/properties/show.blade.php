@@ -1,29 +1,25 @@
 @inject('structuredData', 'App\Services\StructuredDataService')
-<x-layouts.app :breadcrumbs="[
-    ['name' => __('Homepage'), 'url' => localized_route('home')],
-    ['name' => $property->type()->listTitle(), 'url' => localized_route($property->type()->listRoute())],
-    ['name' => $property->title, 'url' => $property->url()],
-]">
-    <x-slot name="title">
-        {{ $property->localized('meta_title', 'meta_title_en') ?: $property->title.' | PSG Irodaházak' }}
-    </x-slot>
+<x-slot name="title">
+    {{ $property->localized('meta_title', 'meta_title_en') ?: $property->title.' | PSG Irodaházak' }}
+</x-slot>
 
-    <x-slot name="meta">
-        {{ $structuredData->toScript($structuredData->property($property, $property->url())) }}
-    </x-slot>
+<x-slot name="meta">
+    {{ $structuredData->toScript($structuredData->property($property, $property->url())) }}
+</x-slot>
 
-    <x-slot name="metaDescription">
-        {{ $property->localized('meta_description', 'meta_description_en') ?: Str::limit(Str::squish(strip_tags((string) $property->localized('content', 'en_content'))), 160) }}
-    </x-slot>
+<x-slot name="metaDescription">
+    {{ $property->localized('meta_description', 'meta_description_en') ?: Str::limit(Str::squish(strip_tags((string) $property->localized('content', 'en_content'))), 160) }}
+</x-slot>
 
-    <x-slot name="metaKeywords">
-        {{ $property->localized('meta_keywords', 'meta_keywords_en') }}
-    </x-slot>
+<x-slot name="metaKeywords">
+    {{ $property->localized('meta_keywords', 'meta_keywords_en') }}
+</x-slot>
 
-    @if (!$property->isActive())
-        <x-slot name="metaRobots">noindex, nofollow</x-slot>
-    @endif
+@if (!$property->isActive())
+    <x-slot name="metaRobots">noindex, nofollow</x-slot>
+@endif
 
+<div>
     <x-page-section spacing="space-y-8">
         <x-slot:heading>{{ translate_value($property->title) }}</x-slot:heading>
         <x-glass-panel class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -243,5 +239,4 @@
             </div>
         </div>
     </div>
-
-</x-layouts.app>
+</div>

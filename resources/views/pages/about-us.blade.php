@@ -1,4 +1,7 @@
-<div>
+<x-slot name="title">{{ __('About Us | PSG Irodaházak') }}</x-slot>
+<x-slot name="metaDescription">{{ __('Since 2014, Property Solution Group Kft. has been helping companies as tenants on the Budapest office market: independent tenant representation, office search and negotiation free of charge.') }}</x-slot>
+
+<div class="overflow-hidden max-w-[2200px] mx-auto bg-white">
     <x-page-section>
         <x-slot:heading>{{ __('About Us') }}</x-slot:heading>
 

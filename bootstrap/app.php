@@ -26,12 +26,6 @@ return Application::configure(basePath: dirname(__DIR__))
             SetLocale::class,
             GoogleTagManagerMiddleware::class,
         ]);
-
-        // Register middleware aliases
-        $middleware->alias([
-            'signed' => Illuminate\Routing\Middleware\ValidateSignature::class,
-
-        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

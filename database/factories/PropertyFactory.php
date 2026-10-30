@@ -31,9 +31,9 @@ final class PropertyFactory extends Factory
             'city' => 'Budapest',
             'street' => fake()->streetName(),
             'house_number' => fake()->buildingNumber().'.',
-            'total_area' => fake()->numberBetween(1000, 40000),
-            'min_rent' => fake()->numberBetween(10, 20),
-            'max_rent' => fake()->numberBetween(20, 30),
+            'total_area' => (string) fake()->numberBetween(1000, 40000),
+            'min_rent' => (string) fake()->numberBetween(10, 20),
+            'max_rent' => (string) fake()->numberBetween(20, 30),
             'min_rent_unit' => 'EUR/m2/hó',
             'featured' => false,
         ];

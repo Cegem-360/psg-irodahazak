@@ -237,7 +237,7 @@ it('marks the empty data sheet page noindex', function (): void {
     /** @var TestCase $this */
     $html = $this->get(route('adatlap-oldal'))->assertOk()->getContent();
 
-    expect($html)->toContain('<meta name="robots" content="noindex, follow">')
+    expect($html)->toMatch('/<meta name="robots"\s+content="noindex, follow">/')
         ->and(mb_substr_count($html, 'name="robots"'))->toBe(1);
 });
 

@@ -25,7 +25,7 @@ it('is rendered on the news page', function (): void {
         ->assertOk()
         ->assertSeeLivewire(NewsList::class)
         ->assertSee('Új irodaház a Váci úton')
-        ->assertSeeHtml(route('news.show', ['slug' => $article->slug]));
+        ->assertSeeHtml(route('news.show', ['news' => $article->slug]));
 });
 
 it('lists only published news, newest first', function (): void {

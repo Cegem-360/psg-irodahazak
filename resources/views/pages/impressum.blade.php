@@ -1,13 +1,10 @@
-<x-layouts.app :breadcrumbs="[
-    ['name' => __('Homepage'), 'url' => localized_route('home')],
-    ['name' => __('Imprint'), 'url' => localized_route('impressum')],
-]">
-    <x-slot name="title">{{ __('Imprint') }} | PSG-IRODAHÁZAK</x-slot>
-    <x-slot name="meta">
-        <meta name="description" content="{{ __('PSG-IRODAHÁZAK imprint - Legal information and contact details.') }}">
-        <meta name="keywords" content="{{ __('imprint, legal information, PSG-IRODAHÁZAK') }}">
-    </x-slot>
+<x-slot name="title">{{ __('Imprint') }} | PSG-IRODAHÁZAK</x-slot>
+<x-slot name="meta">
+    <meta name="description" content="{{ __('PSG-IRODAHÁZAK imprint - Legal information and contact details.') }}">
+    <meta name="keywords" content="{{ __('imprint, legal information, PSG-IRODAHÁZAK') }}">
+</x-slot>
 
+<div>
     <x-page-section spacing="space-y-8">
         <x-slot:heading>{{ __('Imprint') }}</x-slot:heading>
 
@@ -25,4 +22,4 @@
             </div>
         </x-glass-panel>
     </x-page-section>
-</x-layouts.app>
+</div>

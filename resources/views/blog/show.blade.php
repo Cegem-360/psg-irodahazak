@@ -1,29 +1,25 @@
 @inject('structuredData', 'App\Services\StructuredDataService')
-<x-layouts.app :breadcrumbs="[
-    ['name' => __('Homepage'), 'url' => localized_route('home')],
-    ['name' => 'Blog', 'url' => route('en.blog.index')],
-    ['name' => $post->title, 'url' => Request::url()],
-]">
-    <x-slot name="title">{{ $post->title }} | PSG-IRODAHÁZAK Blog</x-slot>
-    <x-slot name="meta">
-        @if ($post->noindex)
-            <meta name="robots" content="noindex, follow">
-        @endif
-        <meta name="description" content="{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 160) }}">
-        <meta name="keywords" content="{{ $post->meta_data['meta_keywords'] ?? __('blog, office market, real estate') }}">
+<x-slot name="title">{{ $post->title }} | PSG-IRODAHÁZAK Blog</x-slot>
+<x-slot name="meta">
+    @if ($post->noindex)
+        <meta name="robots" content="noindex, follow">
+    @endif
+    <meta name="description" content="{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 160) }}">
+    <meta name="keywords" content="{{ $post->meta_data['meta_keywords'] ?? __('blog, office market, real estate') }}">
 
-        {{-- Open Graph --}}
-        <meta property="og:title" content="{{ $post->title }}">
-        <meta property="og:description" content="{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 160) }}">
-        <meta property="og:type" content="article">
-        <meta property="og:url" content="{{ Request::url() }}">
-        @if ($post->featured_image)
-            <meta property="og:image" content="{{ $structuredData->imageUrl($post->featured_image) }}">
-        @endif
+    {{-- Open Graph --}}
+    <meta property="og:title" content="{{ $post->title }}">
+    <meta property="og:description" content="{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 160) }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ Request::url() }}">
+    @if ($post->featured_image)
+        <meta property="og:image" content="{{ $structuredData->imageUrl($post->featured_image) }}">
+    @endif
 
-        {{ $structuredData->toScript($structuredData->article($post, Request::url())) }}
-    </x-slot>
+    {{ $structuredData->toScript($structuredData->article($post, Request::url())) }}
+</x-slot>
 
+<div>
     <div class="min-h-screen bg-gray-50">
         {{-- Breadcrumb --}}
         <div class="bg-white border-b">
@@ -264,4 +260,4 @@
             overflow: hidden;
         }
     </style>
-</x-layouts.app>
+</div>

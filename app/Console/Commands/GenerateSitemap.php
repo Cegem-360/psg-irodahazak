@@ -13,7 +13,6 @@ use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Routing\Route as RoutingRoute;
-use Illuminate\Routing\ViewController;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Spatie\Sitemap\Sitemap;
@@ -107,7 +106,7 @@ final class GenerateSitemap extends Command
             $this->addLocalized(
                 $sitemap,
                 'news.show',
-                ['slug' => $news->slug],
+                ['news' => $news->slug],
                 fn (Url $url): Url => $url->setLastModificationDate($news->updated_at ?? now())->setPriority(0.6),
             );
         }
@@ -185,26 +184,15 @@ final class GenerateSitemap extends Command
      */
     private function isAppOwned(RoutingRoute $route): bool
     {
+        // The pages are full-page Livewire components of the app.
+        $component = $route->getAction('livewire_component');
+
+        if (is_string($component)) {
+            return str_starts_with($component, 'App\\');
+        }
+
         $action = $route->getAction('uses');
 
-        if ($action instanceof Closure) {
-            return true;
-        }
-
-        if (! is_string($action)) {
-            return false;
-        }
-
-        // Route::view() records the action with a leading backslash. Both spellings
-        // are matched rather than trimmed: Pint's mb_str_functions rule rewrites
-        // ltrim() to mb_ltrim(), which needs PHP 8.4, and this command runs from
-        // the schedule:run cron that is still on 8.3.
-        foreach (['App\\', ViewController::class] as $prefix) {
-            if (str_starts_with($action, $prefix) || str_starts_with($action, '\\'.$prefix)) {
-                return true;
-            }
-        }
-
-        return false;
+        return $action instanceof Closure || (is_string($action) && str_starts_with($action, 'App\\'));
     }
 }

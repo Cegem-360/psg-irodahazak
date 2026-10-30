@@ -63,19 +63,20 @@ final class ListRentOffices extends Component
 
     public function mount(array $queryParams = []): void
     {
-        // Initialize filters from queryParams if provided, otherwise from request parameters
-        $this->search = $queryParams['search'] ?? request('search', '');
-        $this->districts = $queryParams['districts'] ?? request('districts', '');
-        $this->district = $queryParams['district'] ?? request('district', '');
-        $this->officeName = $queryParams['office_name'] ?? request('office_name', '');
-        $this->areaMin = $queryParams['area_min'] ?? request('area_min', '');
-        $this->areaMax = $queryParams['area_max'] ?? request('area_max', '');
-        $this->priceMin = $queryParams['price_min'] ?? request('price_min', '');
-        $this->priceMax = $queryParams['price_max'] ?? request('price_max', '');
-        $this->includeAgglomeration = (bool) ($queryParams['include_agglomeration'] ?? request('include_agglomeration', false));
-        $this->category = $queryParams['category'] ?? request('category');
-        $this->minLeaseTerm = $queryParams['min_lease_term'] ?? request('min_lease_term');
-        $this->minLeaseTermUnit = $queryParams['min_lease_term_unit'] ?? request('min_lease_term_unit');
+        // Filters come from the page (a category page passes its slug) or from the query string,
+        // never from route parameters: on /budapest/{category} "category" is the bound model.
+        $this->search = $queryParams['search'] ?? request()->query('search', '');
+        $this->districts = $queryParams['districts'] ?? request()->query('districts', '');
+        $this->district = $queryParams['district'] ?? request()->query('district', '');
+        $this->officeName = $queryParams['office_name'] ?? request()->query('office_name', '');
+        $this->areaMin = $queryParams['area_min'] ?? request()->query('area_min', '');
+        $this->areaMax = $queryParams['area_max'] ?? request()->query('area_max', '');
+        $this->priceMin = $queryParams['price_min'] ?? request()->query('price_min', '');
+        $this->priceMax = $queryParams['price_max'] ?? request()->query('price_max', '');
+        $this->includeAgglomeration = (bool) ($queryParams['include_agglomeration'] ?? request()->query('include_agglomeration', false));
+        $this->category = $queryParams['category'] ?? request()->query('category');
+        $this->minLeaseTerm = $queryParams['min_lease_term'] ?? request()->query('min_lease_term');
+        $this->minLeaseTermUnit = $queryParams['min_lease_term_unit'] ?? request()->query('min_lease_term_unit');
 
         if ($this->officeName) {
             $office = Offices::query()->where('title', $this->officeName)->first();

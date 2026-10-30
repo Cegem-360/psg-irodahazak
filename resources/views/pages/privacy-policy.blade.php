@@ -1,9 +1,7 @@
-<x-layouts.app :breadcrumbs="[
-    ['name' => __('Homepage'), 'url' => localized_route('home')],
-    ['name' => __('Privacy Policy'), 'url' => localized_route('privacy-policy')],
-]">
-    <x-slot name="title">{{ __('Privacy Notice | PSG Irodaházak') }}</x-slot>
-    <x-slot name="metaDescription">{{ __('The general privacy notice of Property Solution Group Kft. for visitors and clients of the psg-irodahazak.hu website.') }}</x-slot>
+<x-slot name="title">{{ __('Privacy Notice | PSG Irodaházak') }}</x-slot>
+<x-slot name="metaDescription">{{ __('The general privacy notice of Property Solution Group Kft. for visitors and clients of the psg-irodahazak.hu website.') }}</x-slot>
+
+<div>
     <x-page-section>
         <h1 class="text-2xl font-bold mb-4">{{ __('General Privacy Notice') }}</h1>
         <ul class="mb-6">
@@ -245,4 +243,4 @@
             </div>
         </section>
     </x-page-section>
-</x-layouts.app>
+</div>
