@@ -23,12 +23,13 @@
         </a>
         <div class="lang text-logogray">
             @php
-                $currentLocale = app()->getLocale();
+                // The same page in the other language when it has one; otherwise just switch the session.
+                $alternateUrls = app(App\Services\LocalizedRoutes::class)->alternates(request()->route());
             @endphp
-            <a href="{{ route('language.switch', ['locale' => 'hu']) }}" title="HUN"
+            <a href="{{ $alternateUrls['hu'] ?? route('language.switch', ['locale' => 'hu']) }}" title="HUN"
                 class="{{ $currentLocale === 'hu' ? 'active' : '' }} hover:underline">HUN</a>
             <span> | </span>
-            <a href="{{ route('language.switch', ['locale' => 'en']) }}" title="ENG"
+            <a href="{{ $alternateUrls['en'] ?? route('language.switch', ['locale' => 'en']) }}" title="ENG"
                 class="{{ $currentLocale === 'en' ? 'active' : '' }} hover:underline">ENG</a>
         </div>
     </div>

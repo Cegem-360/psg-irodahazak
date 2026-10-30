@@ -18,6 +18,7 @@
         "laravel/tinker": "^3.0",
         "league/flysystem-ftp": "^3.31",
         "livewire/livewire": "^4.0",
+        "madbox-99/filament-essentials": "^2.0",
         "nunomaduro/essentials": "@dev",
         "phpoffice/phpspreadsheet": "^5.5",
         "spatie/browsershot": "^5.2.0",

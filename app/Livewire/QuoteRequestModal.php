@@ -104,7 +104,6 @@ final class QuoteRequestModal extends Component
                 'company' => $this->company,
                 'message' => $this->message,
                 'subject' => $this->subject,
-                'status' => 'new',
             ]);
 
             // Send email notification to admin

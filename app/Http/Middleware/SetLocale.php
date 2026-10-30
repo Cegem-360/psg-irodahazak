@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Actions\SwitchLocale;
+use App\Services\LocalizedRoutes;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -13,19 +14,26 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class SetLocale
 {
-    public function __construct(private readonly SwitchLocale $switchLocale) {}
+    public function __construct(
+        private readonly SwitchLocale $switchLocale,
+        private readonly LocalizedRoutes $localizedRoutes,
+    ) {}
 
     /**
-     * Handle an incoming request.
+     * A page that exists in both languages is shown in the language of its URL,
+     * so search engines see one language per address; the choice is kept in the
+     * session for the requests that have no language of their own (Livewire
+     * updates, the blog, the login).
      *
      * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Force English locale for specific routes
-        if ($request->routeIs('en.properties.show', 'en.properties.show-for-sale', 'en.property.pdf')) {
-            $this->switchLocale->handle('en');
-        } elseif (Session::has('locale')) {
+        $locale = $this->localizedRoutes->localeOf($request->route());
+
+        if ($locale !== null) {
+            $this->switchLocale->handle($locale);
+        } elseif (in_array(Session::get('locale'), LocalizedRoutes::LOCALES, true)) {
             App::setLocale(Session::get('locale'));
         }
 

@@ -16,10 +16,8 @@ final class BlogController extends Controller
 
     public function show(BlogPost $post): View
     {
-        // Csak publikált bejegyzéseket mutatjuk
-        abort_if(! $post->is_published || ! $post->published_at || $post->published_at > now(), 404);
+        abort_unless($post->isPublished(), 404);
 
-        // Megtekintések számának növelése
         $post->incrementViews();
 
         // Kapcsolódó bejegyzések (ugyanabból a kategóriából)

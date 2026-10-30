@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Models\BlogPost;
 use App\Models\News;
 use App\Models\Property;
+use App\Services\LocalizedRoutes;
 use Closure;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
@@ -35,8 +36,11 @@ final class GenerateSitemap extends Command
         'adatlap-oldal',
     ];
 
-    public function handle(): int
+    private LocalizedRoutes $localizedRoutes;
+
+    public function handle(LocalizedRoutes $localizedRoutes): int
     {
+        $this->localizedRoutes = $localizedRoutes;
         $indexPath = $this->option('path') ?: public_path('sitemap.xml');
         $directory = dirname((string) $indexPath);
 
@@ -66,8 +70,8 @@ final class GenerateSitemap extends Command
     {
         $sitemap = Sitemap::create();
 
-        foreach ($this->staticUrls() as $url) {
-            $sitemap->add(Url::create($url)->setPriority(0.8));
+        foreach ($this->staticRoutes() as $route) {
+            $this->addLocalized($sitemap, $route, [], fn (Url $url): Url => $url->setPriority(0.8));
         }
 
         return $sitemap;
@@ -84,10 +88,11 @@ final class GenerateSitemap extends Command
             ->cursor();
 
         foreach ($properties as $property) {
-            $sitemap->add(
-                Url::create($property->url())
-                    ->setLastModificationDate($property->updated_at ?? now())
-                    ->setPriority(0.9)
+            $this->addLocalized(
+                $sitemap,
+                $property->elado_v_kiado?->showRoute() ?? 'properties.show',
+                ['property' => $property->slug],
+                fn (Url $url): Url => $url->setLastModificationDate($property->updated_at ?? now())->setPriority(0.9),
             );
         }
 
@@ -99,16 +104,17 @@ final class GenerateSitemap extends Command
         $sitemap = Sitemap::create();
 
         foreach (News::query()->where('is_published', true)->whereNotNull('slug')->cursor() as $news) {
-            $sitemap->add(
-                Url::create(route('news.show', ['slug' => $news->slug]))
-                    ->setLastModificationDate($news->updated_at ?? now())
-                    ->setPriority(0.6)
+            $this->addLocalized(
+                $sitemap,
+                'news.show',
+                ['slug' => $news->slug],
+                fn (Url $url): Url => $url->setLastModificationDate($news->updated_at ?? now())->setPriority(0.6),
             );
         }
 
         if (Route::has('en.blog.show')) {
             $posts = BlogPost::query()
-                ->where('is_published', true)
+                ->published()
                 ->where('noindex', false)
                 ->whereNotNull('slug')
                 ->cursor();
@@ -126,13 +132,36 @@ final class GenerateSitemap extends Command
     }
 
     /**
-     * Every public GET page that takes no route parameters. Discovered from the
+     * Adds the page in every language it exists in, each entry listing all of
+     * them as hreflang alternates; a page without an English twin goes in once.
+     *
+     * @param  array<string, mixed>  $parameters
+     * @param  Closure(Url): Url  $configure
+     */
+    private function addLocalized(Sitemap $sitemap, string $routeName, array $parameters, Closure $configure): void
+    {
+        $alternates = $this->localizedRoutes->alternatesFor($routeName, $parameters);
+
+        foreach ($alternates ?: [LocalizedRoutes::DEFAULT_LOCALE => route($routeName, $parameters)] as $pageUrl) {
+            $url = $configure(Url::create($pageUrl));
+
+            foreach ($alternates as $locale => $alternateUrl) {
+                $url->addAlternate($alternateUrl, $locale);
+            }
+
+            $sitemap->add($url);
+        }
+    }
+
+    /**
+     * The names of every public GET page that takes no route parameters, in
+     * Hungarian; English twins are added alongside them. Discovered from the
      * router rather than hard-coded, so both sites can share this command
      * despite their different Hungarian URLs.
      *
      * @return Collection<int, string>
      */
-    private function staticUrls(): Collection
+    private function staticRoutes(): Collection
     {
         return collect(Route::getRoutes()->getRoutes())
             ->filter(fn (RoutingRoute $route): bool => in_array('GET', $route->methods(), true)
@@ -144,7 +173,7 @@ final class GenerateSitemap extends Command
                 && ! str_starts_with((string) $route->getName(), 'en.')
                 && ! in_array($route->getName(), self::EXCLUDED_ROUTES, true)
                 && $this->isAppOwned($route))
-            ->map(fn (RoutingRoute $route): string => url($route->uri() === '/' ? '/' : '/'.$route->uri()))
+            ->map(fn (RoutingRoute $route): string => (string) $route->getName())
             ->unique()
             ->values();
     }

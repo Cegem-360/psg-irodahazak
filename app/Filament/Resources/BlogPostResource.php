@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\BlogPostStatus;
 use App\Filament\Resources\BlogPostResource\Pages\CreateBlogPost;
 use App\Filament\Resources\BlogPostResource\Pages\EditBlogPost;
 use App\Filament\Resources\BlogPostResource\Pages\ListBlogPosts;
@@ -35,7 +36,6 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -230,19 +230,7 @@ final class BlogPostResource extends Resource
 
                 TextColumn::make('status')
                     ->label('Státusz')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'published' => 'success',
-                        'scheduled' => 'warning',
-                        'draft' => 'gray',
-                        default => 'gray',
-                    })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'published' => 'Publikált',
-                        'scheduled' => 'Ütemezett',
-                        'draft' => 'Vázlat',
-                        default => 'Ismeretlen',
-                    }),
+                    ->badge(),
 
                 ToggleColumn::make('noindex')
                     ->label('Noindex')
@@ -280,34 +268,21 @@ final class BlogPostResource extends Resource
                     ->searchable()
                     ->preload(),
 
-                Filter::make('status')
+                // The status is derived from the publish flag and date, so the filter maps it to a scope.
+                SelectFilter::make('status')
                     ->label('Státusz')
-                    ->schema([
-                        Select::make('status')
-                            ->options([
-                                'published' => 'Publikált',
-                                'scheduled' => 'Ütemezett',
-                                'draft' => 'Vázlat',
-                            ])
-                            ->placeholder('Válassz státuszt'),
-                    ])
-                    ->query(fn (Builder $query, array $data): Builder => $query->when($data['status'], fn (Builder $query, string $status): Builder => match ($status) {
-                        'published' => $query->where('is_published', true)
-                            ->whereNotNull('published_at')
-                            ->where('published_at', '<=', now()),
-                        'scheduled' => $query->where('is_published', true)
-                            ->whereNotNull('published_at')
-                            ->where('published_at', '>', now()),
-                        'draft' => $query->where('is_published', false),
-                        default => $query,
-                    })),
+                    ->options(BlogPostStatus::class)
+                    ->query(fn (Builder $query, array $data): Builder => $query->when(
+                        BlogPostStatus::tryFrom((string) $data['value']),
+                        fn (Builder $query, BlogPostStatus $status): Builder => $query->withStatus($status),
+                    )),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
                 Action::make('toggle_publish')
                     ->label(fn (BlogPost $record): string => $record->is_published ? 'Visszavonás' : 'Publikálás')
-                    ->icon(fn (BlogPost $record): string => $record->is_published ? Heroicon::OutlinedEyeSlash : Heroicon::OutlinedEye)
+                    ->icon(fn (BlogPost $record): Heroicon => $record->is_published ? Heroicon::OutlinedEyeSlash : Heroicon::OutlinedEye)
                     ->color(fn (BlogPost $record): string => $record->is_published ? 'warning' : 'success')
                     ->action(function (BlogPost $record): void {
                         if ($record->is_published) {

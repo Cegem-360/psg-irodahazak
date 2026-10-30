@@ -48,7 +48,10 @@ it('writes a sitemap index pointing at the page, property and article sitemaps',
         ->and($pages)->toContain(url('/kapcsolat'))
         ->and($pages)->not->toContain('/adatlap-oldal')
         ->and($pages)->not->toContain('/admin')
+        ->and($pages)->toContain('<loc>'.url('/offices-for-rent').'</loc>')
+        ->and($pages)->toContain('hreflang="en" href="'.url('/offices-for-rent').'"')
         ->and($properties)->toContain(route('properties.show', ['property' => $property->slug]))
+        ->and($properties)->toContain('<loc>'.route('en.properties.show', ['property' => $property->slug]).'</loc>')
         ->and($properties)->not->toContain($hidden->slug)
         ->and($articles)->toContain(route('en.blog.show', ['post' => $indexedPost->slug]))
         ->and($articles)->not->toContain($noindexPost->slug);

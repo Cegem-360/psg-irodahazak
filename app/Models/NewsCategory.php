@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\NewsCategoryObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Str;
-use Override;
 
+#[ObservedBy(NewsCategoryObserver::class)]
 #[Fillable([
     'name',
     'slug',
@@ -39,28 +40,6 @@ final class NewsCategory extends Model
     public function publishedNews(): HasMany
     {
         return $this->hasMany(News::class)->published();
-    }
-
-    #[Override]
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        self::creating(function (NewsCategory $category): void {
-            if (empty($category->slug)) {
-                $category->slug = Str::slug($category->name);
-            }
-
-            if (empty($category->sort_order)) {
-                $category->sort_order = self::query()->max('sort_order') + 1;
-            }
-        });
-
-        self::updating(function (NewsCategory $category): void {
-            if ($category->isDirty('name') && empty($category->slug)) {
-                $category->slug = Str::slug($category->name);
-            }
-        });
     }
 
     protected function newsCount(): Attribute

@@ -54,7 +54,7 @@
                             {{ $post->category->name }}
                         </span>
                     @endif
-                    <span class="ml-3 text-sm text-gray-500">{{ $post->reading_time }}</span>
+                    <span class="ml-3 text-sm text-gray-500">{{ __(':minutes min read', ['minutes' => $post->reading_time]) }}</span>
                 </div>
 
                 <h1 class="text-4xl font-bold text-gray-900 leading-tight mb-6">{{ $post->title }}</h1>

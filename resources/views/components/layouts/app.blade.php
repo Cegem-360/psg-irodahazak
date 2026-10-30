@@ -1,5 +1,9 @@
 @props(['breadcrumbs' => []])
 @inject('structuredData', 'App\\Services\\StructuredDataService')
+@inject('localizedRoutes', 'App\\Services\\LocalizedRoutes')
+@php
+    $alternateUrls = $localizedRoutes->alternates(request()->route());
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -61,6 +65,18 @@
         @unless ($metaSlotHas('rel="canonical"'))
             <link rel="canonical" href="{{ $metaCanonical ?? Request::url() }}">
         @endunless
+        @foreach ($alternateUrls as $alternateLocale => $alternateUrl)
+            <link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ $alternateUrl }}">
+        @endforeach
+        @isset($alternateUrls[App\Services\LocalizedRoutes::DEFAULT_LOCALE])
+            <link rel="alternate" hreflang="x-default" href="{{ $alternateUrls[App\Services\LocalizedRoutes::DEFAULT_LOCALE] }}">
+        @endisset
+        <meta property="og:locale" content="{{ app()->getLocale() === 'en' ? 'en_GB' : 'hu_HU' }}">
+        @foreach (array_keys($alternateUrls) as $alternateLocale)
+            @if ($alternateLocale !== app()->getLocale())
+                <meta property="og:locale:alternate" content="{{ $alternateLocale === 'en' ? 'en_GB' : 'hu_HU' }}">
+            @endif
+        @endforeach
         @unless ($metaSlotHas('name="robots"'))
             <meta name="robots"
                 content="{{ $metaRobots ?? 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' }}">

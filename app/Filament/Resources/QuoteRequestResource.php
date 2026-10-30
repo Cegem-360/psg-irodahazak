@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\QuoteRequestStatus;
 use App\Filament\Resources\QuoteRequestResource\Pages\CreateQuoteRequest;
 use App\Filament\Resources\QuoteRequestResource\Pages\EditQuoteRequest;
 use App\Filament\Resources\QuoteRequestResource\Pages\ListQuoteRequests;
@@ -93,11 +94,8 @@ final class QuoteRequestResource extends Resource
                     ->schema([
                         Select::make('status')
                             ->label('Állapot')
-                            ->options([
-                                'new' => 'Új',
-                                'contacted' => 'Kapcsolatfelvéve',
-                                'closed' => 'Lezárva',
-                            ])
+                            ->options(QuoteRequestStatus::class)
+                            ->enum(QuoteRequestStatus::class)
                             ->required(),
 
                         DateTimePicker::make('contacted_at')
@@ -127,17 +125,6 @@ final class QuoteRequestResource extends Resource
                 TextColumn::make('status')
                     ->badge()
                     ->label('Állapot')
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'new' => 'Új',
-                        'contacted' => 'Kapcsolatfelvéve',
-                        'closed' => 'Lezárva',
-                        default => $state,
-                    })
-                    ->colors([
-                        'danger' => 'new',
-                        'warning' => 'contacted',
-                        'success' => 'closed',
-                    ])
                     ->sortable(),
 
                 TextColumn::make('name')
@@ -171,21 +158,17 @@ final class QuoteRequestResource extends Resource
             ->filters([
                 SelectFilter::make('status')
                     ->label('Állapot')
-                    ->options([
-                        'new' => 'Új',
-                        'contacted' => 'Kapcsolatfelvéve',
-                        'closed' => 'Lezárva',
-                    ]),
+                    ->options(QuoteRequestStatus::class),
             ])
             ->recordActions([
                 Action::make('contact')
                     ->label('Kapcsolatfelvéve')
                     ->icon(Heroicon::OutlinedPhone)
                     ->color('warning')
-                    ->visible(fn (QuoteRequest $record): bool => $record->status === 'new')
+                    ->visible(fn (QuoteRequest $record): bool => $record->status === QuoteRequestStatus::New)
                     ->action(function (QuoteRequest $record): void {
                         $record->update([
-                            'status' => 'contacted',
+                            'status' => QuoteRequestStatus::Contacted,
                             'contacted_at' => now(),
                         ]);
 
@@ -200,10 +183,10 @@ final class QuoteRequestResource extends Resource
                     ->label('Lezárás')
                     ->icon(Heroicon::OutlinedCheckCircle)
                     ->color('success')
-                    ->visible(fn (QuoteRequest $record): bool => $record->status !== 'closed')
+                    ->visible(fn (QuoteRequest $record): bool => $record->status !== QuoteRequestStatus::Closed)
                     ->action(function (QuoteRequest $record): void {
                         $record->update([
-                            'status' => 'closed',
+                            'status' => QuoteRequestStatus::Closed,
                         ]);
 
                         Notification::make()
@@ -238,13 +221,13 @@ final class QuoteRequestResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = self::getModel()::query()->where('status', 'new')->count();
+        $count = QuoteRequest::query()->new()->count();
 
         return $count > 0 ? (string) $count : null;
     }
 
     public static function getNavigationBadgeColor(): ?string
     {
-        return self::getModel()::query()->where('status', 'new')->count() > 0 ? 'danger' : null;
+        return QuoteRequest::query()->new()->count() > 0 ? 'danger' : null;
     }
 }

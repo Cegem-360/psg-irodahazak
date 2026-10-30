@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c604dcac31e8f4e83386a409968270e6",
+    "content-hash": "8cd6a9ee0a81f6e7b20323683baf50ea",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -3841,6 +3841,66 @@
                 }
             ],
             "time": "2026-10-21T12:53:46+00:00"
+        },
+        {
+            "name": "madbox-99/filament-essentials",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MadBox-99/filament-essentials.git",
+                "reference": "a8d853d10884bbe11da6443e4611c9b597912f7a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MadBox-99/filament-essentials/zipball/a8d853d10884bbe11da6443e4611c9b597912f7a",
+                "reference": "a8d853d10884bbe11da6443e4611c9b597912f7a",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^5.0",
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "orchestra/testbench": "^10.0|^11.0",
+                "pestphp/pest": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MadBox99\\FilamentEssentials\\FilamentEssentialsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MadBox99\\FilamentEssentials\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Zoltán Tamás Szabó",
+                    "email": "zoli.szabok@gmail.com"
+                }
+            ],
+            "description": "Sensible defaults for Filament: translated labels on every field, entry and column, plus optional component defaults.",
+            "keywords": [
+                "defaults",
+                "filament",
+                "labels",
+                "laravel",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/MadBox-99/filament-essentials/issues",
+                "source": "https://github.com/MadBox-99/filament-essentials/tree/v2.0.0"
+            },
+            "time": "2026-10-27T08:39:01+00:00"
         },
         {
             "name": "maennchen/zipstream-php",

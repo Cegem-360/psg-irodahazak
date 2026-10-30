@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\NewsObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,9 +14,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
-use Override;
 
+#[ObservedBy(NewsObserver::class)]
 #[Fillable([
     'title',
     'slug',
@@ -37,6 +38,15 @@ use Override;
 final class News extends Model
 {
     use HasFactory;
+
+    /**
+     * Mirrors the column default: 2 is normal priority.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'priority' => 2,
+    ];
 
     // Relationships
     /**
@@ -85,36 +95,6 @@ final class News extends Model
     public function unmarkAsBreaking(): void
     {
         $this->update(['is_breaking' => false]);
-    }
-
-    #[Override]
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        self::creating(function (News $news): void {
-            if (empty($news->slug)) {
-                $news->slug = Str::slug($news->title);
-            }
-
-            if (empty($news->excerpt)) {
-                $news->excerpt = Str::limit(strip_tags($news->content), 160);
-            }
-
-            if (empty($news->priority)) {
-                $news->priority = 2; // Default to normal priority
-            }
-        });
-
-        self::updating(function (News $news): void {
-            if ($news->isDirty('title') && empty($news->slug)) {
-                $news->slug = Str::slug($news->title);
-            }
-
-            if ($news->isDirty('content') && empty($news->excerpt)) {
-                $news->excerpt = Str::limit(strip_tags($news->content), 160);
-            }
-        });
     }
 
     /**

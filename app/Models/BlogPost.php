@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\BlogPostStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -31,7 +32,9 @@ final class BlogPost extends Model
 {
     use HasFactory;
 
-    // Relationships
+    /** Average reading speed, in words per minute. */
+    private const int WORDS_PER_MINUTE = 200;
+
     /**
      * @return BelongsTo<BlogCategory, $this>
      */
@@ -48,9 +51,19 @@ final class BlogPost extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function isPublished(): bool
+    {
+        return $this->status === BlogPostStatus::Published;
+    }
+
+    /**
+     * Counts a page view without touching updated_at, which the sitemap reports as the last modification.
+     */
     public function incrementViews(): void
     {
-        $this->increment('views_count');
+        self::query()->whereKey($this->getKey())->toBase()->increment('views_count');
+        $this->views_count++;
+        $this->syncOriginalAttribute('views_count');
     }
 
     public function publish(): void
@@ -69,53 +82,25 @@ final class BlogPost extends Model
         ]);
     }
 
-    // Scopes
     /**
      * @param  Builder<self>  $query
-     * @return Builder<self>
      */
     #[Scope]
-    protected function published(Builder $query): Builder
+    protected function published(Builder $query): void
     {
-        return $query->where('is_published', true)
+        $query->where('is_published', true)
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now());
     }
 
     /**
      * @param  Builder<self>  $query
-     * @return Builder<self>
      */
     #[Scope]
-    protected function byCategory(Builder $query, int $categoryId): Builder
+    protected function scheduled(Builder $query): void
     {
-        return $query->where('blog_category_id', $categoryId);
-    }
-
-    protected function readingTime(): Attribute
-    {
-        return Attribute::make(get: function (): string {
-            $wordCount = str_word_count(strip_tags($this->content));
-            $minutes = ceil($wordCount / 200);
-
-            // Average reading speed
-            return $minutes.' perc olvasás';
-        });
-    }
-
-    protected function status(): Attribute
-    {
-        return Attribute::make(get: function (): string {
-            if ($this->is_published && $this->published_at && $this->published_at <= now()) {
-                return 'published';
-            }
-
-            if ($this->is_published && $this->published_at && $this->published_at > now()) {
-                return 'scheduled';
-            }
-
-            return 'draft';
-        });
+        $query->where('is_published', true)
+            ->where('published_at', '>', now());
     }
 
     /**
@@ -124,7 +109,46 @@ final class BlogPost extends Model
     #[Scope]
     protected function draft(Builder $query): void
     {
-        $query->where('is_published', false);
+        $query->where(fn (Builder $query): Builder => $query->where('is_published', false)->orWhereNull('published_at'));
+    }
+
+    /**
+     * @param  Builder<self>  $query
+     */
+    #[Scope]
+    protected function withStatus(Builder $query, BlogPostStatus $status): void
+    {
+        match ($status) {
+            BlogPostStatus::Published => $query->published(),
+            BlogPostStatus::Scheduled => $query->scheduled(),
+            BlogPostStatus::Draft => $query->draft(),
+        };
+    }
+
+    /**
+     * @return Attribute<BlogPostStatus, never>
+     */
+    protected function status(): Attribute
+    {
+        return Attribute::make(get: fn (): BlogPostStatus => match (true) {
+            ! $this->is_published || $this->published_at === null => BlogPostStatus::Draft,
+            $this->published_at->isFuture() => BlogPostStatus::Scheduled,
+            default => BlogPostStatus::Published,
+        });
+    }
+
+    /**
+     * Estimated reading time in whole minutes, at least one.
+     *
+     * @return Attribute<int, never>
+     */
+    protected function readingTime(): Attribute
+    {
+        return Attribute::make(get: function (): int {
+            $words = preg_split('/\s+/u', mb_trim(strip_tags((string) $this->content)), flags: PREG_SPLIT_NO_EMPTY);
+
+            return max(1, (int) ceil(count($words ?: []) / self::WORDS_PER_MINUTE));
+        });
     }
 
     protected function casts(): array

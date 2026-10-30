@@ -578,5 +578,6 @@
     "We have sent the offer to :email!": "Az ajánlatot elküldtük a(z) :email címre!",
     "The favorites list has been cleared!": "A kedvencek listája kiürítve!",
     "Too many attempts": "Túl sok próbálkozás",
-    "Please try again in :minutes minutes.": "Kérjük, próbálja újra :minutes perc múlva."
+    "Please try again in :minutes minutes.": "Kérjük, próbálja újra :minutes perc múlva.",
+    ":minutes min read": ":minutes perc olvasás"
 }
