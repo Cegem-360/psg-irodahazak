@@ -182,17 +182,17 @@ final class ListRentOffices extends Component
         // Apply search filter
         if ($this->search) {
             if (
-                mb_stripos((string) $this->search, '2 csöves fan-coil') !== false ||
-                mb_stripos((string) $this->search, '2 csoves fan-coil') !== false ||
-                mb_stripos((string) $this->search, '2 csöves') !== false ||
-                mb_stripos((string) $this->search, '2 csoves') !== false
+                mb_stripos($this->search, '2 csöves fan-coil') !== false ||
+                mb_stripos($this->search, '2 csoves fan-coil') !== false ||
+                mb_stripos($this->search, '2 csöves') !== false ||
+                mb_stripos($this->search, '2 csoves') !== false
             ) {
                 $query->whereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%2 csöves fan-coil%']);
             } elseif (
-                mb_stripos((string) $this->search, '4 csöves fan-coil') !== false ||
-                mb_stripos((string) $this->search, '4 csoves fan-coil') !== false ||
-                mb_stripos((string) $this->search, '4 csöves') !== false ||
-                mb_stripos((string) $this->search, '4 csoves') !== false
+                mb_stripos($this->search, '4 csöves fan-coil') !== false ||
+                mb_stripos($this->search, '4 csoves fan-coil') !== false ||
+                mb_stripos($this->search, '4 csöves') !== false ||
+                mb_stripos($this->search, '4 csoves') !== false
             ) {
                 $query->whereRaw('JSON_SEARCH(LOWER(tags), "one", LOWER(?)) IS NOT NULL', ['%4 csöves fan-coil%']);
             } else {
@@ -234,7 +234,7 @@ final class ListRentOffices extends Component
 
         // Apply multiple districts filter
         if ($this->districts) {
-            $selectedDistricts = explode(',', (string) $this->districts);
+            $selectedDistricts = explode(',', $this->districts);
             $selectedDistricts = array_filter(array_map(trim(...), $selectedDistricts));
 
             if ($selectedDistricts !== []) {

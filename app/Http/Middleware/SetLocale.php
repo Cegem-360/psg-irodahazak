@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
-final class SetLocale
+final readonly class SetLocale
 {
     public function __construct(
-        private readonly SwitchLocale $switchLocale,
-        private readonly LocalizedRoutes $localizedRoutes,
+        private SwitchLocale $switchLocale,
+        private LocalizedRoutes $localizedRoutes,
     ) {}
 
     /**

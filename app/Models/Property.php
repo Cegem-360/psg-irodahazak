@@ -400,7 +400,7 @@ final class Property extends Model
         $query->where('district', $budapestDistrict?->roman() ?? $district)
             ->orWhere('district', $district);
 
-        if ($budapestDistrict !== null) {
+        if ($budapestDistrict instanceof BudapestDistrict) {
             $query->orWhere(fn (QueryBuilder $postalQuery) => $this->applyPostalCodeDistrictFilter($postalQuery, $budapestDistrict->value));
         }
     }

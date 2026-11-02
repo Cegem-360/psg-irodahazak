@@ -75,7 +75,7 @@ function bankCenter(array $attributes = []): Property
 describe('canonical host redirects', function (): void {
     beforeEach(function (): void {
         /** @var TestCase $this */
-        $this->app['env'] = 'production';
+        $this->app->instance('env', 'production');
         config(['app.url' => 'https://psg-irodahazak.hu']);
     });
 
@@ -143,6 +143,7 @@ it('renders the home page head with robots, author and organization data', funct
 });
 
 it('puts the counter values and the image alt texts in the home page HTML', function (): void {
+    /** @var TestCase $this */
     Reference::factory()->create(['name' => 'Lavylites', 'is_active' => true]);
     Property::query()->forceCreate([
         'title' => 'Váci Greens',
@@ -171,6 +172,7 @@ it('keeps the slogan out of the headings below the home page', function (): void
 });
 
 it('gives a category page its own H1, title, description and breadcrumb', function (): void {
+    /** @var TestCase $this */
     $category = Category::query()->create([
         'name' => 'Kiadó belvárosi irodák',
         'slug' => 'kiado-belvarosi-irodak',
@@ -204,6 +206,7 @@ it('returns 404 for an unknown category', function (): void {
 });
 
 it('describes a property page as a Place with an offer, matching the listed values', function (): void {
+    /** @var TestCase $this */
     $property = bankCenter();
 
     /** @var TestCase $this */
@@ -244,6 +247,7 @@ it('marks the empty data sheet page noindex', function (): void {
 });
 
 it('marks hidden blog posts noindex and credits the organization in the article schema', function (): void {
+    /** @var TestCase $this */
     $post = BlogPost::factory()->published()->create([
         'noindex' => true,
         'featured_image' => 'https://m.blog.hu/ps/psgirodahazak/image/kep.jpg',
@@ -262,6 +266,7 @@ it('marks hidden blog posts noindex and credits the organization in the article 
 });
 
 it('serves the IndexNow key file only for the configured key', function (): void {
+    /** @var TestCase $this */
     config(['seo.indexnow.key' => 'abcdef0123456789']);
 
     /** @var TestCase $this */
@@ -289,7 +294,7 @@ it('posts the changed URLs to the IndexNow API', function (): void {
     config(['seo.indexnow.key' => 'abcdef0123456789']);
     Http::fake(['api.indexnow.org/*' => Http::response(status: 200)]);
 
-    (new SubmitUrlsToIndexNow(['https://psg-irodahazak.test/kiado-iroda/bank-center']))->handle();
+    new SubmitUrlsToIndexNow(['https://psg-irodahazak.test/kiado-iroda/bank-center'])->handle();
 
     Http::assertSent(fn ($request): bool => $request['key'] === 'abcdef0123456789'
         && $request['urlList'] === ['https://psg-irodahazak.test/kiado-iroda/bank-center']);

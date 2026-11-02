@@ -55,7 +55,7 @@ final class PropertyObserver
         SubmitUrlsToIndexNow::dispatchAfterResponse([$property->url()]);
     }
 
-    public function deleted(Property $property): void
+    public function deleted(): void
     {
         Property::forgetDistrictCounts();
     }

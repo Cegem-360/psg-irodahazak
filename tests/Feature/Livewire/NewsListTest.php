@@ -18,6 +18,7 @@ function publishedNews(array $attributes = []): News
 }
 
 it('is rendered on the news page', function (): void {
+    /** @var TestCase $this */
     $article = publishedNews(['title' => 'Új irodaház a Váci úton']);
 
     /** @var TestCase $this */
