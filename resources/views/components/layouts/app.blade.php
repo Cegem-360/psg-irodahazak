@@ -87,6 +87,10 @@
 
         {{ $meta ?? '' }}
 
+        @if (config('seo.google_site_verification'))
+            <meta name="google-site-verification" content="{{ config('seo.google_site_verification') }}">
+        @endif
+
         @if (file_exists(public_path('llms.txt')))
             <link rel="alternate" type="text/plain" href="/llms.txt">
         @endif

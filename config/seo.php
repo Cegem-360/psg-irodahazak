@@ -28,6 +28,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Search Console
+    |--------------------------------------------------------------------------
+    |
+    | The HTML-tag verification token of Google Search Console; with it set,
+    | every page carries the google-site-verification meta tag.
+    |
+    */
+
+    'google_site_verification' => env('GOOGLE_SITE_VERIFICATION'),
+
+    /*
+    |--------------------------------------------------------------------------
     | IndexNow
     |--------------------------------------------------------------------------
     |

@@ -331,3 +331,12 @@ it('links a for-sale property page to the sale list in its breadcrumbs', functio
         route('properties.show-for-sale', ['property' => $property->slug]),
     ]);
 });
+
+it('adds the Search Console verification tag once a token is configured', function (): void {
+    /** @var TestCase $this */
+    $this->get(route('home'))->assertDontSeeHtml('google-site-verification');
+
+    config(['seo.google_site_verification' => 'abc123']);
+
+    $this->get(route('home'))->assertSeeHtml('<meta name="google-site-verification" content="abc123">');
+});
