@@ -137,6 +137,8 @@ it('renders the home page head with robots, author and organization data', funct
         ->toMatchArray(['legalName' => 'Property Solution Group Kft.', 'vatID' => '24963200-2-41'])
         ->and($organization['founder']['@id'])->toBe($person['@id'])
         ->and($person['worksFor']['@id'])->toBe($organization['@id'])
+        ->and($person['jobTitle'])->toBe('ügyvezető')
+        ->and($person['sameAs'])->toContain('https://www.linkedin.com/in/richard-fekete-17371943/')
         ->and(jsonLdNode($html, 'BreadcrumbList'))->toBeNull();
 });
 

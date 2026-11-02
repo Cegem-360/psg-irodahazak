@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\BlogPost;
+use App\Models\News;
 use App\Models\Property;
 use Tests\TestCase;
 
@@ -49,5 +50,21 @@ it('lets pages without an english twin follow the session', function (): void {
         ->get(route('en.blog.show', ['post' => $post->slug]))
         ->assertOk()
         ->assertSee('<html lang="en">', false)
+        ->assertDontSee('hreflang', false);
+});
+
+it('keeps the untranslated english news pages out of search engines', function (): void {
+    /** @var TestCase $this */
+    $news = News::factory()->create(['is_published' => true, 'published_at' => now()->subDay()]);
+
+    $this->get(route('en.news.show', ['news' => $news->slug]))
+        ->assertOk()
+        ->assertSee('<html lang="en">', false)
+        ->assertSee('content="noindex, follow"', false)
+        ->assertDontSee('hreflang', false);
+
+    $this->get(route('news.show', ['news' => $news->slug]))
+        ->assertOk()
+        ->assertDontSee('noindex', false)
         ->assertDontSee('hreflang', false);
 });

@@ -132,14 +132,17 @@ final class GenerateSitemap extends Command
 
     /**
      * Adds the page in every language it exists in, each entry listing all of
-     * them as hreflang alternates; a page without an English twin goes in once.
+     * them as hreflang alternates; a page without an English twin, or whose
+     * English twin is not translated yet, goes in once, in Hungarian.
      *
      * @param  array<string, mixed>  $parameters
      * @param  Closure(Url): Url  $configure
      */
     private function addLocalized(Sitemap $sitemap, string $routeName, array $parameters, Closure $configure): void
     {
-        $alternates = $this->localizedRoutes->alternatesFor($routeName, $parameters);
+        $alternates = $this->localizedRoutes->isTranslated($routeName)
+            ? $this->localizedRoutes->alternatesFor($routeName, $parameters)
+            : [];
 
         foreach ($alternates ?: [LocalizedRoutes::DEFAULT_LOCALE => route($routeName, $parameters)] as $pageUrl) {
             $url = $configure(Url::create($pageUrl));

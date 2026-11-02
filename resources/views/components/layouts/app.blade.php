@@ -2,7 +2,10 @@
 @inject('structuredData', 'App\\Services\\StructuredDataService')
 @inject('localizedRoutes', 'App\\Services\\LocalizedRoutes')
 @php
-    $alternateUrls = $localizedRoutes->alternates(request()->route());
+    $routeName = (string) request()->route()?->getName();
+    $isTranslated = $localizedRoutes->isTranslated($routeName);
+    $alternateUrls = $isTranslated ? $localizedRoutes->alternates(request()->route()) : [];
+    $metaRobots ??= $isTranslated || app()->getLocale() === App\Services\LocalizedRoutes::DEFAULT_LOCALE ? null : 'noindex, follow';
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">

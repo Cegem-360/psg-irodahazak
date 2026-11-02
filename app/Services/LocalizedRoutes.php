@@ -20,6 +20,15 @@ final class LocalizedRoutes
     public const array LOCALES = ['hu', 'en'];
 
     /**
+     * Pages whose English URL still serves the Hungarian text. Their English
+     * version is kept out of search engines (noindex, no hreflang, not in the
+     * sitemap) until the content is translated; then drop the route from here.
+     *
+     * @var list<string>
+     */
+    public const array UNTRANSLATED = ['news.show'];
+
+    /**
      * The name of the given route's version in the given locale, if it exists.
      */
     public function nameIn(string $routeName, string $locale): ?string
@@ -74,6 +83,17 @@ final class LocalizedRoutes
         return collect(self::LOCALES)
             ->mapWithKeys(fn (string $locale): array => [$locale => route((string) $this->nameIn($routeName, $locale), $parameters)])
             ->all();
+    }
+
+    /**
+     * Whether the page has real content in every language, so its versions may
+     * be offered to search engines as hreflang alternates.
+     */
+    public function isTranslated(string $routeName): bool
+    {
+        $baseName = str_starts_with($routeName, 'en.') ? mb_substr($routeName, 3) : $routeName;
+
+        return ! in_array($baseName, self::UNTRANSLATED, true);
     }
 
     private function hasEveryLocale(string $routeName): bool

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\BlogPost;
+use App\Models\News;
 use App\Models\Property;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
@@ -29,6 +30,8 @@ it('writes a sitemap index pointing at the page, property and article sitemaps',
     $indexedPost = BlogPost::factory()->published()->create();
     $noindexPost = BlogPost::factory()->published()->create(['noindex' => true, 'blog_category_id' => $indexedPost->blog_category_id]);
 
+    $news = News::factory()->create(['is_published' => true, 'published_at' => now()->subDay()]);
+
     $directory = sys_get_temp_dir().'/sitemap-test-'.bin2hex(random_bytes(6));
     File::ensureDirectoryExists($directory);
 
@@ -54,5 +57,7 @@ it('writes a sitemap index pointing at the page, property and article sitemaps',
         ->and($properties)->toContain('<loc>'.route('en.properties.show', ['property' => $property->slug]).'</loc>')
         ->and($properties)->not->toContain($hidden->slug)
         ->and($articles)->toContain(route('en.blog.show', ['post' => $indexedPost->slug]))
-        ->and($articles)->not->toContain($noindexPost->slug);
+        ->and($articles)->not->toContain($noindexPost->slug)
+        ->and($articles)->toContain('<loc>'.route('news.show', ['news' => $news->slug]).'</loc>')
+        ->and($articles)->not->toContain(route('en.news.show', ['news' => $news->slug]));
 });

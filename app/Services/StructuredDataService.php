@@ -64,7 +64,7 @@ final class StructuredDataService
                 '@type' => 'Person',
                 '@id' => $this->founderId(),
                 'name' => 'Fekete Richárd',
-                'jobTitle' => 'ügyvezető, társtulajdonos',
+                'jobTitle' => 'ügyvezető',
                 'worksFor' => ['@id' => $this->organizationId()],
                 'sameAs' => config('seo.founder_same_as'),
             ],
