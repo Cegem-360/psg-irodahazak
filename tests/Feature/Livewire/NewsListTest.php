@@ -21,7 +21,6 @@ it('is rendered on the news page', function (): void {
     /** @var TestCase $this */
     $article = publishedNews(['title' => 'Új irodaház a Váci úton']);
 
-    /** @var TestCase $this */
     $this->get(route('news.index'))
         ->assertOk()
         ->assertSeeLivewire(NewsList::class)

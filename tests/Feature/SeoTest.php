@@ -154,7 +154,6 @@ it('puts the counter values and the image alt texts in the home page HTML', func
         'property_photos' => ['property/1/vaci-greens.webp'],
     ]);
 
-    /** @var TestCase $this */
     $this->get(route('home'))
         ->assertOk()
         ->assertSeeHtml('data-to="25" data-suffix="+">25+</span>')
@@ -182,7 +181,6 @@ it('gives a category page its own H1, title, description and breadcrumb', functi
     ]);
     bankCenter()->categories()->attach($category);
 
-    /** @var TestCase $this */
     $html = $this->get(route('budapest.category', ['category' => 'kiado-belvarosi-irodak']))->assertOk()->getContent();
 
     expect($html)
@@ -209,7 +207,6 @@ it('describes a property page as a Place with an offer, matching the listed valu
     /** @var TestCase $this */
     $property = bankCenter();
 
-    /** @var TestCase $this */
     $html = $this->get(route('properties.show', ['property' => $property->slug]))->assertOk()->getContent();
 
     $place = jsonLdNode($html, 'Place');
@@ -253,7 +250,6 @@ it('marks hidden blog posts noindex and credits the organization in the article 
         'featured_image' => 'https://m.blog.hu/ps/psgirodahazak/image/kep.jpg',
     ]);
 
-    /** @var TestCase $this */
     $html = $this->get(route('en.blog.show', $post->slug))->assertOk()->getContent();
 
     $article = jsonLdNode($html, 'Article');
@@ -269,7 +265,6 @@ it('serves the IndexNow key file only for the configured key', function (): void
     /** @var TestCase $this */
     config(['seo.indexnow.key' => 'abcdef0123456789']);
 
-    /** @var TestCase $this */
     $this->get('/abcdef0123456789.txt')
         ->assertOk()
         ->assertHeader('Content-Type', 'text/plain; charset=UTF-8')
