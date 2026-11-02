@@ -53,6 +53,8 @@ it('writes a sitemap index pointing at the page, property and article sitemaps',
         ->and($pages)->not->toContain('/admin')
         ->and($pages)->toContain('<loc>'.url('/offices-for-rent').'</loc>')
         ->and($pages)->toContain('hreflang="en" href="'.url('/offices-for-rent').'"')
+        ->and($pages)->toContain('<loc>'.url('/hirek').'</loc>')
+        ->and($pages)->not->toContain(url('/news'))
         ->and($properties)->toContain(route('properties.show', ['property' => $property->slug]))
         ->and($properties)->toContain('<loc>'.route('en.properties.show', ['property' => $property->slug]).'</loc>')
         ->and($properties)->not->toContain($hidden->slug)

@@ -53,7 +53,7 @@ it('lets pages without an english twin follow the session', function (): void {
         ->assertDontSeeHtml('hreflang');
 });
 
-it('keeps the untranslated english news pages out of search engines', function (): void {
+it('keeps the untranslated english news list and articles out of search engines', function (): void {
     /** @var TestCase $this */
     $news = News::factory()->create(['is_published' => true, 'published_at' => now()->subDay()]);
 
@@ -64,6 +64,16 @@ it('keeps the untranslated english news pages out of search engines', function (
         ->assertDontSeeHtml('hreflang');
 
     $this->get(route('news.show', ['news' => $news->slug]))
+        ->assertOk()
+        ->assertDontSeeHtml('noindex')
+        ->assertDontSeeHtml('hreflang');
+
+    $this->get(route('en.news.index'))
+        ->assertOk()
+        ->assertSeeHtml('content="noindex, follow"')
+        ->assertDontSeeHtml('hreflang');
+
+    $this->get(route('news.index'))
         ->assertOk()
         ->assertDontSeeHtml('noindex')
         ->assertDontSeeHtml('hreflang');

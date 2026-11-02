@@ -26,7 +26,7 @@ final class LocalizedRoutes
      *
      * @var list<string>
      */
-    public const array UNTRANSLATED = ['news.show'];
+    public const array UNTRANSLATED = ['news.index', 'news.show'];
 
     /**
      * The name of the given route's version in the given locale, if it exists.
