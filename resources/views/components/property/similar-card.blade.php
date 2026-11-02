@@ -3,8 +3,18 @@
 {{-- x-data: the buttons' @click needs an Alpine scope, and this card is not inside a Livewire component. --}}
 <div x-data
     class="group relative bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl hover:brightness-95 transition-all duration-300 ease-in-out border border-white/15">
-    <img src="{{ $property->getFirstImageUrl() ?: Vite::asset('resources/images/default-office.jpg') }}"
-        alt="{{ $property->title }}" class="w-full h-auto object-cover aspect-3/2" loading="lazy" />
+    @if ($property->getFirstImageUrl())
+        <img src="{{ $property->getFirstImageUrl() }}" alt="{{ $property->title }}"
+            class="w-full h-auto object-cover aspect-3/2" loading="lazy" />
+    @else
+        <div class="aspect-3/2 bg-gray-100 flex items-center justify-center">
+            <svg class="w-1/3 h-1/3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                    clip-rule="evenodd" />
+            </svg>
+        </div>
+    @endif
     <div class="absolute bottom-64 right-2 flex gap-1">
         {{-- Map icon box --}}
         <button type="button"
