@@ -6,6 +6,7 @@ namespace App\Observers;
 
 use App\Jobs\SubmitUrlsToIndexNow;
 use App\Models\Property;
+use App\Models\PropertyRedirect;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -58,5 +59,13 @@ final class PropertyObserver
     public function deleted(): void
     {
         Property::forgetDistrictCounts();
+    }
+
+    /**
+     * A property deleted for good leaves a 301 behind to its district's page.
+     */
+    public function forceDeleted(Property $property): void
+    {
+        PropertyRedirect::rememberDeleted($property);
     }
 }

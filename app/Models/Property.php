@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -86,6 +87,7 @@ use Illuminate\Support\Str;
 final class Property extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     public const string DISTRICT_COUNTS_CACHE_KEY = 'properties.rent_count_by_district';
 
@@ -223,6 +225,16 @@ final class Property extends Model
     public function isActive(): bool
     {
         return $this->status === PropertyStatus::Active;
+    }
+
+    /**
+     * Whether the company currently brokers the building: it is active and not
+     * deleted. A page of a building that is not offered stays public, but shows
+     * no fees and no quote request.
+     */
+    public function isOffered(): bool
+    {
+        return $this->isActive() && ! $this->trashed();
     }
 
     /**

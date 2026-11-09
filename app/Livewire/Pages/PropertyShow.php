@@ -17,27 +17,34 @@ final class PropertyShow extends Component
 
     public Property $property;
 
-    public function mount(): void
-    {
-        // Inactive listings stay viewable for signed-in admins, who use the page as a preview
-        abort_unless($this->property->isActive() || auth()->check(), 404);
-    }
-
     /**
-     * Three other active properties of the same type, from the same district when there are enough.
+     * Three other active properties of the same type: from the same district
+     * first, the nearest ones when the building has coordinates. The block is
+     * the way on from the page of a building that is no longer offered.
      *
      * @return Collection<int, Property>
      */
     #[Computed]
     public function similarProperties(): Collection
     {
-        return Property::query()->active()
+        $query = Property::query()->active()
             ->where('offer_type', $this->property->type())
             ->whereKeyNot($this->property->id)
-            ->orderByRaw('district = ? desc', [(string) $this->property->district])
-            ->inRandomOrder()
-            ->limit(3)
-            ->get();
+            ->orderByRaw('district = ? desc', [(string) $this->property->district]);
+
+        if (is_numeric($this->property->maps_lat) && is_numeric($this->property->maps_lng)) {
+            $latitude = (float) $this->property->maps_lat;
+            $longitude = (float) $this->property->maps_lng;
+
+            // Squared distance on a flat map; a degree of longitude is about two thirds of a
+            // degree of latitude at Budapest. Buildings without coordinates go last.
+            $query->orderByRaw("coalesce(maps_lat, '') = '' or coalesce(maps_lng, '') = ''")
+                ->orderByRaw('(maps_lat - ?) * (maps_lat - ?) + (maps_lng - ?) * (maps_lng - ?) * 0.45', [$latitude, $latitude, $longitude, $longitude]);
+        } else {
+            $query->inRandomOrder();
+        }
+
+        return $query->limit(3)->get();
     }
 
     public function render(): View

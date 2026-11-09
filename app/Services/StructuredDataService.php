@@ -90,7 +90,7 @@ final class StructuredDataService
 
     /**
      * The office building as a Place, with its listed parameters, its services,
-     * and the rental (or sale) offer made for it.
+     * and the rental (or sale) offer made for it while the company brokers it.
      *
      * @return array<string, mixed>
      */
@@ -127,6 +127,13 @@ final class StructuredDataService
                 ->values()
                 ->all(),
         ]);
+
+        if (! $property->isOffered()) {
+            return [
+                '@context' => 'https://schema.org',
+                '@graph' => [$place],
+            ];
+        }
 
         // Place has no "makesOffer", so the offer is a node of its own that points at
         // the building through availableAtOrFrom; this keeps the validators error-free.
@@ -234,6 +241,11 @@ final class StructuredDataService
                 ['Minimum bérleti időszak', $property->min_lease_term, $property->min_lease_term_unit],
                 ['Kódszám', $property->code, null],
             ];
+
+        // A building no longer offered shows only its basic data, no fees or availability.
+        if (! $property->isOffered()) {
+            $values = array_filter($values, fn (array $value): bool => in_array($value[0], ['Építés éve', 'Összterület', 'Parkolás'], true));
+        }
 
         return collect($values)
             ->filter(fn (array $value): bool => filled($value[1]))

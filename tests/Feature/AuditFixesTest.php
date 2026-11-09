@@ -69,15 +69,18 @@ it('asks guests to sign in before showing the favorites', function (string $uri)
     $this->get($uri)->assertRedirect(route('login'));
 })->with(['/kedvencek', '/kedvencek/export-excel', '/favorites', '/favorites/export-excel']);
 
-it('hides inactive properties from visitors but not from signed-in admins', function (): void {
+it('shows inactive properties to visitors and signed-in admins alike, as a page without an offer', function (): void {
     /** @var TestCase $this */
     $property = Property::query()->forceCreate(['title' => 'Inaktív', 'status' => 'inactive', 'slug' => 'inaktiv-adatlap', 'offer_type' => 'kiado-iroda']);
 
-    $this->get(route('properties.show', ['property' => $property->slug]))->assertNotFound();
+    $this->get(route('properties.show', ['property' => $property->slug]))
+        ->assertOk()
+        ->assertSee('Ezt az épületet jelenleg nem közvetítjük.');
 
     $this->actingAs(User::factory()->create())
         ->get(route('properties.show', ['property' => $property->slug]))
-        ->assertOk();
+        ->assertOk()
+        ->assertSee('Ezt az épületet jelenleg nem közvetítjük.');
 });
 
 it('drops a quote request whose honeypot is filled', function (): void {

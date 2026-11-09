@@ -21,8 +21,10 @@ use App\Livewire\Pages\OfficesForSale;
 use App\Livewire\Pages\PrivacyPolicy;
 use App\Livewire\Pages\PropertyIndex;
 use App\Livewire\Pages\PropertyShow;
+use App\Models\PropertyRedirect;
 use App\Services\LocalizedRoutes;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,7 +39,20 @@ use Symfony\Component\HttpFoundation\Response;
 | other line by line. The URL decides the language of the page (see
 | App\Services\LocalizedRoutes), so a new page needs a route in both blocks.
 |
+| A property page outlives its listing: an inactive or deleted property still
+| answers (withTrashed), as a data sheet without fees; one deleted for good
+| redirects to its district's page.
+|
 */
+
+$redirectDeletedProperty = function (Request $request): RedirectResponse {
+    $redirect = PropertyRedirect::query()->where('slug', $request->route('property'))->firstOrFail();
+
+    // Runs while the route bindings are resolved, before SetLocale: the target is in the URL's language
+    app()->setLocale(resolve(LocalizedRoutes::class)->localeOf($request->route()) ?? LocalizedRoutes::DEFAULT_LOCALE);
+
+    return redirect()->to($redirect->targetUrl(), 301);
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -61,8 +76,10 @@ Route::livewire('/budapest/{category:slug}', OfficeCategory::class)->name('budap
 
 // Properties
 Route::livewire('/ingatlanok', PropertyIndex::class)->name('properties.index');
-Route::livewire('/kiado-iroda/{property:slug}', PropertyShow::class)->name('properties.show');
-Route::livewire('/elado-irodahaz/{property:slug}', PropertyShow::class)->name('properties.show-for-sale');
+Route::livewire('/kiado-iroda/{property:slug}', PropertyShow::class)->name('properties.show')
+    ->withTrashed()->missing($redirectDeletedProperty);
+Route::livewire('/elado-irodahaz/{property:slug}', PropertyShow::class)->name('properties.show-for-sale')
+    ->withTrashed()->missing($redirectDeletedProperty);
 
 // News
 Route::livewire('/hirek', NewsIndex::class)->name('news.index');
@@ -80,7 +97,7 @@ Route::middleware('auth')->group(function (): void {
 |--------------------------------------------------------------------------
 */
 
-Route::name('en.')->group(function (): void {
+Route::name('en.')->group(function () use ($redirectDeletedProperty): void {
     // Pages
     Route::livewire('/home', Home::class)->name('home');
     Route::livewire('/offices-for-rent', OfficesForRent::class)->name('kiado-irodak');
@@ -97,8 +114,10 @@ Route::name('en.')->group(function (): void {
 
     // Properties
     Route::livewire('/properties', PropertyIndex::class)->name('properties.index');
-    Route::livewire('/office-to-let/{property:slug}', PropertyShow::class)->name('properties.show');
-    Route::livewire('/office-to-sale/{property:slug}', PropertyShow::class)->name('properties.show-for-sale');
+    Route::livewire('/office-to-let/{property:slug}', PropertyShow::class)->name('properties.show')
+        ->withTrashed()->missing($redirectDeletedProperty);
+    Route::livewire('/office-to-sale/{property:slug}', PropertyShow::class)->name('properties.show-for-sale')
+        ->withTrashed()->missing($redirectDeletedProperty);
 
     // News
     Route::livewire('/news', NewsIndex::class)->name('news.index');

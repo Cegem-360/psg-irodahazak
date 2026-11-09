@@ -7,6 +7,8 @@ namespace App\Filament\Resources\PropertyResource\Pages;
 use App\Filament\Resources\PropertyResource;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Session;
@@ -36,6 +38,8 @@ final class EditProperty extends EditRecord
                 ->modalDescription('Biztosan szeretnéd generálni az ingatlan PDF adatlapját?')
                 ->modalSubmitActionLabel('PDF Megnyitás'),
             DeleteAction::make(),
+            RestoreAction::make(),
+            ForceDeleteAction::make(),
         ];
     }
 }

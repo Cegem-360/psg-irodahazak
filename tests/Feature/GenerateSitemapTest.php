@@ -19,12 +19,10 @@ it('writes a sitemap index pointing at the page, property and article sitemaps',
         'offer_type' => 'kiado-iroda',
     ]);
 
-    $hidden = Property::query()->forceCreate([
-        'title' => 'Nem aktív ingatlan',
-        'status' => 'inactive',
-        'slug' => 'nem-aktiv-ingatlan',
-        'offer_type' => 'kiado-iroda',
-    ]);
+    $inactive = Property::factory()->inactive()->create(['slug' => 'nem-aktiv-ingatlan']);
+    $deleted = Property::factory()->create(['slug' => 'torolt-ingatlan']);
+    $deleted->delete();
+    Property::factory()->create(['slug' => 'veglegesen-torolt'])->forceDelete();
 
     // BlogCategoryFactory picks from eight fixed names, so two posts share one category to avoid a slug clash.
     $indexedPost = BlogPost::factory()->published()->create();
@@ -57,7 +55,9 @@ it('writes a sitemap index pointing at the page, property and article sitemaps',
         ->and($pages)->not->toContain(url('/news'))
         ->and($properties)->toContain(route('properties.show', ['property' => $property->slug]))
         ->and($properties)->toContain('<loc>'.route('en.properties.show', ['property' => $property->slug]).'</loc>')
-        ->and($properties)->not->toContain($hidden->slug)
+        ->and($properties)->toContain(route('properties.show', ['property' => $inactive->slug]))
+        ->and($properties)->toContain(route('properties.show', ['property' => $deleted->slug]))
+        ->and($properties)->not->toContain('veglegesen-torolt')
         ->and($articles)->toContain(route('en.blog.show', ['post' => $indexedPost->slug]))
         ->and($articles)->not->toContain($noindexPost->slug)
         ->and($articles)->toContain('<loc>'.route('news.show', ['news' => $news->slug]).'</loc>')

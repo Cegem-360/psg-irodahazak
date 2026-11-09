@@ -15,10 +15,6 @@
     {{ $property->localized('meta_keywords', 'meta_keywords_en') }}
 </x-slot>
 
-@if (!$property->isActive())
-    <x-slot name="metaRobots">noindex, nofollow</x-slot>
-@endif
-
 <div>
     <x-page-section spacing="space-y-8">
         <x-slot:heading>{{ translate_value($property->title) }}</x-slot:heading>
@@ -30,7 +26,29 @@
 
                 <table class="table-auto w-full mt-4">
                     <tbody>
-                        @if ($property->isSale())
+                        @if (!$property->isOffered())
+                            {{-- No longer brokered: the building's basic data, no fees and no availability --}}
+                            <x-property.spec-row :label="__('Address')">{{ $property->address() }}</x-property.spec-row>
+                            @if ($property->construction_year && !$property->isSale())
+                                <x-property.spec-row
+                                    :label="__('Construction Year')">{{ $property->construction_year }}</x-property.spec-row>
+                            @endif
+                            @if ($property->total_area)
+                                <x-property.spec-row :label="__('Total Area')">
+                                    {{ $property->total_area }}
+                                    {{ __($property->total_area_unit ?? '') }}
+                                </x-property.spec-row>
+                            @endif
+                            @if ($property->parking)
+                                <x-property.spec-row
+                                    :label="__('Parking')">{{ __($property->parking) }}</x-property.spec-row>
+                            @endif
+                            <tr>
+                                <td class="py-8 italic font-bold text-center text-xl text-logogray" colspan="2">
+                                    {{ __('We are not currently brokering this building.') }}
+                                </td>
+                            </tr>
+                        @elseif ($property->isSale())
 
                             <x-property.spec-row :label="__('Address')">
                                 {{ $property->postal_code ?? '' }}
@@ -155,7 +173,7 @@
                 </table>
             </div>
         </x-glass-panel>
-        @if (auth()->check() || request()->hasValidSignature())
+        @if ($property->isOffered() && (auth()->check() || request()->hasValidSignature()))
             <x-glass-panel>
                 <div class="text-center">
                     <h3 class="text-2xl font-bold mb-4">{{ __('Property Details') }}</h3>
@@ -177,7 +195,7 @@
         @endif
         <x-glass-panel class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-                @if (!$property->isSale())
+                @if (!$property->isSale() || !$property->isOffered())
                     <iframe src="{{ $property->mapEmbedUrl() }}" width="100%" height="100%" style="border:0;"
                         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 @else
@@ -197,7 +215,7 @@
 
             </div>
         </x-glass-panel>
-        @if (!$property->isSale())
+        @if (!$property->isSale() && $property->isOffered())
             <x-glass-panel class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="order-2 md:order-0">
                     <section class="bg-white rounded-xl">
@@ -221,6 +239,15 @@
                         </ul>
                     </div>
                 </div>
+            </x-glass-panel>
+        @elseif (!$property->isSale() && $property->services->merge($property->tags)->isNotEmpty())
+            <x-glass-panel class="space-y-4 p-4">
+                <h2 class="text-3xl">{{ __('Features') }}</h2>
+                <ul class="sm:columns-3 gap-x-8 gap-y-3 list-disc text-lg">
+                    @foreach ($property->services->merge($property->tags)->sortBy(fn ($item) => Str::lower(Str::ascii($item->name))) as $item)
+                        <li class="jellemzok pb-1">{{ translate_value($item->name) }}</li>
+                    @endforeach
+                </ul>
             </x-glass-panel>
         @endif
     </x-page-section>

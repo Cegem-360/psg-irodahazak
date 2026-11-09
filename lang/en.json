@@ -221,5 +221,6 @@
     "Export to Excel": "Export to Excel",
     "Send favorites via email": "Send favorites via email",
     "Köszönjük üzenetét! Visszaigazoló e-mailt küldtünk a(z) :email címre. Hamarosan felvesszük Önnel a kapcsolatot.": "Thank you for your message! We have sent a confirmation email to :email. We will contact you shortly.",
-    "irodaház": "office buildings"
+    "irodaház": "office buildings",
+    "We are not currently brokering this building.": "We are not currently brokering this building."
 }

@@ -80,8 +80,9 @@ final class GenerateSitemap extends Command
     {
         $sitemap = Sitemap::create();
 
+        // Inactive and deleted properties keep their page (as a data sheet without fees), so they stay listed
         $properties = Property::query()
-            ->active()
+            ->withTrashed()
             ->whereNotNull('slug')
             ->where('slug', '!=', '')
             ->cursor();

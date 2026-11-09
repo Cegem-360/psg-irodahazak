@@ -9,7 +9,10 @@ use App\Filament\Pages\ListSaleProperties;
 use App\Filament\Resources\PropertyResource\Pages\EditProperty;
 use App\Filament\Resources\PropertyResource\Pages\ListProperties;
 use App\Models\Property;
+use App\Models\PropertyRedirect;
 use App\Models\User;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\Testing\TestAction;
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Str;
@@ -68,6 +71,23 @@ it('edits a property and keeps its status and type as enums', function (): void 
     expect($property->refresh())
         ->status->toBe(PropertyStatus::Inactive)
         ->offer_type->toBe(PropertyType::Sale);
+});
+
+it('keeps a deleted property restorable and leaves a redirect behind only when it is deleted for good', function (): void {
+    $property = adminProperty(['district' => 'XI']);
+
+    livewire(EditProperty::class, ['record' => $property->getRouteKey()])->callAction(DeleteAction::class);
+
+    expect($property->refresh()->trashed())->toBeTrue()
+        ->and(PropertyRedirect::query()->exists())->toBeFalse();
+
+    livewire(ListProperties::class)
+        ->filterTable('trashed', false)
+        ->assertCanSeeTableRecords([$property])
+        ->callAction(TestAction::make('forceDelete')->table($property));
+
+    expect(Property::withTrashed()->find($property->id))->toBeNull()
+        ->and(PropertyRedirect::query()->sole())->slug->toBe('bank-center')->district->toBe('XI');
 });
 
 it('has no first image URL without photos', function (): void {

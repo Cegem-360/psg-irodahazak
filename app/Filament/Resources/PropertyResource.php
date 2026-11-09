@@ -19,7 +19,11 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ExportAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\ImportAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -38,7 +42,10 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\RecordActionsPosition;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
@@ -416,7 +423,9 @@ final class PropertyResource extends Resource
             ])
             ->defaultSort('date', 'desc')
             ->filters([
-                //
+                // A deleted property keeps its public page as an inactive data sheet; its
+                // permanent delete leaves a 301 to the district's page behind.
+                TrashedFilter::make(),
             ])
             ->recordActions([
 
@@ -435,10 +444,14 @@ final class PropertyResource extends Resource
                     ->modalHeading('PDF Generálás')
                     ->modalDescription('Biztosan szeretnéd generálni az ingatlan PDF adatlapját?')
                     ->modalSubmitActionLabel('PDF Megnyitás'),
+                RestoreAction::make(),
+                ForceDeleteAction::make(),
             ], position: RecordActionsPosition::BeforeCells)
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
                 ]),
             ])
             ->headerActions([
@@ -451,6 +464,16 @@ final class PropertyResource extends Resource
                     ->icon(Heroicon::OutlinedArrowUpTray)
                     ->importer(PropertyImporter::class),
             ]);
+    }
+
+    /**
+     * @return Builder<Property>
+     */
+    #[Override]
+    public static function getRecordRouteBindingEloquentQuery(): Builder
+    {
+        return parent::getRecordRouteBindingEloquentQuery()
+            ->withoutGlobalScopes([SoftDeletingScope::class]);
     }
 
     #[Override]

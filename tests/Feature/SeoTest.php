@@ -12,31 +12,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
-/**
- * Pulls every JSON-LD block out of a page and merges their @graph nodes.
- *
- * @return list<array<string, mixed>>
- */
-function jsonLdNodes(string $html): array
-{
-    preg_match_all('#<script type="application/ld\+json">(.*?)</script>#s', $html, $matches);
-
-    return collect($matches[1])
-        ->map(fn (string $json): array => json_decode($json, true, flags: JSON_THROW_ON_ERROR))
-        ->flatMap(fn (array $data): array => $data['@graph'] ?? [$data])
-        ->values()
-        ->all();
-}
-
-/**
- * @return array<string, mixed>|null
- */
-function jsonLdNode(string $html, string $type): ?array
-{
-    return collect(jsonLdNodes($html))
-        ->first(fn (array $node): bool => in_array($type, (array) $node['@type'], true));
-}
-
 function bankCenter(array $attributes = []): Property
 {
     return Property::query()->forceCreate([
