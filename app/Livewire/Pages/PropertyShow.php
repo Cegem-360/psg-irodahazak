@@ -44,7 +44,13 @@ final class PropertyShow extends Component
             $query->inRandomOrder();
         }
 
-        return $query->limit(3)->get();
+        // Sort the ids only, then load the three winners: sorting whole rows drags the long
+        // text columns into MySQL's on-disk temporary table, which once filled the host's disk.
+        $ids = $query->limit(3)->pluck('id');
+
+        return Property::query()->findMany($ids)
+            ->sortBy(fn (Property $property): int => (int) $ids->search($property->id))
+            ->values();
     }
 
     public function render(): View
