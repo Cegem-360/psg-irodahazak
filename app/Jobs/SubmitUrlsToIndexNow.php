@@ -24,14 +24,23 @@ final class SubmitUrlsToIndexNow implements ShouldQueue
 
     public function handle(): void
     {
+        $this->submit();
+    }
+
+    /**
+     * Posts the URLs and returns the HTTP status of the answer (200 or 202 when
+     * accepted), or null when nothing was sent or the request failed.
+     */
+    public function submit(): ?int
+    {
         $key = config('seo.indexnow.key');
 
         if (blank($key) || $this->urls === []) {
-            return;
+            return null;
         }
 
         try {
-            $response = Http::timeout(10)->post(config('seo.indexnow.endpoint'), [
+            $response = Http::timeout(30)->post(config('seo.indexnow.endpoint'), [
                 'host' => parse_url((string) config('app.url'), PHP_URL_HOST),
                 'key' => $key,
                 'keyLocation' => url($key.'.txt'),
@@ -41,9 +50,13 @@ final class SubmitUrlsToIndexNow implements ShouldQueue
             if ($response->failed()) {
                 Log::warning('IndexNow submission failed', ['status' => $response->status(), 'urls' => $this->urls]);
             }
+
+            return $response->status();
         } catch (Throwable $throwable) {
             // A failed ping must never break saving the property in the admin.
             Log::warning('IndexNow submission failed', ['error' => $throwable->getMessage(), 'urls' => $this->urls]);
+
+            return null;
         }
     }
 }

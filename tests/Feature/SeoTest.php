@@ -5,9 +5,11 @@ declare(strict_types=1);
 use App\Jobs\SubmitUrlsToIndexNow;
 use App\Models\BlogPost;
 use App\Models\Category;
+use App\Models\News;
 use App\Models\Property;
 use App\Models\Reference;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -251,16 +253,51 @@ it('serves the IndexNow key file only for the configured key', function (): void
     $this->get('/0000000000000000.txt')->assertNotFound();
 });
 
-it('pings IndexNow when an active property is saved', function (): void {
+it('pings IndexNow with the Hungarian and English page when a property is saved, deactivated or deleted', function (): void {
+    config(['seo.indexnow.key' => 'abcdef0123456789']);
+    Bus::fake();
+    $pages = [route('properties.show', ['property' => 'bank-center']), route('en.properties.show', ['property' => 'bank-center'])];
+
+    $property = bankCenter();
+    $property->update(['status' => 'inactive']);
+    $property->delete();
+
+    Bus::assertDispatchedAfterResponseTimes(SubmitUrlsToIndexNow::class, 3);
+    Bus::assertDispatchedAfterResponse(SubmitUrlsToIndexNow::class, fn (SubmitUrlsToIndexNow $job): bool => $job->urls === $pages);
+});
+
+it('pings IndexNow when a news article is published, not while it is a draft', function (): void {
     config(['seo.indexnow.key' => 'abcdef0123456789']);
     Bus::fake();
 
-    bankCenter();
+    $news = News::factory()->create(['is_published' => false, 'published_at' => null]);
+    Bus::assertNothingDispatched();
+
+    $news->update(['is_published' => true, 'published_at' => now()->subMinute()]);
 
     Bus::assertDispatchedAfterResponse(
         SubmitUrlsToIndexNow::class,
-        fn (SubmitUrlsToIndexNow $job): bool => $job->urls === [route('properties.show', ['property' => 'bank-center'])],
+        fn (SubmitUrlsToIndexNow $job): bool => $job->urls === [route('news.show', ['news' => $news->slug])],
     );
+});
+
+it('submits every sitemap URL to IndexNow in one call', function (): void {
+    /** @var TestCase $this */
+    config(['seo.indexnow.key' => 'abcdef0123456789']);
+    Http::fake(['api.indexnow.org/*' => Http::response(null, 202)]);
+    $directory = sys_get_temp_dir().'/sitemap-test-'.bin2hex(random_bytes(6));
+    File::ensureDirectoryExists($directory);
+    bankCenter();
+
+    $this->artisan('sitemap:generate', ['--path' => $directory.'/sitemap.xml'])->assertSuccessful();
+    $this->artisan('indexnow:submit-sitemaps', ['--path' => $directory.'/sitemap.xml'])->assertSuccessful();
+    File::deleteDirectory($directory);
+
+    Http::assertSentCount(1);
+    Http::assertSent(fn ($request): bool => $request['key'] === 'abcdef0123456789'
+        && in_array(route('properties.show', ['property' => 'bank-center']), $request['urlList'], true)
+        && in_array(route('en.properties.show', ['property' => 'bank-center']), $request['urlList'], true)
+        && in_array(route('kapcsolat'), $request['urlList'], true));
 });
 
 it('posts the changed URLs to the IndexNow API', function (): void {

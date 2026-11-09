@@ -94,6 +94,18 @@ final class BlogPost extends Model
     }
 
     /**
+     * Posts that may appear in lists: the noindex ones (off-topic posts copied
+     * from blog.hu) stay readable by their URL only.
+     *
+     * @param  Builder<self>  $query
+     */
+    #[Scope]
+    protected function listed(Builder $query): void
+    {
+        $query->where('noindex', false);
+    }
+
+    /**
      * @param  Builder<self>  $query
      */
     #[Scope]

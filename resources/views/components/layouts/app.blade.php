@@ -1,4 +1,4 @@
-@props(['breadcrumbs' => []])
+@props(['breadcrumbs' => [], 'withPopups' => true])
 @inject('structuredData', 'App\\Services\\StructuredDataService')
 @inject('localizedRoutes', 'App\\Services\\LocalizedRoutes')
 @php
@@ -109,6 +109,9 @@
 
         @cookieconsentscripts
         @filamentStyles
+        {{-- Explicit, because Livewire only auto-injects its assets into 200 responses: without
+             them the error pages could not close the quote request popup. --}}
+        @livewireStyles
         @vite(['resources/js/app.js'])
 
     </head>
@@ -127,14 +130,19 @@
 
         <x-toast />
 
-        @livewire('quote-request-modal')
+        {{-- Not on the error pages: Livewire replays the failed page's route on every update,
+             so a popup opened there could never be closed again. --}}
+        @if ($withPopups)
+            @livewire('quote-request-modal')
 
-        @livewire('property-map-modal')
+            @livewire('property-map-modal')
 
-        @livewire('property-phone-modal')
+            @livewire('property-phone-modal')
+        @endif
 
         <x-layouts.footer />
         @cookieconsentview
+        @livewireScripts
         @filamentScripts
         @stack('scripts')
 

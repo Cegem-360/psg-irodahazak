@@ -32,7 +32,7 @@ final class BlogPostShow extends Component
     #[Computed]
     public function relatedPosts(): Collection
     {
-        return BlogPost::query()->published()
+        return BlogPost::query()->published()->listed()
             ->where('blog_category_id', $this->post->blog_category_id)
             ->whereKeyNot($this->post->id)
             ->with(['category', 'author'])

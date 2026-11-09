@@ -238,6 +238,21 @@ final class Property extends Model
     }
 
     /**
+     * The Hungarian and the English page of the property, for IndexNow.
+     *
+     * @return list<string>
+     */
+    public function publicUrls(): array
+    {
+        $routeName = $this->type()->showRoute();
+
+        return [
+            route($routeName, ['property' => $this->slug]),
+            route('en.'.$routeName, ['property' => $this->slug]),
+        ];
+    }
+
+    /**
      * The public page of the property: /kiado-iroda/… or /elado-irodahaz/…
      */
     public function url(): string

@@ -55,7 +55,7 @@ final class Home extends Component
     #[Computed]
     public function latestPosts(): Collection
     {
-        return BlogPost::query()->published()->latest('published_at')->take(3)->get();
+        return BlogPost::query()->published()->listed()->latest('published_at')->take(3)->get();
     }
 
     /**

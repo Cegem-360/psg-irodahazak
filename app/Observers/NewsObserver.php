@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use App\Jobs\SubmitUrlsToIndexNow;
 use App\Models\News;
 use Illuminate\Support\Str;
 
@@ -21,5 +22,18 @@ final class NewsObserver
         if (blank($news->excerpt)) {
             $news->excerpt = Str::limit(strip_tags((string) $news->content), 160);
         }
+    }
+
+    /**
+     * Pings IndexNow with the article once it is published, and after every
+     * later edit. The news only exist in Hungarian.
+     */
+    public function saved(News $news): void
+    {
+        if (blank(config('seo.indexnow.key')) || $news->status !== 'published' || blank($news->slug)) {
+            return;
+        }
+
+        SubmitUrlsToIndexNow::dispatchAfterResponse([route('news.show', ['news' => $news->slug])]);
     }
 }

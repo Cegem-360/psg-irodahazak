@@ -26,7 +26,7 @@ final class BlogCategoryShow extends Component
     public function render(): View
     {
         return $this->asPage(view('blog.category', [
-            'posts' => BlogPost::query()->published()
+            'posts' => BlogPost::query()->published()->listed()
                 ->where('blog_category_id', $this->category->id)
                 ->latest('published_at')
                 ->paginate(12),

@@ -23,3 +23,8 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# Plain text files (llms.txt, robots.txt) and the sitemaps are UTF-8
+<IfModule mod_mime.c>
+    AddCharset utf-8 .txt .xml
+</IfModule>

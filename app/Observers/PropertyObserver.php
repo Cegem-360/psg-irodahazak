@@ -43,22 +43,25 @@ final class PropertyObserver
     }
 
     /**
-     * Pings IndexNow with the property's page after every save in the admin.
+     * Pings IndexNow with the property's pages after every save in the admin:
+     * inactive properties keep a public page too.
      */
     public function saved(Property $property): void
     {
         Property::forgetDistrictCounts();
 
-        if (blank(config('seo.indexnow.key')) || ! $property->isActive() || blank($property->slug)) {
-            return;
-        }
-
-        SubmitUrlsToIndexNow::dispatchAfterResponse([$property->url()]);
+        $this->pingIndexNow($property);
     }
 
-    public function deleted(): void
+    /**
+     * A deleted property keeps its page as an inactive data sheet; search engines
+     * are told to look at it again.
+     */
+    public function deleted(Property $property): void
     {
         Property::forgetDistrictCounts();
+
+        $this->pingIndexNow($property);
     }
 
     /**
@@ -67,5 +70,14 @@ final class PropertyObserver
     public function forceDeleted(Property $property): void
     {
         PropertyRedirect::rememberDeleted($property);
+    }
+
+    private function pingIndexNow(Property $property): void
+    {
+        if (blank(config('seo.indexnow.key')) || blank($property->slug)) {
+            return;
+        }
+
+        SubmitUrlsToIndexNow::dispatchAfterResponse($property->publicUrls());
     }
 }

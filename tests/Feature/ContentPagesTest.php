@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Livewire\Pages\RentalFees;
+use App\Models\BlogPost;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Property;
@@ -123,4 +124,27 @@ it('lists both new pages in the sitemap', function (): void {
 
     expect($pages)->toContain('<loc>'.route('rental-fees').'</loc>')
         ->toContain('<loc>'.route('fekete-richard').'</loc>');
+});
+
+it('shows a 404 page without the popup that could not be closed, with the way on', function (string $uri): void {
+    /** @var TestCase $this */
+    $this->get($uri)
+        ->assertNotFound()
+        ->assertDontSeeHtml('wire:snapshot')
+        ->assertSeeHtml('href="'.route('home').'"')
+        ->assertSeeHtml('href="'.route('kiado-irodak').'"')
+        ->assertSeeText('A keresett oldal nem létezik vagy átköltözött.');
+})->with([
+    'unknown property' => ['/kiado-iroda/nincs-ilyen-epulet'],
+    'unknown address' => ['/nincs-ilyen-oldal'],
+]);
+
+it('keeps noindex blog posts out of the home page and the category lists but readable', function (): void {
+    /** @var TestCase $this */
+    $listed = BlogPost::factory()->published()->create(['title' => 'Irodapiaci poszt']);
+    $hidden = BlogPost::factory()->published()->create(['title' => 'Karácsonyi filmek', 'noindex' => true, 'blog_category_id' => $listed->blog_category_id]);
+
+    $this->get('/')->assertSeeText('Irodapiaci poszt')->assertDontSeeText('Karácsonyi filmek');
+    $this->get(route('en.blog.category', ['category' => $listed->category->slug]))->assertSeeText('Irodapiaci poszt')->assertDontSeeText('Karácsonyi filmek');
+    $this->get(route('en.blog.show', ['post' => $hidden->slug]))->assertOk()->assertSeeHtml('<meta name="robots" content="noindex, follow">');
 });
