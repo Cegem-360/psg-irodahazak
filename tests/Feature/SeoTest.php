@@ -131,8 +131,11 @@ it('puts the counter values and the image alt texts in the home page HTML', func
 
     $this->get(route('home'))
         ->assertOk()
-        ->assertSeeHtml('data-to="25" data-suffix="+">25+</span>')
-        ->assertSeeHtml('data-to="90" data-suffix="%">90%</span>')
+        ->assertSeeHtml('data-to="230" data-suffix="">230</span>')
+        ->assertSeeHtml('data-to="16" data-suffix=" év">16 év</span>')
+        ->assertSeeHtml('data-to="250" data-suffix="+">250+</span>')
+        ->assertSeeHtml('data-to="100" data-suffix=" ezer m²+">100 ezer m²+</span>')
+        ->assertSeeHtml('data-to="24" data-suffix=" óra">24 óra</span>')
         ->assertSeeHtml('alt="Lavylites"')
         ->assertSeeHtml('alt="Váci Greens irodaház"');
 });

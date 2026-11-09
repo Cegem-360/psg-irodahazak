@@ -177,7 +177,6 @@
     "Hétfő-Péntek": "Monday-Friday",
     "Amennyiben sürgős kérdése van, kérjük, hívjon minket telefonon a +36 20 381 3917 számon.": "If you have an urgent question, please call us at +36 20 381 3917.",
     "Üdvözlettel": "Best regards",
-    "Property Solution Group csapata": "Property Solution Group team",
     "Ez egy automatikus válasz. Kérjük, ne válaszoljon erre az emailre.": "This is an automated response. Please do not reply to this email.",
     "Köszönjük üzenetét! Hamarosan felvesszük Önnel a kapcsolatot.": "Thank you for your message! We will contact you soon.",
     "Kérjük, javítsa ki a hibákat és próbálja újra.": "Please correct the errors and try again.",
@@ -222,5 +221,14 @@
     "Send favorites via email": "Send favorites via email",
     "Köszönjük üzenetét! Visszaigazoló e-mailt küldtünk a(z) :email címre. Hamarosan felvesszük Önnel a kapcsolatot.": "Thank you for your message! We have sent a confirmation email to :email. We will contact you shortly.",
     "irodaház": "office buildings",
-    "We are not currently brokering this building.": "We are not currently brokering this building."
+    "We are not currently brokering this building.": "We are not currently brokering this building.",
+    "office buildings": "office buildings",
+    "on offer": "on offer",
+    "of office market": "of office market",
+    "signed": "signed",
+    "contracts": "contracts",
+    "hours": "hours",
+    "within which": "within which",
+    "we send an offer": "we send an offer",
+    "The PSG Irodaházak team": "The PSG Irodaházak team"
 }

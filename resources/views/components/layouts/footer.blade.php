@@ -65,8 +65,16 @@
                              <a wire:navigate.hover href="{{ localized_route('rolunk') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('About Us') }}</a>
                          </li>
-
+                         <li class="mb-4">
+                             <a wire:navigate.hover href="{{ route('fekete-richard') }}"
+                                 class="hover:underline hover:text-blue-600 transition-colors duration-200">Fekete Richárd</a>
                          </li>
+                         @if (app()->getLocale() === 'hu')
+                             <li class="mb-4">
+                                 <a wire:navigate.hover href="{{ route('rental-fees') }}"
+                                     class="hover:underline hover:text-blue-600 transition-colors duration-200">Irodabérleti díjak 2026</a>
+                             </li>
+                         @endif
                          <li>
                              <a wire:navigate.hover href="{{ localized_route('kapcsolat') }}"
                                  class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Contact') }}</a>
@@ -91,8 +99,7 @@
          <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
          <div class="sm:flex sm:items-center sm:justify-between">
              <span class="text-sm text-gray-500 sm:text-center">©2014-{{ date('Y') }} <a href="/"
-                     class="hover:underline hover:text-blue-600 transition-colors duration-200">Property Solution
-                     Group Kft.</a> - {{ __('All rights reserved.') }}</span>
+                     class="hover:underline hover:text-blue-600 transition-colors duration-200">Property Solution Group Kft.</a> - {{ __('All rights reserved.') }}</span>
              <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
                  <a href="https://www.facebook.com/psgirodahazak" target="_blank"
                      class="text-gray-500 hover:text-blue-600 transition-colors duration-200">

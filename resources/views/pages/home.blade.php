@@ -1,4 +1,4 @@
-<x-slot name="title">{{ __('PSG-IRODAHÁZAK | Offices for rent, office buildings for sale, serviced instant office solutions, loft and green office buildings for lease in Budapest. Tenant representation!') }}</x-slot>
+<x-slot name="title">{{ __('PSG Irodaházak | Offices for rent, office buildings for sale, serviced instant office solutions, loft and green office buildings for lease in Budapest. Tenant representation!') }}</x-slot>
 <x-slot name="metaDescription">{{ __('Offices for rent in Budapest! Rent from traditional and serviced offices on favourable lease terms, with a review of the entire office market database. Offers sent the same day.') }}</x-slot>
 
 <div class="overflow-hidden max-w-[2200px] mx-auto bg-white">

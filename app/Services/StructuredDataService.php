@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\BlogPost;
+use App\Models\News;
 use App\Models\Property;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\HtmlString;
@@ -16,6 +18,12 @@ use Illuminate\Support\Str;
  */
 final class StructuredDataService
 {
+    /**
+     * The portrait of the founder, relative to public/; the page and the schema
+     * show it once the file is there.
+     */
+    public const string FOUNDER_PHOTO = 'images/fekete-richard-ugyvezeto-psg-irodahazak.jpg';
+
     public function organizationId(): string
     {
         return url('/').'/#organization';
@@ -41,7 +49,6 @@ final class StructuredDataService
                 '@id' => $this->organizationId(),
                 'name' => 'PSG Irodaházak',
                 'legalName' => 'Property Solution Group Kft.',
-                'alternateName' => 'PSG-IRODAHÁZAK',
                 'url' => url('/').'/',
                 'logo' => $this->logoUrl(),
                 'image' => $this->logoUrl(),
@@ -60,14 +67,21 @@ final class StructuredDataService
                 'sameAs' => config('seo.organization_same_as'),
                 'founder' => ['@id' => $this->founderId()],
             ],
-            [
+            array_filter([
                 '@type' => 'Person',
                 '@id' => $this->founderId(),
                 'name' => 'Fekete Richárd',
                 'jobTitle' => 'ügyvezető',
+                'url' => route('fekete-richard'),
+                'image' => $this->founderPhotoUrl(),
                 'worksFor' => ['@id' => $this->organizationId()],
+                'alumniOf' => [
+                    ['@type' => 'CollegeOrUniversity', 'name' => 'Budapesti Gazdasági Egyetem'],
+                    ['@type' => 'CollegeOrUniversity', 'name' => 'Budapesti Műszaki és Gazdaságtudományi Egyetem'],
+                ],
+                'knowsAbout' => ['irodabérlés Budapest', 'irodabérleti szerződés tárgyalása', 'irodaház értékesítés'],
                 'sameAs' => config('seo.founder_same_as'),
-            ],
+            ]),
         ];
 
         if (count($breadcrumbs) > 1) {
@@ -156,6 +170,103 @@ final class StructuredDataService
             '@context' => 'https://schema.org',
             '@graph' => [$place, array_filter($offer)],
         ];
+    }
+
+    /**
+     * The URL of the founder's portrait, or null until the file is uploaded.
+     */
+    public function founderPhotoUrl(): ?string
+    {
+        return file_exists(public_path(self::FOUNDER_PHOTO)) ? asset(self::FOUNDER_PHOTO) : null;
+    }
+
+    /**
+     * An editorial page of the site written by the founder, such as the rental
+     * fee overview.
+     *
+     * @return array<string, mixed>
+     */
+    public function authoredArticle(string $headline, string $description, string $url, CarbonInterface $published, CarbonInterface $modified): array
+    {
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'Article',
+            'mainEntityOfPage' => $url,
+            'headline' => Str::limit($headline, 110),
+            'description' => $description,
+            'datePublished' => $published->toDateString(),
+            'dateModified' => $modified->toDateString(),
+            'author' => ['@id' => $this->founderId()],
+            'publisher' => ['@id' => $this->organizationId()],
+        ];
+    }
+
+    /**
+     * @param  list<array{question: string, answer: string}>  $questions
+     * @return array<string, mixed>
+     */
+    public function faqPage(array $questions): array
+    {
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'FAQPage',
+            'mainEntity' => array_map(fn (array $faq): array => [
+                '@type' => 'Question',
+                'name' => $faq['question'],
+                'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
+            ], $questions),
+        ];
+    }
+
+    /**
+     * The About Us page, describing the company of the site-wide graph.
+     *
+     * @return array<string, mixed>
+     */
+    public function aboutPage(string $url): array
+    {
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'AboutPage',
+            'url' => $url,
+            'mainEntity' => ['@id' => $this->organizationId()],
+        ];
+    }
+
+    /**
+     * The founder's own page, describing the person of the site-wide graph.
+     *
+     * @return array<string, mixed>
+     */
+    public function profilePage(string $url): array
+    {
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'ProfilePage',
+            'url' => $url,
+            'mainEntity' => ['@id' => $this->founderId()],
+        ];
+    }
+
+    /**
+     * A news article; the news are written by the founder.
+     *
+     * @return array<string, mixed>
+     */
+    public function newsArticle(News $news, string $url): array
+    {
+        return array_filter([
+            '@context' => 'https://schema.org',
+            '@type' => 'NewsArticle',
+            'mainEntityOfPage' => $url,
+            'headline' => Str::limit($news->title, 110),
+            'description' => Str::limit(Str::squish(strip_tags((string) $news->excerpt)), 160) ?: null,
+            'image' => $this->imageUrl($news->featured_image),
+            'datePublished' => $news->published_at?->toIso8601String(),
+            'dateModified' => ($news->updated_at ?? $news->published_at)?->toIso8601String(),
+            'author' => ['@id' => $this->founderId()],
+            'publisher' => ['@id' => $this->organizationId()],
+        ]);
     }
 
     /**

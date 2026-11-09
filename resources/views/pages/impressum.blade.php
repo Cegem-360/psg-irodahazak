@@ -1,7 +1,7 @@
-<x-slot name="title">{{ __('Imprint') }} | PSG-IRODAHÁZAK</x-slot>
+<x-slot name="title">{{ __('Imprint') }} | PSG Irodaházak</x-slot>
 <x-slot name="meta">
-    <meta name="description" content="{{ __('PSG-IRODAHÁZAK imprint - Legal information and contact details.') }}">
-    <meta name="keywords" content="{{ __('imprint, legal information, PSG-IRODAHÁZAK') }}">
+    <meta name="description" content="{{ __('PSG Irodaházak imprint - Legal information and contact details.') }}">
+    <meta name="keywords" content="{{ __('imprint, legal information, PSG Irodaházak') }}">
 </x-slot>
 
 <div>

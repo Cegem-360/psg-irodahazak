@@ -41,7 +41,7 @@
 
 <p style="margin-top: 30px;">
     {{ __('Kind regards') }},<br>
-    <strong>{{ __('The Property Solution Group team') }}</strong>
+    <strong>{{ __('The PSG Irodaházak team') }}</strong>
 </p>
 
 <p style="margin-top: 30px; font-size: 14px; color: #666;">

@@ -10,6 +10,12 @@
             @endif
             <span class="block mt-4 text-xl font-normal text-gray-700">({{ __(':count office buildings', ['count' => $totalOffices]) }})</span>
         </x-slot:heading>
+        @if ($category && app()->getLocale() === 'hu')
+            <p class="-mt-4 mb-8 text-center text-lg text-gray-700">
+                Mennyibe kerül ma egy iroda Budapesten? Alpiaconkénti díjsávok, üzemeltetési díjak és parkolás:
+                <a wire:navigate.hover href="{{ route('rental-fees') }}" class="font-semibold text-accent hover:underline">Budapesti díjsávok 2026</a>
+            </p>
+        @endif
         <x-glass-panel class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="hidden md:block relative">
                 <div wire:ignore id="map" class="sticky top-0 h-[120vh] rounded-lg border border-gray-300"

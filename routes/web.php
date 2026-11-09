@@ -11,6 +11,7 @@ use App\Livewire\Pages\BlogPostShow;
 use App\Livewire\Pages\Contact;
 use App\Livewire\Pages\DataSheet;
 use App\Livewire\Pages\Favorites;
+use App\Livewire\Pages\FounderProfile;
 use App\Livewire\Pages\Home;
 use App\Livewire\Pages\Impressum;
 use App\Livewire\Pages\NewsIndex;
@@ -21,6 +22,7 @@ use App\Livewire\Pages\OfficesForSale;
 use App\Livewire\Pages\PrivacyPolicy;
 use App\Livewire\Pages\PropertyIndex;
 use App\Livewire\Pages\PropertyShow;
+use App\Livewire\Pages\RentalFees;
 use App\Models\PropertyRedirect;
 use App\Services\LocalizedRoutes;
 use Illuminate\Http\RedirectResponse;
@@ -69,6 +71,10 @@ Route::livewire('/adatlap-oldal', DataSheet::class)->name('adatlap-oldal');
 Route::livewire('/adatvedelmi-nyilatkozat', PrivacyPolicy::class)->name('privacy-policy');
 Route::livewire('/kapcsolat', Contact::class)->name('kapcsolat');
 Route::livewire('/impresszum', Impressum::class)->name('impressum');
+
+// Hungarian-only pages (no English twin)
+Route::livewire('/fekete-richard', FounderProfile::class)->name('fekete-richard');
+Route::livewire('/budapest/irodaberleti-dijak', RentalFees::class)->name('rental-fees');
 
 // Office categories (the old "for sale" category is the sale list itself)
 Route::permanentRedirect('/budapest/elado-irodak', '/elado-irodahazak');

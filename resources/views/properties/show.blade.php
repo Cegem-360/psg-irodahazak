@@ -106,6 +106,10 @@
                                 <x-property.spec-row :label="__('Rent')">
                                     {{ $property->min_rent }}{{ $property->max_rent && $property->max_rent !== $property->min_rent ? ' - ' . $property->max_rent : '' }}
                                     {{ __($property->min_rent_unit ?? '') }}
+                                    @if (app()->getLocale() === 'hu')
+                                        <a wire:navigate.hover href="{{ route('rental-fees') }}"
+                                            class="block text-sm font-normal text-accent hover:underline">Budapesti díjsávok 2026</a>
+                                    @endif
                                 </x-property.spec-row>
                             @endif
                             @if ($property->operating_fee)

@@ -44,7 +44,7 @@ final class BlogPostShowTest extends TestCase
         $response = $this->get(route('en.blog.show', $post->slug));
 
         $response->assertOk();
-        $response->assertSee('PSG-IRODAHÁZAK');
+        $response->assertSee('PSG Irodaházak');
         $response->assertDontSee('Kategória:');
     }
 

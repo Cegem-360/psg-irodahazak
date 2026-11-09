@@ -1,5 +1,5 @@
 @inject('structuredData', 'App\Services\StructuredDataService')
-<x-slot name="title">{{ $post->title }} | PSG-IRODAHÁZAK Blog</x-slot>
+<x-slot name="title">{{ $post->title }} | PSG Irodaházak Blog</x-slot>
 <x-slot name="meta">
     @if ($post->noindex)
         <meta name="robots" content="noindex, follow">
@@ -59,10 +59,10 @@
                         <div class="flex items-center">
                             <div
                                 class="w-10 h-10 bg-linear-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-medium">
-                                {{ strtoupper(substr(($post->author?->name ?? 'PSG-IRODAHÁZAK'), 0, 1)) }}
+                                {{ strtoupper(substr(($post->author?->name ?? 'PSG Irodaházak'), 0, 1)) }}
                             </div>
                             <div class="ml-3">
-                                <p class="font-medium text-gray-900">{{ $post->author?->name ?? 'PSG-IRODAHÁZAK' }}</p>
+                                <p class="font-medium text-gray-900">{{ $post->author?->name ?? 'PSG Irodaházak' }}</p>
                                 <p class="text-gray-500">{{ __('Author') }}</p>
                             </div>
                         </div>

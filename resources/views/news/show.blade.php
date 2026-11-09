@@ -1,4 +1,5 @@
-<x-slot name="title">{{ $news->title }} | PSG-IRODAHÁZAK {{ __('News') }}</x-slot>
+@inject('structuredData', 'App\Services\StructuredDataService')
+<x-slot name="title">{{ $news->title }} | PSG Irodaházak {{ __('News') }}</x-slot>
 <x-slot name="meta">
     <meta name="description" content="{{ $news->excerpt }}">
     <meta name="keywords" content="{{ __('news item, office building, office rental') }}">
@@ -14,10 +15,12 @@
 
     {{-- Article specific --}}
     <meta property="article:published_time" content="{{ $news?->published_at?->toISOString() }}">
-    <meta property="article:author" content="{{ $news->author->name }}">
+    <meta property="article:author" content="{{ route('fekete-richard') }}">
     @if ($news->category)
         <meta property="article:section" content="{{ $news->category->name }}">
     @endif
+
+    {{ $structuredData->toScript($structuredData->newsArticle($news, localized_route('news.show', ['news' => $news->slug]))) }}
 </x-slot>
 
 <div class="min-h-screen bg-gray-50">
@@ -64,6 +67,12 @@
                 </div>
             @endif
 
+            <div class="px-8 pb-8">
+                <p class="pt-6 border-t text-gray-700">
+                    Szerző: <a wire:navigate.hover href="{{ route('fekete-richard') }}" rel="author"
+                        class="font-semibold text-accent hover:underline">Fekete Richárd</a>
+                </p>
+            </div>
         </article>
 
         {{-- Back to News --}}

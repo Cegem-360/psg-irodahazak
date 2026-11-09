@@ -22,7 +22,6 @@ return [
     ],
 
     'founder_same_as' => [
-        'https://acora.blog.hu/2020/07/01/a_berlokepviselet_fele_nyit_a_psg',
         'https://www.linkedin.com/in/richard-fekete-17371943/',
     ],
 

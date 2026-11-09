@@ -1,4 +1,4 @@
-<x-slot name="title">{{ $category->name }} | PSG-IRODAHÁZAK Blog</x-slot>
+<x-slot name="title">{{ $category->name }} | PSG Irodaházak Blog</x-slot>
 
 <div>
     <x-page-section>

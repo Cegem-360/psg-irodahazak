@@ -87,6 +87,17 @@ table {
     }
 }
 
+/* A plain data table (e.g. the rental fee bands) without the spec-table look above */
+table.data-table {
+    td {
+        border-bottom: none;
+    }
+    tr:first-child td {
+        font-weight: inherit;
+        color: inherit;
+    }
+}
+
 .swiper-slide-thumb-active {
     border: var(--color-secondary) 2px solid;
     border-radius: 16px;

@@ -1,0 +1,30 @@
+# PSG Irodaházak
+
+> A PSG Irodaházak a Property Solution Group Kft. irodabérbeadási és ingatlan-tanácsadói márkája. 2014 óta segít cégeknek irodát találni Budapesten, bérleti szerződést tárgyalni és újratárgyalni, valamint irodaházat eladni. 230 budapesti irodaház aktuális kínálatát kezeli; ajánlatot 24 órán belül küld, a bérlőknek a közvetítés díjmentes.
+
+Ügyvezető: Fekete Richárd. Székhely: 1016 Budapest, Derék u. 2. Telefon: +36 20 381 3917. E-mail: info@psg-irodahazak.hu.
+
+## Fő oldalak
+
+- [Kiadó irodák Budapesten](https://psg-irodahazak.hu/kiado-irodak): a kiadó irodaházak teljes listája térképpel, bérleti és üzemeltetési díjakkal.
+- [Irodabérleti díjak Budapesten 2026](https://psg-irodahazak.hu/budapest/irodaberleti-dijak): 230 irodaház díjsávjai alpiaconként, 2026. novemberi adatok.
+- [Eladó irodaházak](https://psg-irodahazak.hu/elado-irodahazak): eladó irodaházak és irodák Budapesten és környékén.
+- [Rólunk](https://psg-irodahazak.hu/rolunk): a PSG Irodaházak szolgáltatásai, működése és cégadatai.
+- [Fekete Richárd, ügyvezető](https://psg-irodahazak.hu/fekete-richard): az alapító és ügyvezető szakmai útja és ügyletei.
+- [Kapcsolat](https://psg-irodahazak.hu/kapcsolat): ajánlatkérés és elérhetőségek.
+
+## Kategóriák
+
+- [Kiadó belvárosi irodák](https://psg-irodahazak.hu/budapest/kiado-belvarosi-irodak)
+- [Kiadó irodák az V. kerületben](https://psg-irodahazak.hu/budapest/kiado-irodak-v-kerulet)
+- [Kiadó Váci úti irodák](https://psg-irodahazak.hu/budapest/kiado-vaci-uti-irodak)
+- [Kiadó irodák a XI. kerületben](https://psg-irodahazak.hu/budapest/kiado-irodak-xi-kerulet)
+- [Kiadó budai irodák](https://psg-irodahazak.hu/budapest/kiado-budai-irodak)
+- [Kiadó bel-budai irodák](https://psg-irodahazak.hu/budapest/kiado-bel-budai-irodak)
+- [Kiadó pesti irodák](https://psg-irodahazak.hu/budapest/kiado-pesti-irodak)
+- [Kiadó azonnali szolgáltatott irodák](https://psg-irodahazak.hu/budapest/kiado-azonnali-szolgaltatott-irodak)
+
+## Opcionális
+
+- [Hírek](https://psg-irodahazak.hu/hirek): irodapiaci hírek és ügyletek.
+- [Sitemap](https://psg-irodahazak.hu/sitemap.xml)

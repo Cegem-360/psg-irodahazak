@@ -153,7 +153,7 @@ return [
 
     'notification_from' => [
         'address' => env('MAIL_NOTIFICATION_FROM_ADDRESS', 'weboldal@psg-irodahazak.hu'),
-        'name' => env('MAIL_NOTIFICATION_FROM_NAME', 'PSG-IRODAHÁZAK weboldal'),
+        'name' => env('MAIL_NOTIFICATION_FROM_NAME', 'PSG Irodaházak weboldal'),
     ],
 
 ];
