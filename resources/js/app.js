@@ -25,6 +25,10 @@ document.addEventListener("livewire:navigated", () => {
 // Swipers are (re)initialised on every "livewire:navigated", which also fires on the
 // first page load, so carousels work after wire:navigate page changes too. An
 // element that already carries a Swiper instance is skipped.
+//
+// Links are "focusable elements" for Swiper, so it does not preventDefault() the
+// pointerdown on them: that would swallow the mousedown/mouseup that wire:navigate
+// navigates on, and a click on a link inside a slide would do nothing.
 function initSwiper(selector, options) {
     const element = document.querySelector(selector);
 
@@ -32,7 +36,10 @@ function initSwiper(selector, options) {
         return element?.swiper ?? null;
     }
 
-    return new Swiper(element, options);
+    return new Swiper(element, {
+        focusableElements: "input, select, option, textarea, button, video, label, a",
+        ...options,
+    });
 }
 
 document.addEventListener("livewire:navigated", function () {

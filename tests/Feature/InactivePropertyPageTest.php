@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\PropertyStatus;
-use App\Livewire\Pages;
+use App\Livewire\Pages\Property\Show;
 use App\Models\Category;
 use App\Models\Property;
 use App\Models\PropertyRedirect;
@@ -89,7 +89,7 @@ it('suggests the nearest offered buildings of the same district', function (): v
     $otherDistrictNear = Property::factory()->create(['district' => 'IX', 'maps_lat' => '47.4710', 'maps_lng' => '19.0640']);
     Property::factory()->inactive()->create(['district' => 'XI', 'maps_lat' => '47.4705017', 'maps_lng' => '19.0599275']);
 
-    $similar = Livewire::test(Pages\Property\Show::class, ['property' => $property])->instance()->similarProperties;
+    $similar = Livewire::test(Show::class, ['property' => $property])->instance()->similarProperties;
 
     expect($similar->pluck('id')->all())->toBe([$neighbour->id, $sameDistrictFar->id, $otherDistrictNear->id]);
 });

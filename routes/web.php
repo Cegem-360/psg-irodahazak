@@ -6,6 +6,20 @@ use App\Actions\ExportFavorites;
 use App\Actions\PrintProperty;
 use App\Actions\SwitchLocale;
 use App\Livewire\Pages;
+use App\Livewire\Pages\Company\About;
+use App\Livewire\Pages\Company\Contact;
+use App\Livewire\Pages\Company\Founder;
+use App\Livewire\Pages\Home;
+use App\Livewire\Pages\Legal\Impressum;
+use App\Livewire\Pages\Legal\PrivacyPolicy;
+use App\Livewire\Pages\Office\Category;
+use App\Livewire\Pages\Office\ForRent;
+use App\Livewire\Pages\Office\ForSale;
+use App\Livewire\Pages\Office\RentalFees;
+use App\Livewire\Pages\Property\DataSheet;
+use App\Livewire\Pages\Property\Favorites;
+use App\Livewire\Pages\Property\Index;
+use App\Livewire\Pages\Property\Show;
 use App\Models\PropertyRedirect;
 use App\Services\LocalizedRoutes;
 use Illuminate\Http\RedirectResponse;
@@ -46,28 +60,28 @@ $redirectDeletedProperty = function (Request $request): RedirectResponse {
 */
 
 // Pages
-Route::livewire('/', Pages\Home::class)->name('home');
-Route::livewire('/kiado-irodak', Pages\Office\ForRent::class)->name('kiado-irodak');
-Route::livewire('/elado-irodahazak', Pages\Office\ForSale::class)->name('elado-irodahazak');
-Route::livewire('/rolunk', Pages\Company\About::class)->name('rolunk');
-Route::livewire('/adatlap-oldal', Pages\Property\DataSheet::class)->name('adatlap-oldal');
-Route::livewire('/adatvedelmi-nyilatkozat', Pages\Legal\PrivacyPolicy::class)->name('privacy-policy');
-Route::livewire('/kapcsolat', Pages\Company\Contact::class)->name('kapcsolat');
-Route::livewire('/impresszum', Pages\Legal\Impressum::class)->name('impressum');
+Route::livewire('/', Home::class)->name('home');
+Route::livewire('/kiado-irodak', ForRent::class)->name('kiado-irodak');
+Route::livewire('/elado-irodahazak', ForSale::class)->name('elado-irodahazak');
+Route::livewire('/rolunk', About::class)->name('rolunk');
+Route::livewire('/adatlap-oldal', DataSheet::class)->name('adatlap-oldal');
+Route::livewire('/adatvedelmi-nyilatkozat', PrivacyPolicy::class)->name('privacy-policy');
+Route::livewire('/kapcsolat', Contact::class)->name('kapcsolat');
+Route::livewire('/impresszum', Impressum::class)->name('impressum');
 
 // Hungarian-only pages (no English twin)
-Route::livewire('/fekete-richard', Pages\Company\Founder::class)->name('fekete-richard');
-Route::livewire('/budapest/irodaberleti-dijak', Pages\Office\RentalFees::class)->name('rental-fees');
+Route::livewire('/fekete-richard', Founder::class)->name('fekete-richard');
+Route::livewire('/budapest/irodaberleti-dijak', RentalFees::class)->name('rental-fees');
 
 // Office categories (the old "for sale" category is the sale list itself)
 Route::permanentRedirect('/budapest/elado-irodak', '/elado-irodahazak');
-Route::livewire('/budapest/{category:slug}', Pages\Office\Category::class)->name('budapest.category');
+Route::livewire('/budapest/{category:slug}', Category::class)->name('budapest.category');
 
 // Properties
-Route::livewire('/ingatlanok', Pages\Property\Index::class)->name('properties.index');
-Route::livewire('/kiado-iroda/{property:slug}', Pages\Property\Show::class)->name('properties.show')
+Route::livewire('/ingatlanok', Index::class)->name('properties.index');
+Route::livewire('/kiado-iroda/{property:slug}', Show::class)->name('properties.show')
     ->withTrashed()->missing($redirectDeletedProperty);
-Route::livewire('/elado-irodahaz/{property:slug}', Pages\Property\Show::class)->name('properties.show-for-sale')
+Route::livewire('/elado-irodahaz/{property:slug}', Show::class)->name('properties.show-for-sale')
     ->withTrashed()->missing($redirectDeletedProperty);
 
 // News
@@ -76,7 +90,7 @@ Route::livewire('/hirek/{news:slug}', Pages\News\Show::class)->name('news.show')
 
 // Favorites (signed-in users only)
 Route::middleware('auth')->group(function (): void {
-    Route::livewire('/kedvencek', Pages\Property\Favorites::class)->name('favorites');
+    Route::livewire('/kedvencek', Favorites::class)->name('favorites');
     Route::get('/kedvencek/export-excel', ExportFavorites::class)->name('favorites.export-excel');
 });
 
@@ -88,24 +102,24 @@ Route::middleware('auth')->group(function (): void {
 
 Route::name('en.')->group(function () use ($redirectDeletedProperty): void {
     // Pages
-    Route::livewire('/home', Pages\Home::class)->name('home');
-    Route::livewire('/offices-for-rent', Pages\Office\ForRent::class)->name('kiado-irodak');
-    Route::livewire('/office-buildings-for-sale', Pages\Office\ForSale::class)->name('elado-irodahazak');
-    Route::livewire('/about-us', Pages\Company\About::class)->name('rolunk');
-    Route::livewire('/data-sheet', Pages\Property\DataSheet::class)->name('adatlap-oldal');
-    Route::livewire('/privacy-policy', Pages\Legal\PrivacyPolicy::class)->name('privacy-policy');
-    Route::livewire('/contact-us', Pages\Company\Contact::class)->name('kapcsolat');
-    Route::livewire('/impressum', Pages\Legal\Impressum::class)->name('impressum');
+    Route::livewire('/home', Home::class)->name('home');
+    Route::livewire('/offices-for-rent', ForRent::class)->name('kiado-irodak');
+    Route::livewire('/office-buildings-for-sale', ForSale::class)->name('elado-irodahazak');
+    Route::livewire('/about-us', About::class)->name('rolunk');
+    Route::livewire('/data-sheet', DataSheet::class)->name('adatlap-oldal');
+    Route::livewire('/privacy-policy', PrivacyPolicy::class)->name('privacy-policy');
+    Route::livewire('/contact-us', Contact::class)->name('kapcsolat');
+    Route::livewire('/impressum', Impressum::class)->name('impressum');
 
     // Office categories
     Route::permanentRedirect('/budapest-en/elado-irodak', '/office-buildings-for-sale');
-    Route::livewire('/budapest-en/{category:slug}', Pages\Office\Category::class)->name('budapest.category');
+    Route::livewire('/budapest-en/{category:slug}', Category::class)->name('budapest.category');
 
     // Properties
-    Route::livewire('/properties', Pages\Property\Index::class)->name('properties.index');
-    Route::livewire('/office-to-let/{property:slug}', Pages\Property\Show::class)->name('properties.show')
+    Route::livewire('/properties', Index::class)->name('properties.index');
+    Route::livewire('/office-to-let/{property:slug}', Show::class)->name('properties.show')
         ->withTrashed()->missing($redirectDeletedProperty);
-    Route::livewire('/office-to-sale/{property:slug}', Pages\Property\Show::class)->name('properties.show-for-sale')
+    Route::livewire('/office-to-sale/{property:slug}', Show::class)->name('properties.show-for-sale')
         ->withTrashed()->missing($redirectDeletedProperty);
 
     // News
@@ -119,7 +133,7 @@ Route::name('en.')->group(function () use ($redirectDeletedProperty): void {
 
     // Favorites (signed-in users only)
     Route::middleware('auth')->group(function (): void {
-        Route::livewire('/favorites', Pages\Property\Favorites::class)->name('favorites');
+        Route::livewire('/favorites', Favorites::class)->name('favorites');
         Route::get('/favorites/export-excel', ExportFavorites::class)->name('favorites.export-excel');
     });
 });

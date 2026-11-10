@@ -10,7 +10,7 @@
                 @foreach ($references as $reference)
                     <div class="swiper-slide flex! items-center justify-center px-12 py-4 bg-white rounded-xl">
                         <img class="max-h-20 object-contain object-center" src="{{ Storage::url($reference->image) }}"
-                            alt="{{ $reference->name }}" loading="lazy" />
+                            alt="{{ $reference->name }}" />
                     </div>
                 @endforeach
             </div>

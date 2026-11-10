@@ -133,11 +133,11 @@ it('puts the counter values and the image alt texts in the home page HTML', func
 
     $this->get(route('home'))
         ->assertOk()
-        ->assertSeeHtml('data-to="230" data-suffix="">230</span>')
-        ->assertSeeHtml('data-to="16" data-suffix=" év">16 év</span>')
-        ->assertSeeHtml('data-to="250" data-suffix="+">250+</span>')
-        ->assertSeeHtml('data-to="100" data-suffix=" ezer m²+">100 ezer m²+</span>')
-        ->assertSeeHtml('data-to="24" data-suffix=" óra">24 óra</span>')
+        ->assertSeeHtml('data-to="230">230</span><span class="text-2xl 2xl:text-3xl"></span>')
+        ->assertSeeHtml('data-to="16">16</span><span class="text-2xl 2xl:text-3xl"> év</span>')
+        ->assertSeeHtml('data-to="250">250</span><span class="text-2xl 2xl:text-3xl">+</span>')
+        ->assertSeeHtml('data-to="100">100</span><span class="text-2xl 2xl:text-3xl"> ezer m²+</span>')
+        ->assertSeeHtml('data-to="24">24</span><span class="text-2xl 2xl:text-3xl"> óra</span>')
         ->assertSeeHtml('alt="Lavylites"')
         ->assertSeeHtml('alt="Váci Greens irodaház"');
 });

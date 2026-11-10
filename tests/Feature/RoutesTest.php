@@ -2,7 +2,15 @@
 
 declare(strict_types=1);
 
-use App\Livewire\Pages;
+use App\Livewire\Pages\Company\About;
+use App\Livewire\Pages\Company\Contact;
+use App\Livewire\Pages\Home;
+use App\Livewire\Pages\Legal\Impressum;
+use App\Livewire\Pages\News\Index;
+use App\Livewire\Pages\Office\ForRent;
+use App\Livewire\Pages\Office\ForSale;
+use App\Livewire\Pages\Property\DataSheet;
+use App\Livewire\Pages\Property\Show;
 use App\Models\BlogPost;
 use App\Models\News;
 use App\Models\Property;
@@ -23,15 +31,15 @@ it('serves each page as its own Livewire page component', function (string $uri,
     /** @var TestCase $this */
     $this->get($uri)->assertOk()->assertSeeLivewire($component);
 })->with([
-    ['/', Pages\Home::class],
-    ['/home', Pages\Home::class],
-    ['/kiado-irodak', Pages\Office\ForRent::class],
-    ['/office-buildings-for-sale', Pages\Office\ForSale::class],
-    ['/rolunk', Pages\Company\About::class],
-    ['/data-sheet', Pages\Property\DataSheet::class],
-    ['/kapcsolat', Pages\Company\Contact::class],
-    ['/impressum', Pages\Legal\Impressum::class],
-    ['/hirek', Pages\News\Index::class],
+    ['/', Home::class],
+    ['/home', Home::class],
+    ['/kiado-irodak', ForRent::class],
+    ['/office-buildings-for-sale', ForSale::class],
+    ['/rolunk', About::class],
+    ['/data-sheet', DataSheet::class],
+    ['/kapcsolat', Contact::class],
+    ['/impressum', Impressum::class],
+    ['/hirek', Index::class],
 ]);
 
 it('shows a published news article by its slug and hides the rest', function (): void {
@@ -50,7 +58,7 @@ it('shows similar properties of the same type on a property page', function (): 
     $otherDistrict = Property::factory()->create(['district' => 'XIII']);
     Property::factory()->forSale()->create(['district' => 'V']);
 
-    $similar = Livewire::test(Pages\Property\Show::class, ['property' => $property])->instance()->similarProperties;
+    $similar = Livewire::test(Show::class, ['property' => $property])->instance()->similarProperties;
 
     expect($similar->pluck('id')->all())->toBe([$sameDistrict->id, $otherDistrict->id]);
 });
