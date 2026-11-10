@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\PropertyStatus;
-use App\Livewire\Pages\PropertyShow;
+use App\Livewire\Pages;
 use App\Models\Category;
 use App\Models\Property;
 use App\Models\PropertyRedirect;
@@ -57,7 +57,7 @@ it('keeps the page of a building that is no longer offered, with its basic data 
         ->assertSee('Ezt az épületet jelenleg nem közvetítjük.')
         ->assertDontSee('3900')
         ->assertDontSee('14 - 16')
-        ->assertDontSeeLivewire('contact-form')
+        ->assertDontSeeLivewire('contact.form')
         ->assertDontSeeHtml('noindex')
         ->getContent();
 
@@ -75,7 +75,7 @@ it('still shows the fees, the quote form and the offer of a building that is off
     $html = $this->get('/kiado-iroda/infopark-d')
         ->assertOk()
         ->assertSee('3900')
-        ->assertSeeLivewire('contact-form')
+        ->assertSeeLivewire('contact.form')
         ->assertDontSee('Ezt az épületet jelenleg nem közvetítjük.')
         ->getContent();
 
@@ -89,7 +89,7 @@ it('suggests the nearest offered buildings of the same district', function (): v
     $otherDistrictNear = Property::factory()->create(['district' => 'IX', 'maps_lat' => '47.4710', 'maps_lng' => '19.0640']);
     Property::factory()->inactive()->create(['district' => 'XI', 'maps_lat' => '47.4705017', 'maps_lng' => '19.0599275']);
 
-    $similar = Livewire::test(PropertyShow::class, ['property' => $property])->instance()->similarProperties;
+    $similar = Livewire::test(Pages\Property\Show::class, ['property' => $property])->instance()->similarProperties;
 
     expect($similar->pluck('id')->all())->toBe([$neighbour->id, $sameDistrictFar->id, $otherDistrictNear->id]);
 });

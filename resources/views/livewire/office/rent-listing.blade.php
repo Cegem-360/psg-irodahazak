@@ -1,0 +1,153 @@
+@use('App\Models\Translate')
+<div wire:key="list-rent-offices" class="list-rent-offices">
+    <x-page-section heading-margin="mb-8">
+        <x-slot:heading>
+            {{-- Check if the title is set and if a translation exists --}}
+            @if (app()->getLocale() === 'en' && $title && Translate::whereName($title)->exists())
+                {{ Translate::whereName($title)->first()->translated }}
+            @else
+                {{ $title ? __($title) : __('page.title.offices_for_rent') }}
+            @endif
+            <span class="block mt-4 text-xl font-normal text-gray-700">({{ __(':count office buildings', ['count' => $totalOffices]) }})</span>
+        </x-slot:heading>
+        @if ($category && app()->getLocale() === 'hu')
+            <p class="-mt-4 mb-8 text-center text-lg text-gray-700">
+                Mennyibe kerül ma egy iroda Budapesten? Alpiaconkénti díjsávok, üzemeltetési díjak és parkolás:
+                <a wire:navigate.hover href="{{ route('rental-fees') }}" class="font-semibold text-accent hover:underline">Budapesti díjsávok 2026</a>
+            </p>
+        @endif
+        <x-glass-panel class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="hidden md:block relative">
+                <div wire:ignore id="map" class="sticky top-0 h-[120vh] rounded-lg border border-gray-300"
+                    style="width: 100%;"></div>
+            </div>
+            <div class="col-span-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-fit">
+                    @foreach ($offices ?? [] as $office)
+                        <livewire:property.card :property="$office" :small="true" :minicarousel="true" wire:key="office-{{ $office->id }}" />
+                    @endforeach
+                </div>
+            </div>
+        </x-glass-panel>
+
+        <x-glass-panel padding="px-8 py-3" class="flex justify-center gap-8">
+            {{-- Pagination --}}
+            {{ $offices->links() }}
+        </x-glass-panel>
+    </x-page-section>
+
+    @script
+        <script>
+            // Import the rent offices map handler (creates global instance automatically)
+            import('{{ Vite::asset('resources/js/rent-offices-map.js') }}').then(module => {
+                const apiKey = '{{ config('services.google_maps.api_key') }}';
+                const mapId = '{{ config('services.google_maps.map_id') }}';
+                let officesData = {{ Js::from($this->getOfficesForMap()) }};
+
+                // Check if API key and map ID are available
+                if (!apiKey || apiKey.trim() === '') {
+                    console.warn('Google Maps API key is missing. Please set GOOGLE_MAPS_API_KEY in your .env file.');
+                    const mapElement = document.getElementById('map');
+                    if (mapElement) {
+                        mapElement.innerHTML = `
+                        <div class="flex items-center justify-center h-full bg-gray-100 rounded-lg">
+                            <div class="text-center p-6">
+                                <div class="mb-4">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 616 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('Map not available') }}</h3>
+                                <p class="text-gray-500">{{ __('A Google Maps API key is required to display the map.') }}</p>
+                            </div>
+                        </div>
+                    `;
+                    }
+                    return;
+                }
+
+                if (!mapId || mapId.trim() === '') {
+                    console.warn('Google Maps Map ID is missing. Please set GOOGLE_MAPS_MAP_ID in your .env file.');
+                    const mapElement = document.getElementById('map');
+                    if (mapElement) {
+                        mapElement.innerHTML = `
+                        <div class="flex items-center justify-center h-full bg-gray-100 rounded-lg">
+                            <div class="text-center p-6">
+                                <div class="mb-4">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 616 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('Map not available') }}</h3>
+                                <p class="text-gray-500">{{ __('A Google Maps Map ID is required to display the map.') }}</p>
+                            </div>
+                        </div>
+                    `;
+                    }
+                    return;
+                }
+
+                // Function to safely initialize map when DOM is ready
+                function initializeMapSafely() {
+                    const mapElement = document.getElementById('map');
+                    if (!mapElement) {
+                        console.warn('Map element not found, retrying...');
+                        setTimeout(initializeMapSafely, 100);
+                        return;
+                    }
+
+                    // Initialize map
+                    if (window.rentOfficesMapHandler) {
+                        window.rentOfficesMapHandler.initialize(apiKey, officesData, mapId);
+                    }
+                }
+
+                // Start initialization
+                initializeMapSafely();
+
+                // Track if we're already updating to prevent infinite loops
+                let isUpdating = false;
+
+                // Listen for Livewire updates using $wire hooks
+                $wire.$hook('commit', ({
+                    succeed
+                }) => {
+                    succeed(() => {
+                        // Prevent infinite loops
+                        if (isUpdating) return;
+
+                        setTimeout(() => {
+                            if (window.rentOfficesMapHandler && !isUpdating) {
+                                isUpdating = true;
+
+                                // Get fresh office data without triggering another morph
+                                $wire.$call('getOfficesForMap').then((freshOfficesData) => {
+                                    window.rentOfficesMapHandler.refreshMarkers(
+                                        freshOfficesData);
+                                }).catch((error) => {
+                                    console.error('Failed to fetch fresh office data:',
+                                        error);
+                                    // Fallback to current visible data (no server call)
+                                    const currentData = {{ Js::from($this->getOfficesForMap()) }};
+                                    window.rentOfficesMapHandler.refreshMarkers(
+                                        currentData);
+                                }).finally(() => {
+                                    // Reset the flag after a short delay
+                                    setTimeout(() => {
+                                        isUpdating = false;
+                                    }, 500);
+                                });
+                            }
+                        }, 150);
+                    });
+                });
+
+            }).catch(error => {
+                console.error('Failed to load map module:', error);
+            });
+        </script>
+    @endscript
+
+</div>

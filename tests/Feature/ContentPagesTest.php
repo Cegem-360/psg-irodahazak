@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Livewire\Pages\RentalFees;
+use App\Livewire\Pages;
 use App\Models\BlogPost;
 use App\Models\Category;
 use App\Models\News;
@@ -39,8 +39,8 @@ it('publishes the rental fee overview with its table, source line, category link
 
     expect(mb_substr_count($html, '<h1'))->toBe(1)
         ->and($html)->toContain('<table')
-        ->and($article['headline'])->toBe(RentalFees::HEADLINE)
-        ->and($article['dateModified'])->toBe(RentalFees::LAST_UPDATED)
+        ->and($article['headline'])->toBe(Pages\Office\RentalFees::HEADLINE)
+        ->and($article['dateModified'])->toBe(Pages\Office\RentalFees::LAST_UPDATED)
         ->and($article['author']['@id'])->toBe(jsonLdNode($html, 'Person')['@id'])
         ->and($article['publisher']['@id'])->toBe(jsonLdNode($html, 'Organization')['@id'])
         ->and($faqs)->toHaveCount(7);

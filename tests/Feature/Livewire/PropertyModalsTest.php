@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Livewire\PropertyCard;
-use App\Livewire\PropertyMapModal;
-use App\Livewire\PropertyPhoneModal;
+use App\Livewire\Property\Card;
+use App\Livewire\Property\MapModal;
+use App\Livewire\Property\PhoneModal;
 use App\Models\Property;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
@@ -26,7 +26,7 @@ function modalProperty(): Property
 it('sends the title and property id as named event parameters from the card', function (): void {
     $property = modalProperty();
 
-    Livewire::test(PropertyCard::class, ['property' => $property, 'title' => 'Bank Center', 'images' => ['a.webp']])
+    Livewire::test(Card::class, ['property' => $property, 'title' => 'Bank Center', 'images' => ['a.webp']])
         ->call('showMapModal')
         ->assertDispatched('show-map-modal', title: 'Bank Center', propertyId: $property->id)
         ->call('showPhoneModal')
@@ -36,7 +36,7 @@ it('sends the title and property id as named event parameters from the card', fu
 it('opens the map modal with the property loaded', function (): void {
     $property = modalProperty();
 
-    Livewire::test(PropertyMapModal::class)
+    Livewire::test(MapModal::class)
         ->dispatch('show-map-modal', title: 'Bank Center', propertyId: $property->id)
         ->assertSet('showModal', true)
         ->assertSet('title', 'Bank Center')
@@ -44,7 +44,7 @@ it('opens the map modal with the property loaded', function (): void {
 });
 
 it('opens the phone modal without a property too', function (): void {
-    Livewire::test(PropertyPhoneModal::class)
+    Livewire::test(PhoneModal::class)
         ->dispatch('show-phone-modal', title: 'Bank Center')
         ->assertSet('showModal', true)
         ->assertSet('title', 'Bank Center')

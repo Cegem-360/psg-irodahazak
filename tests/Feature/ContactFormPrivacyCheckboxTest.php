@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\InquirySubject;
-use App\Livewire\ContactForm;
+use App\Livewire\Contact\Form;
 use App\Models\Property;
 use Livewire\Livewire;
 
@@ -15,7 +15,7 @@ use Livewire\Livewire;
  * A checked-state background utility must keep the checked state visible.
  */
 test('contact form privacy checkbox renders a visible checked state', function (): void {
-    Livewire::test(ContactForm::class)
+    Livewire::test(Form::class)
         ->assertSeeHtml('id="contact_privacy"')
         ->assertSeeHtml('checked:bg-primary');
 });
@@ -28,13 +28,13 @@ test('contact form on a property page preselects the building as subject', funct
         'offer_type' => 'kiado-iroda',
     ]);
 
-    Livewire::test(ContactForm::class, ['selectedPropertyId' => $property->id, 'selectedPropertyTypeIsRent' => true])
+    Livewire::test(Form::class, ['selectedPropertyId' => $property->id, 'selectedPropertyTypeIsRent' => true])
         ->assertSet('contact_subject', 'Bank Center')
         ->assertSeeHtml('<option value="Bank Center">Bank Center</option>');
 });
 
 test('contact form on the contact page offers the general subjects', function (): void {
-    Livewire::test(ContactForm::class)
+    Livewire::test(Form::class)
         ->assertSeeHtml('value="'.InquirySubject::OfficeSearch->getLabel().'"')
         ->assertSet('contact_subject', '');
 });

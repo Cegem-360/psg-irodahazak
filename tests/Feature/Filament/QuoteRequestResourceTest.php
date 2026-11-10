@@ -6,7 +6,7 @@ use App\Enums\InquirySubject;
 use App\Enums\QuoteRequestStatus;
 use App\Filament\Resources\QuoteRequestResource;
 use App\Filament\Resources\QuoteRequestResource\Pages\ListQuoteRequests;
-use App\Livewire\QuoteRequestModal;
+use App\Livewire\Contact\QuoteRequestModal;
 use App\Models\QuoteRequest;
 use App\Models\User;
 use Filament\Facades\Filament;

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Livewire\FavoritesSendModal;
-use App\Livewire\QuoteRequestModal;
+use App\Livewire\Contact\QuoteRequestModal;
+use App\Livewire\Favorite\SendModal;
 use App\Mail\FavoritesSendMail;
 use App\Models\BlogPost;
 use App\Models\Property;
@@ -40,7 +40,7 @@ it('emails the active favorites from the cookie, never a list sent by the client
     $inactive = Property::query()->forceCreate(['title' => 'Inaktív', 'status' => 'inactive', 'slug' => 'inaktiv', 'offer_type' => 'kiado-iroda']);
 
     Livewire::withCookies([FavoriteProperties::COOKIE => json_encode([$active->id, $inactive->id])])
-        ->test(FavoritesSendModal::class)
+        ->test(SendModal::class)
         ->set('recipientName', 'Címzett')
         ->set('recipientEmail', 'cimzett@example.com')
         ->call('sendFavorites')
@@ -55,7 +55,7 @@ it('emails the active favorites from the cookie, never a list sent by the client
 it('does not send an empty favorites list', function (): void {
     Mail::fake();
 
-    Livewire::test(FavoritesSendModal::class)
+    Livewire::test(SendModal::class)
         ->set('recipientName', 'Címzett')
         ->set('recipientEmail', 'cimzett@example.com')
         ->call('sendFavorites')
@@ -121,7 +121,7 @@ it('rate limits the favorites email', function (): void {
     $property = Property::query()->forceCreate(['title' => 'Aktív', 'status' => 'active', 'slug' => 'aktiv', 'offer_type' => 'kiado-iroda']);
 
     $send = fn () => Livewire::withCookies([FavoriteProperties::COOKIE => json_encode([$property->id])])
-        ->test(FavoritesSendModal::class)
+        ->test(SendModal::class)
         ->set('recipientName', 'Címzett')
         ->set('recipientEmail', 'cimzett@example.com')
         ->call('sendFavorites');

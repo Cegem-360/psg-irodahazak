@@ -1,0 +1,14 @@
+<x-slot name="title">{{ __('News') }} | PSG Irodaházak</x-slot>
+<x-slot name="meta">
+    <meta name="description"
+        content="{{ __('PSG Irodaházak news - The latest news, developments and professional insights from the office market.') }}">
+    <meta name="keywords" content="{{ __('news, office market, real estate news, office buildings, office rental, industry news') }}">
+</x-slot>
+
+<div>
+    <x-page-section>
+        <x-slot:heading>{{ __('News') }}</x-slot:heading>
+
+        <livewire:news.listing />
+    </x-page-section>
+</div>

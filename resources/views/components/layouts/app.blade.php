@@ -133,11 +133,11 @@
         {{-- Not on the error pages: Livewire replays the failed page's route on every update,
              so a popup opened there could never be closed again. --}}
         @if ($withPopups)
-            @livewire('quote-request-modal')
+            @livewire('contact.quote-request-modal')
 
-            @livewire('property-map-modal')
+            @livewire('property.map-modal')
 
-            @livewire('property-phone-modal')
+            @livewire('property.phone-modal')
         @endif
 
         <x-layouts.footer />

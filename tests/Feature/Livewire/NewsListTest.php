@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Livewire\NewsList;
+use App\Livewire\News\Listing;
 use App\Models\News;
 use App\Models\NewsCategory;
 use Livewire\Livewire;
@@ -23,7 +23,7 @@ it('is rendered on the news page', function (): void {
 
     $this->get(route('news.index'))
         ->assertOk()
-        ->assertSeeLivewire(NewsList::class)
+        ->assertSeeLivewire(Listing::class)
         ->assertSee('Új irodaház a Váci úton')
         ->assertSeeHtml(route('news.show', ['news' => $article->slug]));
 });
@@ -33,7 +33,7 @@ it('lists only published news, newest first', function (): void {
     publishedNews(['title' => 'Friss hír', 'published_at' => now()->subHour()]);
     News::factory()->create(['title' => 'Vázlat hír', 'is_published' => false, 'published_at' => null]);
 
-    Livewire::test(NewsList::class)
+    Livewire::test(Listing::class)
         ->assertSeeInOrder(['Friss hír', 'Régebbi hír'])
         ->assertDontSee('Vázlat hír');
 });
@@ -45,7 +45,7 @@ it('filters by search term and category, and keeps them in the URL', function ()
     publishedNews(['title' => 'Céges évzáró', 'news_category_id' => $other->id]);
 
     Livewire::withQueryParams(['page' => 1])
-        ->test(NewsList::class)
+        ->test(Listing::class)
         ->set('search', 'Bérleti')
         ->assertSee('Bérleti díjak 2026-ban')
         ->assertDontSee('Céges évzáró')
@@ -62,22 +62,22 @@ it('pages through the news', function (): void {
     // NewsCategoryFactory only has ten unique names, so the articles share one category.
     $category = NewsCategory::factory()->create();
 
-    foreach (range(1, NewsList::PER_PAGE + 1) as $day) {
+    foreach (range(1, Listing::PER_PAGE + 1) as $day) {
         publishedNews(['title' => sprintf('Hír %02d', $day), 'published_at' => now()->subDays($day), 'news_category_id' => $category->id]);
     }
 
-    Livewire::test(NewsList::class)
+    Livewire::test(Listing::class)
         ->assertSee('Hír 01')
-        ->assertDontSee(sprintf('Hír %02d', NewsList::PER_PAGE + 1))
+        ->assertDontSee(sprintf('Hír %02d', Listing::PER_PAGE + 1))
         ->call('nextPage')
-        ->assertSee(sprintf('Hír %02d', NewsList::PER_PAGE + 1))
+        ->assertSee(sprintf('Hír %02d', Listing::PER_PAGE + 1))
         ->assertDontSee('Hír 01');
 });
 
 it('shows an empty state when nothing matches', function (): void {
     publishedNews();
 
-    Livewire::test(NewsList::class)
+    Livewire::test(Listing::class)
         ->set('search', 'nincs-ilyen-szöveg')
         ->assertSee('Nincs a keresésnek megfelelő hír.');
 });

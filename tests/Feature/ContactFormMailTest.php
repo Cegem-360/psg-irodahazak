@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Livewire\ContactForm;
+use App\Livewire\Contact\Form;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\Log;
@@ -23,7 +23,7 @@ final class ContactFormMailTest extends TestCase
         // Gmail files mail "from yourself" under Sent, so the admin copy must not come from the admin address.
         Log::spy();
 
-        Livewire::test(ContactForm::class)
+        Livewire::test(Form::class)
             ->set('name', 'Teszt Elek')
             ->set('email', 'teszt.elek@example.com')
             ->set('phone', '+36 30 123 4567')
@@ -49,7 +49,7 @@ final class ContactFormMailTest extends TestCase
 
     public function test_invalid_submission_shows_errors_and_sends_nothing(): void
     {
-        Livewire::test(ContactForm::class)
+        Livewire::test(Form::class)
             ->set('email', 'nem-email')
             ->call('submit')
             ->assertHasErrors(['name' => 'required', 'email' => 'email', 'privacy' => 'accepted'])

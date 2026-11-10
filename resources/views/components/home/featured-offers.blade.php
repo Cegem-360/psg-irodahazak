@@ -10,7 +10,7 @@
             class="swiper kiemeltajanlatok-swiper grid! gap-4 max-w-7xl mx-auto">
             <div class="swiper-wrapper">
                 @foreach ($properties as $property)
-                    <livewire:property-card :property="$property" :key="$property->id" :swiper="true" />
+                    <livewire:property.card :property="$property" :key="$property->id" :swiper="true" />
                 @endforeach
             </div>
         </div>

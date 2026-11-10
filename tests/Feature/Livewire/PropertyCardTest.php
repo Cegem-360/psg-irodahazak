@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Livewire\PropertyCard;
+use App\Livewire\Property\Card;
 use App\Models\Property;
 use App\Models\User;
 use App\Services\FavoriteProperties;
@@ -17,7 +17,7 @@ function favoriteProperty(string $slug = 'kedvenc'): Property
 it('adds a property to the favorites and takes it off again', function (): void {
     $property = favoriteProperty();
 
-    $card = Livewire::test(PropertyCard::class, ['property' => $property, 'title' => 'Kedvenc'])
+    $card = Livewire::test(Card::class, ['property' => $property, 'title' => 'Kedvenc'])
         ->assertSet('isFavorite', false)
         ->call('toggleFavorite')
         ->assertSet('isFavorite', true)
@@ -25,7 +25,7 @@ it('adds a property to the favorites and takes it off again', function (): void 
         ->assertDispatched('favorites-updated', propertyId: $property->id, isFavorite: true);
 
     Livewire::withCookies([FavoriteProperties::COOKIE => json_encode([$property->id])])
-        ->test(PropertyCard::class, ['property' => $property, 'title' => 'Kedvenc'])
+        ->test(Card::class, ['property' => $property, 'title' => 'Kedvenc'])
         ->assertSet('isFavorite', true)
         ->call('toggleFavorite')
         ->assertSet('isFavorite', false)

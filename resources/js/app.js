@@ -137,7 +137,7 @@ document.addEventListener("livewire:navigated", function () {
     });
 
     // NOTE: minicarousel-swiper initialization has been moved to Alpine.js
-    // in the property-card Livewire component. Each card now initializes its own
+    // in the property.card Livewire component. Each card now initializes its own
     // Swiper instance via x-data/x-init, which ensures Swiper works correctly
     // after Livewire pagination re-renders the DOM.
 });
