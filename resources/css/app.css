@@ -180,3 +180,9 @@ li.jellemzok {
     width: var(--swiper-pagination-bullet-width, var(--swiper-pagination-bullet-size, 12px)) !important;
     height: var(--swiper-pagination-bullet-height, var(--swiper-pagination-bullet-size, 12px)) !important;
 }
+
+/* Hungarian quote marks („…”) are typed into the text; the typography plugin's automatic English quotes would double them. */
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+    content: none;
+}

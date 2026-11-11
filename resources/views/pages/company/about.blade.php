@@ -31,7 +31,7 @@
 
                     <h2>Mit csinálunk</h2>
 
-                    <p><strong><a wire:navigate.hover href="{{ route('kiado-irodak') }}">Irodakeresés.</a></strong> Felmérjük a létszám-, munkarend- és költségigényt, ebből kiszámoljuk a szükséges területet, és a 230 irodaház kínálatából öt-hét lehetőséget mutatunk be. A bejárásokat megszervezzük, a rövidlistás irodákra ültetési tervet készítünk, és a bérleti szerződést a bérlői szempontok figyelembevételével tárgyaljuk le. A szolgáltatás a bérlőnek díjmentes.</p>
+                    <p><strong><a wire:navigate.hover href="{{ route('kiado-irodak') }}">Irodakeresés.</a></strong> Felmérjük a létszám-, munkarend- és költségigényt, ebből kiszámoljuk a szükséges területet, és a 230 irodaház kínálatából öt-hét lehetőséget mutatunk be. A bejárásokat megszervezzük, a rövidlistás irodákra ültetési tervet készíttetünk, és a bérleti szerződést a bérlői szempontok figyelembevételével tárgyaljuk le. A szolgáltatás a bérlőnek díjmentes.</p>
 
                     <p><strong>Bérleti szerződés újratárgyalása.</strong> Ha a szerződés lejár, a meglévő bérbeadóval újratárgyaljuk a díjat és a kondíciókat, a futamidőt és a kialakítási hozzájárulást. A költözés lehetősége a legerősebb tárgyalási érv, és mi pontosan tudjuk, mibe kerülne. Sikerdíjas alapon dolgozunk, az elért megtakarítás után.</p>
 
