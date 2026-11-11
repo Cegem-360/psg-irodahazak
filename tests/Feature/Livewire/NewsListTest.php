@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Livewire\News\Listing;
 use App\Models\News;
 use App\Models\NewsCategory;
+use Illuminate\Support\Facades\Date;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -80,4 +81,16 @@ it('shows an empty state when nothing matches', function (): void {
     Livewire::test(Listing::class)
         ->set('search', 'nincs-ilyen-szöveg')
         ->assertSee('Nincs a keresésnek megfelelő hír.');
+});
+
+it('counts a view of an article without changing its last modification date', function (): void {
+    /** @var TestCase $this */
+    $article = publishedNews(['views_count' => 5]);
+    $updatedAt = $article->updated_at;
+
+    Date::setTestNow(now()->addHour());
+    $this->get(route('news.show', ['news' => $article->slug]))->assertOk();
+
+    expect($article->refresh()->views_count)->toBe(6)
+        ->and($article->updated_at->equalTo($updatedAt))->toBeTrue();
 });

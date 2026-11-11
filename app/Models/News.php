@@ -66,9 +66,14 @@ final class News extends Model
     }
 
     // Methods
+    /**
+     * Counts a view without touching updated_at, which is the article's dateModified.
+     */
     public function incrementViews(): void
     {
-        $this->increment('views_count');
+        self::query()->whereKey($this->getKey())->toBase()->increment('views_count');
+        $this->views_count++;
+        $this->syncOriginalAttribute('views_count');
     }
 
     public function publish(): void

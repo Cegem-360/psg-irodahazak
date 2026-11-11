@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Livewire\Pages\Office\RentalFees;
+use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use App\Models\Category;
 use App\Models\News;
@@ -141,7 +142,7 @@ it('shows a 404 page without the popup that could not be closed, with the way on
 
 it('keeps noindex blog posts out of the home page and the category lists but readable', function (): void {
     /** @var TestCase $this */
-    $listed = BlogPost::factory()->published()->create(['title' => 'Irodapiaci poszt']);
+    $listed = BlogPost::factory()->published()->for(BlogCategory::factory()->state(['is_active' => true]), 'category')->create(['title' => 'Irodapiaci poszt']);
     $hidden = BlogPost::factory()->published()->create(['title' => 'Karácsonyi filmek', 'noindex' => true, 'blog_category_id' => $listed->blog_category_id]);
 
     $this->get('/')->assertSeeText('Irodapiaci poszt')->assertDontSeeText('Karácsonyi filmek');
