@@ -3,38 +3,36 @@
     details, opening hours, the sign-off and the "automated reply" note.
     CSS: <x-emails.styles.contact-info>.
 --}}
-@php
-    $contactDetails = [
-        __('Phone') => '+36 20 381 3917',
-        __('Email') => 'info@psg-irodahazak.hu',
-        __('Office') => '1016 Budapest, Derék u. 2.',
-    ];
-
-    $openingHours = [
-        __('Monday-Friday') => '9:00 - 18:00',
-        __('Saturday') => '10:00 - 14:00',
-        __('Sunday') => __('Closed'),
-    ];
-@endphp
-
 <h3>{{ __('Our contact details') }}:</h3>
 <div class="contact-info">
-    @foreach ($contactDetails as $label => $value)
-        <div class="contact-item">
-            <strong>{{ $label }}:</strong>
-            <span>{{ $value }}</span>
-        </div>
-    @endforeach
+    <div class="contact-item">
+        <strong>{{ __('Phone') }}:</strong>
+        <span>+36 20 381 3917</span>
+    </div>
+    <div class="contact-item">
+        <strong>{{ __('Email') }}:</strong>
+        <span>info@psg-irodahazak.hu</span>
+    </div>
+    <div class="contact-item">
+        <strong>{{ __('Office') }}:</strong>
+        <span>1016 Budapest, Derék u. 2.</span>
+    </div>
 </div>
 
 <h3>{{ __('Opening hours') }}:</h3>
 <div class="contact-info">
-    @foreach ($openingHours as $label => $value)
-        <div class="contact-item">
-            <strong>{{ $label }}:</strong>
-            <span>{{ $value }}</span>
-        </div>
-    @endforeach
+    <div class="contact-item">
+        <strong>{{ __('Monday-Friday') }}:</strong>
+        <span>9:00 - 18:00</span>
+    </div>
+    <div class="contact-item">
+        <strong>{{ __('Saturday') }}:</strong>
+        <span>10:00 - 14:00</span>
+    </div>
+    <div class="contact-item">
+        <strong>{{ __('Sunday') }}:</strong>
+        <span>{{ __('Closed') }}</span>
+    </div>
 </div>
 
 <p>{{ __('If you have an urgent question, please call us at :phone.', ['phone' => '+36 20 381 3917']) }}</p>

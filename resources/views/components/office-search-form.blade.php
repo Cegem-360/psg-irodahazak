@@ -1,5 +1,6 @@
 @use('App\Enums\BudapestDistrict')
 @use('App\Models\Property')
+@props(['config'])
 <div>
     <div class="relative">
         <h2 class="text-4xl text-center mt-24 mb-8">
@@ -239,20 +240,7 @@
                 z-index: 10;
             }
         </style>
-        @php
-            $szuroConfig = [
-                'offices' => Property::rent()->active()->orderBy('title')->get(['title', 'postal_code'])
-                    ->map(fn (Property $office): array => ['title' => $office->title, 'city' => $office->postal_code ?? 'Budapest'])
-                    ->values(),
-                'i18n' => [
-                    'selectDistricts' => __('Select Districts'),
-                    'districtsSelected' => __(':count districts selected'),
-                    'allOfficeBuildings' => __('All Office Buildings'),
-                    'officeBuildingName' => __('modal.office_building_name'),
-                ],
-            ];
-        @endphp
         {{-- Read by resources/js/office-search-form.js --}}
-        <script type="application/json" id="office-search-form-config">@json($szuroConfig)</script>
+        <script type="application/json" id="office-search-form-config">@json($config)</script>
     </div>
 </div>

@@ -14,13 +14,9 @@
     'required' => false,
 ])
 
-@php
-    $id ??= $name;
-@endphp
-
 <div>
-    <label for="{{ $id }}" class="block mb-2 text-sm font-medium text-gray-900">{{ $label }}{{ $required ? ' *' : '' }}</label>
-    <input type="{{ $type }}" id="{{ $id }}" wire:model="{{ $name }}"
+    <label for="{{ $id ?? $name }}" class="block mb-2 text-sm font-medium text-gray-900">{{ $label }}{{ $required ? ' *' : '' }}</label>
+    <input type="{{ $type }}" id="{{ $id ?? $name }}" wire:model="{{ $name }}"
         @class(['block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 transition-colors', 'border-red-500' => $errors->has($name)])
         placeholder="{{ $placeholder }}" @required($required)>
     @error($name)

@@ -1,8 +1,6 @@
+{{-- The language links lead to the same page in the other language when it has one; otherwise they just switch the session. --}}
+@inject('localizedRoutes', 'App\\Services\\LocalizedRoutes')
 <div class="flex items-center space-x-2">
-    @php
-        $currentLocale = app()->getLocale();
-    @endphp
-
     <div class="lang-menu absolute top-4 lg:top-8 right-2 lg:right-8 flex items-center gap-4 flex-nowrap z-20">
         @auth
             <a wire:navigate.hover href="{{ localized_route('favorites') }}" title="{{ __('Favorites') }}"
@@ -22,15 +20,11 @@
             <x-svg.fb-icon class="w-6 h-6" />
         </a>
         <div class="lang text-logogray">
-            @php
-                // The same page in the other language when it has one; otherwise just switch the session.
-                $alternateUrls = app(App\Services\LocalizedRoutes::class)->alternates(request()->route());
-            @endphp
-            <a href="{{ $alternateUrls['hu'] ?? route('language.switch', ['locale' => 'hu']) }}" title="HUN"
-                @class(['active' => $currentLocale === 'hu', 'hover:underline'])>HUN</a>
+            <a href="{{ $localizedRoutes->alternates(request()->route())['hu'] ?? route('language.switch', ['locale' => 'hu']) }}" title="HUN"
+                @class(['active' => app()->getLocale() === 'hu', 'hover:underline'])>HUN</a>
             <span> | </span>
-            <a href="{{ $alternateUrls['en'] ?? route('language.switch', ['locale' => 'en']) }}" title="ENG"
-                @class(['active' => $currentLocale === 'en', 'hover:underline'])>ENG</a>
+            <a href="{{ $localizedRoutes->alternates(request()->route())['en'] ?? route('language.switch', ['locale' => 'en']) }}" title="ENG"
+                @class(['active' => app()->getLocale() === 'en', 'hover:underline'])>ENG</a>
         </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Pages;
 
+use App\Livewire\Concerns\ProvidesOfficeSearchForm;
 use App\Livewire\Concerns\RendersAsPage;
 use App\Models\BlogPost;
 use App\Models\News;
@@ -20,6 +21,7 @@ use Livewire\Component;
  */
 final class Home extends Component
 {
+    use ProvidesOfficeSearchForm;
     use RendersAsPage;
 
     /**
@@ -65,6 +67,22 @@ final class Home extends Component
     public function latestNews(): Collection
     {
         return News::query()->published()->latest('published_at')->take(3)->get();
+    }
+
+    /**
+     * The counters of the home page: icon component, target number, unit and the two-line label.
+     *
+     * @return list<array{icon: string, to: int, suffix: string, label: string}>
+     */
+    public function stats(): array
+    {
+        return [
+            ['icon' => 'svg.office', 'to' => 230, 'suffix' => '', 'label' => __('office buildings').'<br>'.__('on offer')],
+            ['icon' => 'svg.experience', 'to' => 16, 'suffix' => ' '.__('years'), 'label' => __('of office market').'<br>'.__('experience')],
+            ['icon' => 'svg.handshake', 'to' => 250, 'suffix' => '+', 'label' => __('signed').'<br>'.__('contracts')],
+            ['icon' => 'svg.market', 'to' => 100, 'suffix' => ' '.__('thousand').' m²+', 'label' => __('leased').'<br>'.__('Class A office space')],
+            ['icon' => 'svg.clock', 'to' => 24, 'suffix' => ' '.__('hours'), 'label' => __('within which').'<br>'.__('we send an offer')],
+        ];
     }
 
     public function render(): View

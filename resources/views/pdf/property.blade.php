@@ -219,52 +219,19 @@
                 </div>
             </div>
         @endif
-        @php
-            $collator = class_exists(\Collator::class) ? new \Collator('hu_HU') : null;
-            if ($collator) {
-                $collator->setStrength(\Collator::SECONDARY);
-            }
 
-            $huCompare = function ($a, $b) use ($collator) {
-                $an = (string) ($a->name ?? '');
-                $bn = (string) ($b->name ?? '');
-                if ($collator) {
-                    return $collator->compare($an, $bn);
-                }
-                return strcasecmp(\Illuminate\Support\Str::ascii($an), \Illuminate\Support\Str::ascii($bn));
-            };
-
-            $normalize = function ($i) {
-                if (is_string($i)) {
-                    return (object) ['name' => $i];
-                }
-                if (is_array($i)) {
-                    return isset($i['name']) ? (object) ['name' => $i['name']] : null;
-                }
-                return $i; // assume object with ->name
-            };
-
-            $items = collect($property->tags ?? [])
-                ->merge(collect($property->services ?? []))
-                ->map($normalize)
-                ->filter(fn($i) => is_object($i) && filled($i->name ?? null))
-                ->unique(fn($i) => \Illuminate\Support\Str::ascii(\Illuminate\Support\Str::lower($i->name)))
-                ->sort($huCompare)
-                ->values();
-        @endphp
-
-        @if ($items->isNotEmpty())
+        @if ($featureNames->isNotEmpty())
             <div class="mt-6 px-6 py-4 bg-gray-50" style="page-break-inside: auto;">
                 <h3 class="text-base font-bold text-gray-800 mb-3">{{ __('Technical specifications and services') }}
                 </h3>
                 <div class="text-sm text-gray-700 leading-relaxed text-justify" style="page-break-inside: auto;">
                     <ul class="list-disc list-inside mb-4">
-                        @foreach ($items as $item)
+                        @foreach ($featureNames as $featureName)
                             @if (app()->getLocale() === 'en')
                                 <li class="mb-1">
-                                    {{ Translate::whereName($item->name)->first()?->translated ?? $item->name }}</li>
+                                    {{ Translate::whereName($featureName)->first()?->translated ?? $featureName }}</li>
                             @else
-                                <li class="mb-1">{{ $item->name }}</li>
+                                <li class="mb-1">{{ $featureName }}</li>
                             @endif
                         @endforeach
                     </ul>

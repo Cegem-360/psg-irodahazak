@@ -1,9 +1,3 @@
-@php
-    // Image alt text: the building's name, marked as an office building unless the name already says so.
-    $imageAlt = Str::contains(Str::lower($property->title), 'iroda')
-        ? $property->title
-        : __(':name office building', ['name' => $property->title]);
-@endphp
 <div @class([
     'swiper-slide' => $swiper,
     'group relative bg-white/10 rounded-xl overflow-hidden shadow-xl backdrop-blur-3xl hover:brightness-95 transition-all duration-300 ease-in-out border border-white/15',
@@ -34,7 +28,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($property->property_photos as $carouselimage)
                         <div class="swiper-slide">
-                            <img src="{{ Storage::url($carouselimage) }}" alt="{{ $imageAlt }}"
+                            <img src="{{ Storage::url($carouselimage) }}" alt="{{ $this->imageAlt() }}"
                                 class="w-full h-auto object-cover aspect-3/2" loading="lazy" />
                         </div>
                     @endforeach
@@ -49,7 +43,7 @@
         @endif
         {{-- Fallback image if no swiper --}}
         @if (!$minicarousel && $property->getFirstImageUrl())
-            <img src="{{ $property->getFirstImageUrl() }}" alt="{{ $imageAlt }}" class="w-full h-auto object-cover aspect-3/2"
+            <img src="{{ $property->getFirstImageUrl() }}" alt="{{ $this->imageAlt() }}" class="w-full h-auto object-cover aspect-3/2"
                 loading="lazy" />
         @endif
 

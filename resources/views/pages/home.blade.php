@@ -51,9 +51,9 @@
             </div>
 
         </div>
-        <x-home.stats />
+        <x-home.stats :stats="$this->stats()" />
 
-        <x-office-search-form />
+        <x-office-search-form :config="$this->searchFormConfig()" />
 
         <x-home.featured-offers :properties="$this->featuredProperties" />
 

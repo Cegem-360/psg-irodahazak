@@ -8,6 +8,7 @@ use App\Enums\BudapestDistrict;
 use App\Enums\PropertyStatus;
 use App\Enums\PropertyType;
 use App\Observers\PropertyObserver;
+use Collator;
 use Illuminate\Contracts\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -143,6 +145,27 @@ final class Property extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * The names of the building's tags and services in one list, without
+     * duplicates (ignoring case and accents), in Hungarian alphabetical order.
+     *
+     * @return Collection<int, string>
+     */
+    public function featureNames(): Collection
+    {
+        $collator = class_exists(Collator::class) ? new Collator('hu_HU') : null;
+        $collator?->setStrength(Collator::SECONDARY);
+
+        return $this->tags->pluck('name')
+            ->merge($this->services->pluck('name'))
+            ->filter(fn (?string $name): bool => filled($name))
+            ->unique(fn (string $name): string => Str::ascii(Str::lower($name)))
+            ->sort(fn (string $a, string $b): int => $collator instanceof Collator
+                ? (int) $collator->compare($a, $b)
+                : strcasecmp(Str::ascii($a), Str::ascii($b)))
+            ->values();
     }
 
     /**

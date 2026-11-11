@@ -18,7 +18,7 @@ final class PropertyPdfService
         $property->load(['images']);
 
         // HTML tartalom generálása
-        $html = view('pdf.property', ['property' => $property])->render();
+        $html = view('pdf.property', ['property' => $property, 'featureNames' => $property->featureNames()])->render();
 
         // PDF generálás Browsershot segítségével
         $footerHtml = view('pdf.footer')->render();
@@ -62,7 +62,7 @@ final class PropertyPdfService
         $property->load(['images']);
 
         // HTML tartalom generálása
-        $html = view('pdf.property', ['property' => $property])->render();
+        $html = view('pdf.property', ['property' => $property, 'featureNames' => $property->featureNames()])->render();
 
         // Alapértelmezett útvonal ha nincs megadva
         if (! $path) {
@@ -119,7 +119,7 @@ final class PropertyPdfService
         $property->load(['images']);
 
         // HTML tartalom generálása
-        $html = view('pdf.property', ['property' => $property])->render();
+        $html = view('pdf.property', ['property' => $property, 'featureNames' => $property->featureNames()])->render();
 
         // PDF generálás Browsershot segítségével
         $footerHtml = (string) view('pdf.footer')->render();

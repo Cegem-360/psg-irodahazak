@@ -8,6 +8,7 @@ use App\Models\Property;
 use App\Services\FavoriteProperties;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -31,6 +32,16 @@ final class Card extends Component
     public function mount(FavoriteProperties $favorites): void
     {
         $this->isFavorite = $favorites->has($this->property->id);
+    }
+
+    /**
+     * Image alt text: the building's name, marked as an office building unless the name already says so.
+     */
+    public function imageAlt(): string
+    {
+        return Str::contains(Str::lower($this->property->title), 'iroda')
+            ? $this->property->title
+            : __(':name office building', ['name' => $this->property->title]);
     }
 
     public function showMapModal(): void

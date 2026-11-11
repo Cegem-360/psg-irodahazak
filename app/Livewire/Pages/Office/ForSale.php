@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Livewire\Pages\Office;
 
+use App\Livewire\Concerns\ProvidesOfficeSearchForm;
 use App\Livewire\Concerns\RendersAsPage;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 final class ForSale extends Component
 {
+    use ProvidesOfficeSearchForm;
     use RendersAsPage;
 
     public function render(): View

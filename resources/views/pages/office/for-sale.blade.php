@@ -6,7 +6,7 @@
 
         <livewire:office.sale-listing />
 
-        <x-office-search-form />
+        <x-office-search-form :config="$this->searchFormConfig()" />
 
     </div>
 </div>
