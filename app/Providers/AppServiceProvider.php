@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\View\Composers\SiteLayoutComposer;
 use Filament\Forms\Components\RichEditor;
-use GoogleTagManager;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Blaze\Blaze;
 use Override;
+use Spatie\GoogleTagManager\GoogleTagManagerFacade;
 use Whitecube\LaravelCookieConsent\Facades\Cookies;
 
 final class AppServiceProvider extends ServiceProvider
@@ -34,17 +36,19 @@ final class AppServiceProvider extends ServiceProvider
             ->in(resource_path('views/components'))
             ->in(resource_path('views/components/layouts'), compile: false);
 
-        GoogleTagManager::set('config', config('services.google_tag_manager.id', ''));
+        View::composer('components.layouts.app', SiteLayoutComposer::class);
+
+        GoogleTagManagerFacade::set('config', config('services.google_tag_manager.id', ''));
         if (Cookies::hasConsentFor('ad_storage')) {
-            GoogleTagManager::set('ad_storage', 'granted');
+            GoogleTagManagerFacade::set('ad_storage', 'granted');
         }
 
         if (Cookies::hasConsentFor('ad_user_data')) {
-            GoogleTagManager::set('ad_user_data', 'granted');
+            GoogleTagManagerFacade::set('ad_user_data', 'granted');
         }
 
         if (Cookies::hasConsentFor('ad_personalization')) {
-            GoogleTagManager::set('ad_personalization', 'granted');
+            GoogleTagManagerFacade::set('ad_personalization', 'granted');
         }
 
         RichEditor::configureUsing(function (RichEditor $editor): void {

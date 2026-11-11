@@ -1,12 +1,5 @@
 @props(['breadcrumbs' => [], 'withPopups' => true])
 @inject('structuredData', 'App\\Services\\StructuredDataService')
-@inject('localizedRoutes', 'App\\Services\\LocalizedRoutes')
-@php
-    $routeName = (string) request()->route()?->getName();
-    $isTranslated = $localizedRoutes->isTranslated($routeName);
-    $alternateUrls = $isTranslated ? $localizedRoutes->alternates(request()->route()) : [];
-    $metaRobots ??= $isTranslated || app()->getLocale() === App\Services\LocalizedRoutes::DEFAULT_LOCALE ? null : 'noindex, follow';
-@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -17,19 +10,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        {{-- Pages may add their own head tags via the "meta" slot; those replace the matching defaults below. --}}
-        @php
-            $metaSlotHtml = isset($meta) ? (string) $meta : '';
-            $metaSlotHas = fn (string $needle): bool => str_contains($metaSlotHtml, $needle);
-
-            $defaultDescription = __('Offices for rent in Budapest! Rent from traditional and serviced offices on favourable lease terms, with an overview of the entire office market database. Offers sent the same day.');
-            $pageTitleText = Str::squish(isset($title) ? strip_tags((string) $title) : '') ?: __('page.title.default');
-            $pageDescriptionText = Str::squish(isset($metaDescription) ? strip_tags((string) $metaDescription) : '');
-            if ($pageDescriptionText === '' && preg_match('/name="description"\s+content="([^"]*)"/', $metaSlotHtml, $slotDescription)) {
-                $pageDescriptionText = html_entity_decode($slotDescription[1]);
-            }
-            $pageDescriptionText = $pageDescriptionText ?: $defaultDescription;
-        @endphp
+        {{-- Pages may add their own head tags via the "meta" slot; those replace the matching defaults below
+             (see App\View\Composers\SiteLayoutComposer). --}}
 
         <title>{{ $pageTitleText }}</title>
         <meta name="author" content="{{ $metaAuthor ?? 'Property Solution Group Kft.' }}">
