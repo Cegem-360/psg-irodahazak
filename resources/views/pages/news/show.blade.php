@@ -69,7 +69,7 @@
 
             <div class="px-8 pb-8">
                 <p class="pt-6 border-t text-gray-700">
-                    Szerző: <a wire:navigate.hover href="{{ route('fekete-richard') }}" rel="author"
+                    {{ __('Author:') }} <a wire:navigate.hover href="{{ route('fekete-richard') }}" rel="author"
                         class="font-semibold text-accent hover:underline">Fekete Richárd</a>
                 </p>
             </div>

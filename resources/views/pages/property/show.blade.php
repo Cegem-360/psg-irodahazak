@@ -108,7 +108,7 @@
                                     {{ __($property->min_rent_unit ?? '') }}
                                     @if (app()->getLocale() === 'hu')
                                         <a wire:navigate.hover href="{{ route('rental-fees') }}"
-                                            class="block text-sm font-normal text-accent hover:underline">Budapesti díjsávok 2026</a>
+                                            class="block text-sm font-normal text-accent hover:underline">{{ __('Budapest fee bands 2026') }}</a>
                                     @endif
                                 </x-property.spec-row>
                             @endif

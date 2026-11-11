@@ -13,8 +13,10 @@ use Livewire\Component;
  * /budapest/irodaberleti-dijak: the office rental fee bands of Budapest per
  * submarket, from the property data sheets. Hungarian only.
  *
- * When the figures are refreshed, update the text and LAST_UPDATED together:
- * the visible "Utolsó frissítés" date and the Article's dateModified follow it.
+ * The copy is translatable: the English keys are in the view and here, the
+ * approved Hungarian text in lang/hu.json. When the figures are refreshed,
+ * update the text and LAST_UPDATED together: the visible "Utolsó frissítés"
+ * date and the Article's dateModified follow it.
  */
 final class RentalFees extends Component
 {
@@ -24,13 +26,27 @@ final class RentalFees extends Component
 
     public const string LAST_UPDATED = '2026-11-09';
 
-    public const string HEADLINE = 'Irodabérleti díjak Budapesten 2026-ban: mennyibe kerül egy iroda alpiaconként?';
+    public static function headline(): string
+    {
+        return __('Office rents in Budapest in 2026: how much does an office cost per submarket?');
+    }
 
-    public const string DESCRIPTION = 'Mennyibe kerül egy iroda Budapesten 2026-ban? 230 irodaház kínálati díja alpiaconként: belváros, Váci út, Dél-Buda, Buda, Pest. Üzemeltetési díj, parkolás, közös területi szorzó.';
+    public static function description(): string
+    {
+        return __('How much does an office cost in Budapest in 2026? Asking rents of 230 office buildings per submarket: city centre, Váci út, South Buda, Buda, Pest. Operating fee, parking, common area factor.');
+    }
 
     public function mount(): void
     {
         app()->setLocale('hu');
+    }
+
+    /**
+     * A link to an office category page, for the "related listings" lines of the text.
+     */
+    public function categoryLink(string $slug, string $anchor): string
+    {
+        return '<a wire:navigate.hover href="'.e(route('budapest.category', ['category' => $slug])).'">'.e($anchor).'</a>';
     }
 
     /**
@@ -41,13 +57,13 @@ final class RentalFees extends Component
     public function submarkets(): array
     {
         return [
-            ['submarket' => 'Belváros (V., VI., VII.)', 'buildings' => '42', 'range' => '11,5 – 28', 'median' => '18,0', 'operating_fee' => '2 845 HUF vagy 6,25 EUR', 'parking' => '148 EUR/hely'],
-            ['submarket' => 'Váci úti folyosó (XIII.)', 'buildings' => '51', 'range' => '7,5 – 23', 'median' => '15,0', 'operating_fee' => '2 375 HUF vagy 5,25 EUR', 'parking' => '120 EUR/hely'],
-            ['submarket' => 'Dél-Buda (XI., XXII.)', 'buildings' => '30', 'range' => '9,25 – 21', 'median' => '14,5', 'operating_fee' => '2 340 HUF vagy 6,5 EUR', 'parking' => '100 EUR/hely'],
-            ['submarket' => 'Buda egyéb (I., II., III., XII.)', 'buildings' => '41', 'range' => '7 – 27', 'median' => '16,7', 'operating_fee' => '2 600 HUF vagy 5,9 EUR', 'parking' => '120 EUR/hely'],
-            ['submarket' => 'Pest egyéb (VIII., IX., X., XIV. és a többi)', 'buildings' => '31', 'range' => '7 – 22', 'median' => '15,0', 'operating_fee' => '2 800 HUF vagy 6,3 EUR', 'parking' => '110 EUR/hely'],
-            ['submarket' => 'Agglomeráció (Budaörs, Törökbálint)', 'buildings' => '3', 'range' => '8 – 14', 'median' => '12,9', 'operating_fee' => '2 340 HUF vagy 4,75 EUR', 'parking' => '40 EUR/hely'],
-            ['submarket' => 'Budapest összesen', 'buildings' => '198', 'range' => '7 – 28', 'median' => '15,5', 'operating_fee' => '2 500 HUF vagy 6 EUR', 'parking' => '120 EUR/hely'],
+            ['submarket' => __('City centre (V., VI., VII.)'), 'buildings' => '42', 'range' => '11,5 – 28', 'median' => '18,0', 'operating_fee' => __(':huf HUF or :eur EUR', ['huf' => '2 845', 'eur' => '6,25']), 'parking' => __(':eur EUR/space', ['eur' => '148'])],
+            ['submarket' => __('Váci út corridor (XIII.)'), 'buildings' => '51', 'range' => '7,5 – 23', 'median' => '15,0', 'operating_fee' => __(':huf HUF or :eur EUR', ['huf' => '2 375', 'eur' => '5,25']), 'parking' => __(':eur EUR/space', ['eur' => '120'])],
+            ['submarket' => __('South Buda (XI., XXII.)'), 'buildings' => '30', 'range' => '9,25 – 21', 'median' => '14,5', 'operating_fee' => __(':huf HUF or :eur EUR', ['huf' => '2 340', 'eur' => '6,5']), 'parking' => __(':eur EUR/space', ['eur' => '100'])],
+            ['submarket' => __('Rest of Buda (I., II., III., XII.)'), 'buildings' => '41', 'range' => '7 – 27', 'median' => '16,7', 'operating_fee' => __(':huf HUF or :eur EUR', ['huf' => '2 600', 'eur' => '5,9']), 'parking' => __(':eur EUR/space', ['eur' => '120'])],
+            ['submarket' => __('Rest of Pest (VIII., IX., X., XIV. and the others)'), 'buildings' => '31', 'range' => '7 – 22', 'median' => '15,0', 'operating_fee' => __(':huf HUF or :eur EUR', ['huf' => '2 800', 'eur' => '6,3']), 'parking' => __(':eur EUR/space', ['eur' => '110'])],
+            ['submarket' => __('Agglomeration (Budaörs, Törökbálint)'), 'buildings' => '3', 'range' => '8 – 14', 'median' => '12,9', 'operating_fee' => __(':huf HUF or :eur EUR', ['huf' => '2 340', 'eur' => '4,75']), 'parking' => __(':eur EUR/space', ['eur' => '40'])],
+            ['submarket' => __('Budapest total'), 'buildings' => '198', 'range' => '7 – 28', 'median' => '15,5', 'operating_fee' => __(':huf HUF or :eur EUR', ['huf' => '2 500', 'eur' => '6']), 'parking' => __(':eur EUR/space', ['eur' => '120'])],
         ];
     }
 
@@ -60,32 +76,32 @@ final class RentalFees extends Component
     {
         return [
             [
-                'question' => 'Mennyibe kerül egy iroda bérlése Budapesten 2026-ban?',
-                'answer' => 'A kínálati bérleti díj 7 és 28 EUR/m²/hó között mozog, a tipikus érték 15,5 EUR/m²/hó. Ehhez jön az üzemeltetési díj (2 300–3 200 HUF/m²/hó) és a parkolás (100–180 EUR/hely/hó), minden tétel nettó összeg.',
+                'question' => __('How much does it cost to rent an office in Budapest in 2026?'),
+                'answer' => __('Asking rents range from 7 to 28 EUR/m²/month, with a typical value of 15.5 EUR/m²/month. On top of this come the operating fee (2,300–3,200 HUF/m²/month) and parking (100–180 EUR/space/month); all amounts are net.'),
             ],
             [
-                'question' => 'Melyik a legdrágább irodapiaci alpiac Budapesten?',
-                'answer' => 'Az V. kerület, 22,5 EUR/m²/hó középértékkel; a prémium épületek 25–28 EUR-t kérnek. A legolcsóbb a III. kerület és az agglomeráció, 13–14 EUR körüli középértékkel.',
+                'question' => __('Which is the most expensive office submarket in Budapest?'),
+                'answer' => __('District V, with a median of 22.5 EUR/m²/month; premium buildings ask 25–28 EUR. The cheapest are District III and the agglomeration, with medians around 13–14 EUR.'),
             ],
             [
-                'question' => 'Mennyi az üzemeltetési díj egy budapesti irodaházban?',
-                'answer' => 'Jellemzően 2 300–3 200 HUF/m²/hó, euróban megadva 5–7 EUR/m²/hó. A belvárosban a legmagasabb, a Váci úton a legalacsonyabb. A bérbeadó évente, utólag, open-book rendszerben számol el vele a bérlők felé.',
+                'question' => __('What is the operating fee in a Budapest office building?'),
+                'answer' => __('Typically 2,300–3,200 HUF/m²/month, or 5–7 EUR/m²/month when given in euros. It is highest in the city centre and lowest on Váci út. The landlord settles it with the tenants annually, in arrears, on an open-book basis.'),
             ],
             [
-                'question' => 'Mi az a közös területi szorzó?',
-                'answer' => 'A közös területek (lobby, folyosók, lépcsőház, liftelőtér) használata után is fizetni kell egy bizonyos százalékot, amely hozzáadódik a kizárólagosan bérelt nettó területhez. Ez a bruttó bérelt terület lesz a bérleti díj és az üzemeltetési költség alapja. Budapesten 5–10% között mozog, az adatlapjaink középértéke 7,2%.',
+                'question' => __('What is the common area factor?'),
+                'answer' => __('A percentage is also charged for the use of the common areas (lobby, corridors, staircase, lift lobby), added to the net area leased exclusively. This gross leased area becomes the basis for the rent and the operating costs. In Budapest it is between 5 and 10%; the median on our data sheets is 7.2%.'),
             ],
             [
-                'question' => 'Mennyi ideig kell bérelni egy irodát minimum?',
-                'answer' => 'A legtöbb irodaház 3 vagy 5 éves szerződést vár el. 1 éves futamidő a szolgáltatott irodáknál és a B kategóriás épületeknél érhető el.',
+                'question' => __('What is the minimum lease term for an office?'),
+                'answer' => __('Most office buildings expect a 3 or 5 year lease. A 1 year term is available in serviced offices and Class B buildings.'),
             ],
             [
-                'question' => 'Mennyibe kerül egy szolgáltatott iroda Budapesten?',
-                'answer' => '150–550 EUR/fő/hó, a középérték 370 EUR, ami az üzemeltetési díjat, a bútorhasználatot, az internetet, a recepciós szolgáltatást, a tárgyalóhasználat egy részét és az irodák takarítását is tartalmazza.',
+                'question' => __('How much does a serviced office cost in Budapest?'),
+                'answer' => __('150–550 EUR/person/month, with a median of 370 EUR, which also includes the operating fee, use of furniture, internet, reception services, part of the meeting room use and office cleaning.'),
             ],
             [
-                'question' => 'Honnan származnak az adatok?',
-                'answer' => 'A PSG Irodaházak 230 budapesti irodaház-adatlapjából, amelyeket a bérbeadók és a kizárólagos megbízással rendelkező ingatlan-tanácsadó cégek riportjai alapján havonta frissítünk. A díjsávok a 198 négyzetméter-alapon árazott irodaházból számolnak, a szolgáltatott irodák külön szerepelnek. Az összesítés 2026. november 6-i állapotot tükröz.',
+                'question' => __('Where does the data come from?'),
+                'answer' => __('From the 230 Budapest office building data sheets of PSG Irodaházak, updated monthly from the reports of landlords and real estate consultancies with exclusive mandates. The fee bands are calculated from the 198 office buildings priced per square metre; serviced offices are listed separately. The summary reflects the situation on 6 November 2026.'),
             ],
         ];
     }
@@ -97,7 +113,7 @@ final class RentalFees extends Component
             'lastUpdated' => CarbonImmutable::parse(self::LAST_UPDATED),
         ]), [
             ['name' => __('Rental Offices'), 'url' => route('kiado-irodak')],
-            ['name' => 'Irodabérleti díjak Budapesten 2026', 'url' => route('rental-fees')],
+            ['name' => __('Office rents in Budapest 2026'), 'url' => route('rental-fees')],
         ]);
     }
 }

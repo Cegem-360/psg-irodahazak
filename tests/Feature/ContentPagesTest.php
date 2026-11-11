@@ -39,7 +39,7 @@ it('publishes the rental fee overview with its table, source line, category link
 
     expect(mb_substr_count($html, '<h1'))->toBe(1)
         ->and($html)->toContain('<table')
-        ->and($article['headline'])->toBe(RentalFees::HEADLINE)
+        ->and($article['headline'])->toBe(RentalFees::headline())
         ->and($article['dateModified'])->toBe(RentalFees::LAST_UPDATED)
         ->and($article['author']['@id'])->toBe(jsonLdNode($html, 'Person')['@id'])
         ->and($article['publisher']['@id'])->toBe(jsonLdNode($html, 'Organization')['@id'])

@@ -72,7 +72,7 @@
                          @if (app()->getLocale() === 'hu')
                              <li class="mb-4">
                                  <a wire:navigate.hover href="{{ route('rental-fees') }}"
-                                     class="hover:underline hover:text-blue-600 transition-colors duration-200">Irodabérleti díjak 2026</a>
+                                     class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Office rents 2026') }}</a>
                              </li>
                          @endif
                          <li>
