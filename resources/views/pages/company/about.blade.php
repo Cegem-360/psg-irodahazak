@@ -72,7 +72,7 @@
 
                     <h2>{{ __('Our clients') }}</h2>
 
-                    <p>{{ __('Our clients who chose an office with us include Netlock, KRKA, Electron Holding, KMÉ Zrt., Httpool and Centrica.') }}</p>
+                    <p>{{ __('Our clients who chose an office with us include WÜRTH Elektronik, Manpower, Szentkirályi Ásványvíz, Doktor24, Alstom, AEGON, Index, Hyundai, COOP, ACCOR, Raiffeisen Bank, FujiFilm, OXO Holdings, Alfa Biztosító, myPOS and Cafe Frei, among many others.') }}</p>
                 </div>
             </x-glass-panel>
         </x-page-section>
