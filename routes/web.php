@@ -86,7 +86,7 @@ Route::livewire('/elado-irodahaz/{property:slug}', Show::class)->name('propertie
 
 // News
 Route::livewire('/hirek', Pages\News\Index::class)->name('news.index');
-// An article page of its own, listed among the news by a News record with the same slug
+// An article page of its own under /hirek; it is not in the news list
 Route::livewire('/hirek/'.Pages\News\OperatingFee::SLUG, Pages\News\OperatingFee::class)->name('operating-fee');
 Route::livewire('/hirek/{news:slug}', Pages\News\Show::class)->name('news.show');
 

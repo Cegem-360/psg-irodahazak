@@ -13,10 +13,9 @@ use Livewire\Component;
  * /hirek/uzemeltetesi-dij-irodaberles: the article on the operating fee of
  * office leases, from the property data sheets. Hungarian only.
  *
- * It is listed among the news by a News record with the same slug (added by a
- * migration), which gives it its place in the news list, the sitemap and the
- * IndexNow pings; the route of this page comes before the news route, so the
- * record's own content is never shown.
+ * It is not a news item (the owner's request): it has no News record, so it
+ * is not in the news list or the home page news block. Its route comes before
+ * the news route, so a News record with the same slug would never be shown.
  *
  * The copy is translatable like the rental fee overview: the English keys are
  * in the view and here, the approved Hungarian text in lang/hu.json.
