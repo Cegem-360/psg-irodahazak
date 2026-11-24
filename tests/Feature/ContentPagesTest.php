@@ -141,12 +141,13 @@ it('shows a 404 page without the popup that could not be closed, with the way on
     'unknown address' => ['/nincs-ilyen-oldal'],
 ]);
 
-it('keeps noindex blog posts out of the home page and the category lists but readable', function (): void {
+it('keeps noindex blog posts out of the category lists but on the home page and readable', function (): void {
     /** @var TestCase $this */
     $listed = BlogPost::factory()->published()->for(BlogCategory::factory()->state(['is_active' => true]), 'category')->create(['title' => 'Irodapiaci poszt']);
     $hidden = BlogPost::factory()->published()->create(['title' => 'Karácsonyi filmek', 'noindex' => true, 'blog_category_id' => $listed->blog_category_id]);
 
-    $this->get('/')->assertSeeText('Irodapiaci poszt')->assertDontSeeText('Karácsonyi filmek');
+    // The home page shows the latest blog.hu posts whatever their topic, as before the noindex list
+    $this->get('/')->assertSeeText('Irodapiaci poszt')->assertSeeText('Karácsonyi filmek');
     $this->get(route('en.blog.category', ['category' => $listed->category->slug]))->assertSeeText('Irodapiaci poszt')->assertDontSeeText('Karácsonyi filmek');
     $this->get(route('en.blog.show', ['post' => $hidden->slug]))->assertOk()->assertSeeHtml('<meta name="robots" content="noindex, follow">');
 });

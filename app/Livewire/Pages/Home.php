@@ -52,12 +52,16 @@ final class Home extends Component
     }
 
     /**
+     * The latest blog.hu posts, the noindex ones too: the marketing request
+     * (2026-11-05) took them out of the sitemap and the blog list only, and the
+     * home page cards link to blog.hu, not to the noindex pages of this site.
+     *
      * @return Collection<int, BlogPost>
      */
     #[Computed]
     public function latestPosts(): Collection
     {
-        return BlogPost::query()->published()->listed()->latest('published_at')->take(3)->get();
+        return BlogPost::query()->published()->latest('published_at')->take(3)->get();
     }
 
     /**
