@@ -8,6 +8,7 @@ use App\Livewire\Concerns\RendersAsPage;
 use App\Livewire\Office\RentListing;
 use App\Models\Category as CategoryModel;
 use App\Models\Property;
+use App\Models\Translate;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
@@ -16,8 +17,9 @@ use Livewire\Component;
 /**
  * A /budapest/{category} page: the rental list narrowed to one category.
  *
- * The title, meta description and intro set in the admin are Hungarian copy,
- * so they are used on the Hungarian page only. A ":count" in the meta
+ * The title and meta description set in the admin are Hungarian copy; the
+ * English page uses their translation from the translates table, and falls
+ * back to the generic text while there is none. A ":count" in the meta
  * description becomes the current number of office buildings in the category.
  */
 final class Category extends Component
@@ -31,13 +33,13 @@ final class Category extends Component
 
     public function title(): string
     {
-        return $this->hungarian($this->category->seo_title)
+        return $this->localized($this->category->seo_title)
             ?? __(':category in Budapest | PSG Irodaházak', ['category' => $this->category->name]);
     }
 
     public function metaDescription(): string
     {
-        $description = $this->hungarian($this->category->meta_description);
+        $description = $this->localized($this->category->meta_description);
 
         return $description !== null
             ? str_replace(':count', (string) $this->officeCount(), $description)
@@ -68,8 +70,20 @@ final class Category extends Component
         return Property::query()->rent()->active()->inCategory($this->category)->count();
     }
 
-    private function hungarian(?string $copy): ?string
+    /**
+     * The admin's Hungarian copy in the current language, or null when there is
+     * none (or no English translation of it yet).
+     */
+    private function localized(?string $copy): ?string
     {
-        return app()->getLocale() === 'hu' && filled($copy) ? $copy : null;
+        if (blank($copy)) {
+            return null;
+        }
+
+        if (app()->getLocale() === 'hu') {
+            return $copy;
+        }
+
+        return Translate::query()->where('name', $copy)->value('translated') ?: null;
     }
 }

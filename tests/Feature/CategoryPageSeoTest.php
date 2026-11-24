@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Livewire\Pages\Office\Category as CategoryPage;
 use App\Models\Category;
 use App\Models\Property;
+use App\Models\Translate;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -65,12 +66,24 @@ it('names at most the first 50 office buildings in the ItemList', function (): v
         ->and($html)->toContain('<meta name="description" content="Kiadó irodák Budapesten '.(CategoryPage::ITEM_LIST_LIMIT + 1).' irodaházból:');
 });
 
-it('keeps the Hungarian copy off the English category page', function (): void {
+it('keeps the Hungarian copy off the English category page, using its translation from the database', function (): void {
+    /** @var TestCase $this */
+    vaciUtCategory()->properties()->attach(Property::factory()->create());
+    Translate::query()->create(['name' => 'Kiadó Váci úti irodák, XIII. kerület | PSG Irodaházak', 'translated' => 'Offices for rent on Váci út, District XIII | PSG Irodaházak']);
+    Translate::query()->create(['name' => 'Kiadó Váci úti irodák :count irodaházban, 7,5–23 EUR/m²/hó bérleti díjjal.', 'translated' => 'Offices for rent on Váci út in :count office buildings, at 7.5–23 EUR/m²/month.']);
+
+    $this->get(route('en.budapest.category', ['category' => 'kiado-vaci-uti-irodak']))
+        ->assertOk()
+        ->assertSee('<title>Offices for rent on Váci út, District XIII | PSG Irodaházak</title>', false)
+        ->assertSeeHtml('<meta name="description" content="Offices for rent on Váci út in 1 office buildings, at 7.5–23 EUR/m²/month.">')
+        ->assertDontSeeText('A Váci úti irodafolyosó Budapest legnagyobb irodapiaca.');
+});
+
+it('falls back to the generic English title while the copy has no translation', function (): void {
     /** @var TestCase $this */
     vaciUtCategory();
 
     $this->get(route('en.budapest.category', ['category' => 'kiado-vaci-uti-irodak']))
         ->assertOk()
-        ->assertDontSee('XIII. kerület | PSG Irodaházak', false)
-        ->assertDontSeeText('A Váci úti irodafolyosó Budapest legnagyobb irodapiaca.');
+        ->assertDontSee('XIII. kerület | PSG Irodaházak', false);
 });
