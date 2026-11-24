@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
     'heading',
     'seo_title',
     'meta_description',
+    'intro',
 ])]
 final class Category extends Model
 {

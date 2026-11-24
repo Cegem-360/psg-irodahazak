@@ -9,6 +9,7 @@ use App\Models\Property;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Locked;
@@ -82,6 +83,21 @@ final class RentListing extends Component
     private array $categoryMemo = [];
 
     /**
+     * The first offices of a page's unfiltered list, in the order the list shows
+     * them: the items of the page's ItemList schema.
+     *
+     * @return EloquentCollection<int, Property>
+     */
+    public static function listedOffices(?Category $category, int $limit): EloquentCollection
+    {
+        return self::orderByAreaInSliderRange(Property::query()->rent()->active())
+            ->when($category, fn (Builder $query, Category $category): Builder => $query->inCategory($category))
+            ->orderBy('title')
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
      * @param  array<string, mixed>  $queryParams  Filters set by the page; the query string fills the rest.
      */
     public function mount(array $queryParams = []): void
@@ -137,7 +153,7 @@ final class RentListing extends Component
             $this->minLeaseTerm, $this->minLeaseTermUnit, $this->perPage, $this->getPage()]);
 
         return $this->officesMemo[$state] ??= $this->buildQuery()
-            ->unless($this->hasAreaFilter(), fn (Builder $query): Builder => $this->orderByAreaInSliderRange($query))
+            ->unless($this->hasAreaFilter(), fn (Builder $query): Builder => self::orderByAreaInSliderRange($query))
             ->orderBy('title')
             ->paginate($this->perPage);
     }
@@ -166,9 +182,28 @@ final class RentListing extends Component
 
     public function render(): View
     {
+        $category = $this->categoryModel();
+
         return view('livewire.office.rent-listing', [
             'offices' => $this->getOffices(),
+            // The intro is Hungarian copy; the English category pages keep the plain list
+            'intro' => app()->getLocale() === 'hu' ? $category?->intro : null,
         ]);
+    }
+
+    /**
+     * Without an area asked for, every office is listed, but those that fit the
+     * slider's full range come first; the ones with no or a larger area go last.
+     *
+     * @param  Builder<Property>  $query
+     * @return Builder<Property>
+     */
+    private static function orderByAreaInSliderRange(Builder $query): Builder
+    {
+        return $query->orderByRaw(
+            'CASE WHEN min_available_area <= ? AND available_area >= ? THEN 0 ELSE 1 END',
+            [self::AREA_MAX, self::AREA_MIN],
+        );
     }
 
     /**
@@ -221,21 +256,6 @@ final class RentListing extends Component
         }
 
         $query->whereRelation('tags', 'name', 'like', '%'.$fanCoilPipes.' csöves fan-coil%');
-    }
-
-    /**
-     * Without an area asked for, every office is listed, but those that fit the
-     * slider's full range come first; the ones with no or a larger area go last.
-     *
-     * @param  Builder<Property>  $query
-     * @return Builder<Property>
-     */
-    private function orderByAreaInSliderRange(Builder $query): Builder
-    {
-        return $query->orderByRaw(
-            'CASE WHEN min_available_area <= ? AND available_area >= ? THEN 0 ELSE 1 END',
-            [self::AREA_MAX, self::AREA_MIN],
-        );
     }
 
     /**

@@ -1,5 +1,9 @@
-<x-slot name="title">{{ $category->seo_title ?: __(':category in Budapest | PSG Irodaházak', ['category' => $category->name]) }}</x-slot>
-<x-slot name="metaDescription">{{ $category->meta_description ?: __(':category in Budapest: current available spaces, rental and operating fees of office buildings on a map. Request a personalised offer from PSG Irodaházak!', ['category' => $category->name]) }}</x-slot>
+@inject('structuredData', 'App\Services\StructuredDataService')
+<x-slot name="title">{{ $this->title() }}</x-slot>
+<x-slot name="metaDescription">{{ $this->metaDescription() }}</x-slot>
+<x-slot name="meta">
+    {{ $structuredData->toScript($structuredData->collectionPage($category->heading ?: $category->name, $this->metaDescription(), localized_route('budapest.category', ['category' => $category->slug]), $this->listedOffices)) }}
+</x-slot>
 
 <div>
     <livewire:office.rent-listing :query-params="$queryParams" />

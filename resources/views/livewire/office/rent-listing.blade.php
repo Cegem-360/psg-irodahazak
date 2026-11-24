@@ -1,6 +1,6 @@
 @use('App\Models\Translate')
 <div wire:key="list-rent-offices" class="list-rent-offices">
-    <x-page-section heading-margin="mb-8">
+    <x-page-section heading-margin="mb-2">
         <x-slot:heading>
             {{-- Check if the title is set and if a translation exists --}}
             @if (app()->getLocale() === 'en' && $title && Translate::whereName($title)->exists())
@@ -8,10 +8,16 @@
             @else
                 {{ $title ? __($title) : __('page.title.offices_for_rent') }}
             @endif
-            <span class="block mt-4 text-xl font-normal text-gray-700">({{ __(':count office buildings', ['count' => $totalOffices]) }})</span>
         </x-slot:heading>
-        @if ($category && app()->getLocale() === 'hu')
-            <p class="-mt-4 mb-8 text-center text-lg text-gray-700">
+        {{-- The count stays out of the H1, so the heading is the plain page title --}}
+        <p class="mb-8 text-center text-xl text-gray-700">({{ __(':count office buildings', ['count' => $totalOffices]) }})</p>
+        @if ($intro)
+            {{-- The category's intro; its last sentence links to the fee bands, so the fee band line is not repeated --}}
+            <div class="category-intro prose prose-lg max-w-none mb-8 text-gray-700 prose-a:text-accent prose-a:font-semibold">
+                {!! $intro !!}
+            </div>
+        @elseif ($category && app()->getLocale() === 'hu')
+            <p class="mb-8 text-center text-lg text-gray-700">
                 {{ __('How much does an office cost in Budapest today? Fee bands, operating fees and parking per submarket:') }}
                 <a wire:navigate.hover href="{{ route('rental-fees') }}" class="font-semibold text-accent hover:underline">{{ __('Budapest fee bands 2026') }}</a>
             </p>

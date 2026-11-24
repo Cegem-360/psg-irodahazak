@@ -15,5 +15,6 @@ arch()->preset()->laravel()->ignoring([
 ]);
 arch()->preset()->security();
 // Model traits live in App\Models\Concerns.
-arch()->expect('App\Models')->toBeClasses()->toExtend(Model::class)->ignoring('App\Models\Concerns');
+arch()->expect('App\Models')->toBeClasses()->ignoring('App\Models\Concerns');
+arch()->expect('App\Models')->toExtend(Model::class)->ignoring('App\Models\Concerns');
 arch('App\Controllers\Controller is abstract')->expect('App\Controllers\Controller')->toBeAbstract();

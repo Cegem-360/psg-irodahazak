@@ -170,7 +170,9 @@ it('gives a category page its own H1, title, description and breadcrumb', functi
 
     preg_match('#<h1[^>]*>(.*?)</h1>#s', $html, $heading);
 
-    expect(Str::squish(strip_tags($heading[1])))->toBe('Kiadó belvárosi irodák Budapesten (1 irodaház)');
+    // The count is shown below the H1, not in it
+    expect(Str::squish(strip_tags($heading[1])))->toBe('Kiadó belvárosi irodák Budapesten')
+        ->and($html)->toContain('(1 irodaház)');
 
     $crumbs = jsonLdNode($html, 'BreadcrumbList')['itemListElement'];
 

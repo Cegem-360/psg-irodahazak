@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Livewire\Pages\News\OperatingFee;
 use App\Models\BlogPost;
 use App\Models\News;
 use App\Models\Property;
@@ -103,7 +104,8 @@ final class GenerateSitemap extends Command
     {
         $sitemap = Sitemap::create();
 
-        foreach (News::query()->where('is_published', true)->whereNotNull('slug')->cursor() as $news) {
+        // The operating fee article is a page of its own, already among the static pages
+        foreach (News::query()->where('is_published', true)->whereNotNull('slug')->where('slug', '!=', OperatingFee::SLUG)->cursor() as $news) {
             $this->addLocalized(
                 $sitemap,
                 'news.show',

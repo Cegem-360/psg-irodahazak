@@ -86,6 +86,8 @@ Route::livewire('/elado-irodahaz/{property:slug}', Show::class)->name('propertie
 
 // News
 Route::livewire('/hirek', Pages\News\Index::class)->name('news.index');
+// An article page of its own, listed among the news by a News record with the same slug
+Route::livewire('/hirek/'.Pages\News\OperatingFee::SLUG, Pages\News\OperatingFee::class)->name('operating-fee');
 Route::livewire('/hirek/{news:slug}', Pages\News\Show::class)->name('news.show');
 
 // Favorites (signed-in users only)
@@ -124,6 +126,8 @@ Route::name('en.')->group(function () use ($redirectDeletedProperty): void {
 
     // News
     Route::livewire('/news', Pages\News\Index::class)->name('news.index');
+    // The operating fee article is Hungarian only
+    Route::permanentRedirect('/news/'.Pages\News\OperatingFee::SLUG, '/hirek/'.Pages\News\OperatingFee::SLUG);
     Route::livewire('/news/{news:slug}', Pages\News\Show::class)->name('news.show');
 
     // Blog (no list page of its own: the latest posts are on the home page)

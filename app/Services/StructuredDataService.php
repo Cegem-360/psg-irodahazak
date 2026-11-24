@@ -219,6 +219,41 @@ final class StructuredDataService
     }
 
     /**
+     * A listing page of office buildings: the page as a CollectionPage, and the
+     * buildings it lists, in the order shown, as its ItemList.
+     *
+     * @param  iterable<Property>  $offices
+     * @return array<string, mixed>
+     */
+    public function collectionPage(string $name, string $description, string $url, iterable $offices): array
+    {
+        $items = [];
+
+        foreach ($offices as $office) {
+            $items[] = [
+                '@type' => 'ListItem',
+                'position' => count($items) + 1,
+                'name' => $office->title,
+                'url' => $office->url(),
+            ];
+        }
+
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            'name' => $name,
+            'description' => $description,
+            'url' => $url,
+            'publisher' => ['@id' => $this->organizationId()],
+            'mainEntity' => [
+                '@type' => 'ItemList',
+                'numberOfItems' => count($items),
+                'itemListElement' => $items,
+            ],
+        ];
+    }
+
+    /**
      * The About Us page, describing the company of the site-wide graph.
      *
      * @return array<string, mixed>

@@ -12,6 +12,7 @@ use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
@@ -63,16 +64,21 @@ final class CategoryResource extends Resource
                     ->schema([
                         TextInput::make('heading')
                             ->label('Oldalcím (H1)')
-                            ->helperText('A találatszám automatikusan mögé kerül, pl. „Kiadó belvárosi irodák Budapesten (54 irodaház)”.')
+                            ->helperText('A találatszám automatikusan alá kerül, külön sorba, pl. „(54 irodaház)”.')
                             ->maxLength(255),
                         TextInput::make('seo_title')
                             ->label('Böngészőcím (title)')
                             ->maxLength(255),
                         Textarea::make('meta_description')
                             ->label('Meta leírás')
+                            ->helperText('A „:count” helyére a kategória aktuális irodaházszáma kerül.')
                             ->rows(3)
                             ->maxLength(320),
                     ]),
+                RichEditor::make('intro')
+                    ->label('Bevezető')
+                    ->helperText('A magyar oldalon a cím alatt, a lista előtt jelenik meg. Ha üres, a díjsáv-oldalra mutató sor látszik helyette.')
+                    ->toolbarButtons(['bold', 'italic', 'link', 'undo', 'redo']),
             ]);
     }
 
