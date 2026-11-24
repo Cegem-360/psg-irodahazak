@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div class="hidden sm:block">
-                            <p class="font-medium">{{ $post->published_at->format('Y. F j.') }}</p>
+                            <p class="font-medium"><time datetime="{{ $post->published_at->toIso8601String() }}">{{ $post->localPublishedAt()->translatedFormat('Y. F j.') }}</time></p>
                             <p class="text-gray-500">{{ __('Published') }}</p>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
 
             {{-- Article Content --}}
             <div class="prose prose-lg max-w-none">
-                @if ($post->excerpt)
+                @if ($post->excerpt && ! $post->excerptOpensContent())
                     <div class="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
                         <p class="text-lg text-blue-800 font-medium italic">{{ $post->excerpt }}</p>
                     </div>
@@ -201,7 +201,7 @@
                                     @endif
 
                                     <div class="mt-4 text-xs text-gray-500">
-                                        {{ $relatedPost->published_at->format('Y. m. d.') }}
+                                        {{ $relatedPost->localPublishedAt()->format('Y. m. d.') }}
                                     </div>
                                 </div>
                             </article>

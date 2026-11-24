@@ -71,6 +71,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Display Timezone
+    |--------------------------------------------------------------------------
+    |
+    | Dates are stored in UTC; the dates shown to visitors, such as the
+    | publication date of a news item, are on the Budapest calendar.
+    |
+    */
+
+    'display_timezone' => 'Europe/Budapest',
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Locale Configuration
     |--------------------------------------------------------------------------
     |

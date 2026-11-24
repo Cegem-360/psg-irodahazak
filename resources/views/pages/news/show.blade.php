@@ -14,7 +14,10 @@
     @endif
 
     {{-- Article specific --}}
-    <meta property="article:published_time" content="{{ $news?->published_at?->toISOString() }}">
+    <meta property="article:published_time" content="{{ $news->published_at?->toIso8601String() }}">
+    @if ($news->updated_at)
+        <meta property="article:modified_time" content="{{ $news->updated_at->toIso8601String() }}">
+    @endif
     <meta property="article:author" content="{{ route('fekete-richard') }}">
     @if ($news->category)
         <meta property="article:section" content="{{ $news->category->name }}">
@@ -33,6 +36,11 @@
 
                 <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{{ $news->title }}</h1>
 
+                @if ($news->localPublishedAt())
+                    <p class="text-sm text-gray-500">
+                        {{ __('Published:') }} <time datetime="{{ $news->published_at->toIso8601String() }}">{{ $news->localPublishedAt()->translatedFormat('Y. F j.') }}</time>
+                    </p>
+                @endif
             </div>
 
             {{-- Featured Image --}}
@@ -43,12 +51,14 @@
                 </div>
             @endif
 
-            {{-- Article Content --}}
-            <div class="px-8 pb-8">
-                <div class="prose prose-lg max-w-none">
-                    {!! $news->excerpt !!}
+            {{-- Excerpt, unless the content opens with the same text --}}
+            @unless ($news->excerptOpensContent())
+                <div class="px-8 pb-8">
+                    <div class="prose prose-lg max-w-none">
+                        {!! $news->excerpt !!}
+                    </div>
                 </div>
-            </div>
+            @endunless
 
             {{-- Article Content --}}
             <div class="px-8 pb-8">

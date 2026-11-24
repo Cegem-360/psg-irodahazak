@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Concerns\HasExcerpt;
 use App\Observers\NewsObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Table(name: 'news')]
 final class News extends Model
 {
+    use HasExcerpt;
     use HasFactory;
 
     /**
@@ -193,13 +195,12 @@ final class News extends Model
         return [
             'is_published' => 'boolean',
             'is_breaking' => 'boolean',
-            'published_at' => 'date',
+            'published_at' => 'datetime',
             'meta_data' => 'array',
             'views_count' => 'integer',
             'priority' => 'integer',
             'created_at' => 'datetime',
-            'updated_at' => 'date',
-
+            'updated_at' => 'datetime',
         ];
     }
 }

@@ -6,6 +6,7 @@ namespace Tests\Feature;
 
 use App\Models\BlogPost;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 final class BlogPostShowTest extends TestCase
@@ -61,5 +62,22 @@ final class BlogPostShowTest extends TestCase
         $response->assertSeeHtml('"@context": "https://schema.org"');
         $this->assertSame(1, mb_substr_count($response->getContent(), '<meta name="description"'));
         $this->assertSame(1, mb_substr_count($response->getContent(), 'property="og:type"'));
+    }
+
+    public function test_imported_post_shows_its_teaser_once_with_a_hungarian_date(): void
+    {
+        // blog.hu posts carry the opening of the content as excerpt; the date is on the Budapest calendar.
+        $post = BlogPost::factory()->published()->create([
+            'published_at' => '2026-11-08 23:46:02',
+            'excerpt' => 'Egymás után hekkelik meg a hűtőberendezéseket...',
+            'content' => '<p>Egymás után hekkelik meg a hűtőberendezéseket: akár 50 fok fölé.</p>',
+        ]);
+
+        $html = $this->withSession(['locale' => 'hu'])->get(route('en.blog.show', $post->slug))
+            ->assertOk()
+            ->assertSeeText('2026. november 9.')
+            ->getContent();
+
+        $this->assertSame(1, mb_substr_count(Str::after($html, '<h1'), 'Egymás után hekkelik meg'));
     }
 }

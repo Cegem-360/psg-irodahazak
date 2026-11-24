@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\BlogPostStatus;
+use App\Models\Concerns\HasExcerpt;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 ])]
 final class BlogPost extends Model
 {
+    use HasExcerpt;
     use HasFactory;
 
     /** Average reading speed, in words per minute. */

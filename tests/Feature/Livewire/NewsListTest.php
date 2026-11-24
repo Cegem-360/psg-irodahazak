@@ -6,6 +6,7 @@ use App\Livewire\News\Listing;
 use App\Models\News;
 use App\Models\NewsCategory;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Str;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -93,4 +94,20 @@ it('counts a view of an article without changing its last modification date', fu
 
     expect($article->refresh()->views_count)->toBe(6)
         ->and($article->updated_at->equalTo($updatedAt))->toBeTrue();
+});
+
+it('shows the publication date on the Budapest calendar and the excerpt only when the content does not open with it', function (): void {
+    /** @var TestCase $this */
+    $article = publishedNews([
+        'published_at' => '2026-11-04 23:30:00',
+        'excerpt' => '<p>A DRFG megvásárolta a Bartók Házat.</p>',
+        'content' => '<p>A DRFG megvásárolta a Bartók Házat: az épület több mint 10 ezer m².</p>',
+    ]);
+
+    $html = $this->get(route('news.show', ['news' => $article->slug]))
+        ->assertOk()
+        ->assertSeeText('Megjelent: 2026. november 5.')
+        ->getContent();
+
+    expect(mb_substr_count(Str::after($html, '<h1'), 'A DRFG megvásárolta a Bartók Házat'))->toBe(1);
 });

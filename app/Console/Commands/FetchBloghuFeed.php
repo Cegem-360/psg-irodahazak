@@ -5,79 +5,81 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\BlogPost;
-use Exception;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use SimpleXMLElement;
 
+/**
+ * Copies the posts of the company's blog.hu blog. It runs daily over the same
+ * feed, so a post is only saved when something in it changed: otherwise its
+ * updated_at, which is the post's dateModified and its sitemap lastmod, would
+ * move to the date of every run.
+ */
 #[Description('Fetches the latest blog.hu posts and saves them to BlogPost.')]
 #[Signature('bloghu:fetch-feed')]
 final class FetchBloghuFeed extends Command
 {
+    public const string FEED_URL = 'https://psgirodahazak.blog.hu/rss';
+
     /**
      * Execute the console command.
      */
     public function handle(): int
     {
-        $feedUrl = 'https://psgirodahazak.blog.hu/rss'; // Itt cseréld le a saját blogod RSS címére
-
         try {
-            $rss = simplexml_load_file($feedUrl);
-        } catch (Exception $exception) {
+            $response = Http::timeout(20)->get(self::FEED_URL);
+        } catch (ConnectionException $exception) {
             $this->error('Nem sikerült lekérni az RSS feedet: '.$exception->getMessage());
 
-            return 1;
+            return self::FAILURE;
         }
 
-        if (! $rss || (! property_exists($rss->channel, 'item') || $rss->channel->item === null)) {
+        $rss = $response->successful() ? simplexml_load_string($response->body()) : false;
+
+        if (! $rss instanceof SimpleXMLElement || ! isset($rss->channel->item)) {
             $this->error('Nem találhatóak bejegyzések az RSS feedben.');
 
-            return 1;
+            return self::FAILURE;
         }
 
-        $count = 0;
+        $saved = 0;
 
         foreach ($rss->channel->item as $item) {
-
-            if (! property_exists($item, 'title') || ! property_exists($item, 'link') || ! property_exists($item, 'description') || ! property_exists($item, 'pubDate')) {
-                continue; // Skip items that do not have the required properties
-            }
-
-            if (empty($item->title) || empty($item->link) || empty($item->description) || empty($item->pubDate)) {
-                continue; // Skip items with empty required properties
-            }
-
-            $title = (string) $item->title;
-            $link = (string) $item->link;
+            $title = mb_trim((string) $item->title);
+            $link = mb_trim((string) $item->link);
             $description = (string) $item->description;
-            $pubDate = date('Y-m-d H:i:s', strtotime((string) $item->pubDate));
-            $featuredImage = null;
-            $namespaces = $item->getNameSpaces(true);
-            $all = [];
-            foreach ($namespaces as $prefix => $ns) {
-                $all[$prefix] = $item->children($ns);
+            $pubDate = mb_trim((string) $item->pubDate);
+
+            if ($title === '' || $link === '' || $description === '' || $pubDate === '') {
+                continue;
             }
 
-            $featuredImage = $all['blh']->image ?? null;
-            $blog = BlogPost::query()->firstOrCreate([
-                'slug' => Str::slug($title),
-            ]);
-            $blog->update([
-                'title' => $title ?? '',
-                'featured_image' => $featuredImage ?? '',
+            $post = BlogPost::query()->firstOrNew(['slug' => Str::slug($title)]);
+
+            $post->fill([
+                'title' => $title,
+                'featured_image' => (string) ($item->children('blh', true)->image ?? ''),
                 'excerpt' => Str::limit(strip_tags($description), 160),
                 'content' => $description,
                 'is_published' => true,
-                'published_at' => $pubDate,
+                'published_at' => Carbon::parse($pubDate)->setTimezone(config('app.timezone')),
                 'meta_data' => ['source' => $link],
                 'link' => $link,
             ]);
-            $count++;
+
+            if ($post->isDirty()) {
+                $post->save();
+                $saved++;
+            }
         }
 
-        $this->info($count.' új bejegyzés mentve.');
+        $this->info($saved.' új vagy módosult bejegyzés mentve.');
 
-        return 0;
+        return self::SUCCESS;
     }
 }
