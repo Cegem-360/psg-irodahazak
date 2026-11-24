@@ -18,6 +18,7 @@ it('publishes the rental fee overview with its table, source line, category link
         ->assertSeeText('Utolsó frissítés: 2026. november')
         ->assertSeeHtml('<th scope="row" class="p-3 font-medium text-gray-900">Váci úti folyosó (XIII.)</th>')
         ->assertSeeText('Forrás: a PSG Irodaházak 230 irodaház-adatlapja, 2026. november 6.')
+        ->assertSeeHtml('href="'.route('fekete-richard').'" rel="author"')
         ->getContent();
 
     $links = [

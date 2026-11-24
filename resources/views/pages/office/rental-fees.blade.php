@@ -129,6 +129,10 @@
                         {{ __('I\'d like a quote') }}
                     </button>
                 </div>
+
+                <p class="pt-6 border-t text-gray-700">
+                    {{ __('Author:') }} <a wire:navigate.hover href="{{ route('fekete-richard') }}" rel="author" class="font-semibold">Fekete Richárd</a>
+                </p>
             </article>
         </x-glass-panel>
     </x-page-section>
