@@ -1,3 +1,5 @@
+@use('App\Enums\ArticlePageKey')
+@use('App\Models\ArticlePage')
  <x-layouts.partials.ajanlat />
  <footer class="p-4 bg-white sm:p-12">
      <div class="mx-auto max-w-7xl">
@@ -72,7 +74,7 @@
                          @if (app()->getLocale() === 'hu')
                              <li class="mb-4">
                                  <a wire:navigate.hover href="{{ route('rental-fees') }}"
-                                     class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ __('Office rents 2026') }}</a>
+                                     class="hover:underline hover:text-blue-600 transition-colors duration-200">{{ ArticlePage::for(ArticlePageKey::RentalFees)->short_title }}</a>
                              </li>
                          @endif
                          <li>

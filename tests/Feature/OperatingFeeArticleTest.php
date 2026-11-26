@@ -14,10 +14,10 @@ it('publishes the operating fee article with its table, source line, links and s
         ->assertSee('<title>Üzemeltetési díj irodabérlésnél: mennyi Budapesten 2026-ban? | PSG Irodaházak</title>', false)
         ->assertSeeHtml('<meta name="description" content="Mit tartalmaz az irodaház üzemeltetési díja, mennyi Budapesten 2026-ban (2 500 HUF/m²/hó a középérték), hogyan számolják el, és mit lehet belőle tárgyalni.">')
         ->assertSeeText('Üzemeltetési díj irodabérlésnél: mit tartalmaz, mennyi Budapesten 2026-ban, és mire figyelj az elszámolásnál')
-        ->assertSeeHtml('<th scope="row" class="p-3 font-medium text-gray-900">Pest egyéb</th>')
+        ->assertSeeHtml('<th>Pest egyéb</th>')
         ->assertSeeText('Forrás: a PSG Irodaházak irodaház-adatlapjai, 131 forintban és 66 euróban árazó irodaház, 2026. november 6. Minden díj nettó.')
         ->assertSeeText('Fekete Richárd tapasztalata')
-        ->assertSeeHtml('href="'.route('rental-fees').'" class="font-semibold underline">irodabérleti díjak Budapesten</a>')
+        ->assertSeeHtml('<a href="/budapest/irodaberleti-dijak">irodabérleti díjak Budapesten</a>')
         ->assertSeeHtml('href="'.route('fekete-richard').'" rel="author"')
         ->assertSeeHtml("Livewire.dispatch('open-request-quote-modal')")
         ->getContent();
@@ -27,8 +27,8 @@ it('publishes the operating fee article with its table, source line, links and s
 
     expect(mb_substr_count($html, '<h1'))->toBe(1)
         ->and($html)->toContain('<table')
-        ->and($article['headline'])->toBe(OperatingFee::headline())
-        ->and($article['datePublished'])->toBe(OperatingFee::PUBLISHED)
+        ->and($article['headline'])->toBe('Üzemeltetési díj irodabérlésnél: mit tartalmaz, mennyi Budapesten 2026-ban, és mire figyelj az elszámolásnál')
+        ->and($article['datePublished'])->toBe('2026-11-24')
         ->and($article['author']['@id'])->toBe(jsonLdNode($html, 'Person')['@id'])
         ->and($article['publisher']['@id'])->toBe(jsonLdNode($html, 'Organization')['@id'])
         ->and($faqs)->toHaveCount(6);
@@ -43,7 +43,7 @@ it('is linked from the operating cost paragraph of the rental fee overview', fun
     /** @var TestCase $this */
     $this->get(route('rental-fees'))
         ->assertOk()
-        ->assertSeeHtml('href="'.route('operating-fee').'">részletesen az üzemeltetési díjról</a>');
+        ->assertSeeHtml('<a href="/hirek/uzemeltetesi-dij-irodaberles">részletesen az üzemeltetési díjról</a>');
 });
 
 it('opens the article itself from its news record, also from the English news URL', function (): void {

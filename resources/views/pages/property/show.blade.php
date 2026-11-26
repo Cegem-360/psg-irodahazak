@@ -1,3 +1,5 @@
+@use('App\Enums\ArticlePageKey')
+@use('App\Models\ArticlePage')
 @inject('structuredData', 'App\Services\StructuredDataService')
 <x-slot name="title">
     {{ $property->localized('meta_title', 'meta_title_en') ?: $property->title.' | PSG Irodaházak' }}
@@ -108,7 +110,7 @@
                                     {{ __($property->min_rent_unit ?? '') }}
                                     @if (app()->getLocale() === 'hu')
                                         <a wire:navigate.hover href="{{ route('rental-fees') }}"
-                                            class="block text-sm font-normal text-accent hover:underline">{{ __('Budapest fee bands 2026') }}</a>
+                                            class="block text-sm font-normal text-accent hover:underline">{{ ArticlePage::for(ArticlePageKey::RentalFees)->link_label }}</a>
                                     @endif
                                 </x-property.spec-row>
                             @endif

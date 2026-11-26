@@ -98,6 +98,43 @@ table.data-table {
     }
 }
 
+/* Tables of the admin-edited article pages (rental fees, operating fee): scroll sideways on phones */
+.article-page table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+
+    th,
+    td {
+        padding: 0.75rem;
+        border-top: 1px solid var(--color-gray-200);
+        border-bottom: none;
+        text-align: left;
+        vertical-align: top;
+        min-width: 7rem;
+    }
+    tr:first-child td {
+        font-weight: inherit;
+        color: inherit;
+    }
+    tbody:first-child > tr:first-child th,
+    thead th {
+        border-top: none;
+        background-color: rgb(var(--logogray-rgb) / 0.1);
+        color: var(--color-gray-900);
+        font-weight: 600;
+    }
+    th {
+        color: var(--color-gray-900);
+        font-weight: 500;
+    }
+    p {
+        margin: 0;
+    }
+}
+
 .swiper-slide-thumb-active {
     border: var(--color-secondary) 2px solid;
     border-radius: 16px;

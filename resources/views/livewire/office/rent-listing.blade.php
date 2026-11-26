@@ -1,3 +1,5 @@
+@use('App\Enums\ArticlePageKey')
+@use('App\Models\ArticlePage')
 @use('App\Models\Translate')
 <div wire:key="list-rent-offices" class="list-rent-offices">
     <x-page-section heading-margin="mb-2">
@@ -19,7 +21,7 @@
         @elseif ($category && app()->getLocale() === 'hu')
             <p class="mb-8 text-center text-lg text-gray-700">
                 {{ __('How much does an office cost in Budapest today? Fee bands, operating fees and parking per submarket:') }}
-                <a wire:navigate.hover href="{{ route('rental-fees') }}" class="font-semibold text-accent hover:underline">{{ __('Budapest fee bands 2026') }}</a>
+                <a wire:navigate.hover href="{{ route('rental-fees') }}" class="font-semibold text-accent hover:underline">{{ ArticlePage::for(ArticlePageKey::RentalFees)->link_label }}</a>
             </p>
         @endif
         <x-glass-panel class="grid grid-cols-1 md:grid-cols-3 gap-8">

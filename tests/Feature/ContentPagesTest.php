@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Livewire\Pages\Office\RentalFees;
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use App\Models\Category;
@@ -16,7 +15,7 @@ it('publishes the rental fee overview with its table, source line, category link
     $html = $this->get('/budapest/irodaberleti-dijak')
         ->assertOk()
         ->assertSeeText('Utolsó frissítés: 2026. november')
-        ->assertSeeHtml('<th scope="row" class="p-3 font-medium text-gray-900">Váci úti folyosó (XIII.)</th>')
+        ->assertSeeHtml('<th>Váci úti folyosó (XIII.)</th>')
         ->assertSeeText('Forrás: a PSG Irodaházak 230 irodaház-adatlapja, 2026. november 6.')
         ->assertSeeHtml('href="'.route('fekete-richard').'" rel="author"')
         ->getContent();
@@ -33,7 +32,7 @@ it('publishes the rental fee overview with its table, source line, category link
     ];
 
     foreach ($links as $slug => $anchor) {
-        expect($html)->toContain('href="'.route('budapest.category', ['category' => $slug]).'">'.$anchor.'</a>');
+        expect($html)->toContain('<a href="/budapest/'.$slug.'">'.$anchor.'</a>');
     }
 
     $article = jsonLdNode($html, 'Article');
@@ -41,8 +40,8 @@ it('publishes the rental fee overview with its table, source line, category link
 
     expect(mb_substr_count($html, '<h1'))->toBe(1)
         ->and($html)->toContain('<table')
-        ->and($article['headline'])->toBe(RentalFees::headline())
-        ->and($article['dateModified'])->toBe(RentalFees::LAST_UPDATED)
+        ->and($article['headline'])->toBe('Irodabérleti díjak Budapesten 2026-ban: mennyibe kerül egy iroda alpiaconként?')
+        ->and($article['dateModified'])->toBe('2026-11-09')
         ->and($article['author']['@id'])->toBe(jsonLdNode($html, 'Person')['@id'])
         ->and($article['publisher']['@id'])->toBe(jsonLdNode($html, 'Organization')['@id'])
         ->and($faqs)->toHaveCount(7);
