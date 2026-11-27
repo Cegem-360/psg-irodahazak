@@ -78,6 +78,22 @@ it('presents the founder as a Person that the organization and the pages point t
         ->and($person)->not->toHaveKey('image');
 });
 
+it('states the founder career in the wording also published elsewhere (Fekete Richárd 2026-11-25)', function (): void {
+    /** @var TestCase $this */
+    $this->get('/fekete-richard')
+        ->assertOk()
+        ->assertSeeText('2002 óta dolgozik a budapesti ingatlanpiacon, 2014 óta kizárólag kereskedelmi ingatlanokkal, elsősorban irodaházakkal foglalkozik.')
+        ->assertSeeText('ahol irodaházak és társasházak üzemeltetésével foglalkozott.')
+        ->assertSeeText('2003-tól 2014-ig a B.G. Property munkatársa volt, ahol a lakóingatlanok után az irodabérbeadásra szakosodott és az elmúlt tizenkét évben')
+        ->assertSeeText('Dél-Budáig vezényelt le bérbeadásokat.')
+        ->assertDontSeeText('irodabérbeadási tanácsadójaként');
+
+    $this->get('/rolunk')
+        ->assertOk()
+        ->assertSeeText('2002 óta dolgozik a budapesti ingatlanpiacon')
+        ->assertDontSeeText('2002 óta dolgozik a budapesti irodapiacon');
+});
+
 it('shows the new About Us text as an AboutPage of the organization, linking the founder and the fee overview', function (): void {
     /** @var TestCase $this */
     $html = $this->get('/rolunk')

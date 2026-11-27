@@ -1,6 +1,6 @@
 @inject('structuredData', 'App\Services\StructuredDataService')
 <x-slot name="title">{{ __('Fekete Richárd, managing director | PSG Irodaházak') }}</x-slot>
-<x-slot name="metaDescription">{{ __('Fekete Richárd, managing director of PSG Irodaházak: on the Budapest office market since 2002, more than 250 office lease and sale transactions, over 100,000 m² of office space.') }}</x-slot>
+<x-slot name="metaDescription">{{ __('Fekete Richárd, managing director of PSG Irodaházak: on the Budapest real estate market since 2002, more than 250 office lease and sale transactions, over 100,000 m² of office space.') }}</x-slot>
 <x-slot name="meta">
     <meta property="og:type" content="profile">
     @if ($structuredData->founderPhotoUrl())
@@ -24,11 +24,11 @@
                 @endif
 
                 <div @class(['prose prose-lg max-w-none text-gray-700 prose-a:text-accent prose-headings:text-logogray', 'lg:col-span-2' => $structuredData->founderPhotoUrl(), 'lg:col-span-3' => ! $structuredData->founderPhotoUrl()])>
-                    <p class="lead">{{ __('Fekete Richárd is the founder and managing director of PSG Irodaházak, working on the Budapest office market since 2002: helping companies find offices, negotiate and renegotiate leases, and sell office buildings. In recent years, more than 250 lease and sale transactions led from start to finish, covering over 100,000 m² of office space in total. Economist and real estate management economist by training.') }}</p>
+                    <p class="lead">{{ __('Fekete Richárd is the founder and managing director of PSG Irodaházak, working on the Budapest real estate market since 2002 and exclusively on commercial real estate, mainly office buildings, since 2014: helping companies find offices, negotiate and renegotiate leases, and sell office buildings. In recent years, more than 250 lease and sale transactions led from start to finish, covering over 100,000 m² of office space in total. Economist and real estate management economist by training.') }}</p>
 
                     <h2>{{ __('Career') }}</h2>
 
-                    <p>{!! __('Career start in 2002 at Tömb Ingatlanhasznosító Kft., working on the letting of office buildings. From 2003 to 2014 an office leasing consultant at B.G. Property, leading lettings over those eleven years in every submarket of the Budapest office market, from the city centre through Váci út to South Buda. In 2014 founded Property Solution Group Kft., whose office leasing and consultancy brand is PSG Irodaházak. Since 2022 the company has also renegotiated leases on the tenants\' side, and in 2025 it added the sister site <a href="https://psg-raktarak.hu">psg-raktarak.hu</a> for warehouse and industrial property brokerage.') !!}</p>
+                    <p>{!! __('Career start in 2002 at Tömb Ingatlanhasznosító Kft., working on the operation of office buildings and condominiums. From 2003 to 2014 at B.G. Property, where after residential property he specialised in office leasing, and over the past twelve years has led lettings in every submarket of the Budapest office market, from the city centre through Váci út to South Buda. In 2014 founded Property Solution Group Kft., whose office leasing and consultancy brand is PSG Irodaházak. Since 2022 the company has also renegotiated leases on the tenants\' side, and in 2025 it added the sister site <a href="https://psg-raktarak.hu">psg-raktarak.hu</a> for warehouse and industrial property brokerage.') !!}</p>
 
                     <h2>{{ __('How I work') }}</h2>
 

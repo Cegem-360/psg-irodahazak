@@ -65,7 +65,7 @@
                             </a>
                         @endif
                         <div class="space-y-4 text-lg text-gray-700 leading-relaxed">
-                            <p>{!! __('The company was founded and is managed by managing director <a wire:navigate.hover href=":url" class="text-accent hover:underline">Fekete Richárd</a>, on the Budapest office market since 2002, economist and real estate management economist. Fekete Richárd personally negotiates with clients and attends the viewings.', ['url' => route('fekete-richard')]) !!}</p>
+                            <p>{!! __('The company was founded and is managed by managing director <a wire:navigate.hover href=":url" class="text-accent hover:underline">Fekete Richárd</a>, on the Budapest real estate market since 2002, economist and real estate management economist. Fekete Richárd personally negotiates with clients and attends the viewings.', ['url' => route('fekete-richard')]) !!}</p>
                             <p><a wire:navigate.hover href="{{ route('fekete-richard') }}" class="font-semibold text-accent hover:underline">{{ __('About Fekete Richárd') }}</a></p>
                         </div>
                     </div>
